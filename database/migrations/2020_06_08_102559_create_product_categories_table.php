@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateProductCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('product_categories', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('parent_id');
             $table->unsignedBigInteger('account_id');
-            $table->enum('role', ['admin', 'business_owner', 'customer']);
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('name');
+            $table->boolean('is_featured')->default(false);
+            $table->boolean('is_archived')->default(false);
             $table->timestamps();
+            $table->softDeletes('deleted_at', 0);
 
+            $table->foreign('parent_id')->references('id')->on('product_categories');
             $table->foreign('account_id')->references('id')->on('accounts');
         });
     }
@@ -36,6 +35,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('product_categories');
     }
 }
