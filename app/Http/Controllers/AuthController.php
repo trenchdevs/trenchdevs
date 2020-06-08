@@ -9,6 +9,7 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
+        // todo: chris - validate? or use global handler
         $user = User::create([
             'email' => $request->email,
             'password' => $request->password,
