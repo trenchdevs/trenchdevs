@@ -15,7 +15,7 @@ class AuthenticationTest extends TestCase
         parent::setUp();
 
         $user = new User([
-            'email'    => 'test@email.com',
+            'email' => 'test@email.com',
             'password' => '123456',
         ]);
 
@@ -26,7 +26,7 @@ class AuthenticationTest extends TestCase
     public function it_will_register_a_user()
     {
         $response = $this->post('api/register', [
-            'email'    => 'test2@email.com',
+            'email' => 'test2@email.com',
             'password' => '123456'
         ]);
 
@@ -41,7 +41,7 @@ class AuthenticationTest extends TestCase
     public function it_will_log_a_user_in()
     {
         $response = $this->post('api/login', [
-            'email'    => 'test@email.com',
+            'email' => 'test@email.com',
             'password' => '123456'
         ]);
 
@@ -50,18 +50,38 @@ class AuthenticationTest extends TestCase
             'token_type',
             'expires_in'
         ]);
+
+        return $response['access_token'];
     }
 
     /** @test */
     public function it_will_not_log_an_invalid_user_in()
     {
         $response = $this->post('api/login', [
-            'email'    => 'test@email.com',
+            'email' => 'test@email.com',
             'password' => 'notlegitpassword'
         ]);
 
         $response->assertJsonStructure([
             'error',
         ]);
+    }
+
+    /**
+     * @test
+     * @param string $accessToken
+     * @depends it_will_log_a_user_in
+     */
+    public function it_will_get_user_details(string $accessToken)
+    {
+        $this->assertNotEmpty($accessToken);
+        $response = $this->post('/api/me', [], [
+           "Bearer Token: {$accessToken}"
+        ]);
+
+        $this->assertNotEmpty($response->assertJson([
+            'email' => 'test@email.com',
+        ]));
+        var_dump($response);
     }
 }
