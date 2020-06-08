@@ -75,13 +75,11 @@ class AuthenticationTest extends TestCase
     public function it_will_get_user_details(string $accessToken)
     {
         $this->assertNotEmpty($accessToken);
-        $response = $this->post('/api/me', [], [
-           "Bearer Token: {$accessToken}"
-        ]);
-
+        $response = $this->withHeader('Authorization', "Bearer $accessToken")
+            ->json('post', 'api/me', []);
+        
         $this->assertNotEmpty($response->assertJson([
             'email' => 'test@email.com',
         ]));
-        var_dump($response);
     }
 }
