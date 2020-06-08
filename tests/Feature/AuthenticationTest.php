@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Account;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -14,9 +16,28 @@ class AuthenticationTest extends TestCase
     {
         parent::setUp();
 
+        $now = date('Y-m-d H:i:s');
+
+
+        DB::table('application_types')->insert([
+            'name' => 'ecommerce',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        DB::table('accounts')->insert([
+            'application_type_id' => 1,
+            'owner_user_id' => null,
+            'business_name' => 'Test Commerce',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
         $user = new User([
             'email' => 'test@email.com',
             'password' => '123456',
+            'account_id' => 1,
+            'role' => 'business_owner',
         ]);
 
         $user->save();
@@ -27,7 +48,9 @@ class AuthenticationTest extends TestCase
     {
         $response = $this->post('api/register', [
             'email' => 'test2@email.com',
-            'password' => '123456'
+            'password' => '123456',
+            'role' => 'business_owner',
+            'account_id' => 1,
         ]);
 
         $response->assertJsonStructure([

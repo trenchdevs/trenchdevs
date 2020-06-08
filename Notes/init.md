@@ -15,3 +15,7 @@ Reference: [JWT Tutorial](https://medium.com/employbl/build-authentication-into-
   ✓ it will not log an invalid user in
 
 ``` 
+### Testing 
+
+1. Crete database `trenchdevs_testing`
+2. Duplicate .env and add credentials for testing database
