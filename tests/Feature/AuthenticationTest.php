@@ -77,9 +77,12 @@ class AuthenticationTest extends TestCase
         $this->assertNotEmpty($accessToken);
         $response = $this->withHeader('Authorization', "Bearer $accessToken")
             ->json('post', 'api/me', []);
-        
+
+        $response->assertStatus(200);
         $this->assertNotEmpty($response->assertJson([
             'email' => 'test@email.com',
         ]));
+
+        var_dump($response->getStatusCode());
     }
 }
