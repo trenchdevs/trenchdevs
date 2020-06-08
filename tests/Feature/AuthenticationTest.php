@@ -83,6 +83,13 @@ class AuthenticationTest extends TestCase
             'email' => 'test@email.com',
         ]));
 
-        var_dump($response->getStatusCode());
+        $response = $this->withHeader('Authorization', "Bearer $accessToken")
+            ->json('get', 'api/user', []);
+
+        $response->assertStatus(200);
+        $this->assertNotEmpty($response->assertJson([
+            'email' => 'test@email.com',
+        ]));
+
     }
 }
