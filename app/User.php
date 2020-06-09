@@ -10,13 +10,21 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
+    const ROLE_ADMIN = 'admin';
+    const ROLE_BUSINESS_OWNER = 'business_owner';
+    const ROLE_CUSTOMER = 'customer';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'account_id', 'role',
+        'name',
+        'email',
+        'password',
+        'account_id',
+        'role',
     ];
 
     /**
@@ -25,7 +33,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -35,6 +44,8 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function getJWTIdentifier()
@@ -46,10 +57,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
     public function setPasswordAttribute($password)
     {
-        if ( !empty($password) ) {
+        if (!empty($password)) {
             $this->attributes['password'] = bcrypt($password);
         }
     }
+
 }
