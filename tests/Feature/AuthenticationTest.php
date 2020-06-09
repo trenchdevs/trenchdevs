@@ -47,6 +47,8 @@ class AuthenticationTest extends TestCase
     public function it_will_register_a_user()
     {
         $response = $this->post('api/register', [
+            'first_name' => 'Test',
+            'last_name' => 'User1',
             'email' => 'test2@email.com',
             'password' => '123456',
             'role' => 'business_owner',
