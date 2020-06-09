@@ -5,12 +5,28 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        // todo: chris - validate? or use global handler
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+            'role' => [
+                'required',
+                Rule::in([User::ROLE_BUSINESS_OWNER, User::ROLE_CUSTOMER]),
+            ],
+            'account_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->validationFailureResponse($validator);
+        }
+
         $user = User::create([
             'email' => $request->email,
             'password' => $request->password,
@@ -21,6 +37,7 @@ class AuthController extends Controller
         $token = auth()->login($user);
 
         return $this->respondWithToken($token);
+
     }
 
     public function login()
@@ -44,6 +61,9 @@ class AuthController extends Controller
         return response()->json(auth()->user());
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function logout()
     {
         auth()->logout();
@@ -51,6 +71,11 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
+
+    /**
+     * @param $token
+     * @return JsonResponse
+     */
     protected function respondWithToken($token)
     {
         return response()->json([
