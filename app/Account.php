@@ -13,6 +13,8 @@ class Account extends Model
      */
     protected $table = 'accounts';
 
+    const TRENCHDEVS_BUSINESS_NAME = 'TrenchDevs';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,4 +23,13 @@ class Account extends Model
     protected $fillable = [
         'owner_user_id', 'business_name', 'application_type_id',
     ];
+
+    /**
+     * @param string $businessName
+     * @return mixed
+     */
+    public static function findByBusinessName(string $businessName){
+        return Account::where('business_name', $businessName)
+            ->first();
+    }
 }
