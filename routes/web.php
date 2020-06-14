@@ -12,13 +12,3 @@ Auth::routes();
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/home', 'HomeController@index');
 });
-
-Route::get('test', function(){
-    try {
-        \Illuminate\Support\Facades\DB::connection();
-        dd(\App\User::all());
-    }catch (Exception $exception) {
-        dd($exception->getMessage());
-    }
-
-});
