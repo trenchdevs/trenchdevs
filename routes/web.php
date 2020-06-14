@@ -16,7 +16,7 @@ Route::middleware(['auth:web'])->group(function () {
 Route::get('test', function(){
     try {
         \Illuminate\Support\Facades\DB::connection();
-        dd('connection made');
+        dd(\App\User::all());
     }catch (Exception $exception) {
         dd($exception->getMessage());
     }
