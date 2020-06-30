@@ -16,16 +16,16 @@ class ProductCategoryUtilities
      */
     public static function getAll(string $accountId)
     {
-        $product_categories = ProductCategory::where('account_id', $accountId)
+        $productCategories = ProductCategory::where('account_id', $accountId)
             ->orderBy('parent_id', 'desc')
             ->orderBy('name', 'asc')
             ->get();
 
-        if (count($product_categories)) {
+        if (count(productCategories)) {
 
             $parentCategories = [];
 
-            foreach ($product_categories as $row) {
+            foreach ($parentCategories as $row) {
                 if (!$row->parent_id) {
                     // is a parent category
                     $parentCategories[$row->id] = $row;
@@ -41,9 +41,9 @@ class ProductCategoryUtilities
                 }
             }
 
-            return $parentCategories;
+            return array_values($parentCategories);
         }
 
-        return $product_categories;
+        return $parentCategories;
     }
 }
