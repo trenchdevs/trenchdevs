@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use App\ProductCategory;
+use App\Utilities\ProductCategoryUtilities;
 use Illuminate\Http\Request;
+
+use ErrorException;
+use Exception;
+use InvalidArgumentException;
 
 class ProductCategoryController extends Controller
 {
@@ -13,36 +19,25 @@ class ProductCategoryController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function all(Request $request)
     {
-//        $product_categories = ProductCategory::where('account_id', account_id)
-//            ->orderBy('parent_id', 'desc')
-//            ->orderBy('name', 'asc');
 
-        $product_categories = ProductCategory::orderBy('parent_id', 'desc')
-            ->orderBy('name', 'asc')
-            ->get();
+        $accountId = $request->header('x-account-id');
 
-        $parentCategories = [];
-
-        foreach ($product_categories as $row) {
-            if (!$row->parent_id) {
-                // is a parent category
-                $parentCategories[$row->id] = $row;
-            } else {
-                // is a child
-                if ($parentCategories[$row->parent_id] && $parentCategories[$row->parent_id]['children']) {
-                    // children array already exists
-                    array_push($parentCategories[$row->parent_id]['children'], $row);
-                } else {
-                    // children array does not exist
-                    $parentCategories[$row->parent_id]['children'] = [$row];
-                }
-            }
+        if (empty($accountId)) {
+            return response()->json(["errors" => "Account ID is required"], 404);
         }
 
+        $account = Account::find($accountId);
+
+        if (!$account) {
+            return response()->json(["errors" => 'Account not found'], 404);
+        }
+
+        $product_categories = ProductCategoryUtilities::getAll($accountId);
+
         return response()->json([
-            'product_categories' => $parentCategories,
-        ]);
+            'product_categories' => $product_categories
+        ], 200);
     }
 }

@@ -30,4 +30,4 @@ Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
 Route::post('me', 'AuthController@me');
 
-Route::get('product_categories/', 'ProductCategoryController@index');
+Route::get('product_categories/', 'ProductCategoryController@all');
