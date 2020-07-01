@@ -30,7 +30,10 @@ Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
 Route::post('me', 'AuthController@me');
 
-Route::group(['prefix' => 'product_categories'], function () {
+Route::group([
+    'prefix' => 'product_categories',
+    'middleware' => 'validAccount'
+], function () {
 
     Route::get('/', 'ProductCategoryController@all');
     Route::get('/parent_categories', 'ProductCategoryController@allParentCategories');

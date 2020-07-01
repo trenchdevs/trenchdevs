@@ -20,39 +20,20 @@ class ProductCategoryController extends ApiController
      */
     public function all(Request $request)
     {
-        $accountId = $request->header('x-account-id');
-
-        if (empty($accountId)) {
-            return response()->json(["errors" => "Account ID is required"], 404);
-        }
-
-        $account = Account::find($accountId);
-
-        if (!$account) {
-            return response()->json(["errors" => 'Account not found'], 404);
-        }
-
-        $product_categories = ProductCategoryUtilities::getAll($accountId);
+        $product_categories = ProductCategoryUtilities::getAll($request->header('x-account-id'));
 
         return response()->json([
             "product_categories" => $product_categories
         ], 200);
     }
 
+    /**
+     * @param Request $request
+     * @param string $categoryId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function one(Request $request, string $categoryId)
     {
-        $accountId = $request->header('x-account-id');
-
-        if (empty($accountId)) {
-            return response()->json(["errors" => "Account ID is required"], 404);
-        }
-
-        $account = Account::find($accountId);
-
-        if (!$account) {
-            return response()->json(["errors" => 'Account not found'], 404);
-        }
-
         $product_category = ProductCategory::findOrfail($categoryId);
 
         return response()->json([
@@ -69,19 +50,7 @@ class ProductCategoryController extends ApiController
      */
     public function allParentCategories(Request $request)
     {
-        $accountId = $request->header('x-account-id');
-
-        if (empty($accountId)) {
-            return response()->json(["errors" => "Account ID is required"], 404);
-        }
-
-        $account = Account::find($accountId);
-
-        if (!$account) {
-            return response()->json(["errors" => 'Account not found'], 404);
-        }
-
-        $parentCategories = ProductCategory::where('account_id', $accountId)
+        $parentCategories = ProductCategory::where('account_id', $request->header('x-account-id'))
             ->where('parent_id', NULL)
             ->orderBy('name', 'asc')
             ->get();
@@ -99,18 +68,6 @@ class ProductCategoryController extends ApiController
      */
     public function upsert(Request $request)
     {
-        $accountId = $request->header('x-account-id');
-
-        if (empty($accountId)) {
-            return response()->json(["errors" => "Account ID is required"], 404);
-        }
-
-        $account = Account::find($accountId);
-
-        if (!$account) {
-            return response()->json(["errors" => 'Account not found'], 404);
-        }
-
         $rules = [
             'name' => 'required|string|max:255',
             'is_featured' => 'required|max:1000'
@@ -137,7 +94,7 @@ class ProductCategoryController extends ApiController
         } else {
             // edit mode
             $productCategory = new ProductCategory();
-            $productCategory->account_id = $accountId;
+            $productCategory->account_id = $request->header('x-account-id');
         }
 
         $productCategory->name = $request->name;
@@ -148,26 +105,16 @@ class ProductCategoryController extends ApiController
             return response()->json(["errors" => "An error occurred while saving entry"], 404);
         }
 
-        return response()->json([
-            'product_category' => $productCategory
-        ], 200);
+        return response()->json(['product_category' => $productCategory], 200);
     }
 
+    /**
+     * @param Request $request
+     * @param string $categoryId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete(Request $request, string $categoryId)
     {
-
-        $accountId = $request->header('x-account-id');
-
-        if (empty($accountId)) {
-            return response()->json(["errors" => "Account ID is required"], 404);
-        }
-
-        $account = Account::find($accountId);
-
-        if (!$account) {
-            return response()->json(["errors" => 'Account not found'], 404);
-        }
-
         $productCategory = ProductCategory::find($categoryId);
 
         if (!$productCategory) {
@@ -180,5 +127,4 @@ class ProductCategoryController extends ApiController
 
         return response()->json([], 200);
     }
-
 }
