@@ -43,6 +43,10 @@ class ProductCategoryUtilities
                 }
             }
 
+            usort($parentCategories, function($a, $b) {
+                return strcmp($a->name, $b->name);
+            });
+
             return array_values($parentCategories);
         }
 

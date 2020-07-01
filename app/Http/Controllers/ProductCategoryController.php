@@ -36,7 +36,28 @@ class ProductCategoryController extends Controller
         $product_categories = ProductCategoryUtilities::getAll($accountId);
 
         return response()->json([
-            "product_categories" =>  $product_categories
+            "product_categories" => $product_categories
+        ], 200);
+    }
+
+    public function one(Request $request, string $categoryId)
+    {
+        $accountId = $request->header('x-account-id');
+
+        if (empty($accountId)) {
+            return response()->json(["errors" => "Account ID is required"], 404);
+        }
+
+        $account = Account::find($accountId);
+
+        if (!$account) {
+            return response()->json(["errors" => 'Account not found'], 404);
+        }
+
+        $product_category = ProductCategory::findOrfail($categoryId);
+
+        return response()->json([
+            "product_category" => $product_category
         ], 200);
     }
 
@@ -72,7 +93,7 @@ class ProductCategoryController extends Controller
     }
 
     /**
-     * Upsert product categort
+     * Upsert product category
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -105,7 +126,7 @@ class ProductCategoryController extends Controller
 
         // see if provided parent id exists (ex. 0, 1 .. but not null)
         if (!empty($request->parent_id) && !is_null($request->parent_id)) {
-            $parentCategory = ProductCategory::where('parent_id', $request->parent_id)->first();
+            $parentCategory = ProductCategory::find($request->parent_id);
 
             if (!$parentCategory) {
                 return response()->json(["errors" => "Parent category not found"], 404);

@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('test', function(){
+Route::get('test', function () {
     return response()->json([
         '@test'
     ]);
@@ -30,7 +30,16 @@ Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
 Route::post('me', 'AuthController@me');
 
-Route::get('product_categories/', 'ProductCategoryController@all');
-Route::get('product_categories/parent_categories', 'ProductCategoryController@allParentCategories');
-Route::post('product_categories/upsert', 'ProductCategoryController@upsert');
+Route::group(['prefix' => 'product_categories'], function () {
+
+    Route::get('/', 'ProductCategoryController@all');
+    Route::get('/parent_categories', 'ProductCategoryController@allParentCategories');
+    Route::post('/upsert', 'ProductCategoryController@upsert');
+    Route::get('/{categoryId}', 'ProductCategoryController@one');
+
+});
+
+
+
+
 
