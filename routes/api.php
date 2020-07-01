@@ -35,6 +35,8 @@ Route::group(['prefix' => 'product_categories'], function () {
     Route::get('/', 'ProductCategoryController@all');
     Route::get('/parent_categories', 'ProductCategoryController@allParentCategories');
     Route::post('/upsert', 'ProductCategoryController@upsert');
+    Route::post('/delete/{categoryId}', 'ProductCategoryController@delete');
+
     Route::get('/{categoryId}', 'ProductCategoryController@one');
 
 });

@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\Http\Controllers\Auth\ApiController;
 use App\ProductCategory;
 use App\Utilities\ProductCategoryUtilities;
 use Illuminate\Http\Request;
-use Exception;
 use Illuminate\Support\Facades\Validator;
-use InvalidArgumentException;
 
-class ProductCategoryController extends Controller
+class ProductCategoryController extends ApiController
 {
     /**
      * Returns all product categories (filtered by account id)
@@ -152,6 +151,34 @@ class ProductCategoryController extends Controller
         return response()->json([
             'product_category' => $productCategory
         ], 200);
+    }
+
+    public function delete(Request $request, string $categoryId)
+    {
+
+        $accountId = $request->header('x-account-id');
+
+        if (empty($accountId)) {
+            return response()->json(["errors" => "Account ID is required"], 404);
+        }
+
+        $account = Account::find($accountId);
+
+        if (!$account) {
+            return response()->json(["errors" => 'Account not found'], 404);
+        }
+
+        $productCategory = ProductCategory::find($categoryId);
+
+        if (!$productCategory) {
+            return response()->json(["errors" => 'Product category not found'], 404);
+        }
+
+        if (!$productCategory->delete()) {
+            return response()->json(["errors" => 'There was a problem deleting the product category'], 404);
+        }
+
+        return response()->json([], 200);
     }
 
 }
