@@ -108,6 +108,44 @@ class ProductCategoryController extends ApiController
         return response()->json(['product_category' => $productCategory], 200);
     }
 
+    public function toggleIsFeatured(Request $request, string $categoryId)
+    {
+        $productCategory = ProductCategory::find($categoryId);
+
+        if (!$productCategory) {
+            return response()->json(["errors" => 'Product category not found'], 404);
+        }
+
+        $productCategory->is_featured = !$productCategory->is_featured;
+
+        if (!$productCategory->save()) {
+            return response()->json(["errors" => 'There was a problem saving the product category'], 500);
+        }
+
+        return response()->json([
+            "product_category" => $productCategory
+        ], 200);
+    }
+
+    public function toggleIsArchived(Request $request, string $categoryId)
+    {
+        $productCategory = ProductCategory::find($categoryId);
+
+        if (!$productCategory) {
+            return response()->json(["errors" => 'Product category not found'], 404);
+        }
+
+        $productCategory->is_archived = !$productCategory->is_archived;
+
+        if (!$productCategory->save()) {
+            return response()->json(["errors" => 'There was a problem saving the product category'], 500);
+        }
+
+        return response()->json([
+            "product_category" => $productCategory
+        ], 200);
+    }
+
     /**
      * @param Request $request
      * @param string $categoryId
@@ -122,7 +160,7 @@ class ProductCategoryController extends ApiController
         }
 
         if (!$productCategory->delete()) {
-            return response()->json(["errors" => 'There was a problem deleting the product category'], 404);
+            return response()->json(["errors" => 'There was a problem deleting the product category'], 500);
         }
 
         return response()->json([], 200);

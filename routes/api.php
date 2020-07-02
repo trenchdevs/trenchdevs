@@ -38,7 +38,10 @@ Route::group([
     Route::get('/', 'ProductCategoryController@all');
     Route::get('/parent_categories', 'ProductCategoryController@allParentCategories');
     Route::post('/upsert', 'ProductCategoryController@upsert');
+
     Route::post('/delete/{categoryId}', 'ProductCategoryController@delete');
+    Route::post('/toggle_is_featured/{categoryId}', 'ProductCategoryController@toggleIsFeatured');
+    Route::post('/toggle_is_archived/{categoryId}', 'ProductCategoryController@toggleIsArchived');
 
     Route::get('/{categoryId}', 'ProductCategoryController@one');
 
