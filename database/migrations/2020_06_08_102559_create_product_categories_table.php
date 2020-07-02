@@ -19,7 +19,6 @@ class CreateProductCategoriesTable extends Migration
             $table->unsignedBigInteger('account_id');
             $table->string('name');
             $table->boolean('is_featured')->default(false);
-            $table->boolean('is_archived')->default(false);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
 

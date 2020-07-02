@@ -41,7 +41,6 @@ Route::group([
 
     Route::post('/delete/{categoryId}', 'ProductCategoryController@delete');
     Route::post('/toggle_is_featured/{categoryId}', 'ProductCategoryController@toggleIsFeatured');
-    Route::post('/toggle_is_archived/{categoryId}', 'ProductCategoryController@toggleIsArchived');
 
     Route::get('/{categoryId}', 'ProductCategoryController@one');
 
