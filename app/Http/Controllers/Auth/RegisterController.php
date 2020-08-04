@@ -74,12 +74,12 @@ class RegisterController extends Controller
             throw new \ErrorException("Account not found");
         }
 
-
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'account_id' => $account->id,
+            'is_active' => 1,
             'password' => $data['password'],
         ]);
     }

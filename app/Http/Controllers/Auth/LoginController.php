@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,11 +53,17 @@ class LoginController extends Controller
      * The user has been authenticated.
      *
      * @param Request $request
-     * @param mixed $user
+     * @param User $user
      * @return mixed
      */
     protected function authenticated(Request $request, $user)
     {
+        /** @var App\User $user */
+        if ($user->is_active != 1) {
+            return view('auth.approval');
+        }
+
+        // else all good, login user and redirect to homepage
         Auth::login($user);
         return redirect('/home');
     }

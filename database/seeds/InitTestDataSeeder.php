@@ -1,5 +1,6 @@
 <?php
 
+use App\Account;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +17,12 @@ class InitTestDataSeeder extends Seeder
         $now = date('Y-m-d H:i:s');
 
         DB::table('application_types')->insert([
+            'name' => 'core',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        DB::table('application_types')->insert([
             'name' => 'ecommerce',
             'created_at' => $now,
             'updated_at' => $now,
@@ -23,6 +30,14 @@ class InitTestDataSeeder extends Seeder
 
         DB::table('accounts')->insert([
             'application_type_id' => 1,
+            'owner_user_id' => null,
+            'business_name' => Account::TRENCHDEVS_BUSINESS_NAME,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        DB::table('accounts')->insert([
+            'application_type_id' => 2,
             'owner_user_id' => null,
             'business_name' => 'Test Commerce',
             'created_at' => $now,

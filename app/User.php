@@ -66,4 +66,11 @@ class User extends Authenticatable implements JWTSubject
         }
     }
 
+    /**
+     * @return string
+     */
+    public function name(): string{
+        return "{$this->first_name} {$this->last_name}";
+    }
+
 }
