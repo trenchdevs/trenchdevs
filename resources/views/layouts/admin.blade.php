@@ -173,12 +173,13 @@
                 <a class="dropdown-item" href="#!"
                 >
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
-                    Account</a
-                ><a class="dropdown-item" href="#!"
-                >
-                    <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
-                    Logout</a
-                >
+                    Account</a>
+                <a class="dropdown-item" href="{{ route('logout') }}">
+                    <div class="dropdown-item-icon">
+                        <i data-feather="log-out"></i>
+                    </div>
+                    Logout
+                </a>
             </div>
         </li>
     </ul>
