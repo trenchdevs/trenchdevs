@@ -1,11 +1,12 @@
 <?php
 
-if (env('APP_ENV') === 'production') {
-    URL::forceSchema('https');
-}
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
+
+if (env('APP_ENV') === 'production') {
+    URL::forceScheme('https');
+}
 
 Route::get('/', function () {
     return view('welcome');
