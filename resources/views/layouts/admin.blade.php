@@ -170,16 +170,19 @@
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#!"
-                >
+                <a class="dropdown-item" href="#!">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
-                    Account</a>
-                <a class="dropdown-item" href="{{ route('logout') }}">
+                    Account
+                </a>
+                <div class="dropdown-item">
+                    <form action="{{ route('logout') }}" method="post">
                     <div class="dropdown-item-icon">
                         <i data-feather="log-out"></i>
                     </div>
                     Logout
-                </a>
+                    </form>
+                </div>
+
             </div>
         </li>
     </ul>
