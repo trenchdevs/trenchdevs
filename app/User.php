@@ -66,4 +66,21 @@ class User extends Authenticatable implements JWTSubject
         }
     }
 
+    /**
+     * User is active
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return intval($this->is_active) == 1;
+    }
+
+    /**
+     * @return string
+     */
+    public function name(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
 }
