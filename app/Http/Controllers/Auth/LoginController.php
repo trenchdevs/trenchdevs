@@ -58,9 +58,9 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        /** @var App\User $user */
-        if ($user->is_active != 1) {
-            return view('auth.approval');
+        
+        if (!$user->isActive()) {
+            return view('auth.inactive-user');
         }
 
         // else all good, login user and redirect to homepage
