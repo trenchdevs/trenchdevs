@@ -174,14 +174,15 @@
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                     Account
                 </a>
-                <div class="dropdown-item">
-                    <form action="{{ route('logout') }}" method="post">
-                    <div class="dropdown-item-icon">
-                        <i data-feather="log-out"></i>
-                    </div>
-                    Logout
-                    </form>
-                </div>
+                <form action="{{ route('logout') }}" method="post" style="display: inline">
+                    {{csrf_field()}}
+                    <button type="submit" class="dropdown-item">
+                        <span class="dropdown-item-icon">
+                            <i data-feather="log-out"></i>
+                        </span>
+                        Logout
+                    </button>
+                </form>
 
             </div>
         </li>
