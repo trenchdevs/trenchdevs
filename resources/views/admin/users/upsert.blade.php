@@ -47,9 +47,11 @@
                     <div class="form-group col-6">
                         <label for="is-active">Is Active</label>
                         <select class="form-control" id="is-active" name="is_active">
-                            <option value="0" {{old('is_active', $user->is_active ?: 0)  == 0 ? 'selected' : ''}}>No
+                            <option value="0" {{old('is_active', $user->is_active ?: 0)  == 0 ? 'selected' : ''}}>
+                                No
                             </option>
-                            <option value="1" {{old('is_active', $user->is_active ?: 1) == 1 ? 'selected' : ''}}>Yes
+                            <option value="1" {{old('is_active', $user->is_active ?: 0) == 1 ? 'selected' : ''}}>
+                                Yes
                             </option>
                         </select>
                     </div>
