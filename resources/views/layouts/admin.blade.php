@@ -79,7 +79,7 @@
                            data-target="#collapseComponents" aria-expanded="false" aria-controls="collapseComponents"
                         >
                             <div class="nav-link-icon"><i data-feather="package"></i></div>
-                            Portfolio
+                            My Portfolio
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
                             >
                         </a>
@@ -119,20 +119,6 @@
                             <div class="small">
                                 <span class="font-weight-500 text-primary">{{date('l')}}</span> &middot;
                                 {{date('F n, Y')}} &middot; {{ date('h:i a') }}
-                            </div>
-                        </div>
-                        <div class="dropdown">
-                            <a class="btn btn-white btn-sm font-weight-500 line-height-normal p-3 dropdown-toggle"
-                               id="dropdownMenuLink" href="#" role="button" data-toggle="dropdown" data-display="static"
-                               aria-haspopup="true" aria-expanded="false"><i class="text-primary mr-2"
-                                                                             data-feather="calendar"></i>Jan - Feb 2020</a>
-                            <div class="dropdown-menu dropdown-menu-sm-right animated--fade-in"
-                                 aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#!">Last 30 days</a><a class="dropdown-item" href="#!">Last
-                                    week</a><a class="dropdown-item" href="#!">This year</a><a class="dropdown-item"
-                                                                                               href="#!">Yesterday</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#!">Custom</a>
                             </div>
                         </div>
                     </div>

@@ -16,39 +16,35 @@
 
                 @if(isset($user->id))
                     <input type="hidden" name="id" value="{{$user->id}}">
-                    @method('PUT')
                 @endif
                 <div class="row">
-                    <div class="form-group col-4">
+                    <div class="form-group col-6">
                         <label for="first-name">First Name</label>
                         <input class="form-control" id="first-name" name="first_name" type="text"
                                value="{{old('first_name', $user->first_name ?: '')}}">
                     </div>
 
-                    <div class="form-group col-4">
+                    <div class="form-group col-6">
                         <label for="last-name">Last Name</label>
                         <input class="form-control" id="last-name" name="last_name" type="text"
                                value="{{old('last_name', $user->last_name ?: '')}}">
                     </div>
 
-                    <div class="form-group col-4">
+                    <div class="form-group col-6">
                         <label for="email">Email</label>
-                        <input class="form-control" id="email" name="email" type="email"
-                               value="{{old('email', $user->email ?: '')}}">
+                        <input
+                            {{$editMode ? 'readonly' : ''}}
+                            class="form-control"
+                            id="email"
+                            name="email" type="email"
+                            value="{{old('email', $user->email ?: '')}}"
+                        >
                     </div>
 
 
-                    @if(!isset($user->id))
-                        <input type="hidden" name="id" value="{{$user->id}}">
-                        @method('PUT')
-                        <div class="form-group col-4">
-                            <label for="password">Password</label>
-                            <input class="form-control" id="password" name="password" type="password"
-                                   value="">
-                        </div>
-                    @endif
 
-                    <div class="form-group col-4">
+
+                    <div class="form-group col-6">
                         <label for="is-active">Is Active</label>
                         <select class="form-control" id="is-active" name="is_active">
                             <option value="0" {{old('is_active', $user->is_active ?: 0)  == 0 ? 'selected' : ''}}>No
@@ -58,9 +54,17 @@
                         </select>
                     </div>
 
-                    <div class="col-4"></div>
+                    <div class="form-group col-6">
+                        @if(!isset($user->id))
+                            <label for="password">Password</label>
+                            <input class="form-control" id="password" name="password" type="password"
+                                   value="">
+                        @endif
+                    </div>
 
-                    <div class="form-group col-4">
+                    <div class="col-6"></div>
+
+                    <div class="form-group col-6">
                         <label for="role">
                             Role <br><small>admin, contributor, business_owner, customer</small>
                         </label>

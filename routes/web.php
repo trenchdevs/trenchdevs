@@ -22,7 +22,9 @@ Route::middleware(['auth:web'])->group(function () {
 //    Route::get('api/admin/users', function(){
 //       return \App\User::all();
 //    });
-    Route::get('admin/users', 'Admin\UsersController@index');
-    Route::get('admin/users/{id}', 'Admin\UsersController@update')->name('users.edit');
+    Route::get('admin/users/create', 'Admin\UsersController@create')->name('users.create');
+    Route::post('admin/users/upsert', 'Admin\UsersController@upsert')->name('users.upsert');
+    Route::get('admin/users/{id}', 'Admin\UsersController@edit')->name('users.edit');
+    Route::get('admin/users', 'Admin\UsersController@index')->name('users.index');
 //    Route::resource('/admin/users', 'Admin\UsersController');
 });

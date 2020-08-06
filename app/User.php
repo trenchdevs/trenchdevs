@@ -78,6 +78,34 @@ class User extends Authenticatable implements JWTSubject
         }
     }
 
+    public function getAllowedRolesToManage(): array {
+
+        // future: can be a levels map instead
+        $rolesMap = [
+            self::ROLE_SUPER_ADMIN => [
+                self::ROLE_ADMIN,
+                self::ROLE_BUSINESS_OWNER,
+                self::ROLE_CUSTOMER,
+                self::ROLE_CONTRIBUTOR,
+            ],
+            self::ROLE_ADMIN => [
+                self::ROLE_BUSINESS_OWNER,
+                self::ROLE_CUSTOMER,
+                self::ROLE_CONTRIBUTOR,
+            ],
+            self::ROLE_CONTRIBUTOR => [
+                self::ROLE_BUSINESS_OWNER,
+                self::ROLE_CUSTOMER,
+            ],
+            self::ROLE_BUSINESS_OWNER => [
+                self::ROLE_CUSTOMER,
+            ],
+            self::ROLE_CUSTOMER => [],
+        ];
+
+        return $rolesMap[$this->role] ?? [];
+    }
+
     /**
      * User is active
      * @return bool

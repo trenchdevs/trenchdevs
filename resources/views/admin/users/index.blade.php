@@ -29,14 +29,8 @@
                         <td>{{!!$user->is_active ? "Yes": "No"}}</td>
                         <td>{{$user->created_at}}</td>
                         <td>
-                            <a href="" class="btn btn-sm btn-primary">
-                                <i data-feather="eye"></i>
-                            </a>
                             <a href="{{ route('users.edit', $user->id, '') }}" class="btn btn-sm btn-warning">
-                                <i data-feather="edit"></i>
-                            </a>
-                            <a href="" class="btn btn-sm btn-danger">
-                                <i data-feather="trash"></i>
+                                <i data-feather="eye"></i>
                             </a>
                         </td>
                     </tr>

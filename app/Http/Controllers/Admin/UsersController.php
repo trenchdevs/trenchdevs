@@ -7,12 +7,17 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Throwable;
 
 class UsersController extends Controller
 {
@@ -23,22 +28,34 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::where('role', '!=', User::ROLE_SUPER_ADMIN)
+        /** @var User $user */
+        $user = Auth::user();
+
+        $users = User::whereIn('role', $user->getAllowedRolesToManage())
+            ->where('id', '!=', $user->id)
             ->paginate();
 
         return view('admin.users.index', ['users' => $users]);
     }
 
-    protected function validator()
+    protected function validator($create = true)
     {
-        return [
+        /** @var User $user */
+        $user = Auth::user();
+
+        $defaultValidator = [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'is_active' => ['required', Rule::in('1', '0')],
-            'password' => ['required', 'string', 'min:8'],
-            'role' => ['required', Rule::in(User::VALID_ROLES)],
+            'role' => ['required', Rule::in($user->getAllowedRolesToManage())],
         ];
+
+        if ($create) {
+            $defaultValidator['email'] = ['required', 'string', 'email', 'max:255', 'unique:users'];
+            $defaultValidator['password'] = ['required', 'string', 'min:8'];
+        }
+
+        return $defaultValidator;
     }
 
     /**
@@ -50,36 +67,9 @@ class UsersController extends Controller
     {
         return view('admin.users.upsert', [
             'user' => new User,
-            'action' => route('users.store'),
+            'action' => route('users.upsert'),
+            'editMode' => false,
         ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        $this->validate($request, $this->validator());
-
-        $data = $request->all();
-
-        /** @var User $user */
-        $user = User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'account_id' => Account::getTrenchDevsAccount()->id, // todo: can modify later
-            'is_active' => 1,
-            'password' => $data['password'],
-        ]);
-
-
-        Session::flash('message', "Successfully created user " . $user->name());
-
-        return redirect(route('users.index'));
     }
 
     /**
@@ -103,39 +93,58 @@ class UsersController extends Controller
     {
         return view('admin.users.upsert', [
             'user' => User::findOrFail($id),
-            'action' => route('users.store')
+            'action' => route('users.upsert'),
+            'editMode' => true,
         ]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return Application|\Illuminate\Http\RedirectResponse|Response|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @return RedirectResponse|Redirector
+     * @throws ValidationException
+     * @throws Throwable
      */
-    public function update(Request $request, $id)
+    public function upsert(Request $request)
     {
-        $this->validate($request, $this->validator());
+        $data = $request->all();
 
         /** @var User $user */
-        $user = User::findOrFail($id);
-        $user->fill($request);
-        $user->save();
+        if ($request->id) {
 
-        Session::flash('message', "Successfully updated user " . $user->name());
+            $this->validate($request, $this->validator(false));
+
+            unset($data['password'], $data['email']);
+            /**
+             * Update
+             */
+            $user = User::findOrFail($request->id);
+            $user->fill($data);
+            $user->saveOrFail();
+
+            Session::flash('message', "Successfully updated user " . $user->name());
+
+        } else {
+
+            $this->validate($request, $this->validator(true));
+
+            /**
+             * Create
+             */
+            $user = User::create([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'email' => $data['email'],
+                'account_id' => Account::getTrenchDevsAccount()->id, // todo: can modify later
+                'is_active' => $data['is_active'],
+                'role' => $data['role'],
+                'password' => $data['password'],
+            ]);
+
+            Session::flash('message', "Successfully created new user " . $user->name());
+        }
 
         return redirect(route('users.index'));
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        throw new \ErrorException("Not implemented");
+
     }
 }

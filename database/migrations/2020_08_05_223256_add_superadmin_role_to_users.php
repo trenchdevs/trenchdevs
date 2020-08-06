@@ -14,7 +14,7 @@ class AddSuperadminRoleToUsers extends Migration
      */
     public function up()
     {
-        DB::statement("ALTER TABLE `users` CHANGE COLUMN `role` `role` ENUM('superadmin','admin','business_owner','customer','contributor') NOT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `account_id`");
+        DB::statement("ALTER TABLE `users` CHANGE COLUMN `role` `role` ENUM('superadmin','admin','business_owner','customer','contributor') NOT NULL DEFAULT 'contributor' COLLATE 'utf8mb4_unicode_ci' AFTER `account_id`");
     }
 
     /**
