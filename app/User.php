@@ -4,15 +4,26 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Validation\Rule;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
+    const ROLE_SUPER_ADMIN = 'superadmin';
     const ROLE_ADMIN = 'admin';
     const ROLE_BUSINESS_OWNER = 'business_owner';
     const ROLE_CUSTOMER = 'customer';
+    const ROLE_CONTRIBUTOR = 'contributor';
+
+    const VALID_ROLES = [
+        self::ROLE_SUPER_ADMIN,
+        self::ROLE_ADMIN,
+        self::ROLE_BUSINESS_OWNER,
+        self::ROLE_CUSTOMER,
+        self::ROLE_CONTRIBUTOR,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +35,7 @@ class User extends Authenticatable implements JWTSubject
         'last_name',
         'email',
         'password',
+        'is_active',
         'account_id',
         'role',
     ];

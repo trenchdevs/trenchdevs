@@ -81,6 +81,7 @@ class RegisterController extends Controller
             'account_id' => $account->id,
             'is_active' => 1,
             'password' => $data['password'],
+            'role' => User::ROLE_CONTRIBUTOR,
         ]);
     }
 }
