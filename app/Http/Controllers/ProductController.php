@@ -50,6 +50,7 @@ class ProductController extends ApiController
             'name' => 'required|string|max:250',
             'description' => 'required|max:250',
             'stock' => 'required|integer',
+            'is_on_sale' => 'required|boolean',
             'product_cost' => 'required|numeric',
             'shipping_cost' => 'numeric',
             'handling_cost' => 'numeric',
