@@ -18,6 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('description', 250)
                 ->nullable();
+            $table->unsignedInteger('stock')
+                ->default(0);
             $table->string('image_url')
                 ->index();
             $table->boolean('is_on_sale')
