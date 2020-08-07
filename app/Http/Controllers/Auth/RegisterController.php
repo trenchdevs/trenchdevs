@@ -79,7 +79,7 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'account_id' => $account->id,
-            'is_active' => 1,
+            'is_active' => 0,
             'password' => $data['password'],
             'role' => User::ROLE_CONTRIBUTOR,
         ]);
