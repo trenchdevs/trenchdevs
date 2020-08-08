@@ -54,11 +54,60 @@ class ProductCategoryTest extends TestCase
     }
 
     /** @test */
-    public function it_will_return_product_category()
+    public function it_will_return_specified_product_category()
     {
         $response = $this
             ->withHeaders(['x-account-id' => '1',])
             ->json('GET', '/api/product_categories/1');
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'product_category',
+            ]);
+    }
+
+    /** @test */
+    public function it_will_return_parent_product_categories()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('GET', '/api/product_categories/parent_categories');
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'parent_categories',
+            ]);
+    }
+
+    /** @test */
+    public function it_will_add_a_product_category()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('POST', '/api/product_categories/upsert', [
+                'name' => 'Pants',
+                'is_featured' => 0,
+            ]);
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'product_category',
+            ]);
+    }
+
+    /** @test */
+    public function it_will_update_existing_product_category()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('POST', '/api/product_categories/upsert', [
+                'id' => 1,
+                'name' => 'Shirtzzz',
+                'is_featured' => 1,
+            ]);
 
         $response
             ->assertStatus(200)
