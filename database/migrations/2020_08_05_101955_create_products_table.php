@@ -26,15 +26,15 @@ class CreateProductsTable extends Migration
                 ->index();
             $table->boolean('is_on_sale')
                 ->default(TRUE);
-            $table->unsignedDecimal('shipping_cost', 8, 4)
+            $table->unsignedDecimal('shipping_cost', 10, 4)
                 ->default(0);
-            $table->unsignedDecimal('handling_cost', 8, 4)
+            $table->unsignedDecimal('handling_cost', 10, 4)
                 ->default(0);
-            $table->unsignedDecimal('product_cost', 8, 4)
+            $table->unsignedDecimal('product_cost', 10, 4)
                 ->default(0);
-            $table->unsignedDecimal('sale_product_cost', 8, 4)
+            $table->unsignedDecimal('sale_product_cost', 10, 4)
                 ->default(0);
-            $table->unsignedDecimal('final_cost', 8, 4)
+            $table->unsignedDecimal('final_cost', 10, 4)
                 ->default(0);
             $table->json('attributes')
                 ->nullable();

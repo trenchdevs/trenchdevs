@@ -34,7 +34,11 @@ class ProductCategoryController extends ApiController
      */
     public function one(Request $request, string $categoryId)
     {
-        $product_category = ProductCategory::findOrfail($categoryId);
+        $product_category = ProductCategory::find($categoryId);
+
+        if (!$product_category) {
+            return response()->json(["errors" => 'Product category not found'], 404);
+        }
 
         return response()->json(["product_category" => $product_category], 200);
     }
