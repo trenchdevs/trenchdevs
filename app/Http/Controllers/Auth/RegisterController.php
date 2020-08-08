@@ -6,6 +6,7 @@ use App\Account;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use ErrorException;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -62,16 +63,16 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param array $data
-     * @return \App\User
+     * @return User
      * @throws
      */
     protected function create(array $data)
     {
 
-        $account = Account::findByBusinessName(Account::TRENCHDEVS_BUSINESS_NAME);
+        $account = Account::getTrenchDevsAccount();
 
         if (!$account) {
-            throw new \ErrorException("Account not found");
+            throw new ErrorException("Account not found");
         }
 
         return User::create([
@@ -80,7 +81,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'account_id' => $account->id,
             'is_active' => 0,
-            'password' => $data['password'],
+            'password' => Hash::make($data['password']),
             'role' => User::ROLE_CONTRIBUTOR,
         ]);
     }

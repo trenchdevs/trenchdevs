@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -146,5 +147,25 @@ class UsersController extends Controller
         return redirect(route('users.index'));
 
 
+    }
+
+    public function passwordReset(Request $request)
+    {
+
+        $id = $request->id ?? null;
+
+        if (empty($id)) {
+            abort(404);
+        }
+
+        /** @var User $user */
+        $user = User::findOrFail($id);
+
+        $token = Password::getRepository()->create($user);
+        $user->sendPasswordResetNotification($token);
+
+        Session::flash('message', "Successfully sent password reset email to user " . $user->name());
+
+        return redirect(route('users.index'));
     }
 }

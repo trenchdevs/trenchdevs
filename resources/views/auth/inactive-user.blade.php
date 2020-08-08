@@ -13,8 +13,8 @@
                                     <p class="lead">Unauthorized</p>
                                     <p>
                                         Your account is currently inactive or awaiting confirmation please check again
-                                        after 24 hours or shoot an email to site owner
-                                        <a href="mailto:christopheredrian@trenchdevs.org">christopheredrian@trenchdevs.org</a>
+                                        after 24 hours or shoot an email to support
+                                        <a href="mailto:support@trenchdevs.org">support@trenchdevs.org</a>
                                     </p>
                                     <a href="/"><i class="fas fa-arrow-left mr-1"></i>Return to Homepage</a>
                                 </div>

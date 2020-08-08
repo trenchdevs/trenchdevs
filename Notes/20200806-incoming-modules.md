@@ -28,3 +28,4 @@ Create CRUD for each data points components
 ## Minors
 - Privacy Policy
 - Terms and Conditions 
+- Recently Logged in on Dashboard

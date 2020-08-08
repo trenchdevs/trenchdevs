@@ -11,6 +11,8 @@
             crossorigin="anonymous"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/home/styles.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png"/>
+
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/home/heading.css">
     <link rel="stylesheet" href="css/home/body.css">
@@ -29,8 +31,19 @@
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                                                      href="#about">ABOUT</a>
                 </li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                                                     href="#contact">CONTACT US</a>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">CONTACT US
+                    </a>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">
+                        SIGN IN
+                    </a>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/register">
+                        JOIN US
+                    </a>
                 </li>
             </ul>
         </div>
@@ -412,7 +425,7 @@
 </footer>
 <!-- Copyright Section-->
 <section class="copyright py-4 text-center text-white">
-    <div class="container"><small class="pre-wrap">Copyright © Your Website 2020</small></div>
+    <div class="container"><small class="pre-wrap">Copyright © TrenchDevs {{date('Y')}}</small></div>
 </section>
 <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
 <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded"

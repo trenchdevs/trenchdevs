@@ -32,6 +32,15 @@
                             <a href="{{ route('users.edit', $user->id, '') }}" class="btn btn-sm btn-warning">
                                 <i data-feather="eye"></i>
                             </a>
+                            <form
+                                class="d-inline" action="{{ route('users.password_reset') }}" method="post"
+                                onsubmit="return confirm('Are you sure you want to send a password reset link to {{$user->email}}?');">
+                                @csrf
+                                <input type="hidden" name="id" value="{{$user->id}}">
+                                <button class="btn btn-sm btn-indigo" type="submit">
+                                    <i data-feather="key"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

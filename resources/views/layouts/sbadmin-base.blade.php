@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ env('APP_NAME')  }}</title>
     <link href="/admin/css/styles.css" rel="stylesheet"/>
-    <link rel="icon" type="image/x-icon" href="/admin/assets/img/favicon.png"/>
+    <link rel="icon" href="/favicon.png"/>
     <script data-search-pseudo-elements defer
             src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
             crossorigin="anonymous"></script>
