@@ -14,6 +14,7 @@ class AwsController extends Controller
         $sns->identifier = "sns";
         $sns->headers = json_encode($request->header());
         $sns->raw_json = json_encode($request->json());
+        $sns->raw_contents = $request->getContent();
         $sns->ip = $request->ip();
         $sns->saveOrFail();
 

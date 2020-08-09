@@ -18,6 +18,7 @@ class CreateAwsSnsLogs extends Migration
             $table->string('identifier');
             $table->json('headers');
             $table->json('raw_json')->comment('Actual json from request');
+            $table->mediumText('raw_contents');
             $table->ipAddress('ip');
             $table->timestamps();
         });
