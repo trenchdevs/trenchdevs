@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
-//if (env('APP_ENV') === 'production') {
-//    URL::forceScheme('https');
-//}
+if (env('APP_ENV') === 'production') {
+    URL::forceScheme('https');
+}
 
 Route::get('/', 'PublicController@index');
 
