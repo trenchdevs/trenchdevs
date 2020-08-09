@@ -100,7 +100,7 @@
                                 </div>
                                 <img
                                     style="height: 200px; width: 200px; object-fit:scale-down;"
-                                    class="img-fluid"
+                                    class="img-fluid rounded"
                                     src="{{$project->image_url}}"
                                      alt="{{ $project->label }}"/>
 
