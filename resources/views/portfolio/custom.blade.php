@@ -2,18 +2,22 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>TrenchDevs</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ env('APP_NAME')  }}</title>
+    <link href="/admin/css/styles.css" rel="stylesheet"/>
+    <link rel="icon" href="/favicon.png"/>
     <style>
         body {
             margin: 0;
         }
+
         iframe {
             width: 100vw;
             height: 100vh;
         }
     </style>
 </head>
-<body >
+<body>
 <iframe width="100%" height="100%" src="{{$site}}" frameborder="0"></iframe>
 </body>
 </html>
