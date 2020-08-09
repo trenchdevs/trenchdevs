@@ -23,9 +23,10 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('stock')
                 ->default(0);
             $table->string('image_url')
-                ->index();
+                ->index()
+                ->default('');
             $table->boolean('is_on_sale')
-                ->default(TRUE);
+                ->default(FALSE);
             $table->unsignedDecimal('shipping_cost', 10, 4)
                 ->default(0);
             $table->unsignedDecimal('handling_cost', 10, 4)

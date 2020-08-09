@@ -18,7 +18,8 @@ class ProductController extends ApiController
     public function all(Request $request)
     {
         $products = Product::where('account_id', $request->header('x-account-id'))
-            ->orderBy('name', 'asc');
+            ->orderBy('name', 'asc')
+            ->get();
 
         return response()->json([
             "products" => $products
@@ -48,10 +49,10 @@ class ProductController extends ApiController
         $rules = [
             'product_category_id' => 'required|integer',
             'name' => 'required|string|max:250',
-            'description' => 'required|max:250',
+            'description' => 'required|string|max:250',
             'stock' => 'required|integer',
-            'is_on_sale' => 'required|boolean',
             'product_cost' => 'required|numeric',
+            'is_on_sale' => 'boolean',
             'shipping_cost' => 'numeric',
             'handling_cost' => 'numeric',
             'sale_product_cost' => 'numeric',
@@ -74,7 +75,7 @@ class ProductController extends ApiController
             $product->account_id = $request->header('x-account-id');
         }
 
-        $product = Product::fillProductWithRequestValues($product, $request);
+        $product->fill($request->all());
 
         if (!$product->save()) {
             return response()->json(["errors" => "An error occurred while saving entry"], 404);

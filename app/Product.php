@@ -37,24 +37,4 @@ class Product extends Model
         'final_cost',
         'attributes',
     ];
-
-    public static function fillProductWithRequestValues(Product $product, Request $request)
-    {
-        $product->product_category_id = $request->product_category_id;
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->stock = $request->stock;
-
-        $product->image_url = '';
-
-        $product->is_on_sale = $request->is_on_sale;
-        $product->shipping_cost = $request->shipping_cost;
-        $product->handling_cost = $request->handling_cost;
-        $product->product_cost = $request->product_cost;
-        $product->sale_product_cost = $request->sale_product_cost;
-        $product->final_cost = $request->final_cost;
-        $product->attributes = $request->attributes;
-
-        return $product;
-    }
 }

@@ -43,7 +43,17 @@ Route::group([
     Route::post('/toggle_is_featured/{categoryId}', 'ProductCategoryController@toggleIsFeatured');
 
     Route::get('/{categoryId}', 'ProductCategoryController@one');
+});
 
+Route::group([
+    'prefix' => 'products',
+    'middleware' => 'validAccount'
+], function () {
+
+    Route::get('/', 'ProductController@all');
+    Route::post('/upsert', 'ProductController@upsert');
+    Route::post('/delete/{productId}', 'ProductController@delete');
+    Route::get('/{productId}', 'ProductController@one');
 });
 
 
