@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\ApiController;
 use App\Product;
+use App\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -65,6 +66,12 @@ class ProductController extends ApiController
         if ($validator->fails()) {
             $errorBag = $validator->errors()->getMessageBag()->all();
             return response()->json(["errors" => implode(' ', $errorBag)], 404);
+        }
+
+        $product_category = ProductCategory::find($request->product_category_id);
+
+        if (!$product_category) {
+            return response()->json(["errors" => 'Product category not found'], 404);
         }
 
         if (!empty($request->id)) {

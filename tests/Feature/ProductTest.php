@@ -234,4 +234,20 @@ class ProductTest extends TestCase
 
         $response->assertStatus(404);
     }
+
+    /** @test */
+    public function it_will_not_add_a_product_with_non_existent_product_category_id()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('POST', '/api/products/upsert', [
+                'product_category_id' => 10,
+                'name' => 'Test Product',
+                'description' => 'test',
+                'stock' => 10,
+                'product_cost' => 500,
+            ]);
+
+        $response->assertStatus(404);
+    }
 }
