@@ -16,7 +16,7 @@ class CreateAwsSnsLogs extends Migration
         Schema::create('aws_sns_logs', function (Blueprint $table) {
             $table->id();
             $table->string('identifier');
-            $table->text('headers');
+            $table->json('headers');
             $table->json('raw_json')->comment('Actual json from request');
             $table->ipAddress('ip');
             $table->timestamps();
