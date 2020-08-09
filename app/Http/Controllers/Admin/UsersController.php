@@ -137,6 +137,7 @@ class UsersController extends Controller
                 'email' => $data['email'],
                 'account_id' => Account::getTrenchDevsAccount()->id, // todo: can modify later
                 'is_active' => $data['is_active'],
+                'email_verified_at' => date('Y-m-d H:i:s'),
                 'role' => $data['role'],
                 'password' => $data['password'],
             ]);

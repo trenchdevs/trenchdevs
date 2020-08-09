@@ -10,22 +10,18 @@ if (env('APP_ENV') === 'production') {
 
 Route::get('/', 'PublicController@index');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::middleware(['auth:web'])->group(function () {
+Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/home', 'HomeController@index');
 
-    // Users
-
-//    Route::get('api/admin/users', function(){
-//       return \App\User::all();
-//    });
+    // START - users
     Route::get('admin/users/create', 'Admin\UsersController@create')->name('users.create');
     Route::post('admin/users/upsert', 'Admin\UsersController@upsert')->name('users.upsert');
     Route::post('admin/users/password_reset', 'Admin\UsersController@passwordReset')->name('users.password_reset');
     Route::get('admin/users/{id}', 'Admin\UsersController@edit')->name('users.edit');
     Route::get('admin/users', 'Admin\UsersController@index')->name('users.index');
-//    Route::resource('/admin/users', 'Admin\UsersController');
+    // End - users
 });
 
 Route::get('emails/test/{view}', 'EmailTester@test');

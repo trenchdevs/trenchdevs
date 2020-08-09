@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use ErrorException;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -80,9 +81,14 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'account_id' => $account->id,
-            'is_active' => 0,
+            'is_active' => 1,
             'password' => Hash::make($data['password']),
             'role' => User::ROLE_CONTRIBUTOR,
         ]);
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        return view('auth.verify');
     }
 }

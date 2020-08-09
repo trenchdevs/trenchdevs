@@ -58,13 +58,14 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        
-        if (!$user->isActive()) {
+
+        if (!$user->isActive() || !$user->hasVerifiedEmail()) {
             return view('auth.inactive-user');
         }
 
         // else all good, login user and redirect to homepage
         Auth::login($user);
+
         return redirect('/home');
     }
 }

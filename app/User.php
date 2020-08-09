@@ -2,12 +2,13 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Validation\Rule;
+use Throwable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use Notifiable;
 
@@ -72,7 +73,8 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
-    public function getAllowedRolesToManage(): array {
+    public function getAllowedRolesToManage(): array
+    {
 
         // future: can be a levels map instead
         $rolesMap = [
@@ -115,6 +117,17 @@ class User extends Authenticatable implements JWTSubject
     public function name(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function activateOrFail(): void
+    {
+        if (!$this->isActive()) {
+            $this->is_active = 1;
+            $this->saveOrFail();
+        }
     }
 
 }
