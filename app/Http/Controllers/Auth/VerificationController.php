@@ -8,8 +8,11 @@ use App\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Throwable;
 
 class VerificationController extends Controller
 {
@@ -48,11 +51,11 @@ class VerificationController extends Controller
     /**
      * Mark the authenticated user's email address as verified.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse|Redirector
      *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     * @throws \Throwable
+     * @throws AuthorizationException
+     * @throws Throwable
      */
     public function verify(Request $request)
     {

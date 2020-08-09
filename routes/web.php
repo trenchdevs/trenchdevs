@@ -22,6 +22,11 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('admin/users/{id}', 'Admin\UsersController@edit')->name('users.edit');
     Route::get('admin/users', 'Admin\UsersController@index')->name('users.index');
     // End - users
+
+    // START - mailers
+    Route::get('emails/generic', 'EmailTester@genericMail');
+    // END - mailers
+
 });
 
 Route::get('emails/test/{view}', 'EmailTester@test');
