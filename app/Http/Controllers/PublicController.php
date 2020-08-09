@@ -27,6 +27,11 @@ class PublicController extends Controller
                 'image_url' => 'https://trenchdevs-assets.s3.amazonaws.com/logo/home-portfolio/mytransienthouse.jpg',
             ],
             [
+                'label' => 'Project Lengua - API',
+                'project_url' => 'http://project-lengua.herokuapp.com/',
+                'image_url' => 'https://trenchdevs-assets.s3.amazonaws.com/logo/home-portfolio/project-lengua.png',
+            ],
+            [
                 'label' => 'InfoSentiA - Research Division, Baguio City',
                 'project_url' => 'https://github.com/christopheredrian/research-division',
                 'image_url' => 'https://trenchdevs-assets.s3.amazonaws.com/logo/home-portfolio/infosentia.png',
@@ -40,6 +45,11 @@ class PublicController extends Controller
                 'label' => 'Procurement System - Bureau of Fire Protection, Baguio City ',
                 'project_url' => 'http://bfp-test.herokuapp.com',
                 'image_url' => 'https://trenchdevs-assets.s3.amazonaws.com/logo/home-portfolio/bfp.png',
+            ],
+            [
+                'label' => 'Alumni Tracker - San Jose Seminary, Quezon City',
+                'project_url' => 'https://github.com/christopheredrian/sjp-v3',
+                'image_url' => 'https://trenchdevs-assets.s3.amazonaws.com/logo/home-portfolio/sjp.png',
             ],
         ];
 
