@@ -32,3 +32,4 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
 Route::get('{username}', 'PortfolioController@show');
 Route::get('emails/test/{view}', 'EmailTester@test');
 Route::get('emails/testsend', 'EmailTester@testSend');
+Route::post('aws/sns', 'AwsController@sns');
