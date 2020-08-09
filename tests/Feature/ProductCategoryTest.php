@@ -50,6 +50,17 @@ class ProductCategoryTest extends TestCase
             ->assertStatus(200)
             ->assertJsonStructure([
                 'product_categories',
+            ])
+            ->assertJson([
+                'product_categories' => [
+                    [
+                        'id' => 1,
+                        'parent_id' => NULL,
+                        'account_id' => 1,
+                        'name' => 'Shirts',
+                        'is_featured' => 0,
+                    ]
+                ]
             ]);
     }
 
@@ -64,6 +75,15 @@ class ProductCategoryTest extends TestCase
             ->assertStatus(200)
             ->assertJsonStructure([
                 'product_category',
+            ])
+            ->assertJson([
+                'product_category' => [
+                    'id' => 1,
+                    'parent_id' => NULL,
+                    'account_id' => 1,
+                    'name' => 'Shirts',
+                    'is_featured' => 0,
+                ]
             ]);
     }
 
@@ -78,11 +98,22 @@ class ProductCategoryTest extends TestCase
             ->assertStatus(200)
             ->assertJsonStructure([
                 'parent_categories',
+            ])
+            ->assertJson([
+                'parent_categories' => [
+                    [
+                        'id' => 1,
+                        'parent_id' => NULL,
+                        'account_id' => 1,
+                        'name' => 'Shirts',
+                        'is_featured' => 0
+                    ]
+                ]
             ]);
     }
 
     /** @test */
-    public function it_will_add_a_product_category()
+    public function it_will_add_a_parent_product_category()
     {
         $response = $this
             ->withHeaders(['x-account-id' => '1',])
@@ -95,6 +126,95 @@ class ProductCategoryTest extends TestCase
             ->assertStatus(200)
             ->assertJsonStructure([
                 'product_category',
+            ])
+            ->assertJson([
+                'product_category' => [
+                    'id' => 2,
+                    'account_id' => 1,
+                    'parent_id' => NULL,
+                    'name' => 'Pants',
+                    'is_featured' => 0,
+                ],
+            ]);
+    }
+
+    /** @test */
+    public function it_will_add_a_featured_parent_product_category()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('POST', '/api/product_categories/upsert', [
+                'name' => 'Pants',
+                'is_featured' => 1,
+            ]);
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'product_category',
+            ])
+            ->assertJson([
+                'product_category' => [
+                    'id' => 2,
+                    'account_id' => 1,
+                    'parent_id' => NULL,
+                    'name' => 'Pants',
+                    'is_featured' => 1,
+                ],
+            ]);
+    }
+
+    /** @test */
+    public function it_will_add_a_child_product_category()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('POST', '/api/product_categories/upsert', [
+                'parent_id' => 1,
+                'name' => 'Polo Shirt',
+                'is_featured' => 0,
+            ]);
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'product_category',
+            ])
+            ->assertJson([
+                'product_category' => [
+                    'id' => 2,
+                    'account_id' => 1,
+                    'parent_id' => 1,
+                    'name' => 'Polo Shirt',
+                    'is_featured' => 0,
+                ],
+            ]);
+    }
+
+    /** @test */
+    public function it_will_add_a_featured_child_product_category()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('POST', '/api/product_categories/upsert', [
+                'parent_id' => 1,
+                'name' => 'Polo Shirt',
+                'is_featured' => 1,
+            ]);
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'product_category',
+            ])
+            ->assertJson([
+                'product_category' => [
+                    'id' => 2,
+                    'account_id' => 1,
+                    'parent_id' => 1,
+                    'name' => 'Polo Shirt',
+                    'is_featured' => 1,
+                ],
             ]);
     }
 
@@ -113,7 +233,47 @@ class ProductCategoryTest extends TestCase
             ->assertStatus(200)
             ->assertJsonStructure([
                 'product_category',
+            ])
+            ->assertJson([
+                'product_category' => [
+                    'id' => 1,
+                    'name' => 'Shirtzzz',
+                    'is_featured' => 1,
+                ]
             ]);
+    }
+
+    /** @test */
+    public function it_will_toggle_product_category_is_featured_flag()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('POST', '/api/product_categories/toggle_is_featured/1');
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'product_category',
+            ])
+            ->assertJson([
+                'product_category' => [
+                    'id' => 1,
+                    'name' => 'Shirts',
+                    'is_featured' => 1,
+                ]
+            ]);
+    }
+
+    /** @test */
+    public function it_will_delete_a_product_category()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('POST', '/api/product_categories/delete/1');
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([]);
     }
 
     /** @test */
@@ -135,6 +295,54 @@ class ProductCategoryTest extends TestCase
 
         $response
             ->assertStatus(404);
+    }
+
+    /** @test */
+    public function it_will_not_add_product_category_with_empty_json_data()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('POST', '/api/product_categories/upsert', []);
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function it_will_not_add_child_product_category_with_invalid_parent_id()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '2',])
+            ->json('POST', '/api/product_categories/upsert', [
+                'parent_id' => 20,
+                'name' => 'Test Category',
+                'is_featured' => 0
+            ]);
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function it_will_not_toggle_non_existent_product_category_is_featured_flag()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '2',])
+            ->json('POST', '/api/product_categories/upsert', [
+                'parent_id' => 20,
+                'name' => 'Test Category',
+                'is_featured' => 0
+            ]);
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function it_will_not_delete_non_existent_product_category()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('POST', '/api/product_categories/delete/2');
+
+        $response->assertStatus(404);
     }
 
 }
