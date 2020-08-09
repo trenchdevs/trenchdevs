@@ -24,22 +24,22 @@ class PublicController extends Controller
             [
                 'label' => 'My Transient House (Multi Tenant App, SaaS)',
                 'project_url' => 'https://github.com/christopheredrian/mytransienthouse',
-                'image_url' => 'https://mytransienthouse.s3.amazonaws.com/production/mytransienthouse/photos/1_espiritu/81674810_2465975933668654_2511516421649858560_n_b9a0cfacd0.jpg',
+                'image_url' => 'https://trenchdevs-assets.s3.amazonaws.com/logo/home-portfolio/mytransienthouse.jpg',
             ],
             [
                 'label' => 'InfoSentiA - Research Division, Baguio City',
                 'project_url' => 'https://github.com/christopheredrian/research-division',
-                'image_url' => 'http://researchbaguio.herokuapp.com/images/client/Ph_seal_Baguio.png',
+                'image_url' => 'https://trenchdevs-assets.s3.amazonaws.com/logo/home-portfolio/infosentia.png',
             ],
             [
                 'label' => 'B2B Scheduler - Haranah-Phitex, Philippines',
                 'project_url' => 'https://github.com/christopheredrian/haranah-phitex',
-                'image_url' => 'https://raw.githubusercontent.com/christopheredrian/haranah-phitex/master/public/img/logo.jpg',
+                'image_url' => 'https://trenchdevs-assets.s3.amazonaws.com/logo/home-portfolio/haranah.jpg',
             ],
             [
                 'label' => 'Procurement System - Bureau of Fire Protection, Baguio City ',
                 'project_url' => 'http://bfp-test.herokuapp.com',
-                'image_url' => 'http://bfp-test.herokuapp.com/img/home/mission.png',
+                'image_url' => 'https://trenchdevs-assets.s3.amazonaws.com/logo/home-portfolio/bfp.png',
             ],
         ];
 
