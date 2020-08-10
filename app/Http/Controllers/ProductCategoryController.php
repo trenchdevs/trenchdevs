@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\ApiController;
 use App\ProductCategory;
-use App\Utilities\ProductCategoryUtilities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,7 +18,7 @@ class ProductCategoryController extends ApiController
      */
     public function all(Request $request)
     {
-        $product_categories = ProductCategoryUtilities::getAll($request->header('x-account-id'));
+        $product_categories = ProductCategory::getAll($request->header('x-account-id'));
 
         return response()->json([
             "product_categories" => $product_categories
@@ -52,10 +51,7 @@ class ProductCategoryController extends ApiController
      */
     public function allParentCategories(Request $request)
     {
-        $parentCategories = ProductCategory::where('account_id', $request->header('x-account-id'))
-            ->where('parent_id', NULL)
-            ->orderBy('name', 'asc')
-            ->get();
+        $parentCategories = ProductCategory::getAllParentProductCategories($request->header('x-account-id'));
 
         return response()->json(['parent_categories' => $parentCategories], 200);
     }
