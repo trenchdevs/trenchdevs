@@ -33,13 +33,13 @@ class ProductCategoryController extends ApiController
      */
     public function one(Request $request, string $categoryId)
     {
-        $product_category = ProductCategory::find($categoryId);
+        $pc = ProductCategory::find($categoryId);
 
-        if (!$product_category) {
+        if (!$pc) {
             return response()->json(["errors" => 'Product category not found'], 404);
         }
 
-        return response()->json(["product_category" => $product_category], 200);
+        return response()->json(["product_category" => $pc], 200);
     }
 
 
@@ -51,9 +51,9 @@ class ProductCategoryController extends ApiController
      */
     public function allParentCategories(Request $request)
     {
-        $parentCategories = ProductCategory::getAllParentProductCategories($request->header('x-account-id'));
+        $parent_categories = ProductCategory::getAllParentProductCategories($request->header('x-account-id'));
 
-        return response()->json(['parent_categories' => $parentCategories], 200);
+        return response()->json(['parent_categories' => $parent_categories], 200);
     }
 
     /**
@@ -86,39 +86,39 @@ class ProductCategoryController extends ApiController
         }
 
         if (!empty($request->id)) {
-            $productCategory = ProductCategory::findOrFail($request->id);
+            $pc = ProductCategory::findOrFail($request->id);
         } else {
             // edit mode
-            $productCategory = new ProductCategory();
-            $productCategory->account_id = $request->header('x-account-id');
+            $pc = new ProductCategory();
+            $pc->account_id = $request->header('x-account-id');
         }
 
-        $productCategory->name = $request->name;
-        $productCategory->parent_id = $request->parent_id ? $request->parent_id : NULL;
-        $productCategory->is_featured = $request->is_featured;
+        $pc->name = $request->name;
+        $pc->parent_id = $request->parent_id ? $request->parent_id : NULL;
+        $pc->is_featured = $request->is_featured;
 
-        if (!$productCategory->save()) {
+        if (!$pc->save()) {
             return response()->json(["errors" => "An error occurred while saving entry"], 404);
         }
 
-        return response()->json(['product_category' => $productCategory], 200);
+        return response()->json(['product_category' => $pc], 200);
     }
 
     public function toggleIsFeatured(Request $request, string $categoryId)
     {
-        $productCategory = ProductCategory::find($categoryId);
+        $pc = ProductCategory::find($categoryId);
 
-        if (!$productCategory) {
+        if (!$pc) {
             return response()->json(["errors" => 'Product category not found'], 404);
         }
 
-        $productCategory->is_featured = !$productCategory->is_featured;
+        $pc->is_featured = $pc->is_featured === 1 ? 0 : 1;
 
-        if (!$productCategory->save()) {
+        if (!$pc->save()) {
             return response()->json(["errors" => 'There was a problem saving the product category'], 500);
         }
 
-        return response()->json(["product_category" => $productCategory], 200);
+        return response()->json(["product_category" => $pc], 200);
     }
 
 
@@ -129,17 +129,17 @@ class ProductCategoryController extends ApiController
      */
     public function delete(Request $request, string $categoryId)
     {
-        $productCategory = ProductCategory::find($categoryId);
+        $pc = ProductCategory::find($categoryId);
 
-        if (!$productCategory) {
+        if (!$pc) {
             return response()->json(["errors" => 'Product category not found'], 404);
         }
 
-        if (!$productCategory->delete()) {
+        if (!$pc->delete()) {
             return response()->json(["errors" => 'There was a problem deleting the product category'], 500);
         }
 
-        $children = ProductCategory::where('parent_id', $productCategory->id)
+        $children = ProductCategory::where('parent_id', $pc->id)
             ->update(['parent_id' => NULL]);
 
         return response()->json([], 200);
