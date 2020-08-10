@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class ProductCategory extends Model
 {
@@ -25,6 +27,10 @@ class ProductCategory extends Model
         'name', 'is_featured', 'is_archived', 'parent_id', 'account_id'
     ];
 
+    /**
+     * @param string $accountId
+     * @return array
+     */
     public static function getAll(string $accountId)
     {
         $productCategories = ProductCategory::where('account_id', $accountId)
@@ -64,6 +70,10 @@ class ProductCategory extends Model
         return $productCategories;
     }
 
+    /**
+     * @param string $accountId
+     * @return mixed
+     */
     public static function getAllParentProductCategories(string $accountId)
     {
         return ProductCategory::where('account_id', $accountId)
@@ -71,4 +81,31 @@ class ProductCategory extends Model
             ->orderBy('name', 'asc')
             ->get();
     }
+
+    /**
+     * @param $productCategoryId
+     * @return int
+     */
+    public static function deleteProductCategory($productCategoryId)
+    {
+        $pc = ProductCategory::find($productCategoryId);
+
+        DB::beginTransaction();
+
+        try {
+            ProductCategory::where('parent_id', $productCategoryId)
+                ->update(['parent_id' => NULL]);
+            // TODO: Sean (Cascade to related products)
+            $pc->delete();
+
+            DB::commit();
+
+            return 1;
+        } catch (Exception $ex) {
+            DB::rollback();
+
+            return 0;
+        }
+    }
+
 }

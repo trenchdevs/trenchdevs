@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Auth\ApiController;
 use App\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class ProductCategoryController extends ApiController
 {
@@ -56,6 +58,7 @@ class ProductCategoryController extends ApiController
         return response()->json(['parent_categories' => $parent_categories], 200);
     }
 
+
     /**
      * Upsert product category
      *
@@ -104,6 +107,12 @@ class ProductCategoryController extends ApiController
         return response()->json(['product_category' => $pc], 200);
     }
 
+
+    /**
+     * @param Request $request
+     * @param string $categoryId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function toggleIsFeatured(Request $request, string $categoryId)
     {
         $pc = ProductCategory::find($categoryId);
@@ -135,12 +144,9 @@ class ProductCategoryController extends ApiController
             return response()->json(["errors" => 'Product category not found'], 404);
         }
 
-        if (!$pc->delete()) {
+        if (!ProductCategory::deleteProductCategory($pc->id)) {
             return response()->json(["errors" => 'There was a problem deleting the product category'], 500);
         }
-
-        $children = ProductCategory::where('parent_id', $pc->id)
-            ->update(['parent_id' => NULL]);
 
         return response()->json([], 200);
     }
