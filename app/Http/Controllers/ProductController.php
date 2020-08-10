@@ -49,15 +49,16 @@ class ProductController extends ApiController
     {
         $rules = [
             'product_category_id' => 'required|integer',
-            'name' => 'required|string|max:250',
-            'description' => 'required|string|max:250',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
             'stock' => 'required|integer',
+            'sku' => 'required|string|max:255',
             'product_cost' => 'required|numeric',
-            'is_on_sale' => 'boolean',
+            'msrp' => 'numeric',
             'shipping_cost' => 'numeric',
             'handling_cost' => 'numeric',
-            'sale_product_cost' => 'numeric',
             'final_cost' => 'numeric',
+            'markup_percentage' => 'numeric',
             'attributes' => 'json',
         ];
 

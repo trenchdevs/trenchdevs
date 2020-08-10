@@ -18,25 +18,27 @@ class CreateProductsTable extends Migration
             $table->foreignId('account_id')->constrained();
             $table->foreignId('product_category_id')->constrained();
             $table->string('name');
-            $table->string('description', 250)
+            $table->string('description', 255)
                 ->nullable();
+            $table->string('sku', 255)
+                ->index();
             $table->unsignedInteger('stock')
                 ->default(0);
             $table->string('image_url')
                 ->index()
                 ->default('');
-            $table->boolean('is_on_sale')
-                ->default(FALSE);
             $table->unsignedDecimal('shipping_cost', 10, 4)
                 ->default(0);
             $table->unsignedDecimal('handling_cost', 10, 4)
                 ->default(0);
             $table->unsignedDecimal('product_cost', 10, 4)
                 ->default(0);
-            $table->unsignedDecimal('sale_product_cost', 10, 4)
+            $table->unsignedDecimal('msrp', 10, 4)
                 ->default(0);
             $table->unsignedDecimal('final_cost', 10, 4)
                 ->default(0);
+            $table->decimal('markup_percentage', 10, 4)
+                ->default(1);
             $table->json('attributes')
                 ->nullable();
             $table->softDeletes('deleted_at', 0);

@@ -28,13 +28,14 @@ class Product extends Model
         'name',
         'description',
         'stock',
+        'sku',
         'image_url',
-        'is_on_sale',
         'shipping_cost',
         'handling_cost',
         'product_cost',
-        'sale_product_cost',
+        'msrp',
         'final_cost',
+        'markup_percentage',
         'attributes',
     ];
 }

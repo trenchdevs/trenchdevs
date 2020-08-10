@@ -42,6 +42,7 @@ class ProductTest extends TestCase
             'account_id' => 1,
             'product_category_id' => 1,
             'name' => 'Test Product',
+            'sku' => 'TEST-SKU',
             'created_at' => $now,
             'updated_at' => $now,
         ]);
@@ -66,6 +67,7 @@ class ProductTest extends TestCase
                         'account_id' => 1,
                         'product_category_id' => 1,
                         'name' => 'Test Product',
+                        'sku' => 'TEST-SKU',
                     ]
                 ]
             ]);
@@ -99,6 +101,7 @@ class ProductTest extends TestCase
                     'account_id' => 1,
                     'product_category_id' => 1,
                     'name' => 'Test Product',
+                    'sku' => 'TEST-SKU',
                 ]
             ]);
     }
@@ -145,12 +148,13 @@ class ProductTest extends TestCase
                 'name' => 'Test Product',
                 'description' => 'test',
                 'stock' => 10,
+                'sku' => 'TEST-SKU',
                 'product_cost' => 500,
-                'is_on_sale' => FALSE,
                 'shipping_cost' => 10,
                 'handling_cost' => 20,
-                'sale_product_cost' => 0,
+                'msrp' => 500,
                 'final_cost' => 530,
+                'markup_percentage' => 1,
             ]);
 
         $response
@@ -165,12 +169,13 @@ class ProductTest extends TestCase
                     'name' => 'Test Product',
                     'description' => 'test',
                     'stock' => 10,
+                    'sku' => 'TEST-SKU',
                     'product_cost' => 500,
-                    'is_on_sale' => FALSE,
                     'shipping_cost' => 10,
                     'handling_cost' => 20,
-                    'sale_product_cost' => 0,
+                    'msrp' => 500,
                     'final_cost' => 530,
+                    'markup_percentage' => 1,
                 ]
             ]);
     }
@@ -236,6 +241,18 @@ class ProductTest extends TestCase
     }
 
     /** @test */
+    public function it_will_not_add_a_product_with_invalid_sku_format()
+    {
+        $response = $this
+            ->withHeaders(['x-account-id' => '1',])
+            ->json('POST', '/api/products/upsert', [
+                'sku' => 0
+            ]);
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
     public function it_will_not_add_a_product_with_non_existent_product_category_id()
     {
         $response = $this
@@ -245,6 +262,7 @@ class ProductTest extends TestCase
                 'name' => 'Test Product',
                 'description' => 'test',
                 'stock' => 10,
+                'sku' => 'TEST-SKU',
                 'product_cost' => 500,
             ]);
 
