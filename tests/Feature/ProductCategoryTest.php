@@ -11,6 +11,8 @@ class ProductCategoryTest extends TestCase
 {
     use DatabaseMigrations;
 
+    var $authUser;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -36,6 +38,15 @@ class ProductCategoryTest extends TestCase
             'name' => 'Shirts',
             'created_at' => $now,
             'updated_at' => $now,
+        ]);
+
+        $this->authUser = User::create([
+            'first_name' => 'Test',
+            'last_name' => 'User',
+            'email' => 'testuser@test.com',
+            'password' => 'password',
+            'role' => 'business_owner',
+            'account_id' => 1,
         ]);
     }
 
@@ -91,6 +102,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_return_parent_product_categories()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('GET', '/api/product_categories/parent_categories');
 
@@ -116,6 +128,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_add_a_parent_product_category()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/product_categories/upsert', [
                 'name' => 'Pants',
@@ -142,6 +155,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_add_a_featured_parent_product_category()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/product_categories/upsert', [
                 'name' => 'Pants',
@@ -168,6 +182,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_add_a_child_product_category()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/product_categories/upsert', [
                 'parent_id' => 1,
@@ -195,6 +210,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_add_a_featured_child_product_category()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/product_categories/upsert', [
                 'parent_id' => 1,
@@ -222,6 +238,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_update_existing_product_category()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/product_categories/upsert', [
                 'id' => 1,
@@ -247,6 +264,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_toggle_product_category_is_featured_flag()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/product_categories/toggle_is_featured/1');
 
@@ -268,6 +286,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_delete_a_product_category()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/product_categories/delete/1');
 
@@ -301,6 +320,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_not_add_product_category_with_empty_json_data()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/product_categories/upsert', []);
 
@@ -311,6 +331,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_not_add_child_product_category_with_invalid_parent_id()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '2',])
             ->json('POST', '/api/product_categories/upsert', [
                 'parent_id' => 20,
@@ -325,6 +346,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_not_toggle_non_existent_product_category_is_featured_flag()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '2',])
             ->json('POST', '/api/product_categories/upsert', [
                 'parent_id' => 20,
@@ -339,6 +361,7 @@ class ProductCategoryTest extends TestCase
     public function it_will_not_delete_non_existent_product_category()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/product_categories/delete/2');
 

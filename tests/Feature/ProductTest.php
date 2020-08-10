@@ -11,6 +11,8 @@ class ProductTest extends TestCase
 {
     use DatabaseMigrations;
 
+    var $authUser;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -45,6 +47,15 @@ class ProductTest extends TestCase
             'sku' => 'TEST-SKU',
             'created_at' => $now,
             'updated_at' => $now,
+        ]);
+
+        $this->authUser = User::create([
+            'first_name' => 'Test',
+            'last_name' => 'User',
+            'email' => 'testuser@test.com',
+            'password' => 'password',
+            'role' => 'business_owner',
+            'account_id' => 1,
         ]);
     }
 
@@ -120,6 +131,7 @@ class ProductTest extends TestCase
     public function it_will_delete_specified_product()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/products/delete/1');
 
@@ -132,6 +144,7 @@ class ProductTest extends TestCase
     public function it_will_not_delete_non_existent_product()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/products/delete/2');
 
@@ -142,6 +155,7 @@ class ProductTest extends TestCase
     public function it_will_add_a_product()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/products/upsert', [
                 'product_category_id' => 1,
@@ -184,6 +198,7 @@ class ProductTest extends TestCase
     public function it_will_not_add_a_product_with_invalid_product_category_id()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/products/upsert', [
                 'product_category_id' => 'test'
@@ -196,6 +211,7 @@ class ProductTest extends TestCase
     public function it_will_not_add_a_product_with_invalid_name()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/products/upsert', [
                 'name' => 10
@@ -208,6 +224,7 @@ class ProductTest extends TestCase
     public function it_will_not_add_a_product_with_invalid_description()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/products/upsert', [
                 'description' => 10
@@ -220,6 +237,7 @@ class ProductTest extends TestCase
     public function it_will_not_add_a_product_with_invalid_stock()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/products/upsert', [
                 'stock' => 'test'
@@ -232,6 +250,7 @@ class ProductTest extends TestCase
     public function it_will_not_add_a_product_with_invalid_product_cost()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/products/upsert', [
                 'product_cost' => 'test'
@@ -244,6 +263,7 @@ class ProductTest extends TestCase
     public function it_will_not_add_a_product_with_invalid_sku_format()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/products/upsert', [
                 'sku' => 0
@@ -256,6 +276,7 @@ class ProductTest extends TestCase
     public function it_will_not_add_a_product_with_non_existent_product_category_id()
     {
         $response = $this
+            ->actingAs($this->authUser, 'api')
             ->withHeaders(['x-account-id' => '1',])
             ->json('POST', '/api/products/upsert', [
                 'product_category_id' => 10,
