@@ -28,8 +28,14 @@ class Account extends Model
      * @param string $businessName
      * @return mixed
      */
-    public static function findByBusinessName(string $businessName){
+    public static function findByBusinessName(string $businessName)
+    {
         return Account::where('business_name', $businessName)
             ->first();
+    }
+
+    public static function getTrenchDevsAccount()
+    {
+        return self::findByBusinessName(self::TRENCHDEVS_BUSINESS_NAME);
     }
 }

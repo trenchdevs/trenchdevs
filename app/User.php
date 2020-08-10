@@ -2,17 +2,29 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Throwable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use Notifiable;
 
+    const ROLE_SUPER_ADMIN = 'superadmin';
     const ROLE_ADMIN = 'admin';
     const ROLE_BUSINESS_OWNER = 'business_owner';
     const ROLE_CUSTOMER = 'customer';
+    const ROLE_CONTRIBUTOR = 'contributor';
+
+    const VALID_ROLES = [
+        self::ROLE_SUPER_ADMIN,
+        self::ROLE_ADMIN,
+        self::ROLE_BUSINESS_OWNER,
+        self::ROLE_CUSTOMER,
+        self::ROLE_CONTRIBUTOR,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +36,7 @@ class User extends Authenticatable implements JWTSubject
         'last_name',
         'email',
         'password',
+        'is_active',
         'account_id',
         'role',
     ];
@@ -59,11 +72,34 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function setPasswordAttribute($password)
+
+    public function getAllowedRolesToManage(): array
     {
-        if (!empty($password)) {
-            $this->attributes['password'] = bcrypt($password);
-        }
+
+        // future: can be a levels map instead
+        $rolesMap = [
+            self::ROLE_SUPER_ADMIN => [
+                self::ROLE_ADMIN,
+                self::ROLE_BUSINESS_OWNER,
+                self::ROLE_CUSTOMER,
+                self::ROLE_CONTRIBUTOR,
+            ],
+            self::ROLE_ADMIN => [
+                self::ROLE_BUSINESS_OWNER,
+                self::ROLE_CUSTOMER,
+                self::ROLE_CONTRIBUTOR,
+            ],
+            self::ROLE_CONTRIBUTOR => [
+                self::ROLE_BUSINESS_OWNER,
+                self::ROLE_CUSTOMER,
+            ],
+            self::ROLE_BUSINESS_OWNER => [
+                self::ROLE_CUSTOMER,
+            ],
+            self::ROLE_CUSTOMER => [],
+        ];
+
+        return $rolesMap[$this->role] ?? [];
     }
 
     /**
@@ -81,6 +117,17 @@ class User extends Authenticatable implements JWTSubject
     public function name(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function activateOrFail(): void
+    {
+        if (!$this->isActive()) {
+            $this->is_active = 1;
+            $this->saveOrFail();
+        }
     }
 
 }

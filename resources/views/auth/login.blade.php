@@ -13,6 +13,8 @@
                                     <div class="card-header justify-content-center"><h3
                                             class="font-weight-light my-4">{{ __('Login') }}</h3></div>
                                     <div class="card-body">
+                                        @include('admin.shared.errors')
+
                                         <form method="POST" action="{{ route('login') }}">
 
                                             @csrf

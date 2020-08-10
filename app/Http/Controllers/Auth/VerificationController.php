@@ -4,7 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Throwable;
 
 class VerificationController extends Controller
 {
@@ -35,8 +43,55 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
+
+    /**
+     * Mark the authenticated user's email address as verified.
+     *
+     * @param Request $request
+     * @return RedirectResponse|Redirector
+     *
+     * @throws AuthorizationException
+     * @throws Throwable
+     */
+    public function verify(Request $request)
+    {
+
+        /** @var User $user */
+        $user = User::findOrFail($request->route('id'));
+
+        if (!hash_equals((string)$request->route('id'), (string)$user->getKey())) {
+            throw new AuthorizationException;
+        }
+        if (!hash_equals((string)$request->route('hash'), sha1($user->getEmailForVerification()))) {
+            throw new AuthorizationException;
+        }
+
+        if ($user->hasVerifiedEmail()) {
+            $user->activateOrFail();
+
+            return $request->wantsJson()
+                ? new Response('', 204)
+                : redirect($this->redirectPath());
+        }
+
+
+        if ($user->markEmailAsVerified()) {
+            $user->activateOrFail();
+
+            event(new Verified($user));
+        }
+
+        if ($response = $this->verified($request)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new Response('', 204)
+            : redirect($this->redirectPath())->with('verified', true);
+    }
+
 }
