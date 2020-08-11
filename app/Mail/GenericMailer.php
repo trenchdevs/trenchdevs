@@ -34,7 +34,7 @@ class GenericMailer extends Mailable
         return $this->view('emails.generic')
             ->with([
                 'name' => $this->name,
-                'email_message' => $this->body
+                'email_body' => $this->body
             ]);
     }
 }

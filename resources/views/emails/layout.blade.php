@@ -4,31 +4,40 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
     <title>TrenchDevs</title>
+
+    <style type="text/css">
+        /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}
+    </style>
     <style type="text/css">
 
-        .logo {
-            max-width: 150px;
+        body {
+            font-size: 12px;
         }
 
         .main-container {
-            padding-top: 2.3rem;
-            height: 100vh;
-            background-color: #40a798;
-            width: 80%;
-            margin: 0 auto;
-            color: white;
+            padding-top: 1.6rem;
+            background-color: white;
             font-family: "Lucida Console", monospace, sans-serif;
+            font-size: 1rem;
+            color: black;
+        }
+
+
+        .header {
+            font-size: 1.1rem;
         }
 
         .footer {
-            font-size: 12px;
+            border-top: 1px solid #dcd5d5;
+            padding-top: 10px;
+            font-size: 0.6rem;
             font-weight: 100;
-            margin-top: 30vh !important;
-            background-color: #40a798;
+            margin-top: 10vh !important;
+            background-color: white;
         }
 
         .message-contents, .footer {
-            margin: 0 10%;
+            margin: 30px 5vw;
         }
 
         .text-center {
@@ -41,26 +50,24 @@
 
         a {
             text-decoration: underline;
-            color: white;
+            color: black;
         }
 
 
     </style>
 </head>
-<body class="bg-white-25 mt-5">
-
+<body>
 
 <div class="main-container">
 
     <div class="mb-3">
-        <div class="col text-center">
-            <img class="logo text-center img-fluid" src="https://trenchdevs-assets.s3.amazonaws.com/logo/v1/logo.png"
-                 alt="">
+        <div class="header col text-center">
+            <h2>🎖 <br> TrenchDevs</h2>
         </div>
     </div>
 
     <div class="mt-5">
-        <div class="col text-center message-contents">
+        <div class="col message-contents text-center">
             <p>
                 @yield('email_header')
             </p>
@@ -72,11 +79,10 @@
     </div>
 
     <div class="footer text-center">
-        You are receiving this email because you are a member of TrenchDevs <br>
-        Please do not reply to this email. <br>
+        You are receiving this email because you are a member of TrenchDevs. Please do not reply to this email. <br>
         For further assistance please contact support at support@trenchdevs.org <br>
-        <a href="/emails/unsubscribe">Click here to unsubscribe</a> from these emails<br>
-        © TrenchDevs {{date('Y')}}
+        <a href="/emails/unsubscribe">Click here to Unsubscribe</a> from these emails<br>
+        <a href="https://trenchdevs.org">© TrenchDevs {{date('Y')}}</a>
     </div>
 
 

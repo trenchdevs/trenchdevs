@@ -5,5 +5,5 @@
 @endsection
 
 @section('email_body')
-    {{ $email_message  }}
+    {!! $email_body !!}
 @endsection
