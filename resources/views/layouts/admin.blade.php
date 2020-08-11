@@ -2,7 +2,7 @@
 
 @section('body')
     <nav class="topnav navbar navbar-expand shadow navbar-light bg-white" id="sidenavAccordion">
-        <a class="navbar-brand d-none d-sm-block" href="index.html">TrenchDevs Portal</a>
+        <a class="navbar-brand d-none d-sm-block" href="/home">TrenchDevs Portal</a>
         <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle" href="#"><i
                 data-feather="menu"></i></button>
         <ul class="navbar-nav align-items-center ml-auto">
@@ -21,7 +21,7 @@
                         </div>
                     </h6>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#!">
+                    <a class="dropdown-item" href="/admin/account">
                         <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                         Account
                     </a>
@@ -44,8 +44,82 @@
             <nav class="sidenav shadow-right sidenav-light">
                 <div class="sidenav-menu">
                     <div class="nav accordion" id="accordionSidenav">
-
                         <div class="sidenav-menu-heading">Core</div>
+                        <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                           data-target="#my-portfolio" aria-expanded="false" aria-controls="my-portfolio">
+                            <div class="nav-link-icon">
+                                <i data-feather="briefcase"></i>
+                            </div>
+                            My Portfolio
+                            <div class="sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </a>
+
+                        <div class="collapse" id="my-portfolio" data-parent="#accordionSidenav">
+                            <nav class="sidenav-menu-nested nav">
+                                <a class="nav-link" href="/portfolio/preview">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="edit"></i>
+                                    </div>
+                                    Edit
+                                </a>
+                                <a class="nav-link" href="/portfolio/preview">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="eye"></i>
+                                    </div>
+                                    Preview
+                                </a>
+                            </nav>
+                        </div>
+
+                        <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                           data-target="#blogs" aria-expanded="false" aria-controls="blogs">
+                            <div class="nav-link-icon">
+                                <i data-feather="book-open"></i>
+                            </div>
+                            Blogs Posts
+                            <div class="sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </a>
+
+                        <div class="collapse" id="blogs" data-parent="#accordionSidenav">
+                            <nav class="sidenav-menu-nested nav">
+                                <a class="nav-link" href="/blogs">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="users"></i>
+                                    </div>
+                                    All Blog Posts
+                                </a>
+                                <a class="nav-link" href="/blogs/me">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="feather"></i>
+                                    </div>
+                                    My Blog Posts
+                                </a>
+                            </nav>
+                        </div>
+
+                        <div class="sidenav-menu-heading">Modules</div>
+                        <a class="nav-link collapsed" href="/admin/shop">
+                            <div class="nav-link-icon">
+                                <i data-feather="shopping-bag"></i>
+                            </div>
+                            Shop
+                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+
+                        <div class="sidenav-menu-heading">Utilities</div>
+
+                        <a class="nav-link collapsed" href="/admin/announcements">
+                            <div class="nav-link-icon">
+                                <i data-feather="globe"></i>
+                            </div>
+                            Accounts
+                            {{--                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
+                        </a>
+
                         <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
                            data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="nav-link-icon">
@@ -58,47 +132,15 @@
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavLayout">
                                 <a class="nav-link" href="{{ route('users.index') }}">All Users</a>
                                 <a class="nav-link" href="{{ route('users.create') }}">Create</a>
-{{--                                <a class="nav-link collapsed" href="#" data-toggle="collapse"--}}
-{{--                                   data-target="#collapseLayoutsPageHeaders" aria-expanded="false"--}}
-{{--                                   aria-controls="collapseLayoutsPageHeaders">Page Headers--}}
-{{--                                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i>--}}
-{{--                                    </div>--}}
-{{--                                </a>--}}
-{{--                                <div class="collapse" id="collapseLayoutsPageHeaders"--}}
-{{--                                     data-parent="#accordionSidenavLayout">--}}
-{{--                                    <nav class="sidenav-menu-nested nav">--}}
-{{--                                        <a class="nav-  link" href="header-simplified.html">Simplified</a>--}}
-{{--                                        <a class="nav-link" href="header-overlap.html">Content Overlap</a>--}}
-{{--                                        <a class="nav-link" href="header-breadcrumbs.html">Breadcrumbs</a>--}}
-{{--                                        <a class="nav-link" href="header-light.html">Light</a>--}}
-{{--                                    </nav>--}}
-{{--                                </div>--}}
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
-                           data-target="#collapseComponents" aria-expanded="false" aria-controls="collapseComponents"
-                        >
-                            <div class="nav-link-icon"><i data-feather="package"></i></div>
-                            My Portfolio
-                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                            >
+                        <a class="nav-link collapsed" href="/admin/announcements">
+                            <div class="nav-link-icon">
+                                <i data-feather="mic"></i>
+                            </div>
+                            Announcements
+{{--                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
                         </a>
-                        <div class="collapse" id="collapseComponents" data-parent="#accordionSidenav">
-                            <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="alerts.html">Alerts</a><a class="nav-link"
-                                                                                    href="avatars.html">Avatars<span
-                                        class="badge badge-primary ml-2">New!</span></a
-                                ><a class="nav-link" href="badges.html">Badges</a><a class="nav-link"
-                                                                                     href="buttons.html">Buttons</a><a
-                                    class="nav-link" href="cards.html">Cards</a><a class="nav-link"
-                                                                                   href="dropdowns.html">Dropdowns</a><a
-                                    class="nav-link" href="forms.html">Forms</a><a class="nav-link" href="modals.html">Modals</a><a
-                                    class="nav-link" href="navigation.html">Navigation</a><a class="nav-link"
-                                                                                             href="progress.html">Progress</a><a
-                                    class="nav-link" href="toasts.html">Toasts</a><a class="nav-link"
-                                                                                     href="tooltips.html">Tooltips</a>
-                            </nav>
-                        </div>
                     </div>
                 </div>
                 <div class="sidenav-footer">

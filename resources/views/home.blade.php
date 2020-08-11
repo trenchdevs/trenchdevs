@@ -5,11 +5,11 @@
         <div class="position-relative">
             <div class="row align-items-center justify-content-between">
                 <div class="col position-relative">
-                    <h2 class="text-primary">TEST Welcome back, your dashboard is ready!</h2>
-                    <p class="text-gray-700">Great job, your affiliate dashboard is ready to go! You can
-                        view sales, generate links, prepare coupons, and download affiliate reports using
-                        this dashboard.</p>
-                    <a class="btn btn-teal" href="#!">Get started
+                    <h2 class="text-primary">Welcome to TrenchDevs!</h2>
+                    <p class="text-gray-700">
+                        Thanks for your interest in joining the team - you can start by filling up your portfolio page
+                    </p>
+                    <a class="btn btn-teal" href="/portfolio/preview">Get started
                         <i class="ml-1" data-feather="arrow-right"></i>
                     </a>
                 </div>

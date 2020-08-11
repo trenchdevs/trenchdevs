@@ -42,9 +42,17 @@ class EmailTester extends Controller
             abort(404);
         }
 
-        $email = 'christopheredrian@gmail.com';
+        $email = 'seanygenove@gmail.com';
         // $email = 'christopheredrian@trenchdevs.org';
-        Mail::to([$email])->send(new TestMailer());
+        $mailer = new TestMailer();
+        $recipients = [
+            'christopheredrian@gmail.com',
+            'christopheredrian@trenchdevs.org',
+            'seanygenove@gmail.com',
+
+        ];
+        Mail::to()
+            ->send($mailer);
         dd('done');
     }
 
@@ -52,7 +60,7 @@ class EmailTester extends Controller
     {
         $email = 'christopheredrian@gmail.com';
 
-        $genericMail = new GenericMailer( 'Chris', "You got a message from John, login to the platform to check");
+        $genericMail = new GenericMailer('Chris', "You got a message from John, login to the platform to check");
         $genericMail->subject('Greetings');
 
         Mail::to([$email])->send($genericMail);

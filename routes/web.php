@@ -27,6 +27,11 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('emails/generic', 'EmailTester@genericMail');
     // END - mailers
 
+    // START - portfolio
+    Route::get('portfolio/preview', 'PortfolioController@preview');
+
+    // END - portfolio
+
 });
 
 Route::get('{username}', 'PortfolioController@show');

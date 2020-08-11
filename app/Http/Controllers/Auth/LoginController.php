@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\UserLogin;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Mockery\Exception;
 
 class LoginController extends Controller
 {
@@ -66,6 +65,46 @@ class LoginController extends Controller
         // else all good, login user and redirect to homepage
         Auth::login($user);
 
+        $userLogin = new UserLogin;
+        $userLogin->fill([
+            'user_id' => $user->id,
+            'type' => UserLogin::DB_TYPE_LOGIN,
+            'ip' => $request->ip(),
+            'user_agent' => $request->header('User-Agent'),
+            'referer' => $request->header('referer'),
+            'misc_json' => json_encode([
+                'email' => $request->email,
+            ]),
+        ]);
+        $userLogin->save();
+
         return redirect('/home');
+    }
+
+    /**
+     * Increment the login attempts for the user.
+     *
+     * @param Request $request
+     * @return void
+     */
+    protected function incrementLoginAttempts(Request $request)
+    {
+
+        $userLogin = new UserLogin;
+        $userLogin->fill([
+            'user_id' => null,
+            'type' => UserLogin::DB_TYPE_LOGIN_ATTEMPT,
+            'ip' => $request->ip(),
+            'user_agent' => $request->header('User-Agent'),
+            'referer' => $request->header('referer'),
+            'misc_json' => json_encode([
+                'email' => $request->email,
+            ]),
+        ]);
+        $userLogin->save();
+
+        $this->limiter()->hit(
+            $this->throttleKey($request), $this->decayMinutes() * 60
+        );
     }
 }

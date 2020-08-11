@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PortfolioController extends Controller
 {
@@ -12,11 +13,21 @@ class PortfolioController extends Controller
     ];
 
 
-    public function show(string $username){
+    public function show(string $username)
+    {
 
         $site = self::CUSTOM_URLS[$username];
 
-        return view('portfolio.custom', ['site' => $site]);
+        return view('portfolio.custom', [
+            'site' => $site
+        ]);
 
+    }
+
+    public function preview()
+    {
+        return view('portfolio.show', [
+            'user' => Auth::user()
+        ]);
     }
 }
