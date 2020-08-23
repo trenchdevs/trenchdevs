@@ -19,7 +19,15 @@
                     <vue-editor v-model="message"/>
                 </div>
 
-                Note: By default this creates an activity feed and emails all participants in TrenchDevs account.
+                <div class="form-group">
+                    <label for="emails">Email Addresses (CSV) </label>
+                    <textarea class="form-control" name="emails" id="emails" v-model="emails"/>
+                </div>
+
+                <div class="alert alert-info">
+                    Note: If no emails are specified, by default this creates an activity feed and emails all
+                    participants in the TrenchDevs account.
+                </div>
 
                 <div class="row">
                     <div class="col text-right">
@@ -28,11 +36,11 @@
                 </div>
             </div>
 
-           <div class="alert alert-danger" v-if="errors">
-               <ul>
-                   <li v-for="error in errors">{{error[0]}}</li>
-               </ul>
-           </div>
+            <div class="alert alert-danger m-3" v-if="errors">
+                <ul>
+                    <li v-for="error in errors">{{error[0]}}</li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -53,7 +61,7 @@
                 title: '',
                 message: "Enter email contents here..",
                 errors: null,
-
+                emails: null,
             };
         },
         methods: {
@@ -61,17 +69,18 @@
                 const data = {
                     title: this.title,
                     message: this.message,
+                    emails: this.emails || null,
                 };
                 axios.post('/announcements/announce', data)
-                .then((d) => {
-                    window.location.href = "/announcements"
-                })
-                .catch(({response}) => {
-                    const {errors} = response.data;
-                    if (errors) {
-                        this.errors = errors;
-                    }
-                });
+                    .then((d) => {
+                        window.location.href = "/announcements"
+                    })
+                    .catch(({response}) => {
+                        const {errors} = response.data;
+                        if (errors) {
+                            this.errors = errors;
+                        }
+                    });
             }
         }
     }

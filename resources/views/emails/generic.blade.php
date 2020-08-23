@@ -1,7 +1,9 @@
 @extends('emails.layout')
 
 @section('email_header')
-    Dear {{$name}},
+    @if(isset($name) && !empty($name))
+        Dear {{$name}},
+    @endif
 @endsection
 
 @section('email_body')

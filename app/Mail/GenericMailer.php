@@ -18,7 +18,7 @@ class GenericMailer extends Mailable
      * @param string $name
      * @param string $body
      */
-    public function __construct(string $name, string $body)
+    public function __construct(string $body, string $name = null)
     {
         $this->name = $name;
         $this->body = $body;

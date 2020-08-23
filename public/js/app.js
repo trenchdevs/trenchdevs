@@ -2125,6 +2125,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2138,7 +2146,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       title: '',
       message: "Enter email contents here..",
-      errors: null
+      errors: null,
+      emails: null
     };
   },
   methods: {
@@ -2147,7 +2156,8 @@ __webpack_require__.r(__webpack_exports__);
 
       var data = {
         title: this.title,
-        message: this.message
+        message: this.message,
+        emails: this.emails || null
       };
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/announcements/announce', data).then(function (d) {
         window.location.href = "/announcements";
@@ -66354,9 +66364,41 @@ var render = function() {
           ],
           1
         ),
-        _vm._v(
-          "\n\n            Note: By default this creates an activity feed and emails all participants in TrenchDevs account.\n\n            "
-        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "emails" } }, [
+            _vm._v("Email Addresses (CSV) ")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.emails,
+                expression: "emails"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { name: "emails", id: "emails" },
+            domProps: { value: _vm.emails },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.emails = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "alert alert-info" }, [
+          _vm._v(
+            "\n                Note: If no emails are specified, by default this creates an activity feed and emails all\n                participants in the TrenchDevs account.\n            "
+          )
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col text-right" }, [
             _c(
@@ -66369,7 +66411,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm.errors
-        ? _c("div", { staticClass: "alert alert-danger" }, [
+        ? _c("div", { staticClass: "alert alert-danger m-3" }, [
             _c(
               "ul",
               _vm._l(_vm.errors, function(error) {

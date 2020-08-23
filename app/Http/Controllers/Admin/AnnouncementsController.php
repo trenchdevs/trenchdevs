@@ -57,19 +57,33 @@ class AnnouncementsController extends Controller
         $announcement->title = $title;
         $announcement->status = 'processed'; // change later on cron
         $announcement->message = $message;
+        // save meta data
         $announcement->saveOrFail();
 
-        $users = User::getTrenchDevsUsers();
+        if (!empty($request->emails)) {
 
-        if (empty($users)) {
-            abort(404, 'No users found');
-        }
+            $emails = explode(',', $request->emails);
 
-        foreach ($users as $user) {
-            $genericMail = new GenericMailer($user->name(), $message);
+            if (empty($emails)) {
+                abort(404, 'No emails found');
+            }
+
+            $genericMail = new GenericMailer($message, null);
             $genericMail->subject($title);
-            Mail::to([$user->email])
+
+            Mail::to($emails)
                 ->send($genericMail);
+
+        } else {
+
+            $users = User::getTrenchDevsUsers();
+
+            foreach ($users as $user) {
+                $genericMail = new GenericMailer($message, $user->name());
+                $genericMail->subject($title);
+                Mail::to([$user->email])
+                    ->send($genericMail);
+            }
         }
 
         return $this->jsonResponse(200, 'Success!');
