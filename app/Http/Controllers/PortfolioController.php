@@ -16,7 +16,11 @@ class PortfolioController extends Controller
     public function show(string $username)
     {
 
-        $site = self::CUSTOM_URLS[$username];
+        $site = self::CUSTOM_URLS[$username] ?? null;
+
+        if (empty($site)) {
+            abort(404);
+        }
 
         return view('portfolio.custom', [
             'site' => $site

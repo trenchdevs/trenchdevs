@@ -8,6 +8,28 @@ if (env('APP_ENV') === 'production') {
     URL::forceScheme('https');
 }
 
+$baseUrl = env('BASE_URL');
+
+if (empty($baseUrl)) {
+    throw new Exception("Base url not found.");
+}
+
+// START - Special subdomains here
+
+//Route::domain("blog.{$baseUrl}")->group(function(){
+//    Route::get('/blog', function () {
+//        dd('@blog');
+//    });
+//});
+
+// END - Special subdomains here
+
+// START - Portfolio Routes
+Route::domain("{username}.{$baseUrl}")->group(function () {
+    Route::get('/','PortfolioController@show');
+});
+// END - Portfolio Routes
+
 Route::get('/', 'PublicController@index');
 
 Auth::routes(['verify' => true]);
@@ -25,11 +47,14 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
 
     // START - mailers
     Route::get('emails/generic', 'EmailTester@genericMail');
+    // Announcements
+    Route::get('announcements/create','Admin\AnnouncementsController@create');
+    Route::post('announcements/announce','Admin\AnnouncementsController@announce');
+    Route::get('announcements','Admin\AnnouncementsController@list');
     // END - mailers
 
     // START - portfolio
     Route::get('portfolio/preview', 'PortfolioController@preview');
-
     // END - portfolio
 
 });

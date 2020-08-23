@@ -25,7 +25,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-6 col-lg-8">
-                                <h1 class="page-header-title">Trench Devs</h1>
+                                <h1 class="page-header-title">{{ $user->name() }}</h1>
                                 <p class="page-header-text mb-5">I am a sales professional specializing in product
                                     marketing and distribution based in Clarcton, MA
                                 </p>

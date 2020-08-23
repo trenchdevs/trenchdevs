@@ -130,4 +130,13 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         }
     }
 
+    /**
+     * @return User[]
+     */
+    public static function getTrenchDevsUsers(){
+
+        return self::where('account_id', 1)
+            ->get();
+    }
+
 }

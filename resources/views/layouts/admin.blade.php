@@ -9,8 +9,9 @@
             <li class="nav-item dropdown no-caret mr-3 dropdown-user">
                 <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
                    href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false"><img class="img-fluid"
-                                              src="https://source.unsplash.com/QAB-WJcbgJk/60x60"/></a>
+                   aria-expanded="false">
+                    <img class="img-fluid" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"/>
+                </a>
                 <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up"
                      aria-labelledby="navbarDropdownUserImage">
                     <h6 class="dropdown-header d-flex align-items-center">
@@ -112,7 +113,7 @@
 
                         <div class="sidenav-menu-heading">Utilities</div>
 
-                        <a class="nav-link collapsed" href="/admin/announcements">
+                        <a class="nav-link collapsed" href="/announcements">
                             <div class="nav-link-icon">
                                 <i data-feather="globe"></i>
                             </div>
@@ -134,7 +135,7 @@
                                 <a class="nav-link" href="{{ route('users.create') }}">Create</a>
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="/admin/announcements">
+                        <a class="nav-link collapsed" href="/announcements">
                             <div class="nav-link-icon">
                                 <i data-feather="mic"></i>
                             </div>
