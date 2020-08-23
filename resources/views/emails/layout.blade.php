@@ -67,8 +67,8 @@
     </div>
 
     <div class="mt-5">
-        <div class="col message-contents text-center">
-            <p>
+        <div class="col message-contents">
+            <p class="text-center">
                 @yield('email_header')
             </p>
 
