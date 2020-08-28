@@ -112,7 +112,7 @@
 
                         <div class="sidenav-menu-heading">Utilities</div>
 
-                        <a class="nav-link collapsed" href="/announcements">
+                        <a class="nav-link collapsed" href="/accounts">
                             <div class="nav-link-icon">
                                 <i data-feather="globe"></i>
                             </div>
