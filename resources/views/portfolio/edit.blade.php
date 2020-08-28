@@ -17,12 +17,12 @@
 
             <div class="row">
 
-                <div class="col-3">
+                <div class="col-md-md-3">
                     <p>{{$user->username ?: 'N/A'}}</p>
                     <img class="img-fluid img-thumbnail rounded-circle" src="{{$user->avatar_url}}" alt="Avatar">
                 </div>
 
-                <div class="col-9">
+                <div class="col-md-md-9">
 
                     <form action="{{route('portfolio.avatar')}}" method="post" enctype="multipart/form-data">
                         @csrf
@@ -62,7 +62,7 @@
                         @csrf
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="primary_phone">Primary Phone Number</label>
                                     <input class="form-control" type="text" id="primary_phone" name="primary_phone"
@@ -71,7 +71,7 @@
                                     >
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="github_url">Github URL</label>
                                     <input class="form-control" type="text" id="github_url" name="github_url"
@@ -80,7 +80,7 @@
                                     >
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="linkedin_url">Linkedin URL</label>
                                     <input class="form-control" type="text" id="linkedin_url" name="linkedin_url"
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="resume_url">Resume URL <small>(e.g. Public Google Drive
                                             URL)</small></label>
@@ -141,7 +141,7 @@
         <div class="card-body p-5">
 
             <div class="row">
-                <div class="col-8">
+                <div class="col-md-8">
 
                     <div class="row">
                         <div class="col">
