@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Mail\GenericMailer;
 use App\Models\Announcement;
+use App\Models\EmailQueue;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
@@ -17,7 +17,9 @@ class AnnouncementsController extends Controller
 {
     public function list()
     {
-        $announcements = Announcement::paginate();
+        $announcements = Announcement::orderBy('id', 'desc')
+            ->paginate();
+
         return view('announcements.list', [
             'announcements' => $announcements,
         ]);
@@ -57,9 +59,9 @@ class AnnouncementsController extends Controller
         $announcement->title = $title;
         $announcement->status = 'processed'; // change later on cron
         $announcement->message = $message;
-        // save meta data
         $announcement->saveOrFail();
 
+        // todo: chris - refactor
         if (!empty($request->emails)) {
 
             $emails = explode(',', $request->emails);
@@ -68,24 +70,44 @@ class AnnouncementsController extends Controller
                 abort(404, 'No emails found');
             }
 
-            $genericMail = new GenericMailer($message, null);
-            $genericMail->subject($title);
+            foreach ($emails as $email) {
 
-            Mail::to($emails)
-                ->send($genericMail);
+                $viewData = [
+                    'name' => $user->name(),
+                    'email_body' => $message,
+                ];
+
+                EmailQueue::queue(
+                    $email,
+                    $title,
+                    $viewData,
+                    'emails.generic'
+                );
+            }
+
 
         } else {
 
             $users = User::getTrenchDevsUsers();
 
             foreach ($users as $user) {
-                $genericMail = new GenericMailer($message, $user->name());
-                $genericMail->subject($title);
-                Mail::to([$user->email])
-                    ->send($genericMail);
+
+                $viewData = [
+                    'name' => $user->name(),
+                    'email_body' => $message,
+                ];
+
+                EmailQueue::queue(
+                    $user->email,
+                    $title,
+                    $viewData,
+                    'emails.generic'
+                );
             }
         }
 
-        return $this->jsonResponse(200, 'Success!');
+        Session::flash('message', "Successfully created announcement");
+
+        return $this->jsonResponse('success', 'Success!');
     }
 }

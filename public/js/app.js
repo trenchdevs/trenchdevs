@@ -2152,22 +2152,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     announce: function announce() {
-      var _this = this;
-
       var data = {
         title: this.title,
         message: this.message,
         emails: this.emails || null
       };
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/announcements/announce', data).then(function (d) {
-        window.location.href = "/announcements";
-      })["catch"](function (_ref) {
-        var response = _ref.response;
-        var errors = response.data.errors;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/announcements/announce', data).then(function (_ref) {
+        var _ref$data = _ref.data,
+            data = _ref$data === void 0 ? {} : _ref$data;
+        var status = data.status,
+            message = data.message;
 
-        if (errors) {
-          _this.errors = errors;
+        if (status === 'success') {
+          window.location.href = "/announcements";
+        } else {
+          if (message) {
+            alert(message);
+          }
         }
+      })["catch"](function (e) {
+        console.error(e);
       });
     }
   }
@@ -79860,8 +79864,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/christopherespiritu/Sites/trenchdevs/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/christopherespiritu/Sites/trenchdevs/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/chris/Sites/trenchdevs/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/chris/Sites/trenchdevs/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -7,9 +7,8 @@
                 data-feather="menu"></i></button>
         <ul class="navbar-nav align-items-center ml-auto">
             <li class="nav-item dropdown no-caret mr-3 dropdown-user">
-                <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
-                   href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
+                <a class="btn btn-icon btn-transparent-dark" id="navbarDropdownUserImage"
+                   href="/profile">
                     <img class="img-fluid" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"/>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up"

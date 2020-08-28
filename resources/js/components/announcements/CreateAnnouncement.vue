@@ -71,15 +71,24 @@
                     message: this.message,
                     emails: this.emails || null,
                 };
+
                 axios.post('/announcements/announce', data)
-                    .then((d) => {
-                        window.location.href = "/announcements"
-                    })
-                    .catch(({response}) => {
-                        const {errors} = response.data;
-                        if (errors) {
-                            this.errors = errors;
+                    .then(({data = {}}) => {
+
+                        const {status, message} = data;
+
+                        if (status === 'success') {
+                            window.location.href = "/announcements"
+                        } else {
+                            if (message) {
+                                alert(message);
+                            }
                         }
+
+
+                    })
+                    .catch((e) => {
+                        console.error(e);
                     });
             }
         }

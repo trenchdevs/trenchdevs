@@ -2,39 +2,32 @@
 
 namespace App\Mail;
 
+use App\Models\EmailQueue;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\Factory as Queue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class GenericMailer extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $name;
-    private $body;
+    public $viewData;
 
     /**
      * GenericMailer constructor.
-     * @param string $name
-     * @param string $body
+     * @param string $to
      */
-    public function __construct(string $body, string $name = null)
+    public function __construct(string $to)
     {
-        $this->name = $name;
-        $this->body = $body;
+        // todo: chris env local check here
+        $this->to($to);
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        return $this->view('emails.generic')
-            ->with([
-                'name' => $this->name,
-                'email_body' => $this->body
-            ]);
+    public function build() {
+        return $this;
     }
+
+
 }

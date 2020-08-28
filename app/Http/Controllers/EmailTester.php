@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Mail\GenericMailer;
 use App\Mail\TestMailer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Mail;
 
 class EmailTester extends Controller
@@ -38,32 +41,42 @@ class EmailTester extends Controller
 
     public function testSend()
     {
-        if (!in_array(env('APP_ENV'), ['local', 'development'])) {
-            abort(404);
-        }
+//        if (!in_array(env('APP_ENV'), ['local', 'development'])) {
+//            abort(404);
+//        }
+//
+//        $email = 'seanygenove@gmail.com';
+//        // $email = 'christopheredrian@trenchdevs.org';
+//        $mailer = new TestMailer();
+//        $recipients = [
+//            'christopheredrian@gmail.com',
+//            'christopheredrian@trenchdevs.org',
+//            'seanygenove@gmail.com',
+//
+//        ];
+//        Mail::to()
+//            ->send($mailer);
+//        dd('done');
 
-        $email = 'seanygenove@gmail.com';
-        // $email = 'christopheredrian@trenchdevs.org';
-        $mailer = new TestMailer();
-        $recipients = [
-            'christopheredrian@gmail.com',
-            'christopheredrian@trenchdevs.org',
-            'seanygenove@gmail.com',
-
+//        Mail::send('emails.generic', ['name' => 'hello', 'email_body' => 'test'], function(Message $message){
+//            $message->to('christopheredrian@gmail.com');
+//            $message->subject('Subject');
+//        });
+        $now = Carbon::now();
+        $viewData = [
+            'name' => 'Christopher Espiritu',
+            'email_body' => 'This is an announcement',
         ];
-        Mail::to()
-            ->send($mailer);
-        dd('done');
+        $gm  = new GenericMailer('christopheredrian@gmail.com', $viewData);
+        $gm->subject('Subject - ' . $now->format('Y-m-d H:i:s'));
+        $gm->to('christopheredrian@gmail.com');
+        return $gm->render();
+
+//        Mail::raw('Helo, this is the message', function(Message $message){
+//            $message->to('christopheredrian@gmail.com');
+//            $message->subject('Helo');
+//        });
+
     }
 
-    public function genericMail()
-    {
-        $email = 'christopheredrian@gmail.com';
-
-        $genericMail = new GenericMailer('Chris', "You got a message from John, login to the platform to check");
-        $genericMail->subject('Greetings');
-
-        Mail::to([$email])->send($genericMail);
-        echo "Email sent to {$email}";
-    }
 }

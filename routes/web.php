@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\URL;
 if (env('APP_ENV') === 'production') {
     URL::forceScheme('https');
 }
-
+Route::get('test', function(){
+    \App\Models\EmailQueue::processPending();
+});
 $baseUrl = env('BASE_URL');
 
 if (empty($baseUrl)) {
@@ -46,7 +48,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // End - users
 
     // START - mailers
-    Route::get('emails/generic', 'EmailTester@genericMail');
+    // Route::get('emails/generic', 'EmailTester@genericMail');
     // Announcements
     Route::get('announcements/create','Admin\AnnouncementsController@create');
     Route::post('announcements/announce','Admin\AnnouncementsController@announce');
@@ -56,6 +58,10 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // START - portfolio
     Route::get('portfolio/preview', 'PortfolioController@preview');
     // END - portfolio
+
+    // START - profile
+    Route::get('profile', 'ProfileController@index');
+    // END - profile
 
 });
 
