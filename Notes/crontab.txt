@@ -1,0 +1,1 @@
+* * * * * cd /var/www/trenchdevs.org/trenchdevs && php artisan schedule:run >> /dev/null 2>&1
