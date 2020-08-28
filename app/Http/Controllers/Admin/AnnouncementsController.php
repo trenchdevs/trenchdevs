@@ -73,7 +73,7 @@ class AnnouncementsController extends Controller
             foreach ($emails as $email) {
 
                 $viewData = [
-                    'name' => $user->name(),
+                    'name' => null,
                     'email_body' => $message,
                 ];
 
