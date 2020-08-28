@@ -45,6 +45,8 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::post('admin/users/password_reset', 'Admin\UsersController@passwordReset')->name('users.password_reset');
     Route::get('admin/users/{id}', 'Admin\UsersController@edit')->name('users.edit');
     Route::get('admin/users', 'Admin\UsersController@index')->name('users.index');
+
+    Route::post('users/change_password', 'Admin\UsersController@changePassword')->name('users.change_password');
     // End - users
 
     // START - mailers
@@ -55,9 +57,22 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('announcements','Admin\AnnouncementsController@list');
     // END - mailers
 
-    // START - portfolio
+    /**
+     * START - portfolio
+     */
+
+    // start - user_portfolio_details
+    Route::get('portfolio/edit', 'PortfolioController@edit')->name('portfolio.edit');
+    Route::get('portfolio/security', 'PortfolioController@showSecurity')->name('portfolio.security');
+    Route::post('portfolio/update', 'PortfolioController@update')->name('portfolio.update');
+    Route::post('portfolio/avatar', 'PortfolioController@uploadAvatar')->name('portfolio.avatar');
+    Route::post('portfolio/background','PortfolioController@uploadBackground')->name('portfolio.background');
     Route::get('portfolio/preview', 'PortfolioController@preview');
-    // END - portfolio
+    // end - user_portfolio_details
+
+    /**
+     * END - portfolio
+     */
 
     // START - profile
     Route::get('profile', 'ProfileController@index');

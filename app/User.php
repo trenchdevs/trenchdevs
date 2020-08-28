@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Users\UserPortfolioDetail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -133,10 +134,45 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     /**
      * @return User[]
      */
-    public static function getTrenchDevsUsers(){
+    public static function getTrenchDevsUsers()
+    {
 
         return self::where('account_id', 1)
             ->get();
+    }
+
+    /**
+     * @return UserPortfolioDetail
+     */
+    public function getPortfolioDetails(): UserPortfolioDetail
+    {
+        return UserPortfolioDetail::findOrEmptyByUser($this->id);
+    }
+
+
+    /**
+     * @param $username
+     * @return static|null
+     */
+    public static function findByUsername(string $username): ?self
+    {
+        return self::where('username', $username)
+            ->first();
+    }
+
+    /**
+     * @param string $username
+     * @return $this
+     */
+    public static function findByUserNameOrFail(string $username): self
+    {
+        $user = self::findByUsername($username);
+
+        if (empty($user)) {
+            throw new \InvalidArgumentException("Username not found");
+        }
+
+        return $user;
     }
 
 }

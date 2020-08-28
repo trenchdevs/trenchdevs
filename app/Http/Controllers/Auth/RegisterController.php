@@ -27,6 +27,8 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    const PASSWORD_VALIDATION_RULE = ['required', 'string', 'min:8', 'confirmed'];
+
     /**
      * Where to redirect users after registration.
      *
@@ -56,7 +58,7 @@ class RegisterController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => self::PASSWORD_VALIDATION_RULE,
         ]);
     }
 

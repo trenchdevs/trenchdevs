@@ -7,21 +7,29 @@
                 data-feather="menu"></i></button>
         <ul class="navbar-nav align-items-center ml-auto">
             <li class="nav-item dropdown no-caret mr-3 dropdown-user">
-                <a class="btn btn-icon btn-transparent-dark" id="navbarDropdownUserImage"
-                   href="/profile">
-                    <img class="img-fluid" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"/>
-                </a>
+                <span onclick class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
+                      href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false"
+                >
+                    <img
+                        class="img-fluid"
+                        src="{{ !empty(Auth::user()->avatar_url) ?Auth::user()->avatar_url : '/assets/img/avataaars.svg'  }}"
+                    />
+                </span>
                 <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up"
                      aria-labelledby="navbarDropdownUserImage">
                     <h6 class="dropdown-header d-flex align-items-center">
-                        <img class="dropdown-user-img" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"/>
+                        <img
+                            class="dropdown-user-img"
+                            src="{{ !empty(Auth::user()->avatar_url) ? Auth::user()->avatar_url : '/assets/img/avataaars.svg'  }}"
+                        />
                         <div class="dropdown-user-details">
                             <div class="dropdown-user-details-name">{{ Auth::user()->name() }}</div>
                             <div class="dropdown-user-details-email">{{ Auth::user()->email }}</div>
                         </div>
                     </h6>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/admin/account">
+                    <a class="dropdown-item" href="/portfolio/edit">
                         <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                         Account
                     </a>
@@ -45,12 +53,24 @@
                 <div class="sidenav-menu">
                     <div class="nav accordion" id="accordionSidenav">
                         <div class="sidenav-menu-heading">Core</div>
+                        <a class="nav-link collapsed" href="/home">
+                            <div class="nav-link-icon">
+                                <i data-feather="activity"></i>
+                            </div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link collapsed" href="{{route('portfolio.edit')}}">
+                            <div class="nav-link-icon">
+                                <i data-feather="user"></i>
+                            </div>
+                            Account & Profile
+                        </a>
                         <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
                            data-target="#my-portfolio" aria-expanded="false" aria-controls="my-portfolio">
                             <div class="nav-link-icon">
                                 <i data-feather="briefcase"></i>
                             </div>
-                            My Portfolio
+                            My Portfolio Page
                             <div class="sidenav-collapse-arrow">
                                 <i class="fas fa-angle-down"></i>
                             </div>
@@ -64,11 +84,11 @@
                                     </div>
                                     Edit
                                 </a>
-                                <a class="nav-link" href="/portfolio/preview">
+                                <a class="nav-link" href="/portfolio/preview" target="_blank">
                                     <div class="nav-link-icon">
                                         <i data-feather="eye"></i>
                                     </div>
-                                    Preview
+                                    Page
                                 </a>
                             </nav>
                         </div>
@@ -139,7 +159,7 @@
                                 <i data-feather="mic"></i>
                             </div>
                             Announcements
-{{--                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
+                            {{--                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
                         </a>
                     </div>
                 </div>
@@ -157,7 +177,8 @@
 
                     <div class="d-flex justify-content-between align-items-sm-center flex-column flex-sm-row mb-4">
                         <div class="mr-4 mb-3 mb-sm-0">
-                            <h1 class="mb-0">Dashboard</h1>
+                            <h1 class="mb-0">@yield('page-header')</h1>
+
                             <div class="small">
                                 <span class="font-weight-500 text-primary">{{date('l')}}</span> &middot;
                                 {{date('F n, Y')}} &middot; {{ date('h:i a') }}

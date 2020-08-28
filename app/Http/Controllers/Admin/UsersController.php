@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Account;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Controller;
+use App\Models\EmailQueue;
 use App\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -12,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -168,5 +171,42 @@ class UsersController extends Controller
         Session::flash('message', "Successfully sent password reset email to user " . $user->name());
 
         return redirect(route('users.index'));
+    }
+
+    public function changePassword(Request $request)
+    {
+
+        $passwordRule = RegisterController::PASSWORD_VALIDATION_RULE;
+        $passwordRule[] = 'confirmed';
+
+        $this->validate($request, [
+            'old_password' => 'required',
+            'password' => $passwordRule,
+        ]);
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        if (!Hash::check($request->old_password, $user->password)) {
+            return back()->withErrors(['Please enter correct current password']);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->saveOrFail();
+
+        $viewData = [
+            'name' => $user->name(),
+            'email_body' => 'The system detected that your password was updated. '
+                . 'If you have not make this update. Please contact support at support@trenchdevs.org',
+        ];
+
+        EmailQueue::queue(
+            $user->email,
+            'Your password was Changed',
+            $viewData,
+            'emails.generic'
+        );
+
+        return back()->with('message', 'Password reset successful.');
     }
 }

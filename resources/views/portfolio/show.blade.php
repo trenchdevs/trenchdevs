@@ -20,16 +20,20 @@
     <div id="layoutDefault_content">
         <main>
             <header class="page-header page-header-dark bg-img-cover overlay overlay-60"
-                    style='background-image: url("https://source.unsplash.com/6dW3xyQvcYE/1600x1200")'>
+                    style='background-image: url("{{empty($portfolio_details->background_cover_url) ? 'https://source.unsplash.com/6dW3xyQvcYE/1600x1200' : $portfolio_details->background_cover_url}}")'>
                 <div class="page-header-content py-15">
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-6 col-lg-8">
                                 <h1 class="page-header-title">{{ $user->name() }}</h1>
-                                <p class="page-header-text mb-5">I am a sales professional specializing in product
-                                    marketing and distribution based in Clarcton, MA
+                                <p class="page-header-text mb-5">
+                                    {{$portfolio_details->tagline}}
                                 </p>
-                                <a class="btn btn-marketing rounded-pill btn-teal lift lift-sm" href="#!">
+                                <a class="btn btn-marketing rounded-pill btn-teal lift lift-sm"
+                                   target="_blank"
+                                   href="//{{ $portfolio_details->resume_url }}"
+                                   target="_blank"
+                                >
                                     <i class="fas fa-file-pdf mr-2"></i>
                                     Download Resume
                                 </a>
@@ -154,41 +158,41 @@
                     </svg>
                 </div>
             </section>
-            <section class="bg-light py-10">
-                <div class="container">
-                    <div class="text-uppercase-expanded small mb-2">Interests</div>
-                    <hr class="mt-0 mb-5"/>
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <p>Apart from being a marketing analyst, I enjoy most of my time being outdoors. In the
-                                winter, I am an avid skier and novice ice climber. During the warmer months here in
-                                Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-                            <p>When forced indoors, I follow a number of sci-fi and fantasy genre movies and television
-                                shows, I am an aspiring chef, and I spend a large amount of my free time exploring the
-                                latest technology advancements in the marketing management world.</p>
+            @if(!empty($portfolio_details->interests))
+
+                <section class="bg-light py-10">
+                    <div class="container">
+                        <div class="text-uppercase-expanded small mb-2">Interests</div>
+                        <hr class="mt-0 mb-5"/>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                {{$portfolio_details->interests}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="svg-border-angled text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
-                         fill="currentColor">
-                        <polygon points="0,100 100,0 100,100"></polygon>
-                    </svg>
-                </div>
-            </section>
+                    <div class="svg-border-angled text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
+                             fill="currentColor">
+                            <polygon points="0,100 100,0 100,100"></polygon>
+                        </svg>
+                    </div>
+                </section>
+            @endif
             <section class="bg-white py-10">
                 <div class="container">
                     <div class="text-uppercase-expanded small mb-2">Contact</div>
                     <hr class="mt-0 mb-5"/>
                     <div class="row">
                         <div class="col-lg-8 mb-4 mb-lg-0">
-                            <h3>Chris Kelly</h3>
-                            <p class="lead mb-0">(555) 392-0323</p>
-                            <a href="#!">ckelly@example.com</a>
+                            <h3>{{$user->name()}}</h3>
+                            <p class="lead mb-0">{{$portfolio_details->primary_phone}}</p>
+                            <a href="#!">{{$user->email}}</a>
                         </div>
                         <div class="col-lg-4 text-lg-right">
-                            <a class="btn btn-marketing btn-teal rounded-pill" href="#!"><i
-                                    class="fas fa-file-pdf mr-2"></i>Download Resume</a>
+                            <a class="btn btn-marketing btn-teal rounded-pill" target="_blank"
+                               href="//{{$portfolio_details->resume_url}}">
+                                <i class="fas fa-file-pdf mr-2"></i>Download Resume
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -207,12 +211,14 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="icon-list-social mb-5">
-                            <a class="icon-list-social-link" href="javascript:void(0);"><i class="fab fa-instagram"></i></a><a
-                                class="icon-list-social-link" href="javascript:void(0);"><i class="fab fa-facebook"></i></a><a
-                                class="icon-list-social-link" href="javascript:void(0);"><i
-                                    class="fab fa-github"></i></a><a class="icon-list-social-link"
-                                                                     href="javascript:void(0);"><i
-                                    class="fab fa-twitter"></i></a>
+                            <a class="icon-list-social-link" target="_blank"
+                               href="//{{$portfolio_details->linkedin_url}}">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a class="icon-list-social-link" target="_blank"
+                               href="//{{$portfolio_details->github_url}}">
+                                <i class="fab fa-github"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -220,11 +226,6 @@
                 <hr class="my-5"/>
                 <div class="row align-items-center">
                     <div class="col-md-6 small">Copyright &copy; TrenchDevs {{ date('Y') }}</div>
-                    {{--                    <div class="col-md-6 text-md-right small">--}}
-                    {{--                        <a href="javascript:void(0);">Privacy Policy</a>--}}
-                    {{--                        &middot;--}}
-                    {{--                        <a href="javascript:void(0);">Terms &amp; Conditions</a>--}}
-                    {{--                    </div>--}}
                 </div>
             </div>
         </footer>

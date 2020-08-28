@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('page-header', 'Announcements')
+
 @section('content')
 
     <div class="card mb-4">
