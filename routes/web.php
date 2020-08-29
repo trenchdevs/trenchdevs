@@ -71,11 +71,23 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('portfolio/preview', 'PortfolioController@preview');
     // end - user_portfolio_details
 
-    // start - degreees
+    // start - user_experiences
+
+    // end - user_experiences
+
+    // start - user_degrees
     Route::view('portfolio/degrees/edit', 'portfolio.degrees')->name('portfolio.degrees');
     Route::post('portfolio/degrees/save', 'Portfolio\UserDegreesController@save')->name('portfolio.degrees.save');
     Route::get('portfolio/degrees/get', 'Portfolio\UserDegreesController@getDegrees')->name('portfolio.degrees.get');
-    // end - degrees
+    // end - user_degrees
+
+    // start - user_skills
+    Route::view('portfolio/skills/edit', 'portfolio.skills')->name('portfolio.skills');
+    Route::get('portfolio/skills/get', 'Portfolio\UserSkillsController@getSkills')->name('portfolio.skills.get');
+    Route::post('portfolio/skills/save', 'Portfolio\UserSkillsController@save')->name('portfolio.skills.save');
+
+
+    //  end - user_skills
 
     /**
      * END - portfolio

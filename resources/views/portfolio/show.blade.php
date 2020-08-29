@@ -1,7 +1,7 @@
 @php
     /** @var \App\User $user */
 @endphp
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -114,7 +114,8 @@
                                     {!! $degree->description !!}
                                 </div>
                                 <div class="col-lg-4 text-lg-right">
-                                    <div class="text-gray-400 small">{{ date('F Y', strtotime($degree->start_date)) }} - {{ date('F Y', strtotime($degree->end_date)) }}</div>
+                                    <div class="text-gray-400 small">{{ date('F Y', strtotime($degree->start_date)) }}
+                                        - {{ date('F Y', strtotime($degree->end_date)) }}</div>
                                 </div>
                             </div>
                         @endforeach
@@ -127,33 +128,36 @@
                     </div>
                 </section>
             @endif
-            <section class="bg-white py-10">
-                <div class="container">
-                    <div class="text-uppercase-expanded small mb-2">Skills</div>
-                    <hr class="mt-0 mb-5"/>
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <p>Attention to detail and a general sense of product viability are my specialties. I am
-                                motivated to provide value in a team environment, and I am committed to creating the
-                                best possible experience for customers.</p>
-                            <ul class="mb-0 text-gray-700">
-                                <li>Market analysis</li>
-                                <li>Supply chain management</li>
-                                <li>Business plan preparation</li>
-                                <li>Technological entrepreneurship</li>
-                                <li>Report generation</li>
-                                <li>Presentation creation</li>
-                            </ul>
+            @if(!empty($user->skills))
+                <section class="bg-white py-10">
+                    <div class="container">
+                        <div class="text-uppercase-expanded small mb-2">Skills</div>
+                        <hr class="mt-0 mb-5"/>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p><strong>Fluent</strong></p>
+                                {!! $user->skills->fluent !!}
+                            </div>
+                            <div class="col-md-4">
+                                <p><strong>Conversationally Fluent</strong></p>
+
+                                {!! $user->skills->conversationally_fluent !!}
+                            </div>
+                            <div class="col-md-4">
+                                <p><strong>Tourist</strong></p>
+
+                                {!! $user->skills->tourist !!}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="svg-border-angled text-light">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
-                         fill="currentColor">
-                        <polygon points="0,100 100,0 100,100"></polygon>
-                    </svg>
-                </div>
-            </section>
+                    <div class="svg-border-angled text-light">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
+                             fill="currentColor">
+                            <polygon points="0,100 100,0 100,100"></polygon>
+                        </svg>
+                    </div>
+                </section>
+            @endif
             @if(!empty($portfolio_details->interests))
 
                 <section class="bg-light py-10">
