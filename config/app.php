@@ -227,6 +227,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        // composer packages
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
+
     ],
 
 ];

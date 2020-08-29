@@ -10,9 +10,8 @@
     <title>{{ env('APP_NAME', 'TrenchDevs')  }}</title>
     <link href="/admin/css/styles.css" rel="stylesheet"/>
     <link rel="icon" href="/favicon.png"/>
-    <script data-search-pseudo-elements defer
-            src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
-            crossorigin="anonymous"></script>
+
+    @yield('styles')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
             crossorigin="anonymous">
     </script>
@@ -30,6 +29,8 @@
         crossorigin="anonymous"></script>
 <script src="{{ asset('js/app.js', env('APP_ENV') === 'production') }}"></script>
 <script src="/admin/js/admin-scripts.js"></script>
+
+@yield('scripts')
 
 {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>--}}
 </body>

@@ -72,7 +72,7 @@
                             </div>
                             My Portfolio Page
                             <div class="sidenav-collapse-arrow">
-                                <i class="fas fa-angle-down"></i>
+                                <i data-feather="chevron-down"></i>
                             </div>
                         </a>
 
@@ -100,19 +100,25 @@
                             </div>
                             Blogs Posts
                             <div class="sidenav-collapse-arrow">
-                                <i class="fas fa-angle-down"></i>
+                                <i data-feather="chevron-down"></i>
                             </div>
                         </a>
 
                         <div class="collapse" id="blogs" data-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="/blogs">
+                                <a class="nav-link" href="{{route('blogs.upsert')}}">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="plus-square"></i>
+                                    </div>
+                                    Create
+                                </a>
+                                <a class="nav-link" href="{{route('blogs.index')}}">
                                     <div class="nav-link-icon">
                                         <i data-feather="users"></i>
                                     </div>
                                     All Blog Posts
                                 </a>
-                                <a class="nav-link" href="/blogs/me">
+                                <a class="nav-link" href="{{route('blogs.index', ['me' => '1'])}}">
                                     <div class="nav-link-icon">
                                         <i data-feather="feather"></i>
                                     </div>
@@ -127,7 +133,7 @@
                                 <i data-feather="shopping-bag"></i>
                             </div>
                             Shop
-                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            <div class="sidenav-collapse-arrow"><i data-feather="chevron-down"></i></div>
                         </a>
 
                         <div class="sidenav-menu-heading">Utilities</div>
@@ -137,7 +143,7 @@
                                 <i data-feather="globe"></i>
                             </div>
                             Accounts
-                            {{--                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
+                            {{--                            <div class="sidenav-collapse-arrow"><i data-feather="chevron-down"></i></div>--}}
                         </a>
 
                         <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
@@ -146,7 +152,7 @@
                                 <i data-feather="users"></i>
                             </div>
                             User Management
-                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            <div class="sidenav-collapse-arrow"><i data-feather="chevron-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseLayouts" data-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavLayout">
@@ -159,7 +165,7 @@
                                 <i data-feather="mic"></i>
                             </div>
                             Announcements
-                            {{--                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
+                            {{--                            <div class="sidenav-collapse-arrow"><i data-feather="chevron-down"></i></div>--}}
                         </a>
                     </div>
                 </div>

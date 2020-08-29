@@ -85,13 +85,17 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::view('portfolio/skills/edit', 'portfolio.skills')->name('portfolio.skills');
     Route::get('portfolio/skills/get', 'Portfolio\UserSkillsController@getSkills')->name('portfolio.skills.get');
     Route::post('portfolio/skills/save', 'Portfolio\UserSkillsController@save')->name('portfolio.skills.save');
-
-
     //  end - user_skills
 
     /**
      * END - portfolio
      */
+
+    // start - blogs
+    Route::get('blogs', 'Blogs\BlogsController@index')->name('blogs.index');
+    Route::get('blogs/upsert/{blogId?}', 'Blogs\BlogsController@upsert')->name('blogs.upsert');
+    Route::post('blogs/store', 'Blogs\BlogsController@store')->name('blogs.store');
+    // end - blogs
 
     // START - profile
     Route::get('profile', 'ProfileController@index');
