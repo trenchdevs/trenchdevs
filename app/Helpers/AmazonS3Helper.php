@@ -25,9 +25,9 @@ class AmazonS3Helper
             throw new ErrorException("APP_ENV not set");
         }
 
-        $name = time() . $file->getClientOriginalName();
+        $uniqueName = time() . $file->getClientOriginalName();
 
-        $filePath = "{$appEnv}/{$s3filePath}/{$fileName}/{$name}";
+        $filePath = "{$appEnv}/{$s3filePath}/{$fileName}{$uniqueName}";
         $filePath = $this->normalizeUrl($filePath);
 
 
