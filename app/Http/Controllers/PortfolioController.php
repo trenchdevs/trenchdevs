@@ -120,6 +120,7 @@ class PortfolioController extends Controller
         $s3FullPath = $this->s3Helper->upload($avatarFile, 'users/avatars', $fileName);
 
         $user->avatar_url = $s3FullPath;
+        $user->username = $request->username;
         $user->saveOrFail();
 
         return back()->with('message', 'Thank you, your basic profile have been updated');

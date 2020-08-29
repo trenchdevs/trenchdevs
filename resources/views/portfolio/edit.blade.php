@@ -17,9 +17,11 @@
 
             <div class="row">
 
-                <div class="col-md-md-3">
+                <div class="col-md-3">
                     <p>{{$user->username ?: 'N/A'}}</p>
-                    <img class="img-fluid img-thumbnail rounded-circle" src="{{$user->avatar_url}}" alt="Avatar">
+                    <img class="img-fluid img-thumbnail rounded-circle"
+                         src="{{!empty($user->avatar_url) ? $user->avatar_url : '/assets/img/avataaars.svg'}}"
+                         alt="Avatar">
                 </div>
 
                 <div class="col-md-md-9">
@@ -30,7 +32,8 @@
                         <div class="form-group">
                             <label for="username">
                                 Username <br>
-                                <small>This will be used as the subdomain for your portfolio (eg. myusername.trenchdevs.org)</small>
+                                <small>This will be used as the subdomain for your portfolio (eg.
+                                    myusername.trenchdevs.org)</small>
                             </label>
                             <input type="text" name="username" class="form-control"
                                    value="{{old('username', $user->username)}}"
