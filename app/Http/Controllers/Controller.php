@@ -19,10 +19,11 @@ class Controller extends BaseController
     /**
      * @param string $status
      * @param string $message
+     * @param array $dataOverride
      * @param array $errors
      * @return JsonResponse
      */
-    protected function jsonResponse(string $status, string $message, array $errors = [])
+    protected function jsonResponse(string $status, string $message, array $dataOverride = [], array $errors = [])
     {
 
         $response = [
@@ -32,6 +33,10 @@ class Controller extends BaseController
 
         if (!empty($errors)) {
             $response['errors'] = $errors;
+        }
+
+        if (!empty($dataOverride)) {
+            $response = array_merge($response, $dataOverride);
         }
 
         return response()->json($response);
@@ -44,7 +49,7 @@ class Controller extends BaseController
      */
     protected function validationFailureResponse(Validator $validator, string $errorMsg = "Validation Error")
     {
-        return $this->jsonResponse(self::STATUS_ERROR, $errorMsg, $validator->errors()->all());
+        return $this->jsonResponse(self::STATUS_ERROR, $errorMsg, [], $validator->errors()->all());
     }
 
 }

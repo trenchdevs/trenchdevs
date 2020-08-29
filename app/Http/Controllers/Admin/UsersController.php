@@ -6,6 +6,7 @@ use App\Account;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Controller;
 use App\Models\EmailQueue;
+use App\Models\Users\UserPortfolioDetail;
 use App\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -208,5 +209,17 @@ class UsersController extends Controller
         );
 
         return back()->with('message', 'Password reset successful.');
+    }
+
+    public function account(Request $request)
+    {
+        $user = $request->user();
+
+        $portfolioDetail = UserPortfolioDetail::findOrEmptyByUser($user->id);
+
+        return view('admin.users.account', [
+            'user' => $user,
+            'portfolio_detail' => $portfolioDetail,
+        ]);
     }
 }

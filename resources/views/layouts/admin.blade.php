@@ -59,11 +59,11 @@
                             </div>
                             Dashboard
                         </a>
-                        <a class="nav-link collapsed" href="{{route('portfolio.edit')}}">
+                        <a class="nav-link collapsed" href="{{route('portfolio.account')}}">
                             <div class="nav-link-icon">
                                 <i data-feather="user"></i>
                             </div>
-                            Account & Profile
+                            Account
                         </a>
                         <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
                            data-target="#my-portfolio" aria-expanded="false" aria-controls="my-portfolio">
@@ -78,7 +78,7 @@
 
                         <div class="collapse" id="my-portfolio" data-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="/portfolio/preview">
+                                <a class="nav-link" href="{{ route('portfolio.edit') }}">
                                     <div class="nav-link-icon">
                                         <i data-feather="edit"></i>
                                     </div>

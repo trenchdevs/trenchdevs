@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @include('portfolio.shared.sub-nav')
+    @include('admin.shared.account')
 
     <div class="row">
         <div class="col-md-12">

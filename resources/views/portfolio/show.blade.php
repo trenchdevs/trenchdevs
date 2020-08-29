@@ -1,3 +1,6 @@
+@php
+    /** @var \App\User $user */
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,39 +101,32 @@
                     </svg>
                 </div>
             </section>
-            <section class="bg-light py-10">
-                <div class="container">
-                    <div class="text-uppercase-expanded small mb-2">Education</div>
-                    <hr class="mt-0 mb-5"/>
-                    <div class="row mb-5">
-                        <div class="col-lg-8">
-                            <h4 class="mb-0">University of Colorado Boulder</h4>
-                            <p class="lead">Master of Business Administration (MBA)</p>
-                            <p>Graduated from University of Colorado Boulder's lockstep evening MBA program</p>
-                        </div>
-                        <div class="col-lg-4 text-lg-right">
-                            <div class="text-gray-400 small">September 2013 - May 2015</div>
-                        </div>
+            @if(!empty($user->degrees))
+                <section class="bg-light py-10">
+                    <div class="container">
+                        <div class="text-uppercase-expanded small mb-2">Education</div>
+                        <hr class="mt-0 mb-5"/>
+                        @foreach($user->degrees as $degree)
+                            <div class="row mb-5">
+                                <div class="col-lg-8">
+                                    <h4 class="mb-0">{{$degree->educational_institution}}</h4>
+                                    <p class="lead">{{ $degree->degree }}</p>
+                                    {!! $degree->description !!}
+                                </div>
+                                <div class="col-lg-4 text-lg-right">
+                                    <div class="text-gray-400 small">{{ date('F Y', strtotime($degree->start_date)) }} - {{ date('F Y', strtotime($degree->end_date)) }}</div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <h4 class="mb-0">Clarcton University</h4>
-                            <p class="lead">Bachelor of Science</p>
-                            <p>Graduated with a degree in Marketing, with a specialization in product management and a
-                                minor in Finance</p>
-                        </div>
-                        <div class="col-lg-4 text-lg-right">
-                            <div class="text-gray-400 small">August 2009 - May 2013</div>
-                        </div>
+                    <div class="svg-border-angled text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
+                             fill="currentColor">
+                            <polygon points="0,100 100,0 100,100"></polygon>
+                        </svg>
                     </div>
-                </div>
-                <div class="svg-border-angled text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
-                         fill="currentColor">
-                        <polygon points="0,100 100,0 100,100"></polygon>
-                    </svg>
-                </div>
-            </section>
+                </section>
+            @endif
             <section class="bg-white py-10">
                 <div class="container">
                     <div class="text-uppercase-expanded small mb-2">Skills</div>

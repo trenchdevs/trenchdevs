@@ -62,6 +62,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
      */
 
     // start - user_portfolio_details
+    Route::get('portfolio/account', 'Admin\UsersController@account')->name('portfolio.account');
     Route::get('portfolio/edit', 'PortfolioController@edit')->name('portfolio.edit');
     Route::get('portfolio/security', 'PortfolioController@showSecurity')->name('portfolio.security');
     Route::post('portfolio/update', 'PortfolioController@update')->name('portfolio.update');
@@ -69,6 +70,12 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::post('portfolio/background','PortfolioController@uploadBackground')->name('portfolio.background');
     Route::get('portfolio/preview', 'PortfolioController@preview');
     // end - user_portfolio_details
+
+    // start - degreees
+    Route::view('portfolio/degrees/edit', 'portfolio.degrees')->name('portfolio.degrees');
+    Route::post('portfolio/degrees/save', 'Portfolio\UserDegreesController@save')->name('portfolio.degrees.save');
+    Route::get('portfolio/degrees/get', 'Portfolio\UserDegreesController@getDegrees')->name('portfolio.degrees.get');
+    // end - degrees
 
     /**
      * END - portfolio

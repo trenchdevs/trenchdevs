@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Users\UserDegree;
 use App\Models\Users\UserPortfolioDetail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,6 +10,11 @@ use Illuminate\Notifications\Notifiable;
 use Throwable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+/**
+ * Class User
+ * @property UserDegree[] $degrees
+ * @package App
+ */
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use Notifiable;
@@ -173,6 +179,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         }
 
         return $user;
+    }
+
+    public function degrees(){
+//        return $this->hasMany('App\Models\Users\UserDegree');
+        return $this->hasMany(UserDegree::class);
     }
 
 }
