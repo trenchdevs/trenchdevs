@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\AdminDashboardMetrics;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request  $request)
+    public function index(Request  $request, AdminDashboardMetrics $dashboardMetrics)
     {
 
         /** @var User $user */
@@ -31,6 +32,7 @@ class HomeController extends Controller
         return view('home', [
             'user' => $user,
             'portfolio_details' => $user->getPortfolioDetails(),
+            'dashboard_metrics' => $dashboardMetrics,
         ]);
     }
 }

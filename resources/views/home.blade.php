@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
+
+    @php
+        /** @var \App\Repositories\AdminDashboardMetrics $dashboard_metrics */
+    @endphp
+
+
     @if(!$portfolio_details->id)
         <div class="alert alert-primary border-0 mb-4 mt-5 px-md-5">
             <div class="position-relative">
@@ -30,12 +36,11 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1">
-                            <div class="small font-weight-bold text-blue mb-1">Active Users</div>
-                            <div class="h5">3</div>
-{{--                            <div--}}
-{{--                                class="text-xs font-weight-bold text-success d-inline-flex align-items-center">--}}
-{{--                                <i class="mr-1" data-feather="trending-up"></i>12%--}}
-{{--                            </div>--}}
+                            <div class="small font-weight-bold text-blue mb-1">TrenchDevs Users</div>
+                            <div class="h5">{{$dashboard_metrics->getActiveTrenchDevUsers()}}</div>
+                            <div class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                                <i class="mr-1" data-feather="info"></i>Active
+                            </div>
                         </div>
                         <div class="ml-2"><i class="fas fa-users fa-2x text-gray-200"></i></div>
                     </div>
@@ -49,11 +54,13 @@
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1">
                             <div class="small font-weight-bold text-purple mb-1">User Logins</div>
-                            <div class="h5">10</div>
-{{--                            <div--}}
-{{--                                class="text-xs font-weight-bold text-danger d-inline-flex align-items-center">--}}
-{{--                                <i class="mr-1" data-feather="trending-down"></i>3%--}}
-{{--                            </div>--}}
+                            <div class="h5">
+                                {{$dashboard_metrics->getUserLoginsPastMonth()}}
+                            </div>
+                            <div
+                                class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                                <i class="mr-1" data-feather="calendar"></i>Past month
+                            </div>
                         </div>
                         <div class="ml-2"><i class="fas fa-users fa-2x text-gray-200"></i></div>
                     </div>
@@ -65,12 +72,14 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1">
-                            <div class="small font-weight-bold text-green mb-1">Number of porfolio visitors</div>
-                            <div class="h5">3</div>
-{{--                            <div--}}
-{{--                                class="text-xs font-weight-bold text-success d-inline-flex align-items-center">--}}
-{{--                                <i class="mr-1" data-feather="trending-up"></i>12%--}}
-{{--                            </div>--}}
+                            <div class="small font-weight-bold text-green mb-1">TrenchDevs Visitors</div>
+                            <div class="h5">
+                                {{$dashboard_metrics->getPageVisitors() }} visits
+                            </div>
+                            <div
+                                class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                                <i class="mr-1" data-feather="calendar"></i>Past Month
+                            </div>
                         </div>
                         <div class="ml-2"><i class="fas fa-mouse-pointer fa-2x text-gray-200"></i></div>
                     </div>
@@ -83,14 +92,14 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1">
-                            <div class="small font-weight-bold text-yellow mb-1">Conversion rate</div>
-                            <div class="h5">1.23%</div>
+                            <div class="small font-weight-bold text-yellow mb-1">My Portfolio Visits</div>
+                            <div class="h5">{{$dashboard_metrics->getMyPortfolioVisits()}} visits</div>
                             <div
-                                class="text-xs font-weight-bold text-danger d-inline-flex align-items-center">
-                                <i class="mr-1" data-feather="trending-down"></i>1%
+                                class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                                <i class="mr-1" data-feather="calendar"></i> Overall
                             </div>
                         </div>
-                        <div class="ml-2"><i class="fas fa-percentage fa-2x text-gray-200"></i></div>
+                        <div class="ml-2"><i class="fas fa-mouse-pointer fa-2x text-gray-200"></i></div>
                     </div>
                 </div>
             </div>
