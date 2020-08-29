@@ -78,7 +78,7 @@ class AnnouncementsController extends Controller
                 ];
 
                 EmailQueue::queue(
-                    $email,
+                    trim($email),
                     $title,
                     $viewData,
                     'emails.generic'
@@ -98,7 +98,7 @@ class AnnouncementsController extends Controller
                 ];
 
                 EmailQueue::queue(
-                    $user->email,
+                    trim($user->email),
                     $title,
                     $viewData,
                     'emails.generic'
