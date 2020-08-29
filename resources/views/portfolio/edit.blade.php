@@ -24,7 +24,7 @@
                          alt="Avatar">
                 </div>
 
-                <div class="col-md-md-9">
+                <div class="col-md-9">
 
                     <form action="{{route('portfolio.avatar')}}" method="post" enctype="multipart/form-data">
                         @csrf
