@@ -22,7 +22,9 @@
                     <img class="img-fluid img-thumbnail rounded-circle text-center"
                          src="{{!empty($user->avatar_url) ? $user->avatar_url : '/assets/img/avataaars.svg'}}"
                          alt="Avatar">
-                    <p class="text-center">{{$user->username ?: 'N/A'}}</p>
+                    <p class="text-center pt-2">
+                        {{!empty($user->username) ? "https://{$user->username}.trenchdevs.org" : 'N/A'}}
+                    </p>
                 </div>
 
                 <div class="col-md-9">
