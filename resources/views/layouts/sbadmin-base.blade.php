@@ -16,7 +16,7 @@
             crossorigin="anonymous">
     </script>
 
-{{--    @include('layouts.partials.ga')--}}
+    @include('layouts.partials.ga')
 
 </head>
 <body class="nav-fixed">

@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/home/heading.css">
     <link rel="stylesheet" href="css/home/body.css">
 
-{{--    @include('layouts.partials.ga')--}}
+    @include('layouts.partials.ga')
 
 </head>
 <body id="page-top">

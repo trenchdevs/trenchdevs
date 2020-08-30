@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
             crossorigin="anonymous"></script>
 
-{{--    @include('layouts.partials.ga')--}}
+    @include('layouts.partials.ga')
 
     {{-- Overrides   --}}
     <style>
