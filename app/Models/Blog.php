@@ -28,6 +28,7 @@ class Blog extends Model
         'tagline',
         'markdown_contents',
         'status',
+        'primary_image_url'
     ];
 
     public function tags()
