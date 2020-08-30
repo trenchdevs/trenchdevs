@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\SiteAccessLog;
+use App\Models\SiteBlacklistedIp;
 use Closure;
 
 class SiteAccessMiddleware
@@ -18,6 +19,9 @@ class SiteAccessMiddleware
     {
 
         $user = $request->user();
+        $ip = $request->ip();
+
+        $isBlackListed = SiteBlacklistedIp::isBlackListed($ip);
 
         $miscArr = [
             'request_encoded' => base64_encode(json_encode($request->all())),
@@ -52,7 +56,7 @@ class SiteAccessMiddleware
         $data = [
             'user_id' => $user->id ?? null,
             'url' => $request->fullUrl(),
-            'ip' => $request->ip(),
+            'ip' => $ip,
             'user_agent' => $userAgent,
             'referer' => $request->header('referer'),
         ];
@@ -61,8 +65,18 @@ class SiteAccessMiddleware
             $data['misc_json'] = json_encode($miscArr);
         }
 
+        if ($isBlackListed) {
+            $data['action'] = SiteAccessLog::DB_ACTION_DENIED;
+        } else {
+            $data['action'] = SiteAccessLog::DB_ACTION_ALLOWED;
+        }
+
         $siteAccess->fill($data);
         $siteAccess->save();
+
+        if ($isBlackListed) {
+            abort(403);
+        }
 
         return $next($request);
     }
