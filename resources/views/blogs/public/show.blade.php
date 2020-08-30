@@ -1,5 +1,14 @@
 @extends('layouts.blog')
 
+@section('styles')
+    <style>
+        #markdown_contents img {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+@endsection
+
 @section('contents')
 
     @php /** @var \App\Models\Blog $blog */ @endphp
@@ -33,7 +42,7 @@
                             </div>
                         </div>
                         <img class="img-fluid mb-2" src="{{$blog->primary_image_url}}"/>
-                        <div class="mt-3">
+                        <div class="mt-3" id="markdown_contents">
                             {!! $blog->markdownContentsAsHtml() !!}
                         </div>
                     </div>

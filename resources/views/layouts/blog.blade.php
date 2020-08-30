@@ -37,6 +37,8 @@
             background-color: #0f6674 !important
         }
     </style>
+
+    @yield('styles')
 </head>
 <body>
 <div id="layoutDefault">
