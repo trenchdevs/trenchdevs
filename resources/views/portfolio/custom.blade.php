@@ -6,6 +6,9 @@
     <title>{{ env('APP_NAME')  }}</title>
     <link href="/admin/css/styles.css" rel="stylesheet"/>
     <link rel="icon" href="/favicon.png"/>
+
+    @include('layouts.partials.ga')
+
     <style>
         body {
             margin: 0;

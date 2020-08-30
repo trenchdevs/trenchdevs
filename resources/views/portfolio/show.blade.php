@@ -12,6 +12,7 @@
     <title>{{ $user->name()  }} - {{env('APP_NAME')}}</title>
     <link rel="icon" href="/favicon.png"/>
     <link href="/portfolio/css/styles.css" rel="stylesheet"/>
+    @include('layouts.partials.ga')
     <script data-search-pseudo-elements defer
             src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
             crossorigin="anonymous"></script>
