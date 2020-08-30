@@ -39,7 +39,7 @@ class SiteAccessMiddleware
         }
 
         if (!empty($requestData)) {
-            $miscArr['request_encoded'] = $requestData;
+            $miscArr['request_encoded'] = base64_encode(json_encode($requestData));
         }
 
         $headers = collect($request->header())->transform(function ($item) {
