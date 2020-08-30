@@ -23,7 +23,8 @@ class BlogsController extends Controller
             $blogs->where('user_id', $user->id);
         }
 
-        $blogs = $blogs->paginate();
+        $blogs = $blogs->orderBy('id', 'desc')
+            ->paginate(6);
 
         return view('blogs.index', [
             'blogs' => $blogs,

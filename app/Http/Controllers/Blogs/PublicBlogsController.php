@@ -15,7 +15,7 @@ class PublicBlogsController extends Controller
         $blogs = $query->where('status', Blog::DB_STATUS_published)
             ->orderBy('created_at', 'DESC')
             ->orderBy('id', 'DESC')
-            ->paginate();
+            ->paginate(6);
 
         return view('blogs.public.index', [
             'blogs' => $blogs
