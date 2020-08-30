@@ -16,7 +16,7 @@
             crossorigin="anonymous">
     </script>
 
-    @include('layouts.partials.google-analytics-main')
+{{--    @include('layouts.partials.ga')--}}
 
 </head>
 <body class="nav-fixed">
