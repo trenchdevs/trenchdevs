@@ -17,16 +17,7 @@
     <link rel="stylesheet" href="css/home/heading.css">
     <link rel="stylesheet" href="css/home/body.css">
 
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176783752-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-176783752-1');
-    </script>
+    @include('layouts.partials.google-analytics-main')
 
 </head>
 <body id="page-top">
