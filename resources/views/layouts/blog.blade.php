@@ -56,8 +56,9 @@
                                 </a>
                             </li>
                         </ul>
-                        <a class="btn-primary btn rounded-pill px-4 ml-lg-4" href="/register">Join<i
-                                class="fas fa-arrow-right ml-1"></i></a>
+                        <a class="btn-primary btn rounded-pill px-4 ml-lg-4" href="{{env('APP_URL')}}/login">SIGN IN / JOIN
+                            <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
                     </div>
                 </div>
             </nav>
