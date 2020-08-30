@@ -49,6 +49,7 @@ class BlogsController extends Controller
             'title' => ['required', 'max:255', Rule::unique('blogs')->ignore($id)],
             'slug' => ['required', 'max:255', Rule::unique('blogs')->ignore($id)],
             'status' => 'required|in:draft,published',
+            'primary_image_url' => 'required:max:512',
             'tagline' => 'required|max:255',
             'markdown_contents' => 'required|max:50000', // can be changed later on if needed more
         ]);

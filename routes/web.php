@@ -18,11 +18,10 @@ if (empty($baseUrl)) {
 
 // START - Special subdomains here
 
-//Route::domain("blog.{$baseUrl}")->group(function(){
-//    Route::get('/blog', function () {
-//        dd('@blog');
-//    });
-//});
+Route::domain("blog.{$baseUrl}")->group(function(){
+    Route::get('/', 'Blogs\PublicBlogsController@index');
+    Route::get('{slug}', 'Blogs\PublicBlogsController@show');
+});
 
 // END - Special subdomains here
 

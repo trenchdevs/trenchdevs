@@ -45,6 +45,24 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="primary_image_url">
+                        Primary Image URL <small>(shown on the blog listing and below title and tagline on blog
+                            details)
+                        </small>
+                    </label>
+                    <p>Tip: you can try using the unsplash to get free images <br> (eg.
+                        <strong>https://source.unsplash.com/1024x760/?blog,blogs,book</strong> - This will return a url
+                        to get pictures with blog / books tagged in
+                        them)
+                    </p>
+                    <input type="text" name="primary_image_url" id="primary_image_url" class="form-control"
+                        value="{{old('primary_image_url', $blog->primary_image_url ?? '')}}"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
                     <label for="status">Status</label>
                     <select class="form-control" name="status" id="status">
                         <option
@@ -56,6 +74,7 @@
                         </option>
                     </select>
                 </div>
+
 
                 <div>
                     <input type="submit" class="btn btn-success">
