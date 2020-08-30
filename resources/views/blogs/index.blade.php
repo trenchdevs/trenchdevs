@@ -15,6 +15,7 @@
 
     <div class="row">
         @foreach($blogs as $blog)
+            @php /** @var \App\Models\Blog $blog */ @endphp
             <div class="col-md-6 mb-5">
                 <div class="card">
                     <div class="card-header">
@@ -28,9 +29,22 @@
                             <i data-feather="edit"></i>
                         </a>
 
-                        <p>Tagline: <strong>{{$blog->tagline}}</strong></p>
-                        <p>Contents:</p>
-                        {!!  Markdown::convertToHtml($blog->markdown_contents)!!}
+                        <p>
+                            <strong>Tagline:</strong> {{$blog->tagline}}
+                        </p>
+                        <p>
+                            <strong>Status:</strong>
+                            @if($blog->status === 'published')
+                                <span class="badge badge-success">PUBLISHED</span>
+                            @elseif($blog->status === 'draft')
+                                <span class="badge badge-warning">DRAFT</span>
+                            @endif
+                        </p>
+                        @if($blog->status === 'published')
+                            <p>
+                                <strong>URL: </strong><a target="_blank" href="{{$blog->getUrl()}}">{{$blog->getUrl()}}</a>
+                            </p>
+                        @endif
                     </div>
                 </div>
             </div>

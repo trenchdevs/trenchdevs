@@ -91,4 +91,14 @@ class Blog extends Model
         return Markdown::convertToHtml($this->markdown_contents);
     }
 
+    public function getUrl(){
+
+        $baseUrl = env('BASE_URL');
+        $environment = env('APP_ENV');
+
+        $scheme = $environment === 'production' ? 'https://' : 'http://';
+
+        return "{$scheme}blog.{$baseUrl}/{$this->slug}";
+    }
+
 }
