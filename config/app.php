@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-//        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
         /*
          * Application Service Providers...
