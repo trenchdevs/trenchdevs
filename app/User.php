@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Users\UserDegree;
+use App\Models\Users\UserExperience;
 use App\Models\Users\UserPortfolioDetail;
 use App\Models\Users\UserSkill;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -181,6 +182,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         }
 
         return $user;
+    }
+
+    public function experiences(){
+        return $this->hasMany(UserExperience::class);
     }
 
     public function degrees(){

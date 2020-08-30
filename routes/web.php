@@ -71,7 +71,9 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // end - user_portfolio_details
 
     // start - user_experiences
-
+    Route::view('portfolio/experiences/edit', 'portfolio.experiences')->name('portfolio.experiences');
+    Route::post('portfolio/experiences/save', 'Portfolio\UserExperiencesController@save')->name('portfolio.experiences.save');
+    Route::get('portfolio/experiences/get', 'Portfolio\UserExperiencesController@getExperiences')->name('portfolio.experiences.get');
     // end - user_experiences
 
     // start - user_degrees
