@@ -9,7 +9,8 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <h1 class="page-header-title mb-3">Publications</h1>
-                        <p class="page-header-text mb-0">Browse articles, keep up to date, and learn more on our
+                        <p class="page-header-text mb-0" style="color: white !important;">Browse articles, keep up to
+                            date, and learn more on our
                             blog!
                         </p>
                     </div>

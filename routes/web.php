@@ -19,7 +19,7 @@ if (empty($baseUrl)) {
 // START - Special subdomains here
 
 Route::domain("blog.{$baseUrl}")->group(function(){
-    Route::get('/', 'Blogs\PublicBlogsController@index');
+    Route::get('/', 'Blogs\PublicBlogsController@index')->name('blogs');
     Route::get('{slug}', 'Blogs\PublicBlogsController@show');
 });
 

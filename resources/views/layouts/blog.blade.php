@@ -7,7 +7,7 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ env('APP_NAME', 'TrenchDevs')  }}</title>
+    <title>{{ env('APP_NAME', 'TrenchDevs')  }} Blog</title>
     <link rel="icon" href="/favicon.png"/>
 
     <link href="/sbui/css/styles.css" rel="stylesheet"/>
@@ -21,9 +21,8 @@
     {{-- Overrides   --}}
     <style>
         .text-primary {
-            color: #00a180 !important;
+            color: #10d2aa !important
         }
-
 
         a.text-primary:hover, a.text-primary:focus {
             color: #0f6674 !important
@@ -45,14 +44,17 @@
         <main>
             <nav class="navbar navbar-marketing navbar-expand-lg bg-dark navbar-dark">
                 <div class="container">
-                    <a class="navbar-brand text-primary" href="/">TrenchDevs Blog</a>
+                    <a class="navbar-brand text-white" href="/">TRENCHDEVS BLOG</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation"><i data-feather="menu"></i></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto mr-lg-5">
-                            <li class="nav-item"><a class="nav-link" target="_blank" href="https://trenchdevs.org">TrenchDevs
-                                    Home</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" target="_blank" href="https://trenchdevs.org">
+                                    TRENCHDEVS
+                                </a>
+                            </li>
                         </ul>
                         <a class="btn-primary btn rounded-pill px-4 ml-lg-4" href="/register">Join<i
                                 class="fas fa-arrow-right ml-1"></i></a>
