@@ -30,10 +30,23 @@ class BlogsController extends Controller
         ]);
     }
 
-    public function upsert($blogId = null)
+    public function upsert($blogId = null, Request $request)
     {
+
+        $blog = new Blog();
+
+        if (!empty($blogId))  {
+            /** @var User $loggedInUser */
+            $loggedInUser = $request->user();
+
+            $blog = Blog::find($blogId);
+            if ($blog->user_id !== $loggedInUser->id) {
+                abort(403);
+            }
+        }
+
         return view('blogs.upsert', [
-            'blog' => Blog::find($blogId),
+            'blog' => $blog,
         ]);
     }
 
@@ -71,7 +84,8 @@ class BlogsController extends Controller
 
         // todo: insert ignore tags
 
-        return back()->with('message', 'Successfully ' . $editMode ? 'updated' : 'created' . ' the blog entry.');
+        $message = 'Successfully ' . ($editMode ? 'updated' : 'created') . ' the blog entry "' . $blog->title . '".';
+        return redirect(route('blogs.index'))->with('message', $message);
 
     }
 }
