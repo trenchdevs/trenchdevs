@@ -52,83 +52,6 @@
                     </svg>
                 </div>
             </header>
-            <section class="bg-white py-10">
-                <div class="container">
-                    <div class="text-uppercase-expanded small mb-2">Experience</div>
-                    <hr class="mt-0 mb-5"/>
-                    <div class="row mb-5">
-                        <div class="col-lg-8">
-                            <h4 class="mb-0">Senior Sales Analyst</h4>
-                            <p class="lead">Intelitec Solutions</p>
-                            <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end
-                                of the day, going forward, a new normal that has evolved from generation X is on the
-                                runway heading towards a streamlined cloud solution. User generated content in real-time
-                                will have multiple touchpoints for offshoring.</p>
-                        </div>
-                        <div class="col-lg-4 text-lg-right">
-                            <div class="text-gray-400 small">May 2018 - Present</div>
-                        </div>
-                    </div>
-                    <div class="row mb-5">
-                        <div class="col-lg-8">
-                            <h4 class="mb-0">Marketing Analyst</h4>
-                            <p class="lead">Shout Media Productions</p>
-                            <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test.
-                                Override the digital divide with additional clickthroughs from DevOps. Nanotechnology
-                                immersion along the information highway will close the loop on focusing solely on the
-                                bottom line.</p>
-                        </div>
-                        <div class="col-lg-4 text-lg-right">
-                            <div class="text-gray-400 small">August 2015 - May 2018</div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <h4 class="mb-0">Sales Representative</h4>
-                            <p class="lead">Gamby Enterprises</p>
-                            <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically
-                                procrastinate B2C users after installed base benefits. Dramatically visualize customer
-                                directed convergence without revolutionary ROI.</p>
-                        </div>
-                        <div class="col-lg-4 text-lg-right">
-                            <div class="text-gray-400 small">June 2011 - August 2015</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="svg-border-angled text-light">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
-                         fill="currentColor">
-                        <polygon points="0,100 100,0 100,100"></polygon>
-                    </svg>
-                </div>
-            </section>
-            @if(!empty($user->degrees))
-                <section class="bg-light py-10">
-                    <div class="container">
-                        <div class="text-uppercase-expanded small mb-2">Education</div>
-                        <hr class="mt-0 mb-5"/>
-                        @foreach($user->degrees as $degree)
-                            <div class="row mb-5">
-                                <div class="col-lg-8">
-                                    <h4 class="mb-0">{{$degree->educational_institution}}</h4>
-                                    <p class="lead">{{ $degree->degree }}</p>
-                                    {!! $degree->description !!}
-                                </div>
-                                <div class="col-lg-4 text-lg-right">
-                                    <div class="text-gray-400 small">{{ date('F Y', strtotime($degree->start_date)) }}
-                                        - {{ date('F Y', strtotime($degree->end_date)) }}</div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="svg-border-angled text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
-                             fill="currentColor">
-                            <polygon points="0,100 100,0 100,100"></polygon>
-                        </svg>
-                    </div>
-                </section>
-            @endif
             @if(!empty($user->skills))
                 <section class="bg-white py-10">
                     <div class="container">
@@ -159,9 +82,93 @@
                     </div>
                 </section>
             @endif
+            @if(!empty($user->experiences))
+                <section class="bg-light py-10">
+                    <div class="container">
+                        <div class="text-uppercase-expanded small mb-2">Experience</div>
+                        <hr class="mt-0 mb-5"/>
+                        @foreach($user->experiences as $experience)
+                            <div class="row mb-5">
+                                <div class="col-lg-8">
+                                    <h4 class="mb-0">{{ $experience->title }}</h4>
+                                    <p class="lead">{{ $experience->company }}</p>
+                                    {!! $experience->description !!}
+                                </div>
+                                <div class="col-lg-4 text-lg-right">
+                                    <div class="text-gray-400 small">
+                                        {{ date('F Y', strtotime($experience->start_date)) }}
+                                        -
+                                        {{ $experience->end_date ? date('F Y', strtotime($experience->end_date)) : 'Present' }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        <div class="svg-border-angled text-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
+                                 fill="currentColor">
+                                <polygon points="0,100 100,0 100,100"></polygon>
+                            </svg>
+                        </div>
+                    </div>
+                </section>
+            @endif
+            @if(!empty($user->certifications))
+                <section class="bg-white py-10">
+                    <div class="container">
+                        <div class="text-uppercase-expanded small mb-2">Certifications</div>
+                        <hr class="mt-0 mb-5"/>
+                        @foreach($user->certifications as $certification)
+                            <div class="row mb-5">
+                                <div class="col-lg-8">
+                                    <h4 class="mb-0">{{$certification->title}}</h4>
+                                    <p class="lead">{{ $certification->issuer }}</p>
+                                    {!! $certification->description !!}
+                                </div>
+                                <div class="col-lg-4 text-lg-right">
+                                    <div class="text-gray-400 small">{{ date('F Y', strtotime($certification->expiration_date)) }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="svg-border-angled text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
+                             fill="currentColor">
+                            <polygon points="0,100 100,0 100,100"></polygon>
+                        </svg>
+                    </div>
+                </section>
+            @endif
+            @if(!empty($user->degrees))
+                <section class="bg-light py-10">
+                    <div class="container">
+                        <div class="text-uppercase-expanded small mb-2">Education</div>
+                        <hr class="mt-0 mb-5"/>
+                        @foreach($user->degrees as $degree)
+                            <div class="row mb-5">
+                                <div class="col-lg-8">
+                                    <h4 class="mb-0">{{$degree->educational_institution}}</h4>
+                                    <p class="lead">{{ $degree->degree }}</p>
+                                    {!! $degree->description !!}
+                                </div>
+                                <div class="col-lg-4 text-lg-right">
+                                    <div class="text-gray-400 small">{{ date('F Y', strtotime($degree->start_date)) }}
+                                        - {{ date('F Y', strtotime($degree->end_date)) }}</div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="svg-border-angled text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
+                             fill="currentColor">
+                            <polygon points="0,100 100,0 100,100"></polygon>
+                        </svg>
+                    </div>
+                </section>
+            @endif
             @if(!empty($portfolio_details->interests))
 
-                <section class="bg-light py-10">
+                <section class="bg-white py-10">
                     <div class="container">
                         <div class="text-uppercase-expanded small mb-2">Interests</div>
                         <hr class="mt-0 mb-5"/>

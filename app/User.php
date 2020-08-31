@@ -15,7 +15,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * Class User
+ * @property UserCertification[] $certifications
  * @property UserDegree[] $degrees
+ * @property UserExperience[] $experiences
  * @property UserSkill $skills
  * @package App
  */
