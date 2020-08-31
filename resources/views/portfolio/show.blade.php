@@ -79,7 +79,9 @@
             @if(!empty($user->skills))
                 <section class="bg-white py-10">
                     <div class="container">
-                        <div class="text-uppercase-expanded small mb-2">Skills</div>
+                        <div class="text-uppercase-expanded small mb-2">
+                            <i data-feather="zap"></i> Skills
+                        </div>
                         <hr class="mt-0 mb-5"/>
                         <div class="row">
                             <div class="col-md-4">
@@ -109,7 +111,9 @@
             @if(!empty($user->experiences))
                 <section class="bg-light py-10">
                     <div class="container">
-                        <div class="text-uppercase-expanded small mb-2">Experience</div>
+                        <div class="text-uppercase-expanded small mb-2">
+                            <i data-feather="briefcase"></i> Experience
+                        </div>
                         <hr class="mt-0 mb-5"/>
                         @foreach($user->experiences as $experience)
                             <div class="row mb-5">
@@ -139,7 +143,9 @@
             @if(!empty($user->certifications))
                 <section class="bg-white py-10">
                     <div class="container">
-                        <div class="text-uppercase-expanded small mb-2">Certifications</div>
+                        <div class="text-uppercase-expanded small mb-2">
+                            <i data-feather="award"></i> Certifications
+                        </div>
                         <hr class="mt-0 mb-5"/>
                         @foreach($user->certifications as $certification)
                             <div class="row mb-5">
@@ -173,7 +179,9 @@
             @if(!empty($user->degrees))
                 <section class="bg-light py-10">
                     <div class="container">
-                        <div class="text-uppercase-expanded small mb-2">Education</div>
+                        <div class="text-uppercase-expanded small mb-2">
+                            <i data-feather="book"></i> Education
+                        </div>
                         <hr class="mt-0 mb-5"/>
                         @foreach($user->degrees as $degree)
                             <div class="row mb-5">
@@ -201,7 +209,9 @@
 
                 <section class="bg-white py-10">
                     <div class="container">
-                        <div class="text-uppercase-expanded small mb-2">Interests</div>
+                        <div class="text-uppercase-expanded small mb-2">
+                            <i data-feather="star"></i>  Interests
+                        </div>
                         <hr class="mt-0 mb-5"/>
                         <div class="row">
                             <div class="col-lg-8">
@@ -219,7 +229,9 @@
             @endif
             <section class="bg-white py-10">
                 <div class="container">
-                    <div class="text-uppercase-expanded small mb-2">Contact</div>
+                    <div class="text-uppercase-expanded small mb-2">
+                        <i data-feather="phone"></i> Contact
+                    </div>
                     <hr class="mt-0 mb-5"/>
                     <div class="row">
                         <div class="col-lg-8 mb-4 mb-lg-0">
