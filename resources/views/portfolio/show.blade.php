@@ -136,7 +136,13 @@
                         @foreach($user->certifications as $certification)
                             <div class="row mb-5">
                                 <div class="col-lg-8">
-                                    <h4 class="mb-0">{{$certification->title}}</h4>
+                                    @if(!empty($certification->certification_url))
+                                        <a href="{{$certification->certification_url}}" target="_blank">
+                                            <h4 class="mb-0">{{$certification->title}}</h4>
+                                        </a>
+                                    @else
+                                        <h4 class="mb-0">{{$certification->title}}</h4>
+                                    @endif
                                     <p class="lead">{{ $certification->issuer }}</p>
                                     {!! $certification->description !!}
                                 </div>
