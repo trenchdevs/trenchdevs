@@ -126,7 +126,7 @@
                                     <div class="text-gray-400 small">
                                         {{ date('F Y', strtotime($experience->start_date)) }}
                                         -
-                                        {{ $experience->end_date ? date('F Y', strtotime($experience->end_date)) : 'Present' }}
+                                        {{ $experience->end_date ? date('F Y', strtotime($experience->end_date)) : 'PRESENT' }}
                                     </div>
                                 </div>
                             </div>
