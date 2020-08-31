@@ -40,7 +40,6 @@
                                        target="_blank"
                                     >
                                         <i data-feather="linkedin"></i>
-                                        Linkedin
                                     </a>
                                 @endif
 
@@ -51,7 +50,6 @@
                                        target="_blank"
                                     >
                                         <i data-feather="github"></i>
-                                        Github
                                     </a>
                                 @endif
 
@@ -62,7 +60,7 @@
                                        target="_blank"
                                     >
                                         <i class="fas fa-file-pdf mr-2"></i>
-                                        Resume
+                                        CV
                                     </a>
                                 @endif
                             </div>
