@@ -33,19 +33,35 @@
                                 <p class="page-header-text mb-5">
                                     {{$portfolio_details->tagline}}
                                 </p>
+                                <a class="btn btn-marketing rounded-pill btn-blue lift lift-sm"
+                                   target="_blank"
+                                   href="//{{ $portfolio_details->linkedin_url }}"
+                                   target="_blank"
+                                >
+                                    <i data-feather="github"></i>
+                                    Linkedin
+                                </a>
+                                <a class="btn btn-marketing rounded-pill btn-white lift lift-sm"
+                                   target="_blank"
+                                   href="//{{ $portfolio_details->github_url }}"
+                                   target="_blank"
+                                >
+                                    <i data-feather="github"></i>
+                                    Github
+                                </a>
                                 <a class="btn btn-marketing rounded-pill btn-teal lift lift-sm"
                                    target="_blank"
                                    href="//{{ $portfolio_details->resume_url }}"
                                    target="_blank"
                                 >
                                     <i class="fas fa-file-pdf mr-2"></i>
-                                    Download Resume
+                                    Resume
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="svg-border-angled text-white">
+                <div class="svg-border-angled text">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
                          fill="currentColor">
                         <polygon points="0,100 100,0 100,100"></polygon>
