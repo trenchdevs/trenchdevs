@@ -28,7 +28,7 @@
 
                 <div class="form-group">
                     <label for="slug">Slug</label>
-                    <input id="slug" class="form-control" type="text" name="slug"
+                    <input readonly id="slug" class="form-control" type="text" name="slug"
                            value="{{ old('slug', $blog->slug ?? '') }}">
                 </div>
 
@@ -56,7 +56,7 @@
                         them)
                     </p>
                     <input type="text" name="primary_image_url" id="primary_image_url" class="form-control"
-                        value="{{old('primary_image_url', $blog->primary_image_url ?? '')}}"
+                           value="{{old('primary_image_url', $blog->primary_image_url ?? '')}}"
                     >
 
                 </div>
@@ -93,6 +93,21 @@
 
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <script>
-        var simplemde = new SimpleMDE({element: document.getElementById("markdown_contents")});
+        $(document).ready(function () {
+
+            var simplemde = new SimpleMDE({element: document.getElementById("markdown_contents")});
+
+            $("#title").on('keyup', function () {
+
+                var titleStr = $(this).val();
+
+                if (titleStr) {
+                    titleStr = titleStr.toLocaleLowerCase().split(' ').join('-');
+                    $('#slug').val(titleStr);
+                } else {
+                    $('#slug').val('');
+                }
+            });
+        });
     </script>
 @endsection
