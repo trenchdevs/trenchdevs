@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                         @endforeach
-                        <div class="svg-border-angled text-light">
+                        <div class="svg-border-angled text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
                                  fill="currentColor">
                                 <polygon points="0,100 100,0 100,100"></polygon>
@@ -162,7 +162,7 @@
                             </div>
                         @endforeach
                     </div>
-                    <div class="svg-border-angled text-white">
+                    <div class="svg-border-angled text-light">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
                              fill="currentColor">
                             <polygon points="0,100 100,0 100,100"></polygon>
@@ -209,7 +209,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="svg-border-angled text-white">
+                    <div class="svg-border-angled text-light">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
                              fill="currentColor">
                             <polygon points="0,100 100,0 100,100"></polygon>
@@ -217,7 +217,7 @@
                     </div>
                 </section>
             @endif
-            <section class="bg-white py-10">
+            <section class="bg-light py-10">
                 <div class="container">
                     <div class="text-uppercase-expanded small mb-2">Contact</div>
                     <hr class="mt-0 mb-5"/>
