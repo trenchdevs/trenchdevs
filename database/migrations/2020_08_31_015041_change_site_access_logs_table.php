@@ -14,7 +14,7 @@ class ChangeSiteAccessLogsTable extends Migration
     public function up()
     {
         Schema::table('site_access_logs', function (Blueprint $table) {
-            $table->string('user_agent', 2048)->change();
+            $table->string('user_agent', "512")->change();
         });
     }
 
