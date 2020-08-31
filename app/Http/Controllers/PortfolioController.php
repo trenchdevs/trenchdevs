@@ -76,7 +76,7 @@ class PortfolioController extends Controller
             'linkedin_url' => 'required|max:128',
             'resume_url' => 'required|max:128',
             'interests' => 'max:500',
-            'tagline' => 'max:500',
+            'tagline' => 'max:255',
         ]);
 
         /** @var User $user */
