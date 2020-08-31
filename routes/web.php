@@ -88,6 +88,12 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::post('portfolio/skills/save', 'Portfolio\UserSkillsController@save')->name('portfolio.skills.save');
     //  end - user_skills
 
+    // start - user_experiences
+    Route::view('portfolio/certifications/edit', 'portfolio.certifications')->name('portfolio.certifications');
+    Route::post('portfolio/certifications/save', 'Portfolio\UserCertificationsController@save')->name('portfolio.certifications.save');
+    Route::get('portfolio/certifications/get', 'Portfolio\UserCertificationsController@getCertifications')->name('portfolio.certifications.get');
+    // end - user_experiences
+
     /**
      * END - portfolio
      */

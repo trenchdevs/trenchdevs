@@ -33,7 +33,7 @@ class UserExperiencesController extends Controller
             'experiences.*.company' => 'required|string',
             'experiences.*.description' => 'required|string',
             'experiences.*.start_date' => 'required|date',
-            'experiences.*.end_date' => 'required|date'
+            'experiences.*.end_date' => 'nullable|date'
         ]);
 
         if ($validator->fails()) {

@@ -30,7 +30,7 @@
                 </p>
             </div>
             <div class="stepwizard-step col-xs-2">
-                <a href="{{route('portfolio.degrees')}}" type="button" class="btn btn-orange btn-circle text-white"
+                <a href="{{route('portfolio.certifications')}}" type="button" class="btn btn-orange btn-circle text-white"
                    disabled="disabled">5</a>
                 <p>
                     <small>Certifications</small>
@@ -38,8 +38,6 @@
             </div>
         </div>
     </div>
-
-</nav>
 
 
 @section('styles')

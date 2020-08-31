@@ -6,3 +6,6 @@ export const PORTFOLIO_SKILLS_SAVE = '/portfolio/skills/save';
 
 export const PORTFOLIO_EXPERIENCES_GET = '/portfolio/experiences/get';
 export const PORTFOLIO_EXPERIENCES_SAVE = '/portfolio/experiences/save';
+
+export const PORTFOLIO_CERTIFICATIONS_GET = '/portfolio/certifications/get';
+export const PORTFOLIO_CERTIFICATIONS_SAVE = '/portfolio/certifications/save';

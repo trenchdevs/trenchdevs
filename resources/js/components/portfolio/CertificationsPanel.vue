@@ -1,7 +1,7 @@
 <template>
     <div class="card mb-4">
         <div class="card-header">
-            Experiences
+            Certifications
         </div>
 
 
@@ -13,47 +13,39 @@
 
             <div class="mb-3"></div>
 
-            <div class="mb-3 row" v-for="(experience,index) in experiences">
+            <div class="mb-3 row" v-for="(certification,index) in certifications">
 
                 <div class="col-md-12">
-                    <h4>Experience #{{ index + 1 }}</h4>
+                    <h4>Certification #{{ index + 1 }}</h4>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" v-model="experience.title">
+                        <input type="text" class="form-control" v-model="certification.title">
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Company</label>
-                        <input type="text" class="form-control" v-model="experience.company">
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-
-                    <div class="form-group">
-                        <label>Start Date</label>
-                        <input type="date" class="form-control" v-model="experience.start_date">
+                        <label>Issuer</label>
+                        <input type="text" class="form-control" v-model="certification.issuer">
                     </div>
                 </div>
 
                 <div class="col-md-6">
 
                     <div class="form-group">
-                        <label>End Date</label>
-                        <input type="date" class="form-control" v-model="experience.end_date">
+                        <label>Certification URL</label>
+                        <input type="text" class="form-control" v-model="certification.certification_url">
                     </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-6">
 
                     <div class="form-group">
-                        <label>Description</label>
-                        <vue-editor v-model="experience.description"/>
+                        <label>Expiration Date</label>
+                        <input type="date" class="form-control" v-model="certification.expiration_date">
                     </div>
                 </div>
 
@@ -75,7 +67,7 @@
                 </ul>
             </div>
 
-            <div class="mt-5" v-if="experiences.length > 0">
+            <div class="mt-5" v-if="certifications.length > 0">
                 <button class="btn btn-success" @click="save">
                     <save-icon/>
                     <span class="pl-1">Save</span>
@@ -93,7 +85,7 @@
     import _ from 'lodash';
     import {VueEditor} from "vue2-editor";
     import {PlusIcon, SaveIcon} from 'vue-feather-icons'
-    import {PORTFOLIO_EXPERIENCES_GET, PORTFOLIO_EXPERIENCES_SAVE} from "../../config/Endpoints";
+    import {PORTFOLIO_CERTIFICATIONS_GET, PORTFOLIO_CERTIFICATIONS_SAVE} from "../../config/Endpoints";
 
     export default {
         components: {
@@ -102,11 +94,11 @@
             VueEditor
         },
         async mounted() {
-            await this.getExperiences();
+            await this.getCertifications();
         },
         data() {
             return {
-                experiences: [],
+                certifications: [],
                 errors: [],
                 errorMessage: undefined,
                 infoMessage: undefined,
@@ -114,14 +106,14 @@
         },
         methods: {
 
-            async getExperiences() {
+            async getCertifications() {
 
                 try {
-                    const response = await axios.get(PORTFOLIO_EXPERIENCES_GET);
-                    const {experiences} = response.data;
+                    const response = await axios.get(PORTFOLIO_CERTIFICATIONS_GET);
+                    const {certifications} = response.data;
 
-                    if (!_.isEmpty(experiences)) {
-                        this.experiences = experiences;
+                    if (!_.isEmpty(certifications)) {
+                        this.certifications = certifications;
                     }
 
                 } catch (error) {
@@ -131,12 +123,11 @@
 
             addEntry() {
 
-                this.experiences.push({
+                this.certifications.push({
                     'title': '',
-                    'company': '',
-                    'start_date': undefined,
-                    'end_date': undefined,
-                    'description': '',
+                    'issuer': '',
+                    'certification_url': '',
+                    'expiration_date': undefined,
                 });
             },
 
@@ -144,18 +135,18 @@
 
                 try {
 
-                    console.log('data', this.experiences);
+                    console.log('data', this.certifications);
 
                     const data = {
-                        experiences: this.experiences
+                        certifications: this.certifications
                     };
 
-                    const response = await axios.post(PORTFOLIO_EXPERIENCES_SAVE, data);
+                    const response = await axios.post(PORTFOLIO_CERTIFICATIONS_SAVE, data);
                     const {status, message, errors = []} = response.data;
 
                     if (status === 'success') {
                         this.infoMessage = message;
-                        await this.getExperiences();
+                        await this.getCertifications();
 
                         window.scrollTo({
                             behavior: 'smooth',

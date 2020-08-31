@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Users\UserCertification;
 use App\Models\Users\UserDegree;
 use App\Models\Users\UserExperience;
 use App\Models\Users\UserPortfolioDetail;
@@ -182,6 +183,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         }
 
         return $user;
+    }
+
+    public function certifications(){
+        return $this->hasMany(UserCertification::class);
     }
 
     public function experiences(){
