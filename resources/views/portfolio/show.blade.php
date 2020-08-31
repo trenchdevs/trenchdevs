@@ -161,9 +161,10 @@
                                     {!! $certification->description !!}
                                 </div>
                                 <div class="col-lg-4 text-lg-right">
-                                    <div
-                                        class="text-gray-400 small">{{ date('F Y', strtotime($certification->expiration_date)) }}
+                                    <div class="text-gray-400 small">
+                                        {{ $certification->issuance_date ? date('F Y', strtotime($certification->issuance_date)) : '' }}
                                     </div>
+
                                 </div>
                             </div>
                         @endforeach

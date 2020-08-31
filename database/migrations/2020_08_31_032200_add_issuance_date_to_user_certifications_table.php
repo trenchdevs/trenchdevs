@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeUserExperiencesToTextTable extends Migration
+class AddIssuanceDateToUserCertificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChangeUserExperiencesToTextTable extends Migration
      */
     public function up()
     {
-        Schema::table('user_experiences', function (Blueprint $table) {
-            $table->text('description')->after('certification_url')->change();
+        Schema::table('user_certifications', function (Blueprint $table) {
+            $table->date('issuance_date')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class ChangeUserExperiencesToTextTable extends Migration
     public function down()
     {
         Schema::table('user_experiences', function (Blueprint $table) {
-            $table->string('description')->change();
+            $table->dropColumn('issuance_date');
         });
     }
 }

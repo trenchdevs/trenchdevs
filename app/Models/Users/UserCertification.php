@@ -16,6 +16,7 @@ class UserCertification extends Model
         'title',
         'issuer',
         'certification_url',
+        'issuance_date',
         'expiration_date',
     ];
 }

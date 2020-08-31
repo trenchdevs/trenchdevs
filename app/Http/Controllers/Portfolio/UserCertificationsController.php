@@ -30,6 +30,7 @@ class UserCertificationsController extends Controller
             'certifications' => 'required|array|present',
             'certifications.*.title' => 'required|string',
             'certifications.*.issuer' => 'required|string',
+            'certifications.*.issuance_date' => 'required|date',
             'certifications.*.certification_url' => 'nullable|string|url',
             'certifications.*.expiration_date' => 'nullable|date',
         ]);

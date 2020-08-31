@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
 
                     <div class="form-group">
                         <label>Certification URL</label>
@@ -41,7 +41,15 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
+
+                    <div class="form-group">
+                        <label>Issuance Date</label>
+                        <input type="date" class="form-control" v-model="certification.issuance_date">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
 
                     <div class="form-group">
                         <label>Expiration Date</label>
@@ -127,6 +135,7 @@
                     'title': '',
                     'issuer': '',
                     'certification_url': '',
+                    'issuance_date': undefined,
                     'expiration_date': undefined,
                 });
             },
