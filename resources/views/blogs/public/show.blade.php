@@ -7,6 +7,13 @@
             text-align: center;
         }
     </style>
+
+
+    <link href="/blog/prism/prism.css" rel="stylesheet"/>
+@endsection
+
+@section('scripts')
+    <script src="/blog/prism/prism.js"></script>
 @endsection
 
 @section('contents')
