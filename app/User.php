@@ -203,4 +203,16 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->hasOne(UserSkill::class);
     }
 
+    /**
+     * @return string
+     */
+    public function getPortfolioUrl(): string{
+
+        if (empty($this->username)) {
+            return '';
+        }
+
+        return get_portfolio_url($this->username);
+    }
+
 }

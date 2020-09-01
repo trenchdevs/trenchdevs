@@ -54,7 +54,7 @@
 
                     @php /** @var \App\Models\Blog $blog */ @endphp
                     <div class="col-md-6 col-xl-4 mb-5">
-                        <a class="card post-preview lift h-100" href="/{{$blog->slug}}">
+                        <a class="card post-preview lift h-100" href="/{{$blog->slug}}?user={{$blog->user->username}}">
                             <img class="card-img-top"
                                  src="{{!empty($blog->primary_image_url) ? $blog->primary_image_url : 'https://source.unsplash.com/1024x760/?blog,blogs,book'}}"
                                  alt="..."/>

@@ -32,7 +32,9 @@
                                 <img class="single-post-meta-img"
                                      src="{{ empty($blog->user->avatar_url) ? 'https://source.unsplash.com/300x300/?user' : $blog->user->avatar_url  }}"/>
                                 <div class="single-post-meta-details">
-                                    <div class="single-post-meta-details-name">{{$blog->user->name()}}</div>
+                                    <div class="single-post-meta-details-name">
+                                        <a target="_blank" href="{{$blog->user->getPortfolioUrl()}}">{{$blog->user->name()}}</a>
+                                    </div>
                                     <div class="single-post-meta-details-date">{{$blog->getDateMeta()}}</div>
                                 </div>
                             </div>
