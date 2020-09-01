@@ -73,8 +73,10 @@
             <div class="divider-custom-line"></div>
         </div>
         <!-- Masthead Subheading-->
-        <p class="pre-wrap masthead-subheading font-weight-light mb-0">Software Engineers</p>
-        <p><small>We know how it was like to be in the trenches</small></p>
+        <p class="masthead-subheading font-weight-light w-50">
+            TrenchDevs believes in outcome-based learning and adapting to different technologies by creating
+            purposeful projects.
+        </p>
     </div>
 </header>
 <section class="page-section portfolio" id="portfolio">
@@ -107,7 +109,7 @@
                                     style="height: 200px; width: 200px; object-fit:scale-down;"
                                     class="img-fluid rounded"
                                     src="{{$project->image_url}}"
-                                     alt="{{ $project->label }}"/>
+                                    alt="{{ $project->label }}"/>
 
                                 <p class="text-center mt-3">{{$project->label}}</p>
                             </a>
@@ -144,7 +146,8 @@
                 </p>
             </div>
             <div class="col-lg-4">
-                <p class="text-center">We achieve this by applying it through various good cause open-source projects </p>
+                <p class="text-center">We achieve this by applying it through various good cause open-source
+                    projects </p>
             </div>
             <div class="col-lg-4">
                 <p class="text-center">
@@ -200,17 +203,14 @@
                 <a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/trenchdevs">
                     <i class="fab fa-fw fa-facebook-f"></i>
                 </a>
-                {{--                <a class="btn btn-outline-light btn-social mx-1" href="https://www.twitter.com/trenchdevs">--}}
-                {{--                    <i class="fab fa-fw fa-twitter"></i>--}}
-                {{--                </a>--}}
-                {{--                <a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/trenchdevs">--}}
-                {{--                    <i class="fab fa-fw fa-linkedin-in"></i>--}}
-                {{--                </a>--}}
             </div>
             <!-- Footer About Text-->
             <div class="col-lg-4">
                 <h4 class="mb-4">ABOUT TRENCHDEVS</h4>
-                <p class="pre-wrap lead mb-0">We know how it was like to be in the trenches</p>
+                <p class="mb-0 w-50">
+                    TrenchDevs believes in outcome-based learning and adapting to different technologies by creating
+                    purposeful projects.
+                </p>
             </div>
         </div>
     </div>
