@@ -142,7 +142,7 @@
                 <section class="bg-white py-10">
                     <div class="container">
                         <div class="text-uppercase-expanded small mb-2">
-                            <i data-feather="award"></i> Certifications
+                            <i data-feather="award"></i> Certifications & Accomplishments
                         </div>
                         <hr class="mt-0 mb-5"/>
                         @foreach($user->certifications as $certification)
