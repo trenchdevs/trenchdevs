@@ -10,7 +10,7 @@ if (env('APP_ENV') === 'production') {
 Route::get('test', function(){
     \App\Models\EmailQueue::processPending();
 });
-$baseUrl = env('BASE_URL');
+$baseUrl = env('BASE_URL', 'trenchdevs.org');
 
 if (empty($baseUrl)) {
     throw new Exception("Base url not found.");
