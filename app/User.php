@@ -6,6 +6,7 @@ use App\Models\Users\UserCertification;
 use App\Models\Users\UserDegree;
 use App\Models\Users\UserExperience;
 use App\Models\Users\UserPortfolioDetail;
+use App\Models\Users\UserProject;
 use App\Models\Users\UserSkill;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,6 +19,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property UserCertification[] $certifications
  * @property UserDegree[] $degrees
  * @property UserExperience[] $experiences
+ * @property UserProject $projects
  * @property UserSkill $skills
  * @package App
  */
@@ -209,6 +211,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function degrees()
     {
         return $this->hasMany(UserDegree::class);
+    }
+
+    public function projects()
+    {
+        return $this->hasMany(UserProject::class);
     }
 
     public function skills()
