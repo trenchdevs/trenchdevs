@@ -49,7 +49,7 @@
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-            <nav class="sidenav shadow-right sidenav-light">
+            <nav class="sidenav shadow-right sidenav-dark">
                 <div class="sidenav-menu">
                     <div class="nav accordion" id="accordionSidenav">
                         <div class="sidenav-menu-heading">Core</div>

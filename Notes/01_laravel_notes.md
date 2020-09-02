@@ -13,3 +13,9 @@ php artisan view:clear
 php artisan route:clear
 composer dump-autoload
 ```
+
+# Git Related
+
+Executing a git pull from php does not work by default 
+ 
+Action: `chmod o+rw -R .git`
