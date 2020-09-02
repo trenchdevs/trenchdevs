@@ -21,6 +21,10 @@ class Blog extends Model
     const DB_STATUS_DRAFT = 'draft';
     const DB_STATUS_published = 'published';
 
+    const DB_MODERATION_STATUS_PENDING = 'pending';
+    const DB_MODERATION_STATUS_APPROVED = 'approved';
+    const DB_MODERATION_STATUS_REJECTED = 'rejected';
+
     protected $fillable = [
         'user_id',
         'slug',
@@ -28,7 +32,12 @@ class Blog extends Model
         'tagline',
         'markdown_contents',
         'status',
-        'primary_image_url'
+        'primary_image_url',
+
+        'moderation_status',
+        'moderated_by',
+        'moderated_at',
+        'moderation_notes',
     ];
 
     public function tags()

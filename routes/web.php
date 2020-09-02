@@ -102,6 +102,8 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('blogs', 'Blogs\BlogsController@index')->name('blogs.index');
     Route::get('blogs/upsert/{blogId?}', 'Blogs\BlogsController@upsert')->name('blogs.upsert');
     Route::post('blogs/store', 'Blogs\BlogsController@store')->name('blogs.store');
+    Route::get('blogs/show/{id}', 'Blogs\BlogsController@show')->name('blogs.show');
+    Route::post('blogs/moderate/{id}', 'Blogs\BlogsController@moderate')->name('blogs.moderate');
     // end - blogs
 
     // START - profile

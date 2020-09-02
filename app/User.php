@@ -277,4 +277,9 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->role === self::ROLE_SUPER_ADMIN;
     }
 
+    public function isBlogModerator(): bool
+    {
+        return $this->isAdmin();
+    }
+
 }
