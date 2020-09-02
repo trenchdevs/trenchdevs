@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Superadmin;
+namespace App\Http\Controllers\SuperAdmin;
 
 use App\Helpers\SuperAdmin\CommandHandlerHelper;
 use App\Http\Controllers\AuthWebController;
