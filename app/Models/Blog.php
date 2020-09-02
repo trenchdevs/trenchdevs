@@ -80,6 +80,7 @@ class Blog extends Model
         return self::query()
             ->where('slug', $slug)
             ->where('status', self::DB_STATUS_published)
+            ->where('moderation_status', self::DB_MODERATION_STATUS_APPROVED)
             ->first();
     }
 
