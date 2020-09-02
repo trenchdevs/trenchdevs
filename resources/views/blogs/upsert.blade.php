@@ -102,8 +102,9 @@
                 var titleStr = $(this).val();
 
                 if (titleStr) {
-                    titleStr = titleStr.toLocaleLowerCase().split(' ').join('-');
-                    $('#slug').val(titleStr);
+                    var slug = titleStr.toLocaleLowerCase().split(' ').join('-');
+                    slug = slug.replace(/[^0-9a-z\-]/gi, '');
+                    $('#slug').val(slug);
                 } else {
                     $('#slug').val('');
                 }

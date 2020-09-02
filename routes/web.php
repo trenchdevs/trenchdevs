@@ -51,9 +51,9 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // START - mailers
     // Route::get('emails/generic', 'EmailTester@genericMail');
     // Announcements
-    Route::get('announcements/create','Admin\AnnouncementsController@create');
-    Route::post('announcements/announce','Admin\AnnouncementsController@announce');
-    Route::get('announcements','Admin\AnnouncementsController@list');
+    Route::get('announcements','Admin\AnnouncementsController@list')->name('announcements.index');
+    Route::get('announcements/create','Admin\AnnouncementsController@create')->name('announcements.create');
+    Route::post('announcements/announce','Admin\AnnouncementsController@announce')->name('announcements.announce');
     // END - mailers
 
     /**
@@ -107,6 +107,9 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // START - profile
     Route::get('profile', 'ProfileController@index');
     // END - profile
+
+    Route::get('superadmin/commands', 'SuperAdmin\\CommandsController@index')->name('superadmin.index');
+    Route::post('superadmin/commands', 'SuperAdmin\\CommandsController@command')->name('superadmin.command');
 
 });
 

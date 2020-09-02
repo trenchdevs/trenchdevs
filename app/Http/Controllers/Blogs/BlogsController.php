@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers\Blogs;
 
+use App\Http\Controllers\AuthWebController;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class BlogsController extends Controller
+class BlogsController extends AuthWebController
 {
+
+    public function middlewareOnConstructorCalled(): void
+    {
+        if (!$this->user->hasAccessToBlogs()) {
+            abort(403, "Blogs feature not enabled in your account");
+        }
+    }
+
     public function index(Request $request)
     {
         $me = $request->get('me');
@@ -36,13 +45,14 @@ class BlogsController extends Controller
 
         $blog = new Blog();
 
-        if (!empty($blogId))  {
+        if (!empty($blogId)) {
             /** @var User $loggedInUser */
             $loggedInUser = $request->user();
 
             $blog = Blog::find($blogId);
-            if ($blog->user_id !== $loggedInUser->id) {
-                abort(403);
+            if (!$this->isLoggedInUserAdmin() &&
+                $blog->user_id !== $loggedInUser->id) {
+                abort(403, "You are not allowed to update this resource");
             }
         }
 

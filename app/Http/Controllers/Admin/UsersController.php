@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Account;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AuthWebController;
 use App\Http\Controllers\Controller;
 use App\Models\EmailQueue;
 use App\Models\Users\UserPortfolioDetail;
@@ -24,7 +25,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Throwable;
 
-class UsersController extends Controller
+class UsersController extends AuthWebController
 {
     /**
      * Display a listing of the resource.
@@ -85,6 +86,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+
         return view('admin.users.show', ['user' => User::findOrFail($id)]);
     }
 
@@ -96,6 +98,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
+        $this->adminCheckOrFail('Feature not enabled for account');
+
         return view('admin.users.upsert', [
             'user' => User::findOrFail($id),
             'action' => route('users.upsert'),
@@ -154,8 +158,14 @@ class UsersController extends Controller
 
     }
 
+    /**
+     * Admin - send password reset email to user
+     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     */
     public function passwordReset(Request $request)
     {
+        $this->adminCheckOrFail('Feature not enabled for account');
 
         $id = $request->id ?? null;
 
@@ -174,6 +184,14 @@ class UsersController extends Controller
         return redirect(route('users.index'));
     }
 
+    /**
+     * User changes own password
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws Throwable
+     * @throws ValidationException
+     */
     public function changePassword(Request $request)
     {
 

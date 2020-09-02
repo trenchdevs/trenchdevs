@@ -39,6 +39,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         self::ROLE_CONTRIBUTOR,
     ];
 
+    const ADMIN_ROLES = [
+        self::ROLE_SUPER_ADMIN,
+        self::ROLE_ADMIN,
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -85,6 +90,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return [];
     }
 
+    public function canManage(User $user)
+    {
+        return in_array($user->role, $this->getAllowedRolesToManage());
+    }
 
     public function getAllowedRolesToManage(): array
     {
@@ -187,32 +196,78 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $user;
     }
 
-    public function certifications(){
+    public function certifications()
+    {
         return $this->hasMany(UserCertification::class);
     }
 
-    public function experiences(){
+    public function experiences()
+    {
         return $this->hasMany(UserExperience::class);
     }
 
-    public function degrees(){
+    public function degrees()
+    {
         return $this->hasMany(UserDegree::class);
     }
 
-    public function skills(){
+    public function skills()
+    {
         return $this->hasOne(UserSkill::class);
     }
+
+    public function portfolioDetails()
+    {
+        return $this->hasOne(UserPortfolioDetail::class);
+    }
+
 
     /**
      * @return string
      */
-    public function getPortfolioUrl(): string{
+    public function getPortfolioUrl(): string
+    {
 
         if (empty($this->username)) {
             return '';
         }
 
         return get_portfolio_url($this->username);
+    }
+
+    /**
+     * @return bool
+     */
+    public function canAnnounce(): bool
+    {
+        return in_array($this->role, self::ADMIN_ROLES);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAccessToBlogs(): bool
+    {
+        return in_array($this->role, array_merge(
+            self::ADMIN_ROLES,
+            [self::ROLE_CONTRIBUTOR]
+        ));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return in_array($this->role, self::ADMIN_ROLES);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === self::ROLE_SUPER_ADMIN;
     }
 
 }
