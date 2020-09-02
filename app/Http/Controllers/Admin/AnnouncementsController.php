@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\AuthWebController;
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\EmailQueue;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
-class AnnouncementsController extends Controller
+class AnnouncementsController extends AuthWebController
 {
     public function list()
     {
@@ -27,6 +28,8 @@ class AnnouncementsController extends Controller
 
     public function create()
     {
+        $this->adminCheckOrFail('Action not permitted for your account.');
+
         return view('announcements.create');
     }
 
@@ -39,16 +42,15 @@ class AnnouncementsController extends Controller
     public function announce(Request $request)
     {
 
+        $this->adminCheckOrFail('Action not permitted for your account.');
+
         $this->validate($request, [
             'title' => 'required',
             'message' => 'required'
         ]);
 
+        /** @var User $user */
         $user = Auth::user();
-
-        if ($user->role !== User::ROLE_SUPER_ADMIN) {
-            abort(403);
-        }
 
         $message = $request->message;
         $title = $request->title;

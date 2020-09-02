@@ -10,7 +10,7 @@ if (env('APP_ENV') === 'production') {
 Route::get('test', function(){
     \App\Models\EmailQueue::processPending();
 });
-$baseUrl = env('BASE_URL');
+$baseUrl = env('BASE_URL', 'trenchdevs.org');
 
 if (empty($baseUrl)) {
     throw new Exception("Base url not found.");
@@ -51,9 +51,9 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // START - mailers
     // Route::get('emails/generic', 'EmailTester@genericMail');
     // Announcements
-    Route::get('announcements/create','Admin\AnnouncementsController@create');
-    Route::post('announcements/announce','Admin\AnnouncementsController@announce');
-    Route::get('announcements','Admin\AnnouncementsController@list');
+    Route::get('announcements','Admin\AnnouncementsController@list')->name('announcements.index');
+    Route::get('announcements/create','Admin\AnnouncementsController@create')->name('announcements.create');
+    Route::post('announcements/announce','Admin\AnnouncementsController@announce')->name('announcements.announce');
     // END - mailers
 
     /**
@@ -102,11 +102,16 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('blogs', 'Blogs\BlogsController@index')->name('blogs.index');
     Route::get('blogs/upsert/{blogId?}', 'Blogs\BlogsController@upsert')->name('blogs.upsert');
     Route::post('blogs/store', 'Blogs\BlogsController@store')->name('blogs.store');
+    Route::get('blogs/show/{id}', 'Blogs\BlogsController@show')->name('blogs.show');
+    Route::post('blogs/moderate/{id}', 'Blogs\BlogsController@moderate')->name('blogs.moderate');
     // end - blogs
 
     // START - profile
     Route::get('profile', 'ProfileController@index');
     // END - profile
+
+    Route::get('superadmin/commands', 'SuperAdmin\CommandsController@index')->name('superadmin.index');
+    Route::post('superadmin/commands', 'SuperAdmin\CommandsController@command')->name('superadmin.command');
 
 });
 

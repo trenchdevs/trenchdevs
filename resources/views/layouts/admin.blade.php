@@ -7,7 +7,7 @@
                 data-feather="menu"></i></button>
         <ul class="navbar-nav align-items-center ml-auto">
             <li class="nav-item dropdown no-caret mr-3 dropdown-user">
-                <span onclick class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
+                <span class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
                       href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true"
                       aria-expanded="false"
                 >
@@ -49,7 +49,7 @@
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-            <nav class="sidenav shadow-right sidenav-light">
+            <nav class="sidenav shadow-right sidenav-dark">
                 <div class="sidenav-menu">
                     <div class="nav accordion" id="accordionSidenav">
                         <div class="sidenav-menu-heading">Core</div>
@@ -165,7 +165,12 @@
                                 <i data-feather="mic"></i>
                             </div>
                             Announcements
-                            {{--                            <div class="sidenav-collapse-arrow"><i data-feather="chevron-down"></i></div>--}}
+                        </a>
+                        <a class="nav-link collapsed" href="{{route('superadmin.command')}}">
+                            <div class="nav-link-icon">
+                                <i data-feather="terminal"></i>
+                            </div>
+                            Commands
                         </a>
                     </div>
                 </div>

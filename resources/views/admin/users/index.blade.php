@@ -6,8 +6,8 @@
         <div class="card-header">
             Users
         </div>
-        <div class="card-body">
-            <table class="table table-hover table-sm">
+        <div class="card-body table-responsive">
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     <th>ID</th>

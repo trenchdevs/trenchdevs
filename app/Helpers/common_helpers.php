@@ -28,3 +28,14 @@ if (!function_exists('add_scheme_to_url')) {
         return "{$scheme}{$url}";
     }
 }
+
+if (!function_exists('print_json')) {
+    function print_json($var, bool $die = false)
+    {
+        echo json_encode($var, JSON_PRETTY_PRINT);
+
+        if ($die) {
+            die;
+        }
+    }
+}
