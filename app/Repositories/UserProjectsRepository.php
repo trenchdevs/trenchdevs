@@ -36,7 +36,7 @@ class UserProjectsRepository
             }
 
             foreach($forUser->projects as $oldProject) {
-                $oldProject->delete();
+                $this->deleteProject($oldProject);
             }
 
             foreach ($rawProjects as $rawProject) {
@@ -46,14 +46,15 @@ class UserProjectsRepository
                 $userProject->saveOrFail();
                 $userProjects[] = $userProject;
 
-                foreach ($userProjects['users'] as $user) {
-                    $projectUser = new ProjectUser();
-                    $projectUser->user_id = $user->id;
-                    $projectUser->project_id = $userProject->id;
-                    $projectUser->saveOrFail();
+                if(!$userProject->is_personal){
+                    foreach ($userProjects['users'] as $user) {
+                        $projectUser = new ProjectUser();
+                        $projectUser->user_id = $user->id;
+                        $projectUser->project_id = $userProject->id;
+                        $projectUser->saveOrFail();
+                    }
                 }
             }
-
 
             DB::commit();
 
@@ -71,6 +72,12 @@ class UserProjectsRepository
 
         try {
             DB::beginTransaction();
+
+            if(!$userProject->is_personal){
+                foreach ($userProject->projectUsers as $projectUser) {
+                    $projectUser->delete();
+                }
+            }
 
             $userProject->delete();
 

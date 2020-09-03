@@ -2,6 +2,7 @@
 
 namespace App\Models\Users;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class UserProject extends Model
@@ -16,4 +17,8 @@ class UserProject extends Model
         'url',
         'repository_url',
     ];
+
+    public function projectUsers(){
+        return $this->hasMany(ProjectUser::class);
+    }
 }
