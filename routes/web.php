@@ -99,7 +99,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::post('portfolio/projects/save', 'Portfolio\UserProjectsController@save')->name('portfolio.projects.save');
     Route::get('portfolio/projects/get', 'Portfolio\UserProjectsController@getProjects')->name('portfolio.projects.get');
 
-    Route::get('projects', 'Portfolio\UserProjectsController@list')->name('projects.list');
+//    Route::get('projects', 'Portfolio\UserProjectsController@list')->name('projects.list');
     // end - user_projects
 
     /**
@@ -122,6 +122,10 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('superadmin/commands', 'SuperAdmin\CommandsController@index')->name('superadmin.index');
     Route::post('superadmin/commands', 'SuperAdmin\CommandsController@command')->name('superadmin.command');
     // END - commands
+
+    // START - global projects
+    Route::get('projects', 'Projects\ProjectsController@index')->name('projects.list');
+    // END - global projects
 
 
     // START - accounts

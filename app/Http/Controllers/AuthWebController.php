@@ -19,7 +19,7 @@ abstract class AuthWebController extends Controller
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
-            $this->middlewareOnConstructorCalled($this->user);
+            $this->middlewareOnConstructorCalled();
             return $next($request);
         });
     }
