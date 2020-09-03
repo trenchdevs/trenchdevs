@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * Class Blog
  * @property $tags
  * @property User $user
+ * @property $title
+ * @property $moderation_status
  * @package App\Models
  */
 class Blog extends Model
@@ -19,7 +21,7 @@ class Blog extends Model
     protected $table = 'blogs';
 
     const DB_STATUS_DRAFT = 'draft';
-    const DB_STATUS_published = 'published';
+    const DB_STATUS_PUBLISHED = 'published';
 
     const DB_MODERATION_STATUS_PENDING = 'pending';
     const DB_MODERATION_STATUS_APPROVED = 'approved';
@@ -79,7 +81,7 @@ class Blog extends Model
     {
         return self::query()
             ->where('slug', $slug)
-            ->where('status', self::DB_STATUS_published)
+            ->where('status', self::DB_STATUS_PUBLISHED)
             ->where('moderation_status', self::DB_MODERATION_STATUS_APPROVED)
             ->first();
     }

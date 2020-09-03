@@ -9,6 +9,8 @@ use App\Models\Users\UserPortfolioDetail;
 use App\Models\Users\UserProject;
 use App\Models\Users\UserSkill;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Throwable;
@@ -21,6 +23,10 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property UserExperience[] $experiences
  * @property UserProject $projects
  * @property UserSkill $skills
+ * @property $email
+ * @property $id
+ * @property $avatar_url
+ * @property $username
  * @package App
  */
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
@@ -280,6 +286,34 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function isBlogModerator(): bool
     {
         return $this->isAdmin();
+    }
+
+    /**
+     * @return Builder[]|Collection
+     */
+    public static function getBlogModerators()
+    {
+        return self::query()->whereIn('role', self::ADMIN_ROLES) // admin/superadmins are moderator for now
+        ->where('is_active', 1)
+            ->whereNotNull('email')
+            ->whereNotNull('email_verified_at')
+            ->get();
+    }
+
+    /**
+     * @return array
+     */
+    public static function getBlogModeratorEmails(): array
+    {
+        $emails = [];
+        $moderators = self::getBlogModerators();
+        $moderatorsArr = $moderators->all();
+
+        if (!empty($moderatorsArr)) {
+            $emails = array_column($moderatorsArr, 'email');
+        }
+
+        return $emails;
     }
 
 }

@@ -30,23 +30,25 @@ class EmailQueue extends Model
                                  string $subject,
                                  array $viewData,
                                  string $view = 'emails.generic'
-    )
+    ): self
     {
         $queue = new self;
         $queue->status = 'pending';
-        $queue->email_to = $emailTo;
+        $queue->email_to = trim($emailTo);
         $queue->view = $view;
         $queue->view_data = json_encode($viewData);
         $queue->subject = $subject;
 
-        return $queue->saveOrFail();
+        $queue->saveOrFail();
+
+        return $queue;
     }
 
     /**
      * @param EmailQueue $emailQueue
      * @throws Throwable
      */
-    public static function send(EmailQueue $emailQueue)
+    public static function sendEntry(EmailQueue $emailQueue)
     {
 
         if (
@@ -75,6 +77,13 @@ class EmailQueue extends Model
     }
 
     /**
+     * @throws Throwable
+     */
+    public function send(){
+        return self::sendEntry($this);
+    }
+
+    /**
      * @param int $limit
      * @throws Throwable
      */
@@ -89,7 +98,7 @@ class EmailQueue extends Model
 
         foreach ($queues as $queue) {
             /** @var self $queue */
-            self::send($queue);
+            self::sendEntry($queue);
         }
     }
 }

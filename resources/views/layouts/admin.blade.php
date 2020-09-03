@@ -2,9 +2,9 @@
 
 @section('body')
     <nav class="topnav navbar navbar-expand shadow navbar-light bg-white" id="sidenavAccordion">
-        <a class="navbar-brand d-none d-sm-block" href="/home">TrenchDevs Portal</a>
-        <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle" href="#"><i
-                data-feather="menu"></i></button>
+        <a class="navbar-brand d-none d-sm-block" href="/home">TRENCHDEVS PORTAL</a>
+        <button class="btn btn-icon btn-transparent-light order-1 order-lg-0 mr-lg-2" id="sidebarToggle" href="#">
+            <i data-feather="menu"></i></button>
         <ul class="navbar-nav align-items-center ml-auto">
             <li class="nav-item dropdown no-caret mr-3 dropdown-user">
                 <span class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
@@ -16,7 +16,7 @@
                         src="{{ !empty(Auth::user()->avatar_url) ?Auth::user()->avatar_url : '/assets/img/avataaars.svg'  }}"
                     />
                 </span>
-                <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up"
+                <div id="navbarDropdownUserImage" class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up"
                      aria-labelledby="navbarDropdownUserImage">
                     <h6 class="dropdown-header d-flex align-items-center">
                         <img
@@ -122,13 +122,85 @@
                                     <div class="nav-link-icon">
                                         <i data-feather="feather"></i>
                                     </div>
-                                    My Blog Posts
+                                    My Blogs
                                 </a>
                             </nav>
                         </div>
 
+                        <a class="nav-link collapsed"
+                           href="{{ route('accounts.index') }}">
+                            <div class="nav-link-icon">
+                                <i data-feather="pen-tool"></i>
+                            </div>
+                            Markdown Notes
+                        </a>
+
+                        <div class="sidenav-menu-heading">Git</div>
+
+                        <a class="nav-link collapsed" target="_blank"
+                           href="https://github.com/christopheredrian/trenchdevs/issues">
+                            <div class="nav-link-icon">
+                                <i data-feather="alert-circle"></i>
+                            </div>
+                            Issues
+                        </a>
+
+                        <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                           data-target="#repositories" aria-expanded="false" aria-controls="repositories">
+                            <div class="nav-link-icon">
+                                <i data-feather="book-open"></i>
+                            </div>
+                            Repositories
+                            <div class="sidenav-collapse-arrow">
+                                <i data-feather="chevron-down"></i>
+                            </div>
+                        </a>
+
+                        <div class="collapse" id="repositories" data-parent="#accordionSidenav">
+                            <nav class="sidenav-menu-nested nav">
+                                <a target="_blank" class="nav-link"
+                                   href="https://github.com/christopheredrian/trenchdevs">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="code"></i>
+                                    </div>
+                                    trenchdevs
+                                </a>
+                                <a target="_blank" class="nav-link"
+                                   href="https://github.com/christopheredrian/trenchdevs-php-client">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="code"></i>
+                                    </div>
+                                    trenchdevs-php-client
+                                </a>
+                            </nav>
+                        </div>
+
+
                         <div class="sidenav-menu-heading">Modules</div>
-                        <a class="nav-link collapsed" href="/admin/shop">
+
+                        <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                           data-target="#api-clients" aria-expanded="false" aria-controls="api-clients">
+                            <div class="nav-link-icon">
+                                <i data-feather="book-open"></i>
+                            </div>
+                            API Clients
+                            <div class="sidenav-collapse-arrow">
+                                <i data-feather="chevron-down"></i>
+                            </div>
+                        </a>
+
+                        <div class="collapse" id="api-clients" data-parent="#accordionSidenav">
+                            <nav class="sidenav-menu-nested nav">
+                                <a target="_blank" class="nav-link"
+                                   href="https://packagist.org/packages/trenchdevs/trenchdevs-php-client">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="code"></i>
+                                    </div>
+                                    Php Client
+                                </a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="https://github.com/seangenove/td-shop" target="_blank">
                             <div class="nav-link-icon">
                                 <i data-feather="shopping-bag"></i>
                             </div>
@@ -136,14 +208,14 @@
                             <div class="sidenav-collapse-arrow"><i data-feather="chevron-down"></i></div>
                         </a>
 
+
                         <div class="sidenav-menu-heading">Utilities</div>
 
-                        <a class="nav-link collapsed" href="/accounts">
+                        <a class="nav-link collapsed" href="{{ route('accounts.index') }}">
                             <div class="nav-link-icon">
                                 <i data-feather="globe"></i>
                             </div>
                             Accounts
-                            {{--                            <div class="sidenav-collapse-arrow"><i data-feather="chevron-down"></i></div>--}}
                         </a>
 
                         <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
@@ -156,8 +228,19 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" data-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavLayout">
-                                <a class="nav-link" href="{{ route('users.index') }}">All Users</a>
-                                <a class="nav-link" href="{{ route('users.create') }}">Create</a>
+
+                                <a class="nav-link" href="{{ route('users.index') }}">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="users"></i>
+                                    </div>
+                                    All Users
+                                </a>
+                                <a class="nav-link" href="{{ route('users.create') }}">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="plus-square"></i>
+                                    </div>
+                                    Create
+                                </a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="/announcements">
@@ -184,11 +267,11 @@
         </div>
         <div id="layoutSidenav_content">
             <main>
-                <div class="container-fluid mt-5">
+                <div class="container-fluid mt-3">
 
-                    <div class="d-flex justify-content-between align-items-sm-center flex-column flex-sm-row mb-4">
+                    <div class="d-flex justify-content-end align-items-sm-center flex-column flex-sm-row mb-4">
                         <div class="mr-4 mb-3 mb-sm-0">
-                            <h1 class="mb-0">@yield('page-header')</h1>
+{{--                            <h1 class="mb-0">@yield('page-header')</h1>--}}
 
                             <div class="small">
                                 <span class="font-weight-500 text-primary">{{date('l')}}</span> &middot;

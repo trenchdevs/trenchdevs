@@ -2,7 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Models\EmailQueue;
+use ErrorException;
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -29,27 +34,63 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param Throwable $exception
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception|Throwable
      */
     public function report(Throwable $exception)
     {
+        if ($exception instanceof ErrorException) {
+            $this->sendEmailToSupport($exception);
+            abort(500, "There was an error while processing your request. Admin has been notified");
+        }
+
         parent::report($exception);
     }
 
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @param Throwable $exception
+     * @return Response
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception);
+    }
+
+    /**
+     * @param Throwable $throwable
+     */
+    private function sendEmailToSupport(Throwable $throwable)
+    {
+
+        try {
+
+            if (env('APP_ENV') !== 'production') {
+                throw new Exception("Suppress error");
+            }
+
+            $title = "TrenchDevs: Error Reporting";
+
+            $emailer = EmailQueue::queue(
+                trim('support@trenchdevs.org'),
+                $title,
+                $viewData = [
+                    'name' => null,
+                    'email_body' => "<pre>" .$throwable->getMessage() . "\n" . $throwable->getTraceAsString() . "</pre>",
+                ],
+                'emails.generic'
+            );
+
+            $emailer->send();
+
+        } catch (Throwable $throwable) {
+            // this time just suppress.
+        }
     }
 }

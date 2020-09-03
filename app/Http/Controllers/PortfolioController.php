@@ -6,8 +6,12 @@ use App\Helpers\AmazonS3Helper;
 use App\Helpers\UrlHelper;
 use App\Models\Users\UserPortfolioDetail;
 use App\User;
+use ErrorException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class PortfolioController extends Controller
 {
@@ -104,12 +108,19 @@ class PortfolioController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws ErrorException
+     * @throws ValidationException
+     * @throws Throwable
+     */
     public function uploadAvatar(Request $request)
     {
 
         $this->validate($request, [
             'avatar_url' => 'required|max:10000|mimes:jpeg,jpg,png',
-            'username' => 'required|max:25',
+            'username' => 'required|max:25|alpha_num',
         ]);
 
         /** @var User $user */
@@ -120,7 +131,7 @@ class PortfolioController extends Controller
         $s3FullPath = $this->s3Helper->upload($avatarFile, 'users/avatars', $fileName);
 
         $user->avatar_url = $s3FullPath;
-        $user->username = $request->username;
+        $user->username = $request->get('username');
         $user->saveOrFail();
 
         return back()->with('message', 'Thank you, your basic profile have been updated');

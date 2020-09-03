@@ -68,7 +68,7 @@ abstract class Controller extends BaseController
     /**
      * @param string $message
      */
-    protected function adminCheckOrFail(string $message = "Resource not found"): void
+    protected function adminCheckOrAbort(string $message = "Feature not enabled for account. Please contact admin if you require elevated access"): void
     {
         if (!$this->isLoggedInUserAdmin()) {
             abort('403', $message);

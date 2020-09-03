@@ -17,27 +17,23 @@
         .main-container {
             padding-top: 1.6rem;
             background-color: white;
-            font-family: "Lucida Console", monospace, sans-serif;
+            /*font-family: "Lucida Console", monospace, sans-serif;*/
+            font-family: Georgia, serif;
             font-size: 1rem;
             color: black;
-        }
-
-
-        .header {
-            font-size: 1.1rem;
         }
 
         .footer {
             border-top: 1px solid #dcd5d5;
             padding-top: 10px;
-            font-size: 0.6rem;
+            font-size: 0.8rem;
             font-weight: 100;
-            margin-top: 10vh !important;
+            margin-top: 5vh !important;
             background-color: white;
         }
 
         .message-contents, .footer {
-            margin: 30px 5vw;
+            margin: 20px 5vw;
         }
 
         .text-center {
@@ -50,7 +46,6 @@
 
         a {
             text-decoration: underline;
-            color: black;
         }
 
 
@@ -60,15 +55,12 @@
 
 <div class="main-container">
 
-    <div class="mb-3">
-        <div class="header col text-center">
-            <h2>🎖 <br> TrenchDevs</h2>
-        </div>
-    </div>
-
     <div class="mt-5">
         <div class="col message-contents">
-            <p class="text-center">
+
+            <h2 style="margin-top: 10px; margin-bottom: 20px;">TrenchDevs</h2>
+
+            <p style="margin-bottom: 10px;">
                 @yield('email_header')
             </p>
 
@@ -78,11 +70,14 @@
         </div>
     </div>
 
-    <div class="footer text-center">
-        You are receiving this email because you are a member of TrenchDevs. Please do not reply to this email. <br>
-        For further assistance please contact support at support@trenchdevs.org <br>
-        <a href="/emails/unsubscribe">Click here to Unsubscribe</a> from these emails<br>
-        <a href="https://trenchdevs.org">© TrenchDevs {{date('Y')}}</a>
+    <div class="footer">
+        <div style="margin: 10px auto;">
+            You are receiving this email because you are a member of TrenchDevs. <br>
+            Please do not reply to this email. <br>
+            For further assistance please contact support at support@trenchdevs.org <br>
+            <a href="/emails/unsubscribe">Click here to Unsubscribe</a> from these emails<br>
+            <a target="_blank" href="https://trenchdevs.org">© TrenchDevs {{date('Y')}}</a>
+        </div>
     </div>
 
 
