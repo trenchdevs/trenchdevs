@@ -117,26 +117,29 @@ class BlogsRepository
 
         try {
 
+            // todo: future - can add blog hash for content changes
+            // todo: future - can always create new entry instead of updating
             DB::beginTransaction();
 
             $id = $data['id'] ?? null;
             $editMode = !empty($id);
-
-            $data['user_id'] = $loggedInUser->id;
 
             /**
              * 1. Save Blog
              */
             if ($editMode) {
 
+                $blog = Blog::query()->findOrFail($id);
+
                 if (!$loggedInUser->isBlogModerator()) {
                     // User updates content, let moderators re-moderate the blog again
                     $data['moderation_status'] = Blog::DB_MODERATION_STATUS_PENDING;
                 }
 
-                $blog = Blog::query()->findOrFail($id);
 
             } else {
+
+                $data['user_id'] = $loggedInUser->id;
 
                 if ($loggedInUser->isBlogModerator()) {
                     $data['moderation_status'] = Blog::DB_MODERATION_STATUS_APPROVED;
