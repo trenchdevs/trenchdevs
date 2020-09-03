@@ -94,6 +94,14 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('portfolio/certifications/get', 'Portfolio\UserCertificationsController@getCertifications')->name('portfolio.certifications.get');
     // end - user_experiences
 
+    // start - user_projects
+    Route::view('portfolio/projects/edit', 'portfolio.projects')->name('portfolio.projects');
+
+    Route::get('projects', 'Portfolio\UserProjectsController@list')->name('projects.list');
+    Route::post('projects/save', 'Portfolio\UserProjectsController@save')->name('projects.save');
+    Route::get('projects/get', 'Portfolio\UserProjectsController@getProjects')->name('projects.get');
+    // end - user_projects
+
     /**
      * END - portfolio
      */

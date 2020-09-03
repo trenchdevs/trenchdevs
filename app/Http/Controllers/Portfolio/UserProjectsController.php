@@ -25,15 +25,25 @@ class UserProjectsController extends Controller
         $this->projectsRepository = $projectsRepository;
     }
 
+    public function list()
+    {
+        $projects = UserProject::orderBy('id', 'desc')
+            ->paginate();
+
+        return view('projects.list', [
+            'projects' => $projects,
+        ]);
+    }
+
     public function save(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'projects' => 'required|array|present',
-            'projects.*.is_personal' => 'required|string|max:128',
+            'projects.*.is_personal' => 'required|boolean',
             'projects.*.title' => 'required|string|max:128',
             'projects.*.url' => 'nullable|url',
             'projects.*.repository_url' => 'nullable|url',
-            'projects.*.users' => 'nullable|exists|array',
+            'projects.*.users' => 'nullable|array',
             'projects.*.users.*.id' => 'nullable|exists:users,id',
         ]);
 

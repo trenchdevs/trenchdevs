@@ -172,6 +172,12 @@
                             </div>
                             Commands
                         </a>
+                        <a class="nav-link collapsed" href="{{route('projects.list')}}">
+                            <div class="nav-link-icon">
+                                <i data-feather="terminal"></i>
+                            </div>
+                            Projects
+                        </a>
                     </div>
                 </div>
                 <div class="sidenav-footer">

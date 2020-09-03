@@ -30,8 +30,15 @@
                 </p>
             </div>
             <div class="stepwizard-step col-xs-2">
-                <a href="{{route('portfolio.certifications')}}" type="button" class="btn btn-orange btn-circle text-white"
+                <a href="{{route('portfolio.projects')}}" type="button" class="btn btn-warning btn-circle text-white"
                    disabled="disabled">5</a>
+                <p>
+                    <small>Projects</small>
+                </p>
+            </div>
+            <div class="stepwizard-step col-xs-2">
+                <a href="{{route('portfolio.certifications')}}" type="button" class="btn btn-orange btn-circle text-white"
+                   disabled="disabled">6</a>
                 <p>
                     <small>Certifications</small>
                 </p>

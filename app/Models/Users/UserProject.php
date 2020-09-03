@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserProject extends Model
 {
 
-    protected $table = 'user_experiences';
+    protected $table = 'user_projects';
 
     protected $fillable = [
         'user_id',
