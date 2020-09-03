@@ -10,5 +10,5 @@ export const PORTFOLIO_EXPERIENCES_SAVE = '/portfolio/experiences/save';
 export const PORTFOLIO_CERTIFICATIONS_GET = '/portfolio/certifications/get';
 export const PORTFOLIO_CERTIFICATIONS_SAVE = '/portfolio/certifications/save';
 
-export const PORTFOLIO_PROJECTS_GET = '/projects/get';
-export const PORTFOLIO_PROJECTS_SAVE = '/projects/save';
+export const PORTFOLIO_PROJECTS_GET = '/portfolio/projects/get';
+export const PORTFOLIO_PROJECTS_SAVE = '/portfolio/projects/save';

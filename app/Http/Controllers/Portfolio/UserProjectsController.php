@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Portfolio;
 
+use App\Http\Controllers\AuthWebController;
 use App\Http\Controllers\Controller;
-use App\Models\Users\UserProject;
+use App\Models\Projects\Project;
 use App\Repositories\UserProjectsRepository;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-class UserProjectsController extends Controller
+class UserProjectsController extends AuthWebController
 {
 
 
@@ -27,7 +28,7 @@ class UserProjectsController extends Controller
 
     public function list()
     {
-        $projects = UserProject::orderBy('id', 'desc')
+        $projects = Project::orderBy('id', 'desc')
             ->paginate();
 
         return view('projects.list', [
@@ -70,6 +71,8 @@ class UserProjectsController extends Controller
 
         $projects = $user->projects;
 
+//        dd('test');
+
         if (!empty($projects)) {
             return $this->jsonResponse(self::STATUS_SUCCESS, "Success", ['projects' => $projects], []);
         } else {
@@ -84,8 +87,8 @@ class UserProjectsController extends Controller
         /** @var User $user */
         $user = $request->user();
 
-        /** @var UserProject $userProject */
-        $userProject = UserProject::findOrFail($request->id);
+        /** @var Project $userProject */
+        $userProject = Project::findOrFail($request->id);
 
         if ($user->id !== $userProject->user_id) {
             return $this->jsonResponse(self::STATUS_ERROR, "Forbidden");

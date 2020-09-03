@@ -40,25 +40,6 @@
                     </div>
                 </div>
 
-<!--                <div class="col-md-6">-->
-<!--                    <div class="form-group">-->
-<!--                        <label>Users</label>-->
-<!--                        <input type="text" class="form-control" v-model="project.users">-->
-<!--                    </div>-->
-<!--                </div>-->
-
-                <vue-autosuggest
-                    :suggestions="[{data:['Frodo', 'Samwise', 'Gandalf', 'Galadriel', 'Faramir', 'Éowyn']}]"
-                    :input-props="{id:'autosuggest__input', placeholder:'Do you feel lucky, punk?'}"
-                    @input="onInputChange"
-                    @selected="selectHandler"
-                    @click="clickHandler"
-                >
-                    <template slot-scope="{suggestion}">
-                        <span class="my-suggestion-item">{{suggestion.item}}</span>
-                    </template>
-                </vue-autosuggest>
-
             </div>
 
 
@@ -97,15 +78,11 @@
     import {PlusIcon, SaveIcon} from 'vue-feather-icons'
     import {PORTFOLIO_PROJECTS_GET, PORTFOLIO_PROJECTS_SAVE} from "../../config/Endpoints";
 
-    import { VueAutosuggest } from 'vue-autosuggest';
-
-
     export default {
         components: {
             PlusIcon,
             SaveIcon,
             VueEditor,
-            VueAutosuggest
         },
         async mounted() {
             await this.getProjects();

@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Projects\Project;
 use App\Models\Users\ProjectUser;
 use App\Models\Users\UserDegree;
-use App\Models\Users\UserProject;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
@@ -40,7 +40,7 @@ class UserProjectsRepository
             }
 
             foreach ($rawProjects as $rawProject) {
-                $userProject = new UserProject();
+                $userProject = new Project();
                 $rawProject['user_id'] = $forUser->id;
                 $userProject->fill($rawProject);
                 $userProject->saveOrFail();
@@ -68,18 +68,18 @@ class UserProjectsRepository
 
     }
 
-    public function deleteProject(UserProject $userProject){
+    public function deleteProject(Project $project){
 
         try {
             DB::beginTransaction();
 
-            if(!$userProject->is_personal){
-                foreach ($userProject->projectUsers as $projectUser) {
+            if(!$project->is_personal){
+                foreach ($project->projectUsers as $projectUser) {
                     $projectUser->delete();
                 }
             }
 
-            $userProject->delete();
+            $project->delete();
 
             DB::commit();
 

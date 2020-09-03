@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Models\Users;
+namespace App\Models\Projects;
 
+use App\Models\Users\ProjectUser;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class UserProject extends Model
+class Project extends Model
 {
 
-    protected $table = 'user_projects';
+    protected $table = 'projects';
 
     protected $fillable = [
         'user_id',
