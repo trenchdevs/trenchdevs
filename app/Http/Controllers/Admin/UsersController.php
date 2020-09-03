@@ -98,7 +98,7 @@ class UsersController extends AuthWebController
      */
     public function edit($id)
     {
-        $this->adminCheckOrFail('Feature not enabled for account');
+        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
 
         return view('admin.users.upsert', [
             'user' => User::findOrFail($id),
@@ -115,6 +115,9 @@ class UsersController extends AuthWebController
      */
     public function upsert(Request $request)
     {
+
+        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
+
         $data = $request->all();
 
         /** @var User $user */
@@ -165,7 +168,7 @@ class UsersController extends AuthWebController
      */
     public function passwordReset(Request $request)
     {
-        $this->adminCheckOrFail('Feature not enabled for account');
+        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
 
         $id = $request->id ?? null;
 

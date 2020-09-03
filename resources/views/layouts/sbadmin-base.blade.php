@@ -16,6 +16,54 @@
             crossorigin="anonymous">
     </script>
 
+    <style>
+        .card-header {
+            background-color: #1f2d41;
+            color: white !important;
+        }
+
+        /** Paginations */
+        .pagination > li > a {
+            background-color: white;
+            color: #5A4181;
+        }
+
+        nav#sidenavAccordion {
+            background: #00ac69 !important;
+        }
+
+        /*#navbarDropdownUserImage{*/
+        /*    background-color: #1f2d41;*/
+        /*    color: white !important;*/
+        /*}*/
+
+        /*.dropdown-menu .dropdown-header {*/
+        /*    color: white !important;*/
+        /*}*/
+
+
+        li.page-item.active > .page-link {
+            color: white;
+            background-color: #1f2d41 !important;
+            border-color: #1f2d41 !important;
+        }
+
+        .pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+            color: white;
+            background-color: #1f2d418f !important;
+            border-color: transparent;
+        }
+
+        .topnav.navbar-light .navbar-brand {
+            color: #eff3f9 !important;
+        }
+
+        #sidebarToggle {
+            color: white !important;
+        }
+
+    </style>
+
     @include('layouts.partials.ga')
 
 </head>

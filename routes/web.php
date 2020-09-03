@@ -118,8 +118,15 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('profile', 'ProfileController@index');
     // END - profile
 
+    // START - commands
     Route::get('superadmin/commands', 'SuperAdmin\CommandsController@index')->name('superadmin.index');
     Route::post('superadmin/commands', 'SuperAdmin\CommandsController@command')->name('superadmin.command');
+    // END - commands
+
+
+    // START - accounts
+    Route::get('accounts', 'Admin\AccountsController@index')->name('accounts.index');
+    // END - accounts
 
 });
 

@@ -1,9 +1,6 @@
 @extends('layouts.admin')
 
-@section('page-header', 'Account')
-
 @section('content')
-
 
     @include('portfolio.shared.sub-nav')
 

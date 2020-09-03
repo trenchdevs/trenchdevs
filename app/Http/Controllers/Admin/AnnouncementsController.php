@@ -28,7 +28,7 @@ class AnnouncementsController extends AuthWebController
 
     public function create()
     {
-        $this->adminCheckOrFail('Action not permitted for your account.');
+        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
 
         return view('announcements.create');
     }
@@ -42,7 +42,7 @@ class AnnouncementsController extends AuthWebController
     public function announce(Request $request)
     {
 
-        $this->adminCheckOrFail('Action not permitted for your account.');
+        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
 
         $this->validate($request, [
             'title' => 'required',

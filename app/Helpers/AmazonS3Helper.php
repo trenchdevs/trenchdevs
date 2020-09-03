@@ -14,7 +14,7 @@ class AmazonS3Helper
      * @param UploadedFile $file
      * @param string $s3filePath
      * @param string $fileName
-     * @return bool
+     * @return string|null
      * @throws ErrorException
      */
     public function upload(UploadedFile $file, string $s3filePath, string $fileName) : ?string
@@ -34,7 +34,7 @@ class AmazonS3Helper
         $s3FullPath = null;
 
         if (Storage::disk('s3')->put($filePath, file_get_contents($file))) {
-            $s3FullPath = $this->addScheme($this->normalizeUrl($this->generateBaseUrl() . $filePath));
+            $s3FullPath = add_scheme_to_url($this->normalizeUrl($this->generateS3BaseUrl() . $filePath));
         }
 
         return $s3FullPath;
@@ -44,30 +44,18 @@ class AmazonS3Helper
         return str_replace('//', '/', $url); // normalize;
     }
 
-    public function addScheme(string $url, bool $tls = true){
-
-        $scheme = 'https://';
-
-        if (!$tls) {
-            $scheme = 'http://';
-        }
-
-        $url = $this->normalizeUrl($url);
-
-        return "{$scheme}{$url}";
-    }
 
     /**
      * @return string
      * @throws ErrorException
      */
-    public function generateBaseUrl(){
+    public function generateS3BaseUrl(){
 
         $region = env('AWS_DEFAULT_REGION');
         $bucket = env('AWS_BUCKET');
 
         if (empty($region) || empty($bucket)) {
-            throw new \ErrorException("S3 environment urls not configured correctly");
+            throw new ErrorException("S3 environment urls not configured correctly");
         }
 
         return "s3.{$region}.amazonaws.com/{$bucket}/";

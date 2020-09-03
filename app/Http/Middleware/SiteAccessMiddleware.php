@@ -50,6 +50,12 @@ class SiteAccessMiddleware
             $miscArr['headers'] = $headers;
         }
 
+        $method = $request->method();
+
+        if (!empty($method)) {
+            $miscArr['method'] = $method;
+        }
+
 
         $siteAccess = new SiteAccessLog();
 

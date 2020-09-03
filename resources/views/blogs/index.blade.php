@@ -10,7 +10,27 @@
         </div>
     </div>
 
-    <div class="row mb-2">
+    <div class="row">
+        @foreach($blog_statistics as $key => $blog_statistic)
+            <div class="col-md-4 mb-4">
+                <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-blue h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <div class="small font-weight-bold text-blue mb-1">{{ucwords(humanize($key))}}</div>
+                                <div class="h5">{{$blog_statistic}} entries</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <div class="row border-bottom mb-3 pb-2 mt-3">
+        <div class="col">
+            <h2 class="">Blog Entries</h2>
+        </div>
         <div class="col text-right">
             <a href="{{route('blogs.upsert')}}" class="btn btn-success btn-sm">
                 <i data-feather="feather" class="mr-2"></i>
@@ -18,6 +38,7 @@
             </a>
         </div>
     </div>
+
 
     <div class="row">
         @foreach($blogs as $blog)
@@ -37,6 +58,13 @@
                         </a>
                     </div>
                     <div class="card-body">
+                        <p><strong>Author:</strong>
+
+                            @if(!empty($blog->user->avatar_url))
+                                <img class="ml-3 avatar avatar-sm" src="{{$blog->user->avatar_url}}" alt="author avatar">
+                            @endif
+                            {{$blog->user->name()}}
+                        </p>
                         <p>
                             <strong>Tagline:</strong> {{$blog->tagline}}
                         </p>
@@ -119,7 +147,12 @@
             </div>
         @endforeach
 
-        {{ $blogs->links() }}
+    </div>
+
+    <div class="row">
+        <div class="col">
+            {{ $blogs->links() }}
+        </div>
     </div>
 
 @endsection

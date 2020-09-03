@@ -76,7 +76,7 @@ class RegisterController extends Controller
         $account = Account::getTrenchDevsAccount();
 
         if (!$account) {
-            throw new ErrorException("Account not found");
+            throw new ErrorException("TrenchDevs Account not found");
         }
 
         return User::create([

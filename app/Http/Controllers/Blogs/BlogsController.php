@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Blogs;
 use App\Http\Controllers\AuthWebController;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Models\EmailQueue;
 use App\Repositories\BlogsRepository;
 use App\User;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Routing\Redirector;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -46,8 +48,11 @@ class BlogsController extends AuthWebController
         $blogs = $blogs->orderBy('id', 'desc')
             ->paginate(6);
 
+        $blogStatistics = $this->blogsRepo->getStatistics();
+
         return view('blogs.index', [
             'blogs' => $blogs,
+            'blog_statistics' => $blogStatistics,
         ]);
     }
 
@@ -72,6 +77,12 @@ class BlogsController extends AuthWebController
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     * @throws Throwable
+     * @throws ValidationException
+     */
     public function store(Request $request)
     {
 
@@ -91,19 +102,7 @@ class BlogsController extends AuthWebController
         /** @var User $user */
         $user = $request->user();
 
-        $data = $request->all();
-        $data['user_id'] = $user->id;
-
-        if ($editMode) {
-            $blog = Blog::findOrFail($id);
-        } else {
-            $blog = new Blog;
-        }
-
-        $blog->fill($data);
-        $blog->saveOrFail();
-
-        // todo: insert ignore tags
+        $blog = $this->blogsRepo->storeBlog($user, $request->all());
 
         $message = 'Successfully ' . ($editMode ? 'updated' : 'created') . ' the blog entry "' . $blog->title . '".';
         return redirect(route('blogs.index'))->with('message', $message);

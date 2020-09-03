@@ -207,7 +207,7 @@
             <!-- Footer About Text-->
             <div class="col-lg-4">
                 <h4 class="mb-4">ABOUT TRENCHDEVS</h4>
-                <p class="mb-0 w-50">
+                <p class="mb-0">
                     TrenchDevs believes in outcome-based learning and adapting to different technologies by creating
                     purposeful projects.
                 </p>
