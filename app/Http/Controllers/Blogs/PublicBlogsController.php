@@ -12,8 +12,11 @@ class PublicBlogsController extends Controller
     {
 
         $query = Blog::query();
-        $blogs = $query->where('status', Blog::DB_STATUS_PUBLISHED)
-            ->where('moderation_status', Blog::DB_MODERATION_STATUS_APPROVED)
+
+        $blogs = $query->where('status', '=',Blog::DB_STATUS_PUBLISHED)
+            ->where('moderation_status','=', Blog::DB_MODERATION_STATUS_APPROVED)
+            ->where('publication_date', '<=', mysql_now())
+            ->whereNotNull('publication_date')
             ->orderBy('created_at', 'DESC')
             ->orderBy('id', 'DESC')
             ->paginate(6);

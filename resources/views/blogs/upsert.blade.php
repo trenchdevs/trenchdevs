@@ -61,6 +61,15 @@
 
                 </div>
 
+                <div class="form-group">
+                    <label for="publication_date">
+                        Publication Date (when will the blog post be available to the public)
+                    </label>
+                    <input type="text" name="publication_date"
+                           class="form-control" placeholder="YYYY-mm-dd HH:mm:ss"
+                           value="{{old('publication_date', $blog->publication_date ?? '')}}">
+                </div>
+
 
                 <div class="form-group">
                     <label for="status">Status</label>

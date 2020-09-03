@@ -277,8 +277,7 @@
 
                     <div class="d-flex justify-content-end align-items-sm-center flex-column flex-sm-row mb-4">
                         <div class="mr-4 mb-3 mb-sm-0">
-{{--                            <h1 class="mb-0">@yield('page-header')</h1>--}}
-
+                        <h6 class="mb-0">Server Time</h6>
                             <div class="small">
                                 <span class="font-weight-500 text-primary">{{date('l')}}</span> &middot;
                                 {{date('F n, Y')}} &middot; {{ date('h:i a') }}

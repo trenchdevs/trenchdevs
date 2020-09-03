@@ -97,6 +97,7 @@ class BlogsController extends AuthWebController
             'primary_image_url' => 'required:max:512',
             'tagline' => 'required|max:255',
             'markdown_contents' => 'required|max:50000', // can be changed later on if needed more
+            'publication_date' => 'required|date',
         ]);
 
         /** @var User $user */

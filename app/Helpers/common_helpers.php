@@ -87,3 +87,15 @@ if (!function_exists('humanize')) {
     }
 }
 
+
+if (!function_exists('str_to_date_format')) {
+    /**
+     * @param string $str
+     * @param string $format
+     * @return string
+     */
+    function str_to_date_format(string $str, string $format): string
+    {
+        return date($format, strtotime($str));
+    }
+}

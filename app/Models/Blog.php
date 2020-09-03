@@ -14,6 +14,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property User $user
  * @property $title
  * @property $moderation_status
+ * @property $created_at
+ * @property $markdown_contents
+ * @property $slug
+ * @property $publication_date
  * @package App\Models
  */
 class Blog extends Model
@@ -35,6 +39,7 @@ class Blog extends Model
         'markdown_contents',
         'status',
         'primary_image_url',
+        'publication_date',
 
         'moderation_status',
         'moderated_by',
@@ -83,6 +88,8 @@ class Blog extends Model
             ->where('slug', $slug)
             ->where('status', self::DB_STATUS_PUBLISHED)
             ->where('moderation_status', self::DB_MODERATION_STATUS_APPROVED)
+            ->where('publication_date', '<=', mysql_now())
+            ->whereNotNull('publication_date')
             ->first();
     }
 
@@ -93,17 +100,27 @@ class Blog extends Model
     public function getDateMeta(): string
     {
 
-        $date = date("F j, Y", strtotime($this->created_at));
+        $date = date("F j, Y", strtotime($this->publication_date));
         $minutes = $this->getEstimatedNumberOfMinutesToRead();
 
         return "{$date} - {$minutes} min read";
     }
 
-    public function markdownContentsAsHtml(){
+    /**
+     * @return mixed
+     */
+    public function markdownContentsAsHtml()
+    {
         return Markdown::convertToHtml($this->markdown_contents);
     }
 
-    public function getUrl(){
+
+    /**
+     * Get public blog url
+     * @return string
+     */
+    public function getPublicUrl()
+    {
 
         $baseUrl = env('BASE_URL');
         $environment = env('APP_ENV');

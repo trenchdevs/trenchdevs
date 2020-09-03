@@ -68,6 +68,11 @@
                         <p>
                             <strong>Tagline:</strong> {{$blog->tagline}}
                         </p>
+
+                        <p>
+                            <strong>Publication Date:</strong> {{ !empty($blog->publication_date) ? str_to_date_format($blog->publication_date, 'l, F Y h:i:s A') : 'N/A'}}
+                        </p>
+
                         <p>
                             <strong>Status:</strong>
                             @if($blog->status === 'published')
@@ -86,11 +91,12 @@
                                 <span class="badge badge-warning">PENDING</span><em> - waiting for approval</em>
                             @endif
                         </p>
+
                         @if($blog->status === 'published')
                             <p>
                                 <strong>URL: </strong>
-                                <a target="_blank" href="{{$blog->getUrl()}}">
-                                    {{$blog->getUrl()}}
+                                <a target="_blank" href="{{$blog->getPublicUrl()}}">
+                                    {{$blog->getPublicUrl()}}
                                 </a>
                             </p>
                         @endif
