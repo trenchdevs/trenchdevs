@@ -41,11 +41,14 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        if ($exception instanceof ErrorException) {
-            $this->sendEmailToSupport($exception);
-            abort(500, "There was an error while processing your request. Admin has been notified");
-        }
 
+        if (env('APP_ENV') !== 'local') {
+            if ($exception instanceof ErrorException) {
+                $this->sendEmailToSupport($exception);
+                abort(500, "There was an error while processing your request. Admin has been notified");
+            }
+        }
+        
         parent::report($exception);
     }
 
