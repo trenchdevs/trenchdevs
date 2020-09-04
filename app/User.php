@@ -52,6 +52,8 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         self::ROLE_ADMIN,
     ];
 
+    private $portfolioUrl;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -241,11 +243,18 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function getPortfolioUrl(): string
     {
 
-        if (empty($this->username)) {
-            return '';
+        $portfolioUrl = '';
+
+        if (!empty($this->username)) {
+            $portfolioUrl = get_portfolio_url($this->username);
         }
 
-        return get_portfolio_url($this->username);
+        // cache on instance
+        if (!isset($this->portfolioUrl)) {
+            $this->portfolioUrl = $portfolioUrl;
+        }
+
+        return $this->portfolioUrl;
     }
 
     /**

@@ -37,9 +37,8 @@ class UsersController extends AuthWebController
         /** @var User $user */
         $user = Auth::user();
 
-        $users = User::whereIn('role', $user->getAllowedRolesToManage())
-            ->where('id', '!=', $user->id)
-            ->paginate();
+        $users = User::query()
+            ->paginate(30);
 
         return view('admin.users.index', ['users' => $users]);
     }
@@ -71,6 +70,8 @@ class UsersController extends AuthWebController
      */
     public function create()
     {
+        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
+
         return view('admin.users.upsert', [
             'user' => new User,
             'action' => route('users.upsert'),

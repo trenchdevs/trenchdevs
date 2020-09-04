@@ -13,6 +13,14 @@
         <div class="card-body">
 
             <div class="row">
+                <div class="col">
+                    <div class="alert alert-info">
+                        These are the projects shown on the <a target="_blank" href="{{get_site_url()}}">main page</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col text-right pb-3">
 {{--                    <a class="btn btn-sm btn-success" href="{{route('projects.create')}}">Create</a>--}}
                 </div>
@@ -29,7 +37,6 @@
                             <th>URL</th>
                             <th>Repository URL</th>
                             <th>Image URL</th>
-                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,26 +47,31 @@
                                 <td>{{$project->title}}</td>
                                 <td>
                                     @if(!empty($project->url))
-                                        <a href="{{$project->url}}" target="_blank">Link</a>
+                                        <a href="{{$project->url}}" target="_blank">
+                                            <i data-feather="external-link"></i>
+                                        </a>
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+
+                                <td>
+                                    @if(!empty($project->repository_url))
+                                        <a href="{{$project->repository_url}}" target="_blank">
+                                            <i data-feather="external-link"></i>
+                                        </a>
                                     @else
                                         N/A
                                     @endif
                                 </td>
                                 <td>
                                     @if(!empty($project->image_url))
-                                        <a href="{{$project->image_url}}" target="_blank">Link</a>
+                                        <img src="{{$project->image_url}}" alt="{{$project->title}}"
+                                             style="max-width: 35px">
                                     @else
                                         N/A
                                     @endif
                                 </td>
-                                <td>
-                                    @if(!empty($project->repository_url))
-                                        <a href="{{$project->project_url}}" target="_blank">Link</a>
-                                    @else
-                                        N/A
-                                    @endif
-                                </td>
-                                <td>Action</td>
                             </tr>
                         @endforeach
                         </tbody>

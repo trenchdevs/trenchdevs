@@ -96,7 +96,7 @@
                         <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
                            data-target="#blogs" aria-expanded="false" aria-controls="blogs">
                             <div class="nav-link-icon">
-                                <i data-feather="book-open"></i>
+                                <i data-feather="edit-3"></i>
                             </div>
                             Blogs Posts
                             <div class="sidenav-collapse-arrow">
@@ -106,6 +106,12 @@
 
                         <div class="collapse" id="blogs" data-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{route('blogs')}}">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="book-open"></i>
+                                    </div>
+                                    Blog Page
+                                </a>
                                 <a class="nav-link" href="{{route('blogs.upsert')}}">
                                     <div class="nav-link-icon">
                                         <i data-feather="plus-square"></i>
@@ -126,6 +132,20 @@
                                 </a>
                             </nav>
                         </div>
+
+                        <a class="nav-link collapsed" href="{{ route('users.index') }}">
+                            <div class="nav-link-icon">
+                                <i data-feather="users"></i>
+                            </div>
+                            Participants
+                        </a>
+
+                        <a class="nav-link collapsed" href="{{route('projects.list')}}">
+                            <div class="nav-link-icon">
+                                <i data-feather="paperclip"></i>
+                            </div>
+                            Projects
+                        </a>
 
                         <a class="nav-link collapsed"
                            href="{{ route('accounts.index') }}">
@@ -218,31 +238,6 @@
                             Accounts
                         </a>
 
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
-                           data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="nav-link-icon">
-                                <i data-feather="users"></i>
-                            </div>
-                            User Management
-                            <div class="sidenav-collapse-arrow"><i data-feather="chevron-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" data-parent="#accordionSidenav">
-                            <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavLayout">
-
-                                <a class="nav-link" href="{{ route('users.index') }}">
-                                    <div class="nav-link-icon">
-                                        <i data-feather="users"></i>
-                                    </div>
-                                    All Users
-                                </a>
-                                <a class="nav-link" href="{{ route('users.create') }}">
-                                    <div class="nav-link-icon">
-                                        <i data-feather="plus-square"></i>
-                                    </div>
-                                    Create
-                                </a>
-                            </nav>
-                        </div>
                         <a class="nav-link collapsed" href="/announcements">
                             <div class="nav-link-icon">
                                 <i data-feather="mic"></i>
@@ -255,12 +250,7 @@
                             </div>
                             Commands
                         </a>
-                        <a class="nav-link collapsed" href="{{route('projects.list')}}">
-                            <div class="nav-link-icon">
-                                <i data-feather="terminal"></i>
-                            </div>
-                            Projects
-                        </a>
+
                     </div>
                 </div>
                 <div class="sidenav-footer">
@@ -277,7 +267,7 @@
 
                     <div class="d-flex justify-content-end align-items-sm-center flex-column flex-sm-row mb-4">
                         <div class="mr-4 mb-3 mb-sm-0">
-                        <h6 class="mb-0">Server Time</h6>
+                        <h6 class="mb-0">Server Time (UTC)</h6>
                             <div class="small">
                                 <span class="font-weight-500 text-primary">{{date('l')}}</span> &middot;
                                 {{date('F d, Y')}} &middot; {{ date('h:i a') }}

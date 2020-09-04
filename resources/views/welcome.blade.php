@@ -52,13 +52,20 @@
                     </a>
                 </li>
 
-                @if(Auth::guest())
+                @if($loggedInUser)
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">
+                            PORTAL
+                        </a>
+                    </li>
+                @else
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">
                             SIGN IN / JOIN
                         </a>
                     </li>
                 @endif
+
             </ul>
         </div>
     </div>
@@ -94,13 +101,15 @@
             <div class="divider-custom-line"></div>
         </div>
         <!-- Portfolio Grid Items-->
-        @if ($projects)
+
+        @php /** @var \App\Models\Projects\Project[] $projects */ @endphp
+        @if (!empty($projects))
             <div class="row justify-content-center text-center">
             @foreach($projects as $project)
                 <!-- Portfolio Items-->
                     <div class="col-md-6 col-lg-4 mb-5">
                         <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal0">
-                            <a href="{{ $project->project_url }}" target="_blank">
+                            <a href="{{ $project->url }}" target="_blank">
                                 <div
                                     class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                     <div class="portfolio-item-caption-content text-center text-white">
@@ -111,9 +120,9 @@
                                     style="height: 200px; width: 200px; object-fit:scale-down;"
                                     class="img-fluid rounded"
                                     src="{{$project->image_url}}"
-                                    alt="{{ $project->label }}"/>
+                                    alt="{{ $project->title }}"/>
 
-                                <p class="text-center mt-3">{{$project->label}}</p>
+                                <p class="text-center mt-3">{{$project->title}}</p>
                             </a>
                         </div>
 
