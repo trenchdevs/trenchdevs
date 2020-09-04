@@ -4,11 +4,13 @@ namespace App\Repositories;
 
 use App\Models\Blog;
 use App\Models\EmailQueue;
+use App\Models\Tag;
 use App\User;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use InvalidArgumentException;
 use Throwable;
 
 class BlogsRepository
@@ -124,9 +126,7 @@ class BlogsRepository
             $id = $data['id'] ?? null;
             $editMode = !empty($id);
 
-            /**
-             * 1. Save Blog
-             */
+            // 1. Save actual Blog entry
             if ($editMode) {
 
                 $blog = Blog::query()->findOrFail($id);
@@ -154,18 +154,43 @@ class BlogsRepository
             $blog->fill($data);
             $blog->saveOrFail();
 
-            /**
-             * todo:
-             * 2. Save Blog Tags
-             */
+            // 2. Save Blog tags
+            $tags = $data['tags'] ?? null;
 
-            /**
-             * 3. Send emails to moderator (if applicable)
-             */
+            if (empty($tags) || !is_string($tags)) {
+                throw new InvalidArgumentException("Tag(s) csv required (eg: 'php, git, first-post')");
+            }
+
+            $tags = trim($tags, "\t\n\r\0\x0B,");
+            $tagsArr = explode(',', $tags);
+
+            if (empty($tagsArr)) {
+                throw new InvalidArgumentException("Tag(s) csv required (eg: 'php, git, first-post')");
+            }
+
+            $tagIds = [];
+            foreach ($tagsArr as $tagName) {
+                $sanitizedTag = trim(strtolower($tagName));
+
+                if (empty($sanitizedTag)) {
+                    continue; // skipping these
+                }
+
+                $tag = Tag::findOrNewByName($sanitizedTag); // throws on error
+                $tagIds[] = $tag->id;
+            }
+
+            if (empty($tagIds)) {
+                throw new InvalidArgumentException("Unable to save tags.");
+            }
+
+            // add / remove tags from pivot table (blog_tags)
+            $blog->tags()->sync($tagIds);
+
+            // 3. Send emails to moderator (if applicable)
             if (!$loggedInUser->isBlogModerator() && $blog->moderation_status === Blog::DB_MODERATION_STATUS_PENDING) {
                 $this->sendModerationEmails($blog);
             }
-
 
             DB::commit();
 

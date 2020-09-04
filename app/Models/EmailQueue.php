@@ -7,9 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
 
+/**
+ * Class EmailQueue
+ * @property $status
+ * @property $email_to
+ * @property $view
+ * @property $view_data
+ * @property $subject
+ * @property $sent_at
+ * @package App\Models
+ */
 class EmailQueue extends Model
 {
     protected $table = 'email_queues';
+
+    const DB_STATUS_PROCESSED = 'processed';
+    const DB_STATUS_PENDING = 'pending';
+    const DB_STATUS_PAUSED = 'paused';
 
     protected $fillable = [
         'view',
@@ -23,7 +37,7 @@ class EmailQueue extends Model
      * @param string $subject
      * @param array $viewData
      * @param string $view
-     * @return bool
+     * @return EmailQueue
      * @throws Throwable
      */
     public static function queue(string $emailTo,
@@ -33,11 +47,19 @@ class EmailQueue extends Model
     ): self
     {
         $queue = new self;
-        $queue->status = 'pending';
+        $queue->status = self::DB_STATUS_PENDING;
         $queue->email_to = trim($emailTo);
         $queue->view = $view;
         $queue->view_data = json_encode($viewData);
         $queue->subject = $subject;
+
+        $environment = env('APP_ENV');
+        // overrides for local
+        if ($environment !== 'production') {
+            $queue->subject = "{$subject} - {$environment}";
+            $queue->status = self::DB_STATUS_PAUSED;
+            $queue->email_to = 'support@trenchdevs.org';
+        }
 
         $queue->saveOrFail();
 
@@ -69,7 +91,7 @@ class EmailQueue extends Model
             $genericMailer->subject($emailQueue->subject);
 
             Mail::to([$emailQueue->email_to])->send($genericMailer);
-            $emailQueue->status = 'processed';
+            $emailQueue->status = self::DB_STATUS_PROCESSED;
             $emailQueue->sent_at = date('Y-m-d H:i:s');
             $emailQueue->saveOrFail();
         }
@@ -79,7 +101,8 @@ class EmailQueue extends Model
     /**
      * @throws Throwable
      */
-    public function send(){
+    public function send()
+    {
         return self::sendEntry($this);
     }
 

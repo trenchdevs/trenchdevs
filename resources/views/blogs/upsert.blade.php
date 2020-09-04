@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @php /** @var \App\Models\Blog $blog */ @endphp
+
     <div class="card">
         <div class="card-header">{{!empty($blog->id) ? 'Update' : 'Create'}} Blog</div>
         <div class="card-body">
@@ -56,20 +58,25 @@
                         them)
                     </p>
                     <input type="text" name="primary_image_url" id="primary_image_url" class="form-control"
-                           value="{{old('primary_image_url', $blog->primary_image_url ?? '')}}"
-                    >
+                           value="{{old('primary_image_url', $blog->primary_image_url ?? '')}}">
 
                 </div>
 
                 <div class="form-group">
                     <label for="publication_date">
                         Publication Date (when will the blog post be available to the public)
+                        <em>eg: 2020-09-25 15:03:00</em>
                     </label>
                     <input type="text" name="publication_date"
                            class="form-control" placeholder="YYYY-mm-dd HH:mm:ss"
                            value="{{old('publication_date', $blog->publication_date ?? '')}}">
                 </div>
 
+                <div class="form-group">
+                    <label for="tags">Tags (comma-separated) - eg. <em>"laravel, codeigniter, nodejs"</em></label>
+                    <textarea name="tags" id="tagline" cols="30" rows="2"
+                              class="form-control">{{old('tags', $blog->tagsAsCsv())}}</textarea>
+                </div>
 
                 <div class="form-group">
                     <label for="status">Status</label>

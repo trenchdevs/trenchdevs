@@ -7,6 +7,7 @@ use App\User;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Blog
@@ -47,9 +48,13 @@ class Blog extends Model
         'moderation_notes',
     ];
 
+    /**
+     * @return BelongsToMany
+     */
     public function tags()
     {
-        $this->hasMany(BlogTag::class);
+        return $this->belongsToMany(Tag::class, 'blog_tags')
+            ->withTimestamps();
     }
 
     public function user()
@@ -137,4 +142,22 @@ class Blog extends Model
         return "{$scheme}blog.{$baseUrl}/{$this->slug}";
     }
 
+
+    /**
+     * Returns associate tag entries as csv string
+     * @return string
+     */
+    public function tagsAsCsv(): string{
+
+        $tagsCsv = '';
+
+        if (!empty($this->tags)) {
+            $tagsCsv = $this->tags()
+                ->select('tag_name')
+                ->get('tag_name')
+                ->implode('tag_name', ',');
+        }
+
+        return $tagsCsv;
+    }
 }
