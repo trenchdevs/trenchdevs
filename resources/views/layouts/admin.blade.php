@@ -288,9 +288,9 @@
                     <div class="row">
                         <div class="col-md-6 small">Copyright &copy; TrenchDevs {{date('Y')}}</div>
                         <div class="col-md-6 text-md-right small">
-                            <a href="#!">Privacy Policy</a>
+                            <a href="{{route('documents.privacy')}}" target="_blank">Privacy Policy</a>
                             &middot;
-                            <a href="#!">Terms &amp; Conditions</a>
+                            <a href="{{route('documents.tnc')}}" target="_blank">Terms &amp; Conditions</a>
                         </div>
                     </div>
                 </div>

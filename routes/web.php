@@ -29,7 +29,7 @@ Route::domain("{username}.{$baseUrl}")->group(function () {
 });
 // END - Portfolio Routes
 
-Route::get('/', 'PublicController@index');
+Route::get('/', 'PublicController@index')->name('public.home');
 
 Auth::routes(['verify' => true]);
 
@@ -112,18 +112,18 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::post('blogs/moderate/{id}', 'Blogs\BlogsController@moderate')->name('blogs.moderate');
     // end - blogs
 
-    // START - profile
+    // start - profile
     Route::get('profile', 'ProfileController@index');
-    // END - profile
+    // end - profile
 
-    // START - commands
+    // start - commands
     Route::get('superadmin/commands', 'SuperAdmin\CommandsController@index')->name('superadmin.index');
     Route::post('superadmin/commands', 'SuperAdmin\CommandsController@command')->name('superadmin.command');
-    // END - commands
+    // end - commands
 
-    // START - global projects
+    // start - global projects
     Route::get('projects', 'Projects\ProjectsController@index')->name('projects.list');
-    // END - global projects
+    // end - global projects
 
 
     // START - accounts
@@ -131,6 +131,11 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // END - accounts
 
 });
+
+// start - public documents
+Route::view('documents/privacy', 'documents.privacy')->name('documents.privacy');
+Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
+// end - public documents
 
 Route::get('{username}', 'PortfolioController@show');
 Route::get('emails/test/{view}', 'EmailTester@test');

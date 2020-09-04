@@ -5,13 +5,14 @@ namespace App\Http\Middleware;
 use App\Models\SiteAccessLog;
 use App\Models\SiteBlacklistedIp;
 use Closure;
+use Illuminate\Http\Request;
 
 class SiteAccessMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  \Closure  $next
      * @return mixed
      */
@@ -24,7 +25,6 @@ class SiteAccessMiddleware
         $isBlackListed = SiteBlacklistedIp::isBlackListed($ip);
 
         $miscArr = [
-            'request_encoded' => base64_encode(json_encode($request->all())),
             'headers' => $request->headers,
         ];
 
@@ -39,7 +39,8 @@ class SiteAccessMiddleware
         }
 
         if (!empty($requestData)) {
-            $miscArr['request_encoded'] = base64_encode(json_encode($requestData));
+            unset($requestData  ['password'], $requestData['password_confirmation']);
+            $miscArr['request_encoded'] = $requestData;
         }
 
         $headers = collect($request->header())->transform(function ($item) {

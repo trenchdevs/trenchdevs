@@ -63,12 +63,13 @@ class Blog extends Model
     public function getEstimatedNumberOfMinutesToRead(): int
     {
 
-        $minutes = 1;
+        $minutes = 1; // default to 1 minute
 
         if (!empty($this->markdown_contents)) {
             $numberOfWords = str_word_count($this->markdown_contents);
-            // on avg: 300 words per minute
-            $minutes = $numberOfWords / 300;
+            // the average reading speed is 200 to 250 words a minute
+            // https://secure.execuread.com/facts/#:~:text=The%20average%20person%20in%20business,roughly%202%20minutes%20per%20page.
+            $minutes = intval(ceil($numberOfWords / 200));
         }
 
         if ($minutes < 1) {
@@ -103,7 +104,13 @@ class Blog extends Model
         $date = date("F j, Y", strtotime($this->publication_date));
         $minutes = $this->getEstimatedNumberOfMinutesToRead();
 
-        return "{$date} - {$minutes} min read";
+        $minutesVerbiage = 'minutes';
+
+        if ($minutes < 2) {
+            $minutesVerbiage = 'minute';
+        }
+
+        return "{$date} · {$minutes} {$minutesVerbiage} read";
     }
 
     /**

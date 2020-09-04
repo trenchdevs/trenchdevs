@@ -1,9 +1,9 @@
-@extends('layouts.sbadmin-base')
+@extends('layouts.home')
 
-@section('body')
+@section('content')
     <div class="bg-primary">
 
-        <div id="layoutAuthentication">
+        <div id="layoutAuthentication" style="padding: 120px 0;">
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
@@ -83,8 +83,8 @@
 
                                                         @error('password')
                                                         <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
                                                         @enderror
                                                     </div>
                                                 </div>
@@ -102,12 +102,17 @@
 
                                             <div class="form-group d-flex align-items-center justify-content-between">
                                                 <div class="custom-control custom-control-solid custom-checkbox">
-                                                    <input class="custom-control-input small" id="customCheck1"
-                                                           type="checkbox"/>
-                                                    <label class="custom-control-label mr-3" for="customCheck1">I accept
-                                                        the
-                                                        <a href="javascript:void(0);">terms &amp; conditions</a>.
+                                                    <input class="custom-control-input small" id="tnc"
+                                                           type="checkbox" name="tnc" value="yes" required/>
+                                                    <label class="custom-control-label mr-3" for="tnc">
+                                                        I accept the
+                                                        <a target="_blank" href="{{route('documents.tnc')}}">terms &amp; conditions</a>.
                                                     </label>
+                                                    @error('tnc')
+                                                    <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">
                                                     Create Account
@@ -126,20 +131,6 @@
                         </div>
                     </div>
                 </main>
-            </div>
-            <div id="layoutAuthentication_footer">
-                <footer class="footer mt-auto footer-dark">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6 small">Copyright &copy; TrenchDevs {{date('Y')}}</div>
-                            <div class="col-md-6 text-md-right small">
-                                <a href="#!">Privacy Policy</a>
-                                &middot;
-                                <a href="#!">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
     </div>

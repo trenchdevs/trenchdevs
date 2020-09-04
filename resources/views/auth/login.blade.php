@@ -1,9 +1,10 @@
-@extends('layouts.sbadmin-base')
+@extends('layouts.home')
 
-@section('body')
+@section('content')
 
-    <div class="bg-primary">
-        <div id="layoutAuthentication">
+    <div class="bg-primary mt-5">
+
+        <div id="layoutAuthentication mt-5" style="padding: 120px 0;">
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
@@ -83,20 +84,7 @@
                     </div>
                 </main>
             </div>
-            <div id="layoutAuthentication_footer">
-                <footer class="footer mt-auto footer-dark">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6 small">Copyright &copy; TrenchDevs {{ date('Y') }}</div>
-                            <div class="col-md-6 text-md-right small">
-                                <a href="#!">Privacy Policy</a>
-                                &middot;
-                                <a href="#!">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
+
         </div>
     </div>
 @endsection
