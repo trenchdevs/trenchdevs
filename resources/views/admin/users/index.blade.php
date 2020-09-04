@@ -22,7 +22,6 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>Portfolio</th>
                             <th>Is Active</th>
@@ -33,7 +32,6 @@
                         @php /** @var \App\User[] $users */ @endphp
                         @foreach($users as $user)
                             <tr>
-                                <td>{{$user->id}}</td>
                                 <td>
                                     <img
                                         class="avatar avatar-sm"

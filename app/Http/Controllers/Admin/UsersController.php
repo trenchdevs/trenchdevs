@@ -38,6 +38,7 @@ class UsersController extends AuthWebController
         $user = Auth::user();
 
         $users = User::query()
+            ->orderBy('first_name')
             ->paginate(30);
 
         return view('admin.users.index', ['users' => $users]);
