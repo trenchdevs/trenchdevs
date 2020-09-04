@@ -61,7 +61,7 @@
                             </li>
                         </ul>
                         <a class="btn-primary btn rounded-pill px-4 ml-lg-4" href="{{env('APP_URL')}}/login">
-                            @if(!empty($loggedInUser))
+                            @if(empty($loggedInUser))
                                 SIGN IN / JOIN
                             @else
                                 PORTAL
