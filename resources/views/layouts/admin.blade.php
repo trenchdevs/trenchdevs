@@ -280,7 +280,7 @@
                         <h6 class="mb-0">Server Time</h6>
                             <div class="small">
                                 <span class="font-weight-500 text-primary">{{date('l')}}</span> &middot;
-                                {{date('F n, Y')}} &middot; {{ date('h:i a') }}
+                                {{date('F d, Y')}} &middot; {{ date('h:i a') }}
                             </div>
                         </div>
                     </div>

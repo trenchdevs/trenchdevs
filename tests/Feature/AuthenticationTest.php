@@ -6,6 +6,7 @@ use App\Account;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -35,7 +36,7 @@ class AuthenticationTest extends TestCase
 
         $user = new User([
             'email' => 'test@email.com',
-            'password' => '123456',
+            'password' => Hash::make('123456'),
             'account_id' => 1,
             'role' => 'business_owner',
         ]);

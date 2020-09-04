@@ -25,7 +25,7 @@ class AddIssuanceDateToUserCertificationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('user_experiences', function (Blueprint $table) {
+        Schema::table('user_certifications', function (Blueprint $table) {
             $table->dropColumn('issuance_date');
         });
     }

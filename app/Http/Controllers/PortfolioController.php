@@ -52,7 +52,7 @@ class PortfolioController extends Controller
         $customSite = self::CUSTOM_URLS[$username] ?? null;
 
         if (!empty($customSite)) {
-            $this->handleCustomPortfolio();
+            $this->handleCustomPortfolio($customSite);
         }
 
         /**

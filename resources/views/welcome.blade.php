@@ -52,11 +52,13 @@
                     </a>
                 </li>
 
-                <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">
-                        SIGN IN / JOIN
-                    </a>
-                </li>
+                @if(Auth::guest())
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">
+                            SIGN IN / JOIN
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
@@ -73,7 +75,7 @@
             <div class="divider-custom-line"></div>
         </div>
         <!-- Masthead Subheading-->
-        <p class="masthead-subheading font-weight-light w-50">
+        <p class="masthead-subheading font-weight-light col-md-6">
             TrenchDevs believes in outcome-based learning and adapting to different technologies by creating
             purposeful projects.
         </p>

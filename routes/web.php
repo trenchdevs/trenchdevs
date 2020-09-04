@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\URL;
 if (env('APP_ENV') === 'production') {
     URL::forceScheme('https');
 }
-Route::get('test', function(){
-    \App\Models\EmailQueue::processPending();
-});
+
 $baseUrl = env('BASE_URL', 'trenchdevs.org');
 
 if (empty($baseUrl)) {

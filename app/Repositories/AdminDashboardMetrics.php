@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Account;
+use App\Models\SiteAccessLog;
 use App\User;
 use App\UserLogin;
 use Illuminate\Support\Facades\Auth;
@@ -29,18 +30,25 @@ class AdminDashboardMetrics
 
     private function initialize()
     {
+        // we can cache these values in the future
         $this->activeTrenchDevUsers = User::where('is_active', 1)
             ->where('account_id', Account::getTrenchDevsAccount()->id)
             ->count();
 
         $lastMonth = date('Y-m-d H:i:s', strtotime('-1 month'));
+
         $this->userLoginsPastMonth = UserLogin::where('created_at', '>=', $lastMonth)
             ->where('type', '=', UserLogin::DB_TYPE_LOGIN)
             ->count();
 
-        // todo: make dynamic
-        $this->pageVisitors = 86;
-        $this->myPortfolioVisits = 0;
+        $this->pageVisitors = SiteAccessLog::query()
+            ->where('url', get_site_url())
+            ->where('created_at', '>=', $lastMonth)
+            ->count();
+
+        $this->myPortfolioVisits = SiteAccessLog::query()
+            ->where('url', $this->loggedInUser->getPortfolioUrl())
+            ->count();
     }
 
     /**

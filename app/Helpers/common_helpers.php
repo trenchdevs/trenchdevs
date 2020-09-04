@@ -11,6 +11,17 @@ if (!function_exists('get_base_url')) {
     }
 }
 
+if (!function_exists('get_site_url')) {
+    /**
+     * @return mixed|string
+     */
+    function get_site_url()
+    {
+        return add_scheme_to_url(get_base_url());
+    }
+}
+
+
 if (!function_exists('get_portfolio_url')) {
     /**
      * @param string $username

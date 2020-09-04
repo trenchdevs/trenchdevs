@@ -87,7 +87,7 @@
                                 <i class="mr-1" data-feather="calendar"></i>Past Month
                             </div>
                         </div>
-                        <div class="ml-2"><i class="fas fa-mouse-pointer fa-2x text-gray-200"></i></div>
+                        <div class="ml-2"><i class="fas fa-home fa-2x text-gray-200"></i></div>
                     </div>
                 </div>
             </div>
