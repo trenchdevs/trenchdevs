@@ -71,7 +71,14 @@ class PortfolioController extends Controller
 
     }
 
-    public function update(Request $request, UrlHelper $urlHelper)
+    /**
+     * @param Request $request
+     * @param UrlHelper $urlHelper
+     * @return RedirectResponse
+     * @throws Throwable
+     * @throws ValidationException
+     */
+    public function update(Request $request)
     {
 
         $this->validate($request, [
