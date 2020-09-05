@@ -158,7 +158,7 @@
                         <div class="sidenav-menu-heading">Git</div>
 
                         <a class="nav-link collapsed" target="_blank"
-                           href="https://github.com/christopheredrian/trenchdevs/issues">
+                           href="https://github.com/trenchdevs/trenchdevs/issues">
                             <div class="nav-link-icon">
                                 <i data-feather="alert-circle"></i>
                             </div>
@@ -179,7 +179,7 @@
                         <div class="collapse" id="repositories" data-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav">
                                 <a target="_blank" class="nav-link"
-                                   href="https://github.com/christopheredrian/trenchdevs">
+                                   href="https://github.com/trenchdevs/trenchdevs">
                                     <div class="nav-link-icon">
                                         <i data-feather="code"></i>
                                     </div>
