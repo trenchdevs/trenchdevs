@@ -145,9 +145,10 @@ class Blog extends Model
 
     /**
      * Returns associate tag entries as csv string
+     * @param string $delimiter
      * @return string
      */
-    public function tagsAsCsv(): string{
+    public function getTagsUsingDelimiter($delimiter = ','): string{
 
         $tagsCsv = '';
 
@@ -155,7 +156,7 @@ class Blog extends Model
             $tagsCsv = $this->tags()
                 ->select('tag_name')
                 ->get('tag_name')
-                ->implode('tag_name', ',');
+                ->implode('tag_name', $delimiter);
         }
 
         return $tagsCsv;

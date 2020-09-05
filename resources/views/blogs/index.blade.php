@@ -91,6 +91,10 @@
                                 <span class="badge badge-warning">PENDING</span><em> - waiting for approval</em>
                             @endif
                         </p>
+                        <p>
+                            <strong>Tags: </strong>
+                            {{ $blog->getTagsUsingDelimiter(', ') ?: 'None' }}
+                        </p>
 
                         @if($blog->status === 'published')
                             <p>

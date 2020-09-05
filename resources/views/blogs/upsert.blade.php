@@ -75,7 +75,7 @@
                 <div class="form-group">
                     <label for="tags">Tags (comma-separated) - eg. <em>"laravel, codeigniter, nodejs"</em></label>
                     <textarea name="tags" id="tagline" cols="30" rows="2"
-                              class="form-control">{{old('tags', $blog->tagsAsCsv())}}</textarea>
+                              class="form-control">{{old('tags', $blog->getTagsUsingDelimiter())}}</textarea>
                 </div>
 
                 <div class="form-group">
