@@ -2209,6 +2209,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-editor */ "./node_modules/vue2-editor/dist/vue2-editor.esm.js");
 /* harmony import */ var vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-feather-icons */ "./node_modules/vue-feather-icons/dist/vue-feather-icons.es.js");
 /* harmony import */ var _config_Endpoints__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../config/Endpoints */ "./resources/js/config/Endpoints.js");
+/* harmony import */ var _helpers_array_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../helpers/array_helpers */ "./resources/js/components/helpers/array_helpers.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2304,6 +2305,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2313,7 +2329,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     PlusIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["PlusIcon"],
     SaveIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["SaveIcon"],
-    VueEditor: vue2_editor__WEBPACK_IMPORTED_MODULE_3__["VueEditor"]
+    VueEditor: vue2_editor__WEBPACK_IMPORTED_MODULE_3__["VueEditor"],
+    ArrowUpIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["ArrowUpIcon"],
+    ArrowDownIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["ArrowDownIcon"],
+    TrashIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["TrashIcon"]
   },
   mounted: function mounted() {
     var _this = this;
@@ -2450,8 +2469,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee3, null, [[0, 20]]);
       }))();
+    },
+    // end save
+    removeItem: function removeItem(index) {
+      if (!!this.certifications[index]) {
+        this.certifications.splice(index, 1);
+      }
+    },
+    movePosition: function movePosition(index, places) {
+      this.certifications = Object(_helpers_array_helpers__WEBPACK_IMPORTED_MODULE_6__["moveToPosition"])(this.certifications, index, places);
     }
-  }
+  } // end methods
+
 });
 
 /***/ }),
@@ -2474,6 +2503,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-editor */ "./node_modules/vue2-editor/dist/vue2-editor.esm.js");
 /* harmony import */ var vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-feather-icons */ "./node_modules/vue-feather-icons/dist/vue-feather-icons.es.js");
 /* harmony import */ var _config_Endpoints__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../config/Endpoints */ "./resources/js/config/Endpoints.js");
+/* harmony import */ var _helpers_array_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../helpers/array_helpers */ "./resources/js/components/helpers/array_helpers.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2570,6 +2600,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2579,7 +2624,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     PlusIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["PlusIcon"],
     SaveIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["SaveIcon"],
-    VueEditor: vue2_editor__WEBPACK_IMPORTED_MODULE_3__["VueEditor"]
+    VueEditor: vue2_editor__WEBPACK_IMPORTED_MODULE_3__["VueEditor"],
+    ArrowUpIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["ArrowUpIcon"],
+    ArrowDownIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["ArrowDownIcon"],
+    TrashIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["TrashIcon"]
   },
   mounted: function mounted() {
     var _this = this;
@@ -2715,6 +2763,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee3, null, [[0, 19]]);
       }))();
+    },
+    removeItem: function removeItem(index) {
+      if (!!this.degrees[index]) {
+        this.degrees.splice(index, 1);
+      }
+    },
+    movePosition: function movePosition(index, places) {
+      this.degrees = Object(_helpers_array_helpers__WEBPACK_IMPORTED_MODULE_6__["moveToPosition"])(this.degrees, index, places);
     }
   }
 });
@@ -2739,6 +2795,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-editor */ "./node_modules/vue2-editor/dist/vue2-editor.esm.js");
 /* harmony import */ var vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-feather-icons */ "./node_modules/vue-feather-icons/dist/vue-feather-icons.es.js");
 /* harmony import */ var _config_Endpoints__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../config/Endpoints */ "./resources/js/config/Endpoints.js");
+/* harmony import */ var _helpers_array_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../helpers/array_helpers */ "./resources/js/components/helpers/array_helpers.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2834,6 +2891,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2843,7 +2915,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     PlusIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["PlusIcon"],
     SaveIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["SaveIcon"],
-    VueEditor: vue2_editor__WEBPACK_IMPORTED_MODULE_3__["VueEditor"]
+    VueEditor: vue2_editor__WEBPACK_IMPORTED_MODULE_3__["VueEditor"],
+    ArrowUpIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["ArrowUpIcon"],
+    ArrowDownIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["ArrowDownIcon"],
+    TrashIcon: vue_feather_icons__WEBPACK_IMPORTED_MODULE_4__["TrashIcon"]
   },
   mounted: function mounted() {
     var _this = this;
@@ -2980,6 +3055,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee3, null, [[0, 20]]);
       }))();
+    },
+    removeItem: function removeItem(index) {
+      if (!!this.experiences[index]) {
+        this.experiences.splice(index, 1);
+      }
+    },
+    movePosition: function movePosition(index, places) {
+      this.experiences = Object(_helpers_array_helpers__WEBPACK_IMPORTED_MODULE_6__["moveToPosition"])(this.experiences, index, places);
     }
   }
 });
@@ -50587,7 +50670,68 @@ var render = function() {
         _vm._l(_vm.certifications, function(certification, index) {
           return _c("div", { staticClass: "mb-3 row" }, [
             _c("div", { staticClass: "col-md-12" }, [
-              _c("h4", [_vm._v("Certification #" + _vm._s(index + 1))])
+              _c(
+                "h4",
+                [
+                  _vm._v(
+                    "\n                    Certification #" +
+                      _vm._s(index + 1) +
+                      "\n                    "
+                  ),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "float-right btn mr-2 btn-sm btn-danger",
+                      on: {
+                        click: function($event) {
+                          return _vm.removeItem(index)
+                        }
+                      }
+                    },
+                    [_c("trash-icon")],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.certifications.length !== 1
+                    ? [
+                        index !== 0
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "float-right mr-2 btn-sm btn btn-info",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.movePosition(index, -1)
+                                  }
+                                }
+                              },
+                              [_c("arrow-up-icon")],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        index !== _vm.certifications.length - 1
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "float-right mr-2 btn-sm btn btn-info",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.movePosition(index, 1)
+                                  }
+                                }
+                              },
+                              [_c("arrow-down-icon")],
+                              1
+                            )
+                          : _vm._e()
+                      ]
+                    : _vm._e()
+                ],
+                2
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6" }, [
@@ -50831,7 +50975,68 @@ var render = function() {
         _vm._l(_vm.degrees, function(degree, index) {
           return _c("div", { staticClass: "mb-3 row" }, [
             _c("div", { staticClass: "col-md-12" }, [
-              _c("h4", [_vm._v("Degree #" + _vm._s(index + 1))])
+              _c(
+                "h4",
+                [
+                  _vm._v(
+                    "\n                    Degree #" +
+                      _vm._s(index + 1) +
+                      "\n                    "
+                  ),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "float-right btn mr-2 btn-sm btn-danger",
+                      on: {
+                        click: function($event) {
+                          return _vm.removeItem(index)
+                        }
+                      }
+                    },
+                    [_c("trash-icon")],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.degrees.length !== 1
+                    ? [
+                        index !== 0
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "float-right mr-2 btn-sm btn btn-info",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.movePosition(index, -1)
+                                  }
+                                }
+                              },
+                              [_c("arrow-up-icon")],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        index !== _vm.degrees.length - 1
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "float-right mr-2 btn-sm btn btn-info",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.movePosition(index, 1)
+                                  }
+                                }
+                              },
+                              [_c("arrow-down-icon")],
+                              1
+                            )
+                          : _vm._e()
+                      ]
+                    : _vm._e()
+                ],
+                2
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6" }, [
@@ -51060,7 +51265,68 @@ var render = function() {
         _vm._l(_vm.experiences, function(experience, index) {
           return _c("div", { staticClass: "mb-3 row" }, [
             _c("div", { staticClass: "col-md-12" }, [
-              _c("h4", [_vm._v("Experience #" + _vm._s(index + 1))])
+              _c(
+                "h4",
+                [
+                  _vm._v(
+                    "\n                    Experience #" +
+                      _vm._s(index + 1) +
+                      "\n                    "
+                  ),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "float-right btn mr-2 btn-sm btn-danger",
+                      on: {
+                        click: function($event) {
+                          return _vm.removeItem(index)
+                        }
+                      }
+                    },
+                    [_c("trash-icon")],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.experiences.length !== 1
+                    ? [
+                        index !== 0
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "float-right mr-2 btn-sm btn btn-info",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.movePosition(index, -1)
+                                  }
+                                }
+                              },
+                              [_c("arrow-up-icon")],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        index !== _vm.experiences.length - 1
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "float-right mr-2 btn-sm btn btn-info",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.movePosition(index, 1)
+                                  }
+                                }
+                              },
+                              [_c("arrow-down-icon")],
+                              1
+                            )
+                          : _vm._e()
+                      ]
+                    : _vm._e()
+                ],
+                2
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6" }, [
@@ -65055,6 +65321,48 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/helpers/array_helpers.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/helpers/array_helpers.js ***!
+  \**********************************************************/
+/*! exports provided: moveToPosition, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "moveToPosition", function() { return moveToPosition; });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var moveToPosition = function moveToPosition(arr, index, places) {
+  var items = _toConsumableArray(arr);
+
+  var newIndex = index + places;
+  var temp = items[newIndex] || null;
+  var currentVal = items[index] || null;
+
+  if (temp !== null && currentVal !== null) {
+    items[newIndex] = currentVal;
+    items[index] = temp;
+  }
+
+  return items;
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  moveToPosition: moveToPosition
+});
+
+/***/ }),
+
 /***/ "./resources/js/components/portfolio/CertificationsPanel.vue":
 /*!*******************************************************************!*\
   !*** ./resources/js/components/portfolio/CertificationsPanel.vue ***!
@@ -65450,8 +65758,8 @@ var PORTFOLIO_PROJECTS_SAVE = '/portfolio/projects/save';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/seand/Sites/trenchdevs/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/seand/Sites/trenchdevs/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/chris/Sites/trenchdevs/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/chris/Sites/trenchdevs/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

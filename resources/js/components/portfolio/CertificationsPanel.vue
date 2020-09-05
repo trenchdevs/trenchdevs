@@ -16,7 +16,21 @@
             <div class="mb-3 row" v-for="(certification,index) in certifications">
 
                 <div class="col-md-12">
-                    <h4>Certification #{{ index + 1 }}</h4>
+                    <h4>
+                        Certification #{{ index + 1 }}
+                        <button class="float-right btn mr-2 btn-sm btn-danger" @click="removeItem(index)">
+                            <trash-icon/>
+                        </button>
+
+                        <template v-if="certifications.length !== 1">
+                            <button class="float-right mr-2 btn-sm btn btn-info" v-if="index !== 0" @click="movePosition(index, -1)">
+                                <arrow-up-icon/>
+                            </button>
+                            <button class="float-right mr-2 btn-sm btn btn-info" v-if="index !== (certifications.length - 1)" @click="movePosition(index, 1)">
+                                <arrow-down-icon/>
+                            </button>
+                        </template>
+                    </h4>
                 </div>
 
                 <div class="col-md-6">
@@ -92,14 +106,18 @@
     import axios from 'axios';
     import _ from 'lodash';
     import {VueEditor} from "vue2-editor";
-    import {PlusIcon, SaveIcon} from 'vue-feather-icons'
+    import {PlusIcon, SaveIcon, ArrowUpIcon, ArrowDownIcon, TrashIcon} from 'vue-feather-icons'
     import {PORTFOLIO_CERTIFICATIONS_GET, PORTFOLIO_CERTIFICATIONS_SAVE} from "../../config/Endpoints";
+    import {moveToPosition} from "../helpers/array_helpers";
 
     export default {
         components: {
             PlusIcon,
             SaveIcon,
-            VueEditor
+            VueEditor,
+            ArrowUpIcon,
+            ArrowDownIcon,
+            TrashIcon,
         },
         async mounted() {
             await this.getCertifications();
@@ -174,8 +192,21 @@
 
                 }
 
-            }
-        }
+            }, // end save
+
+            removeItem(index) {
+
+                if (!!this.certifications[index]) {
+                    this.certifications.splice(index, 1);
+                }
+            },
+
+            movePosition(index, places) {
+                this.certifications = moveToPosition(this.certifications, index, places);
+            },
+
+        }, // end methods
+
     }
 
 </script>
