@@ -64,6 +64,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('portfolio/security', 'PortfolioController@showSecurity')->name('portfolio.security');
     Route::post('portfolio/update', 'PortfolioController@update')->name('portfolio.update');
     Route::post('portfolio/avatar', 'PortfolioController@uploadAvatar')->name('portfolio.avatar');
+    Route::post('portfolio/updateBasicInfo', 'PortfolioController@updateBasicInfo')->name('portfolio.updateBasicInfo');
     Route::post('portfolio/background','PortfolioController@uploadBackground')->name('portfolio.background');
     Route::get('portfolio/preview', 'PortfolioController@preview');
     // end - user_portfolio_details

@@ -5,6 +5,11 @@ namespace App\Models\Users;
 use App\Helpers\UrlHelper;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class UserPortfolioDetail
+ * @property $portfolio_view
+ * @package App\Models\Users
+ */
 class UserPortfolioDetail extends Model
 {
     protected $table = 'user_portfolio_details';
@@ -24,6 +29,13 @@ class UserPortfolioDetail extends Model
         'github_url',
         'linkedin_url',
         'resume_url'
+    ];
+
+    // can be on DB later on
+    const VALID_VIEWS = [
+        // view => label
+        'portfolio.show' => 'Default',
+        'portfolio.custom.basic' => 'StarBootstrap Basic'
     ];
 
     public static function findOrEmptyByUser(int $userId): self
