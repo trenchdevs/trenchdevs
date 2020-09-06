@@ -89,10 +89,10 @@
             </div>
             <p class="lead mb-5">{{$portfolio_details->tagline}}</p>
             <div class="social-icons">
-                <a class="social-icon" href="{{$portfolio_details->linkedin_url}}" target="_blank">
+                <a class="social-icon" href="//{{$portfolio_details->linkedin_url}}" target="_blank">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a class="social-icon" href="{{$portfolio_details->github_url}}" target="_blank">
+                <a class="social-icon" href="//{{$portfolio_details->github_url}}" target="_blank">
                     <i class="fab fa-github"></i>
                 </a>
             </div>
