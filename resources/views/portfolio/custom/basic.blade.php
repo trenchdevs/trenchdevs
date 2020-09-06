@@ -92,7 +92,9 @@
                 <a class="social-icon" href="{{$portfolio_details->linkedin_url}}" target="_blank">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a class="social-icon" href="#"><i class="fab fa-github"></i></a>
+                <a class="social-icon" href="{{$portfolio_details->github_url}}" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
             </div>
         </div>
     </section>
