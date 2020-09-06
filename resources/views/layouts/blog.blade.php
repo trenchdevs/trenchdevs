@@ -80,7 +80,6 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="footer-brand">TrenchDevs Blog</div>
-                        <div class="mb-3">Build better websites</div>
                         <div class="icon-list-social mb-5">
                             <a target="_blank" class="icon-list-social-link" href="https://www.facebook.com/trenchdevs"><i
                                     class="fab fa-facebook"></i></a>
