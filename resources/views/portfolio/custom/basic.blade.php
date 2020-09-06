@@ -151,7 +151,7 @@
             {!! $user->skills->fluent ?? '' !!}
             <div class="subheading mb-3">Conversationally Fluent</div>
             {!! $user->skills->conversatinally_fleunt ?? '' !!}
-            <div class="subheading mb-3"></div>
+            <div class="subheading mb-3">Tourist</div>
             {!! $user->skills->tourist ?? '' !!}
         </div>
     </section>
