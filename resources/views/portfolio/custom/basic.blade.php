@@ -150,7 +150,7 @@
             <div class="subheading mb-3">Fluent</div>
             {!! $user->skills->fluent ?? '' !!}
             <div class="subheading mb-3">Conversationally Fluent</div>
-            {!! $user->skills->conversationally_fleunt ?? '' !!}
+            {!! $user->skills->conversationally_fluent ?? '' !!}
             <div class="subheading mb-3">Tourist</div>
             {!! $user->skills->tourist ?? '' !!}
         </div>
