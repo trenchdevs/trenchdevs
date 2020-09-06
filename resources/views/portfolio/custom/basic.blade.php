@@ -58,7 +58,7 @@
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
         <span class="d-block d-lg-none">{{$user->name()}}</span>
         <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2"
-                                             src="{{$user->avatar_url}}" alt=""/></span>
+                                             src="{{$user->avatar_url ?? ''}}" alt=""/></span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
@@ -84,7 +84,7 @@
                 <span class="text-primary">{{ $user->last_name }}</span>
             </h1>
             <div class="subheading mb-5">
-                (317) 585-8468 ·
+                {{$portfolio_details->primary_phone ?? ''}} ·
                 <a href="{{$user->email}}" id="email">{{$user->email}}</a>
             </div>
             <p class="lead mb-5">{{$portfolio_details->tagline}}</p>
@@ -148,11 +148,11 @@
         <div class="resume-section-content">
             <h2 class="mb-5">Skills</h2>
             <div class="subheading mb-3">Fluent</div>
-            {!! $user->skills->fluent !!}
+            {!! $user->skills->fluent ?? '' !!}
             <div class="subheading mb-3">Conversationally Fluent</div>
-            {!! $user->skills->conversatinally_fleunt !!}
+            {!! $user->skills->conversatinally_fleunt ?? '' !!}
             <div class="subheading mb-3"></div>
-            {!! $user->skills->tourist !!}
+            {!! $user->skills->tourist ?? '' !!}
         </div>
     </section>
     <hr class="m-0"/>
