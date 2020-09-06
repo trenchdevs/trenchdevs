@@ -19,7 +19,7 @@ class SiteAccessMiddleware
     public function handle($request, Closure $next)
     {
 
-        $user = $request->user();
+        $user = $request->user('web');
         $ip = $request->ip();
 
         $isBlackListed = SiteBlacklistedIp::isBlackListed($ip);
