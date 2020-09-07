@@ -53,6 +53,7 @@ class UserPortfolioDetail extends Model
 
     /**
      * @param array $requestArr
+     * @return array
      */
     public static function sanitizeFields(array &$requestArr)
     {
