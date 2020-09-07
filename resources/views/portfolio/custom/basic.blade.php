@@ -85,7 +85,7 @@
             </h1>
             <div class="subheading mb-5">
                 {{$portfolio_details->primary_phone ?? ''}} ·
-                <a href="{{$user->email}}" id="email">{{$user->email}}</a>
+                <a href="mailto:{{$user->email}}" id="email" target="_blank">{{$user->email}}</a>
             </div>
             <p class="lead mb-5">{{$portfolio_details->tagline}}</p>
             <div class="social-icons">
