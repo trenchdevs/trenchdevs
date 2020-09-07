@@ -35,7 +35,7 @@ class UserPortfolioDetail extends Model
     const VALID_VIEWS = [
         // view => label
         'portfolio.show' => 'Default',
-        'portfolio.custom.basic' => 'StarBootstrap Basic'
+        'portfolio.custom.basic' => 'Basic (StartBootstrap Template)',
     ];
 
     public static function findOrEmptyByUser(int $userId): self
