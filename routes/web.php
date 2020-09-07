@@ -16,16 +16,30 @@ if (empty($baseUrl)) {
 
 // START - Special subdomains here
 
-Route::domain("blog.{$baseUrl}")->group(function(){
+/**
+ * Blogging Domain
+ */
+Route::domain("blog.{$baseUrl}")->group(function () {
     Route::get('/', 'Blogs\PublicBlogsController@index')->name('blogs');
     Route::get('{slug}', 'Blogs\PublicBlogsController@show');
 });
+
+
+/**
+ * Sample local domain - react
+ */
+//Route::domain("admin.{$baseUrl}")->group(function () use ($baseUrl) {
+//    Route::redirect('login', "http://{$baseUrl}/login");
+//    Route::get('/{path?}', function () {
+//        return File::get(public_path() . '/fe/index.html');
+//    })->middleware(['auth:web']);
+//});
 
 // END - Special subdomains here
 
 // START - Portfolio Routes
 Route::domain("{username}.{$baseUrl}")->group(function () {
-    Route::get('/','PortfolioController@show');
+    Route::get('/', 'PortfolioController@show');
 });
 // END - Portfolio Routes
 
@@ -49,9 +63,9 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // START - mailers
     // Route::get('emails/generic', 'EmailTester@genericMail');
     // Announcements
-    Route::get('announcements','Admin\AnnouncementsController@list')->name('announcements.index');
-    Route::get('announcements/create','Admin\AnnouncementsController@create')->name('announcements.create');
-    Route::post('announcements/announce','Admin\AnnouncementsController@announce')->name('announcements.announce');
+    Route::get('announcements', 'Admin\AnnouncementsController@list')->name('announcements.index');
+    Route::get('announcements/create', 'Admin\AnnouncementsController@create')->name('announcements.create');
+    Route::post('announcements/announce', 'Admin\AnnouncementsController@announce')->name('announcements.announce');
     // END - mailers
 
     /**
@@ -65,7 +79,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::post('portfolio/update', 'PortfolioController@update')->name('portfolio.update');
     Route::post('portfolio/avatar', 'PortfolioController@uploadAvatar')->name('portfolio.avatar');
     Route::post('portfolio/updateBasicInfo', 'PortfolioController@updateBasicInfo')->name('portfolio.updateBasicInfo');
-    Route::post('portfolio/background','PortfolioController@uploadBackground')->name('portfolio.background');
+    Route::post('portfolio/background', 'PortfolioController@uploadBackground')->name('portfolio.background');
     Route::get('portfolio/preview', 'PortfolioController@preview');
     // end - user_portfolio_details
 

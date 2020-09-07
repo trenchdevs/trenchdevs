@@ -50,10 +50,17 @@ class BlogsController extends AuthWebController
 
         $blogStatistics = $this->blogsRepo->getStatistics();
 
-        return view('blogs.index', [
-            'blogs' => $blogs,
+
+        $data = [
             'blog_statistics' => $blogStatistics,
-        ]);
+            'blogs' => $blogs,
+        ];
+
+        if ($request->expectsJson()) {
+            return response()->json($data);
+        }
+
+        return view('blogs.index', $data);
     }
 
     public function upsert($blogId = null, Request $request)
