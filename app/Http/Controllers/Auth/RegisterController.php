@@ -90,7 +90,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'role' => User::ROLE_CONTRIBUTOR,
         ]);
-    }
+    } 
 
     protected function registered(Request $request, $user)
     {
