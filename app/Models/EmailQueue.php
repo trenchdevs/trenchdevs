@@ -124,4 +124,21 @@ class EmailQueue extends Model
             self::sendEntry($queue);
         }
     }
+
+    /**
+     * @param string $email
+     * @param string $subject
+     * @param string $message
+     * @return static
+     * @throws Throwable
+     */
+    public static function createGenericMail(string $email, string $subject, string $message): self
+    {
+
+        $viewData = [
+            'name' => 'TrenchDevs Member',
+            'email_body' => $message,
+        ];
+        return self::queue($email, $subject, $viewData, 'emails.generic');
+    }
 }

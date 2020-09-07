@@ -83,7 +83,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <p class="text-center">
-                        We are a group of individuals developers who believe in expanding our knowledge in software
+                        We are a group of individuals who believe in expanding our knowledge in software
                         development
                     </p>
                 </div>

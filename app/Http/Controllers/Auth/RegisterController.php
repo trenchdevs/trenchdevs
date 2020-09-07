@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\Account;
 use App\Http\Controllers\Controller;
+use App\Models\EmailQueue;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use ErrorException;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class RegisterController extends Controller
 {
@@ -93,6 +94,32 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user)
     {
+        $this->notifyOnNewUserRegistered($user);
+
         return view('auth.verify');
+    }
+
+    /**
+     * notify admin on new users for now
+     * @param $user
+     */
+    private function notifyOnNewUserRegistered($user): void
+    {
+        try {
+
+            $email = $user->email ?? '';
+            $id = $user->id ?? '';
+
+            $notifier = EmailQueue::createGenericMail(
+                'support@trenchdevs.org',
+                'New user registered',
+                "A new user registered on the system. (email is: {$email}, id = {$id})"
+            ); // send immediately
+
+            $notifier->send();
+
+        } catch (Throwable $throwable) {
+            // suppress
+        }
     }
 }
