@@ -139,6 +139,12 @@ Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
 // end - public documents
 
 Route::get('{username}', 'PortfolioController@show');
-Route::get('emails/test/{view}', 'EmailTester@test');
+
+// start - public email endpoints
+Route::get('emails/unsubscribe', 'EmailTester@test');
 Route::get('emails/testsend', 'EmailTester@testSend');
+
+Route::get('emails/unsubscribe', 'Notifications\EmailPreferencesController@showUnsubscribeForm')->name('notifications.emails.showUnsubscribeForm');
+Route::post('emails/unsubscribe', 'Notifications\EmailPreferencesController@unsubscribe')->name('notifications.emails.unsubscribe');
+// end - public email endpoints
 Route::post('aws/sns', 'AwsController@sns');

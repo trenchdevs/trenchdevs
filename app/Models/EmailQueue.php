@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\BlackListedEmail;
 use App\Mail\GenericMailer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
@@ -59,6 +60,14 @@ class EmailQueue extends Model
             $queue->subject = "{$subject} - {$environment}";
             $queue->status = self::DB_STATUS_PAUSED;
             $queue->email_to = 'support@trenchdevs.org';
+        }
+
+
+        if (BlackListedEmail::isBlackListed($emailTo)) {
+            /**
+             * Don't send to blacklisted emails
+             */
+            $queue->status = self::DB_STATUS_PAUSED;
         }
 
         $queue->saveOrFail();
