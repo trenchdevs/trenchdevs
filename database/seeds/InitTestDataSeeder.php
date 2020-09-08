@@ -45,7 +45,7 @@ class InitTestDataSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'account_id' => 1,
+            'account_id' => 2,
             'role' => 'admin',
             'first_name' => 'Test',
             'is_active' => 1,
