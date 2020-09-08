@@ -175,6 +175,7 @@ class PortfolioController extends Controller
             $user->username = $request->get('username');
             $user->saveOrFail();
             $portfolioDetails = $user->getPortfolioDetails();
+            $user->user_id = $user->id;
             $portfolioDetails->portfolio_view = $request->get('portfolio_view');
             $portfolioDetails->saveOrFail();
         });
