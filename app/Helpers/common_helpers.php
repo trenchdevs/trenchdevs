@@ -53,7 +53,6 @@ if (!function_exists('add_scheme_to_url')) {
 
 if (!function_exists('get_site_url')) {
     /**
-     * @param string $url
      * @return string
      */
     function get_site_url()

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Blogs;
 
 use App\Http\Controllers\AuthWebController;
-use App\Http\Controllers\Controller;
 use App\Models\Blog;
-use App\Models\EmailQueue;
 use App\Repositories\BlogsRepository;
 use App\User;
 use Exception;
