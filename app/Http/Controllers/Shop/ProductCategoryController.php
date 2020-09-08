@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Auth\ApiController;
 use App\ProductCategory;
@@ -26,7 +26,6 @@ class ProductCategoryController extends ApiController
             "product_categories" => $product_categories
         ], 200);
     }
-
 
     /**
      * @param Request $request

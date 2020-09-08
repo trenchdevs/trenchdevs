@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Auth\ApiController;
 use App\Product;
@@ -27,6 +27,31 @@ class ProductController extends ApiController
         ], 200);
     }
 
+    public function showBulkUpload(Request $request)
+    {
+        return view('shop.bulkupload');
+    }
+
+    public function bulkUpload(Request $request)
+    {
+        // IMPORTANT: Arrangement of clomuns should be as follows:
+        // SKU, NAME, STOCK, MIDDLE_NAME, LAST_NAME, BIRTH_DATE, COURSE & YEAR
+
+        if ($request->hasFile('student_data')) {
+
+            $path = $request->file('student_data')->getRealPath();
+
+            $result = StudentUploadUtilities::bulkUpload($path);
+
+            return redirect('/')->with('success', 'Successfully upload bulk student data!');
+
+        } else {
+
+            return redirect('/')->with('error', 'Error.');
+
+        }
+    }
+
     /**
      * @param Request $request
      * @param string $categoryId
@@ -48,18 +73,18 @@ class ProductController extends ApiController
     public function upsert(Request $request)
     {
         $rules = [
-            'product_category_id' => 'required|integer',
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
             'stock' => 'required|integer',
             'sku' => 'required|string|max:255',
-            'product_cost' => 'required|numeric',
-            'msrp' => 'numeric',
-            'shipping_cost' => 'numeric',
-            'handling_cost' => 'numeric',
-            'final_cost' => 'numeric',
-            'markup_percentage' => 'numeric',
-            'attributes' => 'json',
+            'msrp' => 'required|numeric',
+            'product_category_id' => 'nullable|integer',
+            'description' => 'nullable|string|max:255',
+            'product_cost' => 'nullable|numeric',
+            'shipping_cost' => 'nullable|numeric',
+            'handling_cost' => 'nullable|numeric',
+            'final_cost' => 'nullable|numeric',
+            'markup_percentage' => 'nullable|numeric',
+            'attributes' => 'nullable|json',
         ];
 
         $validator = Validator::make($request->all(), $rules);

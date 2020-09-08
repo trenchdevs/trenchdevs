@@ -227,13 +227,28 @@
                                 </a>
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="https://github.com/seangenove/td-shop" target="_blank">
+
+                        <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                           data-target="#shop" aria-expanded="false" aria-controls="shop">
                             <div class="nav-link-icon">
                                 <i data-feather="shopping-bag"></i>
                             </div>
                             Shop
-                            <div class="sidenav-collapse-arrow"><i data-feather="chevron-down"></i></div>
+                            <div class="sidenav-collapse-arrow">
+                                <i data-feather="chevron-down"></i>
+                            </div>
                         </a>
+
+                        <div class="collapse" id="shop" data-parent="#accordionSidenav">
+                            <nav class="sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{route('shop.bulk-upload')}}">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="upload"></i>
+                                    </div>
+                                    Product Bulk Upload
+                                </a>
+                            </nav>
+                        </div>
 
 
                         <div class="sidenav-menu-heading">Utilities</div>
