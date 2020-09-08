@@ -109,7 +109,7 @@ class UtilitiesCommand extends Command
             foreach ($projectsArr as $projectData) {
 
                 $projectData['is_personal'] = 0;
-                $projectData['user_id'] = User::query()->find(1);
+                $projectData['user_id'] = User::query()->find(1)->id;
                 $projectData['url'] = $projectData['repository_url'] ?? '';
 
                 $project = new Project();
