@@ -1,85 +1,54 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# TrenchDevs Repo 
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Main source code for https://trenchdevs.org. 
+TrenchDevs believes in outcome-based learning and adapting to different technologies by creating purposeful projects.
 
-## About Laravel
+For more information please refer the ["Launching TrenchDevs!!!"](https://blog.trenchdevs.org/launching-trenchdevs) post.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Php 7.4+
+- MySQL (Preferably MySQL 8)
+- composer (https://getcomposer.org)
 
-## Learning Laravel
+### Quickstart
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Clone the repo: `git clone https://github.com/trenchdevs/trenchdevs.git`
+- Navigate to directory: `cd trenchdevs`
+- Install php dependencies: `composer install`
+- Install npm dependencies: `npm install`
+- Create database on MySQL: sql - `create database trenchdevs`
+- Clone sample `.env` file: `cp .env.example .env`
+- Modify `.env` for local system
+- Generate Laravel key: `php artisan key:generate`
+- Generate JWT key: `php artisan jwt:secret`
+- Migrate the database tables: `php artisan migrate`
+- Initial Data: `php artisan db:seed`
+- Initialize projects data: `php artisan utilities:execute initialize_project_data`
+- Start server: `php artisan serve`
+- Using the default .env copied. On browser these two endponts should worl: 
+    - `http://localhost:8000`
+    - `blog.localhost:8000` 
+- To sign in using the default user:
+    - `http://localhost:8000/login`
+    - email: `tcommerce@test.com`
+    - password: `password`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Note: All file uploads and email **will not work by default**. Please contact us at support@trenchdevs.org to help
+ you setup these features locally.  
 
-## Laravel Sponsors
+## Code of Conduct 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+In order to ensure that the TrenchDevs community is welcoming to all, please review and abide by the 
+[Code of Conduct](https://github.com/trenchdevs/trenchdevs/blob/master/CODE_OF_CONDUCT.md).
 
-### Premium Partners
+## Security Issues
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
+For security issues, please send an email to Christopher Espiritu via [christopheredrian@trenchdevs.org](mailto:christopheredrian@trenchdevs.org)
+Security vulnerabilities will be addressed immediately.
 
-### Community Sponsors
+## License 
 
-<a href="https://op.gg"><img src="http://opgg-static.akamaized.net/icon/t.rectangle.png" width="150"></a>
-
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [云软科技](http://www.yunruan.ltd/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The TrenchDevs App is open-sourced software under the [Apache-2.0 License](https://github.com/trenchdevs/trenchdevs/blob/master/LICENSE)

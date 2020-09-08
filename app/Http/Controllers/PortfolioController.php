@@ -10,6 +10,8 @@ use ErrorException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
@@ -64,7 +66,11 @@ class PortfolioController extends Controller
             abort(404);
         }
 
-        return view('portfolio.show', [
+        $portfolioDetails = $user->getPortfolioDetails();
+
+        $view = $portfolioDetails->portfolio_view ?: 'portfolio.show';
+
+        return view($view, [
             'user' => $user,
             'portfolio_details' => $user->getPortfolioDetails(),
         ]);
@@ -73,7 +79,6 @@ class PortfolioController extends Controller
 
     /**
      * @param Request $request
-     * @param UrlHelper $urlHelper
      * @return RedirectResponse
      * @throws Throwable
      * @throws ValidationException
@@ -127,7 +132,6 @@ class PortfolioController extends Controller
 
         $this->validate($request, [
             'avatar_url' => 'required|max:10000|mimes:jpeg,jpg,png',
-            'username' => 'required|max:25|alpha_num',
         ]);
 
         /** @var User $user */
@@ -140,6 +144,40 @@ class PortfolioController extends Controller
         $user->avatar_url = $s3FullPath;
         $user->username = $request->get('username');
         $user->saveOrFail();
+
+        return back()->with('message', 'Thank you, your avatar has been updated');
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws ValidationException
+     * @throws Throwable
+     */
+    public function updateBasicInfo(Request $request)
+    {
+
+
+        $this->validate($request, [
+            'username' => 'required|max:25|alpha_num',
+            'portfolio_view' => [
+                'required',
+                'max:50',
+                Rule::in(array_keys(UserPortfolioDetail::VALID_VIEWS)),
+
+            ],
+        ]);
+
+        /** @var User $user */
+        $user = $request->user();
+
+        DB::transaction(function () use ($user, $request) {
+            $user->username = $request->get('username');
+            $user->saveOrFail();
+            $portfolioDetails = $user->getPortfolioDetails();
+            $portfolioDetails->portfolio_view = $request->get('portfolio_view');
+            $portfolioDetails->saveOrFail();
+        });
 
         return back()->with('message', 'Thank you, your basic profile have been updated');
     }

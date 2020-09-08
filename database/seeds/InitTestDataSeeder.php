@@ -45,9 +45,11 @@ class InitTestDataSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'account_id' => 1,
-            'role' => 'business_owner',
+            'account_id' => 2,
+            'role' => 'admin',
             'first_name' => 'Test',
+            'is_active' => 1,
+            'email_verified_at' => mysql_now(),
             'last_name' => 'Owner',
             'email' => 'tcommerce@test.com',
             'password' => Hash::make('password'),

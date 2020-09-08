@@ -140,6 +140,7 @@ class BlogsRepository
             } else {
 
                 $data['user_id'] = $loggedInUser->id;
+                $data['moderation_status'] = Blog::DB_MODERATION_STATUS_PENDING;
 
                 if ($loggedInUser->isBlogModerator()) {
                     $data['moderation_status'] = Blog::DB_MODERATION_STATUS_APPROVED;

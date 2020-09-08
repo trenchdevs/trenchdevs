@@ -8,7 +8,7 @@
 
     <div class="card mb-4">
         <div class="card-header">
-            Basic
+            Avatar
         </div>
         <div class="card-body p-5">
 
@@ -19,9 +19,6 @@
                     <img class="img-fluid img-thumbnail rounded-circle text-center"
                          src="{{!empty($user->avatar_url) ? $user->avatar_url : '/assets/img/avataaars.svg'}}"
                          alt="Avatar">
-                    <p class="text-center pt-2">
-                        {{!empty($user->username) ? "https://{$user->username}.trenchdevs.org" : 'N/A'}}
-                    </p>
                 </div>
 
                 <div class="col-md-9">
@@ -30,21 +27,61 @@
                         @csrf
 
                         <div class="form-group">
+                            <label for="avatar_url">Upload Avatar</label>
+                            <input name="avatar_url" class="form-control mt-2 pb-5 pt-3 pl-5" type="file"
+                                   value="{{old('avatar_url', $user->avatar_url)}}">
+                        </div>
+                        <input class="float-right btn btn-success" type="submit" name="submit" value="Save">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            Basic
+        </div>
+        <div class="card-body p-5">
+
+            <div class="row">
+
+                <div class="col-md-9">
+
+                    <form action="{{route('portfolio.updateBasicInfo')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="form-group">
                             <label for="username">
                                 Username <br>
                                 <small>This will be used as the subdomain for your portfolio (eg.
                                     myusername.trenchdevs.org)</small>
                             </label>
-                            <input type="text" name="username" class="form-control"
-                                   value="{{old('username', $user->username)}}"
-                            >
+                            <div class="input-group">
+                                <input type="text" name="username" class="form-control"
+                                       value="{{old('username', $user->username)}}"
+                                >
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2">.trenchdevs.org</span>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="form-group">
-                            <label for="avatar_url">Upload Avatar</label>
-                            <input name="avatar_url" class="form-control mt-2 pb-5 pt-3 pl-5" type="file"
-                                   value="{{old('avatar_url', $user->avatar_url)}}">
+                            <label for="portfolio_view">
+                                Template / Custom View
+                            </label>
+                            <select name="portfolio_view" id="portfolio_view" class="form-control">
+                                @foreach(\App\Models\Users\UserPortfolioDetail::VALID_VIEWS as $view => $label)
+                                    <option value="{{$view}}" {{ $view === old('portfolio_view', $portfolio_detail->portfolio_view ?? '') ? 'selected' : ''  }}>
+                                        {{$label}}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
+
                         <input class="float-right btn btn-success" type="submit" name="submit" value="Save">
                     </form>
 

@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\SiteAccessMiddleware;
+use App\Http\Middleware\WebApiMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -50,6 +51,10 @@ class Kernel extends HttpKernel
 
             // app middlewares for web
             SiteAccessMiddleware::class,
+        ],
+
+        'webapi' => [
+            WebApiMiddleware::class,
         ],
     ];
 

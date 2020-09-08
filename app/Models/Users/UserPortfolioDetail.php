@@ -5,6 +5,11 @@ namespace App\Models\Users;
 use App\Helpers\UrlHelper;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class UserPortfolioDetail
+ * @property $portfolio_view
+ * @package App\Models\Users
+ */
 class UserPortfolioDetail extends Model
 {
     protected $table = 'user_portfolio_details';
@@ -26,6 +31,13 @@ class UserPortfolioDetail extends Model
         'resume_url'
     ];
 
+    // can be on DB later on
+    const VALID_VIEWS = [
+        // view => label
+        'portfolio.show' => 'Default',
+        'portfolio.custom.basic' => 'Basic (StartBootstrap Template)',
+    ];
+
     public static function findOrEmptyByUser(int $userId): self
     {
 
@@ -41,6 +53,7 @@ class UserPortfolioDetail extends Model
 
     /**
      * @param array $requestArr
+     * @return array
      */
     public static function sanitizeFields(array &$requestArr)
     {

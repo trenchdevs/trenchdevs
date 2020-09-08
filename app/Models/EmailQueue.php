@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\BlackListedEmail;
 use App\Mail\GenericMailer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
@@ -59,6 +60,14 @@ class EmailQueue extends Model
             $queue->subject = "{$subject} - {$environment}";
             $queue->status = self::DB_STATUS_PAUSED;
             $queue->email_to = 'support@trenchdevs.org';
+        }
+
+
+        if (BlackListedEmail::isBlackListed($emailTo)) {
+            /**
+             * Don't send to blacklisted emails
+             */
+            $queue->status = self::DB_STATUS_PAUSED;
         }
 
         $queue->saveOrFail();
@@ -123,5 +132,22 @@ class EmailQueue extends Model
             /** @var self $queue */
             self::sendEntry($queue);
         }
+    }
+
+    /**
+     * @param string $email
+     * @param string $subject
+     * @param string $message
+     * @return static
+     * @throws Throwable
+     */
+    public static function createGenericMail(string $email, string $subject, string $message): self
+    {
+
+        $viewData = [
+            'name' => 'TrenchDevs Member',
+            'email_body' => $message,
+        ];
+        return self::queue($email, $subject, $viewData, 'emails.generic');
     }
 }

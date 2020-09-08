@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Str;
 
+$base_url = env('BASE_URL', 'trenchdevs.org');
+
 return [
 
     /*
@@ -155,7 +157,9 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', null),
+    // enable cross domain cookies (eg. blog.trenchdevs.com)
+    // https://stackoverflow.com/questions/30338518/persisting-sessions-across-subdomains-in-laravel-5
+    'domain' => env('SESSION_DOMAIN', ".{$base_url}"),
 
     /*
     |--------------------------------------------------------------------------

@@ -147,6 +147,13 @@
                             Projects
                         </a>
 
+                        <a class="nav-link collapsed" target="_blank" href="https://trenchdevs.slack.com">
+                            <div class="nav-link-icon">
+                                <i data-feather="slack"></i>
+                            </div>
+                            Slack
+                        </a>
+
                         <a class="nav-link collapsed"
                            href="{{ route('accounts.index') }}">
                             <div class="nav-link-icon">
