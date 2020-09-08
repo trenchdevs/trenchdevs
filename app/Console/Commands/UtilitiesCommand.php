@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Projects\Project;
+use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -108,7 +109,7 @@ class UtilitiesCommand extends Command
             foreach ($projectsArr as $projectData) {
 
                 $projectData['is_personal'] = 0;
-                $projectData['user_id'] = 2;
+                $projectData['user_id'] = User::query()->find(1);
                 $projectData['url'] = $projectData['repository_url'] ?? '';
 
                 $project = new Project();
