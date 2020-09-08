@@ -34,8 +34,8 @@ class ProductController extends ApiController
 
     public function bulkUpload(Request $request)
     {
-        // IMPORTANT: Arrangement of clomuns should be as follows:
-        // SKU, NAME, STOCK, MIDDLE_NAME, LAST_NAME, BIRTH_DATE, COURSE & YEAR
+        // NOTE: Arrangement of clomuns should be as follows:
+        // SKU, NAME, STOCK, MSRP
 
         if ($request->hasFile('student_data')) {
 
