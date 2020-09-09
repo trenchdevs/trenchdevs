@@ -36,14 +36,14 @@ Route::group([
 ], function () {
 
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('/parent_categories', 'ProductCategoryController@allParentCategories');
-        Route::post('/upsert', 'ProductCategoryController@upsert');
-        Route::post('/delete/{categoryId}', 'ProductCategoryController@delete');
-        Route::post('/toggle_is_featured/{categoryId}', 'ProductCategoryController@toggleIsFeatured');
+        Route::get('/parent_categories', 'ProductCategoriesController@allParentCategories');
+        Route::post('/upsert', 'ProductCategoriesController@upsert');
+        Route::post('/delete/{categoryId}', 'ProductCategoriesController@delete');
+        Route::post('/toggle_is_featured/{categoryId}', 'ProductCategoriesController@toggleIsFeatured');
     });
 
-    Route::get('/', 'ProductCategoryController@all');
-    Route::get('/{categoryId}', 'ProductCategoryController@one');
+    Route::get('/', 'ProductCategoriesController@all');
+    Route::get('/{categoryId}', 'ProductCategoriesController@one');
 });
 
 Route::group([
@@ -52,12 +52,12 @@ Route::group([
 ], function () {
 
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::post('/upsert', 'ProductController@upsert');
-        Route::post('/delete/{productId}', 'ProductController@delete');
+        Route::post('/upsert', 'ProductsController@upsert');
+        Route::post('/delete/{productId}', 'ProductsController@delete');
     });
 
-    Route::get('/', 'ProductController@all');
-    Route::get('/{productId}', 'ProductController@one');
+    Route::get('/', 'ProductsController@all');
+    Route::get('/{productId}', 'ProductsController@one');
 });
 
 

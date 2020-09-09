@@ -5,11 +5,51 @@ namespace App\Http\Controllers\Shop;
 use App\Http\Controllers\Auth\ApiController;
 use App\Product;
 use App\ProductCategory;
+use App\Repositories\ProductsRepository;
+use App\Repositories\ShopProductsRepository;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ProductController extends ApiController
+class ProductsController extends ApiController
 {
+    private $productsRepository;
+
+    /**
+     * UserCertificationsController constructor.
+     * @param ProductsRepository $productsRepository
+     */
+    public function __construct(ProductsRepository $productsRepository)
+    {
+        $this->productsRepository = $productsRepository;
+    }
+
+    public function showBulkUpload(Request $request)
+    {
+        return view('shop.bulkupload');
+    }
+
+    public function bulkUpload(Request $request)
+    {
+        // NOTE: Arrangement of clomuns should be as follows:
+        // SKU, NAME, STOCK, MSRP
+
+        /** @var User $user */
+        $user = $request->user();
+
+        if ($request->hasFile('student_data')) {
+
+            $path = $request->file('student_data')->getRealPath();
+
+            $result = $this->productsRepository->bulkUpload($user->account_id, $path);
+
+            return redirect('/shop/products/bulk-upload')->with('success', 'Successfully uploaded bulk product data!');
+
+        } else {
+            return redirect('/')->with('error', 'Error.');
+        }
+    }
+
     /**
      * Returns all products according to corresponding account
      *
@@ -25,31 +65,6 @@ class ProductController extends ApiController
         return response()->json([
             "products" => $products
         ], 200);
-    }
-
-    public function showBulkUpload(Request $request)
-    {
-        return view('shop.bulkupload');
-    }
-
-    public function bulkUpload(Request $request)
-    {
-        // NOTE: Arrangement of clomuns should be as follows:
-        // SKU, NAME, STOCK, MSRP
-
-        if ($request->hasFile('student_data')) {
-
-            $path = $request->file('student_data')->getRealPath();
-
-            $result = StudentUploadUtilities::bulkUpload($path);
-
-            return redirect('/')->with('success', 'Successfully upload bulk student data!');
-
-        } else {
-
-            return redirect('/')->with('error', 'Error.');
-
-        }
     }
 
     /**

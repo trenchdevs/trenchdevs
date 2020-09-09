@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 
-class ProductCategoryController extends ApiController
+class ProductCategoriesController extends ApiController
 {
     /**
      * Returns all product categories (filtered by account id)

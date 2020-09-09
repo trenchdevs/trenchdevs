@@ -128,8 +128,8 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // end - blogs
 
     // START - shop
-//    Route::get('shop', 'Shop\AccountsController@index')->name('accounts.index');
-    Route::get('shop/products/bulk-upload', 'Shop\ProductController@showBulkUpload')->name('shop.bulk-upload');
+    Route::get('shop/products/bulk-upload', 'Shop\ProductsController@showBulkUpload')->name('shop.show-bulk-upload');
+    Route::post('shop/products/bulk-upload', 'Shop\ProductsController@bulkUpload')->name('shop.bulk-upload');
     // END - shop
 
     // start - profile

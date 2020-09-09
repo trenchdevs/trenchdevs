@@ -241,7 +241,7 @@
 
                         <div class="collapse" id="shop" data-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{route('shop.bulk-upload')}}">
+                                <a class="nav-link" href="{{route('shop.show-bulk-upload')}}">
                                     <div class="nav-link-icon">
                                         <i data-feather="upload"></i>
                                     </div>
