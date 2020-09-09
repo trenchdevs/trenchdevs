@@ -22,11 +22,10 @@ class ProductsRepository
      */
     public static function bulkUpload(int $account_id, string $path): array
     {
-
+        $result = [];
+        $rowsToInsert = [];
         $hasSuccess = false;
         $hasError = false;
-
-        $rowsToInsert = [];
 
         $reader = new CsvReader($path);
         $reader->setFirstRowAsHeaders(true);
@@ -50,24 +49,39 @@ class ProductsRepository
 
                 $newProduct = Product::updateOrCreate($productIdentifier, $productData);
 
+                unset($row['account_id']);
                 $row['result'] = 'Success';
-                array_push($rowsToInsert, WriterEntityFactory::createRowFromArray($row));
+
+                array_push($rowsToInsert, $row);
 
                 $hasSuccess = true;
 
             } catch (Exception $e) {
+                unset($row['account_id']);
                 $row['result'] = $e->getMessage();
 
-                array_push($rowsToInsert, WriterEntityFactory::createRowFromArray($row));
-
+                array_push($rowsToInsert, $row);
 
                 $hasError = true;
-
             }
 
         }
 
-        $result = [];
+        $csvHeaders = $reader->getHeaders();
+        array_push($csvHeaders, 'result');
+
+        $result['csvHeaders'] = $csvHeaders;
+        $result['csvInserts'] = $rowsToInsert;
+
+//        header("Content-disposition: attachment; filename=test.csv");
+//        $fp = fopen('php://output', 'w');
+//
+//        fputcsv($fp, $csvHeaders);
+//        foreach ($rowsToInsert as $rowToInsert) {
+//            fputcsv($fp, $rowToInsert);
+//        }
+//
+//        fclose($fp);
 
         if ($hasSuccess && $hasError) {
 
@@ -87,16 +101,6 @@ class ProductsRepository
         }
 
         return $result;
-
-        // Ask help from Chris
-//        $headers = $reader->getHeaders();
-//        array_push($headers, 'result');
-//
-//        $writer = WriterFactory::createFromType(Type::CSV);
-//        $writer->openToFile($path)
-//            ->addRow(WriterEntityFactory::createRowFromArray($headers))
-//            ->addRows($rowsToInsert)
-//            ->close();
 
     }
 }

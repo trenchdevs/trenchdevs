@@ -47,7 +47,17 @@ class ProductsController extends ApiController
 
         $result = $this->productsRepository->bulkUpload($user->account_id, $path);
 
-        return back()->with($result['status'], $result['message']);
+        header("Content-disposition: attachment; filename=RESULTS.csv");
+        $fp = fopen('php://output', 'w');
+
+        fputcsv($fp, $result['csvHeaders']);
+        foreach ($result['csvInserts'] as $rowToInsert) {
+            fputcsv($fp, $rowToInsert);
+        }
+
+        fclose($fp);
+
+//        return back()->with($result['status'], $result['message']);
     }
 
     /**
