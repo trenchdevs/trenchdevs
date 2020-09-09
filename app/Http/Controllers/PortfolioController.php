@@ -142,7 +142,6 @@ class PortfolioController extends Controller
         $s3FullPath = $this->s3Helper->upload($avatarFile, 'users/avatars', $fileName);
 
         $user->avatar_url = $s3FullPath;
-        $user->username = $request->get('username');
         $user->saveOrFail();
 
         return back()->with('message', 'Thank you, your avatar has been updated');
@@ -175,6 +174,7 @@ class PortfolioController extends Controller
             $user->username = $request->get('username');
             $user->saveOrFail();
             $portfolioDetails = $user->getPortfolioDetails();
+            $portfolioDetails->user_id = $user->id;
             $portfolioDetails->portfolio_view = $request->get('portfolio_view');
             $portfolioDetails->saveOrFail();
         });

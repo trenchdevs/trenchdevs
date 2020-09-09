@@ -136,7 +136,7 @@
                                             URL)</small></label>
                                     <input class="form-control" type="text" id="resume_url" name="resume_url"
                                            value="{{old('resume_url', $portfolio_detail->resume_url)}}"
-                                           placeholder="myresumelink.example.com/myresume"
+                                           placeholder="myresumelink.example.com/myresume or same as linkedin linkedin.com/in/<<username>>"
                                     >
 
                                 </div>

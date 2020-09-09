@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class UserPortfolioDetail
  * @property $portfolio_view
+ * @property $user_id
  * @package App\Models\Users
  */
 class UserPortfolioDetail extends Model

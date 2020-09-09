@@ -27,6 +27,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property $id
  * @property $avatar_url
  * @property $username
+ * @property $role
  * @package App
  */
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail

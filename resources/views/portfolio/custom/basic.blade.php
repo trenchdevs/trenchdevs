@@ -50,6 +50,18 @@
             color: black !important;
         }
 
+        #about {
+            color: #d1deec !important;
+            @if(!empty($portfolio_details))
+                background-size: cover;
+                background-image: url({{$portfolio_details->background_cover_url}});
+            @endif
+        }
+
+        #about h1 {
+            color: #d1deec;
+        }
+
     </style>
 </head>
 <body id="page-top">
@@ -57,8 +69,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
         <span class="d-block d-lg-none">{{$user->name()}}</span>
-        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2"
-                                             src="{{$user->avatar_url ?? ''}}" alt=""/></span>
+        <span class="d-none d-lg-block">
+            <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{{$user->avatar_url ?? ''}}" alt=""/>
+        </span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
@@ -71,6 +84,12 @@
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">Interests</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Certifications</a></li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{{route('blogs')}}?username={{$user->username}}">
+                    Blog
+                </a>
+            </li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{get_site_url()}}">TrenchDevs</a></li>
         </ul>
     </div>
 </nav>
@@ -148,13 +167,27 @@
     <!-- Skills-->
     <section class="resume-section" id="skills">
         <div class="resume-section-content">
-            <h2 class="mb-5">Skills</h2>
-            <div class="subheading mb-3">Fluent</div>
-            {!! $user->skills->fluent ?? '' !!}
-            <div class="subheading mb-3">Conversationally Fluent</div>
-            {!! $user->skills->conversationally_fluent ?? '' !!}
-            <div class="subheading mb-3">Tourist</div>
-            {!! $user->skills->tourist ?? '' !!}
+
+            <div class="row">
+                <div class="col">
+                    <h2 class="mb-5">Skills</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="subheading mb-4">Fluent</div>
+                    {!! $user->skills->fluent ?? '' !!}
+                </div>
+                <div class="col-md-4">
+                    <div class="subheading mb-4">Conversationally Fluent</div>
+                    {!! $user->skills->conversationally_fluent ?? '' !!}
+                </div>
+                <div class="col-md-4">
+                    <div class="subheading mb-4">Tourist</div>
+                    {!! $user->skills->tourist ?? '' !!}
+                </div>
+            </div>
         </div>
     </section>
     <hr class="m-0"/>
