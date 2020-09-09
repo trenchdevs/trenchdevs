@@ -20,6 +20,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "league/flysystem-aws-s3-v3": "^1.0",
+        "trenchdevs/csv": "dev-master",
         "tymon/jwt-auth": "1.0.*"
     },
     "require-dev": {

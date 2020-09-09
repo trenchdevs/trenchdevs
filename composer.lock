@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d80ab2403750501735e970837b59f8ff",
+    "content-hash": "287bb6b025210479c133e279c6a3c831",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5037,6 +5037,45 @@
             "time": "2020-07-13T06:12:54+00:00"
         },
         {
+            "name": "trenchdevs/csv",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/trenchdevs/csv.git",
+                "reference": "8933d3c2a252451f4d754dcbbce91a681ace6bd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/trenchdevs/csv/zipball/8933d3c2a252451f4d754dcbbce91a681ace6bd1",
+                "reference": "8933d3c2a252451f4d754dcbbce91a681ace6bd1",
+                "shasum": ""
+            },
+            "require": {
+                "box/spout": "^3.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christopher Espiritu",
+                    "email": "christopheredrian@gmail.com"
+                }
+            ],
+            "description": "A simple csv wrapper for box/spout package",
+            "time": "2020-09-09T01:45:32+00:00"
+        },
+        {
             "name": "tymon/jwt-auth",
             "version": "1.0.0",
             "source": {
@@ -6368,6 +6407,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {
@@ -7235,7 +7275,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "trenchdevs/csv": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

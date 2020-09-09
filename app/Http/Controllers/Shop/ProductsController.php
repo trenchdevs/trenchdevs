@@ -31,23 +31,23 @@ class ProductsController extends ApiController
 
     public function bulkUpload(Request $request)
     {
-        // NOTE: Arrangement of clomuns should be as follows:
-        // SKU, NAME, STOCK, MSRP
 
         /** @var User $user */
         $user = $request->user();
 
-        if ($request->hasFile('student_data')) {
-
-            $path = $request->file('student_data')->getRealPath();
-
-            $result = $this->productsRepository->bulkUpload($user->account_id, $path);
-
-            return redirect('/shop/products/bulk-upload')->with('success', 'Successfully uploaded bulk product data!');
-
-        } else {
-            return redirect('/')->with('error', 'Error.');
+        if (!$request->hasFile('product_data')) {
+            return back()->with('error', 'Product CSV file is required');
         }
+
+        $path = $request->file('product_data')->getRealPath();
+
+        if (!file_exists($path)) {
+            return back()->with('error', 'Product CSV file is nonexistent');
+        }
+
+        $result = $this->productsRepository->bulkUpload($user->account_id, $path);
+
+        return back()->with($result['status'], $result['message']);
     }
 
     /**
@@ -87,22 +87,8 @@ class ProductsController extends ApiController
      */
     public function upsert(Request $request)
     {
-        $rules = [
-            'name' => 'required|string|max:255',
-            'stock' => 'required|integer',
-            'sku' => 'required|string|max:255',
-            'msrp' => 'required|numeric',
-            'product_category_id' => 'nullable|integer',
-            'description' => 'nullable|string|max:255',
-            'product_cost' => 'nullable|numeric',
-            'shipping_cost' => 'nullable|numeric',
-            'handling_cost' => 'nullable|numeric',
-            'final_cost' => 'nullable|numeric',
-            'markup_percentage' => 'nullable|numeric',
-            'attributes' => 'nullable|json',
-        ];
 
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), Product::$rules);
 
         if ($validator->fails()) {
             $errorBag = $validator->errors()->getMessageBag()->all();
