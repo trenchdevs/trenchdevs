@@ -1,0 +1,16 @@
+.git/
+Notes/
+vendor/
+
+.*
+*.md
+
+phpunit.xml
+server.php
+webpack.mix.js
+
+public/hot/
+public/storage/
+storage/*.key/
+
+docker-compose.yml
