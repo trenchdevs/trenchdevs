@@ -13,7 +13,12 @@ class PublicController extends Controller
 
         $projects = Project::getGlobalProjects();
         $coreDevs = User::query()
-            ->whereIn('id', [2, 3, 4, 11])
+            ->whereIn('id', [
+                2,
+                3,
+                4,
+                // 11, // avatar needs cropping
+            ])
             ->get();
 
         return view('welcome', [
