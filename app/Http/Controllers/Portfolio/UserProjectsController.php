@@ -28,8 +28,9 @@ class UserProjectsController extends AuthWebController
 
     public function list()
     {
-        $projects = Project::orderBy('id', 'desc')
-            ->paginate();
+        $projects = Project::query()
+            ->orderBy('id', 'desc')
+            ->simplePaginate();
 
         return view('projects.list', [
             'projects' => $projects,

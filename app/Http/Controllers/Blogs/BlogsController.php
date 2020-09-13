@@ -44,7 +44,7 @@ class BlogsController extends AuthWebController
         }
 
         $blogs = $blogs->orderBy('id', 'desc')
-            ->paginate(6);
+            ->simplePaginate(6);
 
         $blogStatistics = $this->blogsRepo->getStatistics();
 

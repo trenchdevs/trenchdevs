@@ -16,7 +16,7 @@ class ProjectsController extends AuthWebController
     {
         $projects = Project::query()
             ->where('is_personal', 0)
-            ->paginate();
+            ->simplePaginate(;
 
         return view('projects.list', [
             'projects' => $projects,

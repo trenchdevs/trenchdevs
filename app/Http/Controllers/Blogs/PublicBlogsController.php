@@ -34,7 +34,7 @@ class PublicBlogsController extends Controller
                 ->where('users.username', '=', $username);
         }
 
-        $blogs = $query->paginate(6);
+        $blogs = $query->simplePaginate(6);
 
         return view('blogs.public.index', [
             'blogs' => $blogs
