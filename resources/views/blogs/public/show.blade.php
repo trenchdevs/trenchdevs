@@ -5,7 +5,19 @@
         #markdown_contents img {
             width: 100%;
             text-align: center;
+            padding: 2rem;
         }
+
+
+        #markdown_contents h1,
+        #markdown_contents h2,
+        #markdown_contents h3,
+        #markdown_contents h4,
+        #markdown_contents h5,
+        #markdown_contents h6 {
+            margin-bottom: 25px;
+        }
+
     </style>
 
 
@@ -33,7 +45,8 @@
                                      src="{{ empty($blog->user->avatar_url) ? 'https://source.unsplash.com/300x300/?user' : $blog->user->avatar_url  }}"/>
                                 <div class="single-post-meta-details">
                                     <div class="single-post-meta-details-name">
-                                        <a target="_blank" href="{{$blog->user->getPortfolioUrl()}}">{{$blog->user->name()}}</a>
+                                        <a target="_blank"
+                                           href="{{$blog->user->getPortfolioUrl()}}">{{$blog->user->name()}}</a>
                                     </div>
                                     <div class="single-post-meta-details-date">{{$blog->getDateMeta()}}</div>
                                 </div>
