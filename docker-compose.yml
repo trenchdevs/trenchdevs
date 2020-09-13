@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    tmpfs: /var/lib/mysql
+    volumes:
+      - ./database/docker-init:/docker-entrypoint-initdb.d
+    ports:
+      - ${DB_PORT}:3306
+    healthcheck:
+      test: mysqladmin ping
