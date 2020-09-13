@@ -40,7 +40,7 @@ Note: All file uploads and email **will not work by default**. Please contact us
  you setup these features locally.
 
 #### Running App in Docker
-A Docker image for the app is hosted in [Docker hub](https://hub.docker.com/repository/docker/trenchdevs/trenchdevs). An example for running the image in `docker` with sequelize is provided in this section. Before proceeding, make sure you have ran through Quickstart. The `.env` generated will be needed for you to proceed. Instructions are tested in a linux shell, but should be compatible with any other Posix compliant shell.
+A Docker image for the app is hosted in [Docker hub](https://hub.docker.com/repository/docker/trenchdevs/trenchdevs). An example for running the image in `docker` with MySQL is provided in this section. Before proceeding, make sure you have ran through Quickstart. The `.env` generated will be needed for you to proceed. Instructions are tested in a linux shell, but should be compatible with any other Posix compliant shell.
 
 ##### Requirements
 
@@ -48,7 +48,7 @@ A Docker image for the app is hosted in [Docker hub](https://hub.docker.com/repo
  - `docker-compose`
  - Posix compliant shell
 
-If you don't have mysql installed locally on your machine, you could run it using `docker-compose`. Do note that the database instance used here will use `tmpfs` (in memory storage), stopping the service will delete data in mysql.
+If you don't have mysql installed locally on your machine, you could run it using `docker-compose`. Do note that the database instance used here will use `tmpfs` (in memory storage), stopping the service will delete data in MySQL.
 
 ```
 $ docker-compose up db
