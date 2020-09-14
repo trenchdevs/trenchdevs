@@ -87,10 +87,10 @@ class PortfolioController extends Controller
     {
 
         $this->validate($request, [
-            'primary_phone' => 'required|max:15',
-            'github_url' => 'required|max:128',
-            'linkedin_url' => 'required|max:128',
-            'resume_url' => 'required|max:128',
+            'primary_phone' => 'max:15',
+            'github_url' => 'max:128',
+            'linkedin_url' => 'max:128',
+            'resume_url' => 'max:128',
             'interests' => 'max:500',
             'tagline' => 'max:1024',
         ]);

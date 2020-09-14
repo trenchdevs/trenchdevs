@@ -1,5 +1,17 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountsController;
+use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\AwsController;
+use App\Http\Controllers\Blogs\PublicBlogsController;
+use App\Http\Controllers\EmailTester;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Notifications\EmailPreferencesController;
+use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Projects\ProjectsController;
+use App\Http\Controllers\PublicController;
+use App\Http\Controllers\SuperAdmin\CommandsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -20,8 +32,8 @@ if (empty($baseUrl)) {
  * Blogging Domain
  */
 Route::domain("blog.{$baseUrl}")->group(function () {
-    Route::get('/', 'Blogs\PublicBlogsController@index')->name('blogs');
-    Route::get('{slug}', 'Blogs\PublicBlogsController@show');
+    Route::get('/', [PublicBlogsController::class, 'index'])->name('blogs');
+    Route::get('{slug}', [PublicBlogsController::class, 'show']);
 });
 
 
@@ -39,25 +51,25 @@ Route::domain("blog.{$baseUrl}")->group(function () {
 
 // START - Portfolio Routes
 Route::domain("{username}.{$baseUrl}")->group(function () {
-    Route::get('/', 'PortfolioController@show');
+    Route::get('/', [PortfolioController::class, 'show']);
 });
 // END - Portfolio Routes
 
-Route::get('/', 'PublicController@index')->name('public.home');
+Route::get('/', [PublicController::class, 'index'])->name('public.home');
 
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth:web', 'verified'])->group(function () {
-    Route::get('/home', 'HomeController@index');
+    Route::get('/home', [HomeController::class, 'index']);
 
     // START - users
-    Route::get('admin/users/create', 'Admin\UsersController@create')->name('users.create');
-    Route::post('admin/users/upsert', 'Admin\UsersController@upsert')->name('users.upsert');
-    Route::post('admin/users/password_reset', 'Admin\UsersController@passwordReset')->name('users.password_reset');
-    Route::get('admin/users/{id}', 'Admin\UsersController@edit')->name('users.edit');
-    Route::get('admin/users', 'Admin\UsersController@index')->name('users.index');
+    Route::get('admin/users/create', [UsersController::class, 'create'])->name('users.create');
+    Route::post('admin/users/upsert', [UsersController::class, 'upsert'])->name('users.upsert');
+    Route::post('admin/users/password_reset', [UsersController::class, 'passwordReset'])->name('users.password_reset');
+    Route::get('admin/users/{id}', [UsersController::class, 'edit'])->name('users.edit');
+    Route::get('admin/users', [UsersController::class, 'index'])->name('users.index');
 
-    Route::post('users/change_password', 'Admin\UsersController@changePassword')->name('users.change_password');
+    Route::post('users/change_password', [UsersController::class, 'changePassword'])->name('users.change_password');
     // End - users
 
     // START - mailers
@@ -133,21 +145,21 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // END - shop
 
     // start - profile
-    Route::get('profile', 'ProfileController@index');
+    Route::get('profile', [ProfileController::class, 'index']);
     // end - profile
 
     // start - commands
-    Route::get('superadmin/commands', 'SuperAdmin\CommandsController@index')->name('superadmin.index');
-    Route::post('superadmin/commands', 'SuperAdmin\CommandsController@command')->name('superadmin.command');
+    Route::get('superadmin/commands', [CommandsController::class, 'index'])->name('superadmin.index');
+    Route::post('superadmin/commands', [CommandsController::class, 'command'])->name('superadmin.command');
     // end - commands
 
     // start - global projects
-    Route::get('projects', 'Projects\ProjectsController@index')->name('projects.list');
+    Route::get('projects', [ProjectsController::class, 'index'])->name('projects.list');
     // end - global projects
 
 
     // START - accounts
-    Route::get('accounts', 'Admin\AccountsController@index')->name('accounts.index');
+    Route::get('accounts', [AccountsController::class, 'index'])->name('accounts.index');
     // END - accounts
 
 });
@@ -157,13 +169,13 @@ Route::view('documents/privacy', 'documents.privacy')->name('documents.privacy')
 Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
 // end - public documents
 
-Route::get('{username}', 'PortfolioController@show');
+Route::get('{username}', [PortfolioController::class, 'show']);
 
 // start - public email endpoints
-Route::get('emails/unsubscribe', 'EmailTester@test');
-Route::get('emails/testsend', 'EmailTester@testSend');
+Route::get('emails/unsubscribe', [EmailTester::class, 'test']);
+Route::get('emails/testsend', [EmailTester::class, 'testSend']);
 
-Route::get('emails/unsubscribe', 'Notifications\EmailPreferencesController@showUnsubscribeForm')->name('notifications.emails.showUnsubscribeForm');
-Route::post('emails/unsubscribe', 'Notifications\EmailPreferencesController@unsubscribe')->name('notifications.emails.unsubscribe');
+Route::get('emails/unsubscribe', [EmailPreferencesController::class, 'showUnsubscribeForm'])->name('notifications.emails.showUnsubscribeForm');
+Route::post('emails/unsubscribe', [EmailPreferencesController::class, 'unsubscribe'])->name('notifications.emails.unsubscribe');
 // end - public email endpoints
-Route::post('aws/sns', 'AwsController@sns');
+Route::post('aws/sns', [AwsController::class, 'sns']);

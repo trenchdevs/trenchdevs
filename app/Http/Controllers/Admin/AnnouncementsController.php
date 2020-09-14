@@ -18,8 +18,9 @@ class AnnouncementsController extends AuthWebController
 {
     public function list()
     {
-        $announcements = Announcement::orderBy('id', 'desc')
-            ->paginate();
+        $announcements = Announcement::query()
+            ->orderBy('id', 'desc')
+            ->simplePaginate();
 
         return view('announcements.list', [
             'announcements' => $announcements,

@@ -39,7 +39,7 @@ class UsersController extends AuthWebController
 
         $users = User::query()
             ->orderBy('first_name')
-            ->paginate(30);
+            ->simplePaginate(30);
 
         return view('admin.users.index', ['users' => $users]);
     }

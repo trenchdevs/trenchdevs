@@ -100,6 +100,40 @@
                 </div>
             </div>
         </div>
+
+        @if(isset($coreDevs) && !empty($coreDevs))
+
+            <div class="container mt-5">
+
+                <!-- About Section Heading-->
+                <div class="text-center">
+                    <h4 class="page-section-heading d-inline-block text-white">CORE CONTRIBUTORS</h4>
+                </div>
+                <!-- Icon Divider-->
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+
+                <div class="d-flex justify-content-between flex-wrap">
+                    @foreach($coreDevs as $coreDev)
+                        <div class="col-md-3 my-3 text-center">
+                            <a target="_blank" href="{{$coreDev->getPortfolioUrl()}}" class="text-white">
+                                <img
+                                    src="{{$coreDev->avatar_url}}"
+                                    alt="Avatar URL"
+                                    class="text-center rounded-circle img-thumbnail text-white"
+                                    style="max-width: 150px;"
+                                >
+                                <h5 class="mt-3">{{$coreDev->name()}}</h5>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
     </section>
     <section class="page-section" id="contact">
         <div class="container">
@@ -138,7 +172,7 @@
                 <!-- Footer Location-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="mb-4">LOCATION</h4>
-                    <p class="pre-wrap lead mb-0">USA & PHILIPPINES</p>
+                    <p class="pre-wrap lead mb-0">PHILIPPINES & USA</p>
                 </div>
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
