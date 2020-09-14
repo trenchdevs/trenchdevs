@@ -24,8 +24,6 @@ class ProductsRepository
     {
         $result = [];
         $rowsToInsert = [];
-        $hasSuccess = false;
-        $hasError = false;
 
         $reader = new CsvReader($path);
         $reader->setFirstRowAsHeaders(true);
@@ -54,15 +52,11 @@ class ProductsRepository
 
                 array_push($rowsToInsert, $row);
 
-                $hasSuccess = true;
-
             } catch (Exception $e) {
                 unset($row['account_id']);
                 $row['result'] = $e->getMessage();
 
                 array_push($rowsToInsert, $row);
-
-                $hasError = true;
             }
 
         }
@@ -72,33 +66,6 @@ class ProductsRepository
 
         $result['csvHeaders'] = $csvHeaders;
         $result['csvInserts'] = $rowsToInsert;
-
-//        header("Content-disposition: attachment; filename=test.csv");
-//        $fp = fopen('php://output', 'w');
-//
-//        fputcsv($fp, $csvHeaders);
-//        foreach ($rowsToInsert as $rowToInsert) {
-//            fputcsv($fp, $rowToInsert);
-//        }
-//
-//        fclose($fp);
-
-        if ($hasSuccess && $hasError) {
-
-            $result['status'] = 'success w/ errors';
-            $result['message'] = 'Successfully uploaded  partial product data! Please check CSV file for products with validation errors.';
-
-        } elseif ($hasSuccess && !$hasError) {
-
-            $result['status'] = 'success';
-            $result['message'] = 'Successfully uploaded bulk product data!';
-
-        } else {
-
-            $result['status'] = 'errors';
-            $result['message'] = 'Bulk product data was not uploaded. Please check CSV file for validation errors.';
-
-        }
 
         return $result;
 

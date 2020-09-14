@@ -56,8 +56,6 @@ class ProductsController extends ApiController
         }
 
         fclose($fp);
-
-//        return back()->with($result['status'], $result['message']);
     }
 
     /**
