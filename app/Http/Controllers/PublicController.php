@@ -17,7 +17,7 @@ class PublicController extends Controller
                 2,
                 3,
                 4,
-                // 11, // avatar needs cropping
+                11,
             ])
             ->get();
 
