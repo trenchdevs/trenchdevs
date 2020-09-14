@@ -139,6 +139,11 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::post('blogs/moderate/{id}', 'Blogs\BlogsController@moderate')->name('blogs.moderate');
     // end - blogs
 
+    // START - shop
+    Route::get('shop/products/bulk-upload', 'Shop\ProductsController@showBulkUpload')->name('shop.show-bulk-upload');
+    Route::post('shop/products/bulk-upload', 'Shop\ProductsController@bulkUpload')->name('shop.bulk-upload');
+    // END - shop
+
     // start - profile
     Route::get('profile', [ProfileController::class, 'index']);
     // end - profile

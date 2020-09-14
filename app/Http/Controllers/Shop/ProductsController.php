@@ -1,15 +1,63 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Auth\ApiController;
 use App\Product;
 use App\ProductCategory;
+use App\Repositories\ProductsRepository;
+use App\Repositories\ShopProductsRepository;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ProductController extends ApiController
+class ProductsController extends ApiController
 {
+    private $productsRepository;
+
+    /**
+     * UserCertificationsController constructor.
+     * @param ProductsRepository $productsRepository
+     */
+    public function __construct(ProductsRepository $productsRepository)
+    {
+        $this->productsRepository = $productsRepository;
+    }
+
+    public function showBulkUpload(Request $request)
+    {
+        return view('shop.bulkupload');
+    }
+
+    public function bulkUpload(Request $request)
+    {
+
+        /** @var User $user */
+        $user = $request->user();
+
+        if (!$request->hasFile('product_data')) {
+            return back()->with('error', 'Product CSV file is required');
+        }
+
+        $path = $request->file('product_data')->getRealPath();
+
+        if (!file_exists($path)) {
+            return back()->with('error', 'Product CSV file is nonexistent');
+        }
+
+        $result = $this->productsRepository->bulkUpload($user->account_id, $path);
+
+        header("Content-disposition: attachment; filename=RESULTS.csv");
+        $fp = fopen('php://output', 'w');
+
+        fputcsv($fp, $result['csvHeaders']);
+        foreach ($result['csvInserts'] as $rowToInsert) {
+            fputcsv($fp, $rowToInsert);
+        }
+
+        fclose($fp);
+    }
+
     /**
      * Returns all products according to corresponding account
      *
@@ -47,22 +95,8 @@ class ProductController extends ApiController
      */
     public function upsert(Request $request)
     {
-        $rules = [
-            'product_category_id' => 'required|integer',
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'stock' => 'required|integer',
-            'sku' => 'required|string|max:255',
-            'product_cost' => 'required|numeric',
-            'msrp' => 'numeric',
-            'shipping_cost' => 'numeric',
-            'handling_cost' => 'numeric',
-            'final_cost' => 'numeric',
-            'markup_percentage' => 'numeric',
-            'attributes' => 'json',
-        ];
 
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), Product::$rules);
 
         if ($validator->fails()) {
             $errorBag = $validator->errors()->getMessageBag()->all();

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Auth\ApiController;
 use App\ProductCategory;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 
-class ProductCategoryController extends ApiController
+class ProductCategoriesController extends ApiController
 {
     /**
      * Returns all product categories (filtered by account id)
@@ -26,7 +26,6 @@ class ProductCategoryController extends ApiController
             "product_categories" => $product_categories
         ], 200);
     }
-
 
     /**
      * @param Request $request
