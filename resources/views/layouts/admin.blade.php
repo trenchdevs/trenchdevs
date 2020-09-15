@@ -16,7 +16,8 @@
                         src="{{ !empty(Auth::user()->avatar_url) ?Auth::user()->avatar_url : '/assets/img/avataaars.svg'  }}"
                     />
                 </span>
-                <div id="navbarDropdownUserImage" class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up"
+                <div id="navbarDropdownUserImage"
+                     class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up"
                      aria-labelledby="navbarDropdownUserImage">
                     <h6 class="dropdown-header d-flex align-items-center">
                         <img
@@ -228,28 +229,31 @@
                             </nav>
                         </div>
 
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
-                           data-target="#shop" aria-expanded="false" aria-controls="shop">
-                            <div class="nav-link-icon">
-                                <i data-feather="shopping-bag"></i>
-                            </div>
-                            Shop
-                            <div class="sidenav-collapse-arrow">
-                                <i data-feather="chevron-down"></i>
-                            </div>
-                        </a>
+                        @if(Auth::user()->canManageShop())
 
-                        <div class="collapse" id="shop" data-parent="#accordionSidenav">
-                            <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{route('shop.products.show-bulk-upload')}}">
-                                    <div class="nav-link-icon">
-                                        <i data-feather="upload"></i>
-                                    </div>
-                                    Product Bulk Upload
-                                </a>
-                            </nav>
-                        </div>
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                               data-target="#shop" aria-expanded="false" aria-controls="shop">
+                                <div class="nav-link-icon">
+                                    <i data-feather="shopping-bag"></i>
+                                </div>
+                                Shop
+                                <div class="sidenav-collapse-arrow">
+                                    <i data-feather="chevron-down"></i>
+                                </div>
+                            </a>
 
+                            <div class="collapse" id="shop" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{{route('shop.products.show-bulk-upload')}}">
+                                        <div class="nav-link-icon">
+                                            <i data-feather="upload"></i>
+                                        </div>
+                                        Product Bulk Upload
+                                    </a>
+                                </nav>
+                            </div>
+
+                        @endif
 
                         <div class="sidenav-menu-heading">Utilities</div>
 
@@ -289,7 +293,7 @@
 
                     <div class="d-flex justify-content-end align-items-sm-center flex-column flex-sm-row mb-4">
                         <div class="mr-4 mb-3 mb-sm-0">
-                        <h6 class="mb-0">Server Time (UTC)</h6>
+                            <h6 class="mb-0">Server Time (UTC)</h6>
                             <div class="small">
                                 <span class="font-weight-500 text-primary">{{date('l')}}</span> &middot;
                                 {{date('F d, Y')}} &middot; {{ date('h:i a') }}
