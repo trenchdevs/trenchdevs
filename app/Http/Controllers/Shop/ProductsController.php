@@ -26,6 +26,13 @@ class ProductsController extends ApiController
 
     public function showBulkUpload(Request $request)
     {
+        $user = $request->user();
+
+        // Temporary
+        if (!$user->canManageShop()) {
+            die("403");
+        }
+
         return view('shop.bulkupload');
     }
 
@@ -34,6 +41,11 @@ class ProductsController extends ApiController
 
         /** @var User $user */
         $user = $request->user();
+
+        // Temporary
+        if (!$user->canManageShop()) {
+            die("403");
+        }
 
         if (!$request->hasFile('product_data')) {
             return back()->with('error', 'Product CSV file is required');

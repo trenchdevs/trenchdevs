@@ -53,6 +53,12 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         self::ROLE_ADMIN,
     ];
 
+    const SHOP_ADMIN_ROLES = [
+        self::ROLE_SUPER_ADMIN,
+        self::ROLE_ADMIN,
+        self::ROLE_BUSINESS_OWNER,
+    ];
+
     private $portfolioUrl;
 
     /**
@@ -283,6 +289,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function isAdmin(): bool
     {
         return in_array($this->role, self::ADMIN_ROLES);
+    }
+
+    public function canManageShop(): bool
+    {
+        return in_array($this->role, self::SHOP_ADMIN_ROLES);
     }
 
     /**
