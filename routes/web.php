@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Projects\ProjectsController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\SuperAdmin\CommandsController;
+use App\Http\Controllers\Shop\ProductsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -140,8 +141,8 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // end - blogs
 
     // START - shop
-    Route::get('shop/products/bulk-upload', 'Shop\ProductsController@showBulkUpload')->name('shop.show-bulk-upload');
-    Route::post('shop/products/bulk-upload', 'Shop\ProductsController@bulkUpload')->name('shop.bulk-upload');
+    Route::get('shop/products/bulk-upload', [ProductsController::class, 'showBulkUpload'])->name('shop.products.show-bulk-upload');
+    Route::post('shop/products/bulk-upload', [ProductsController::class, 'bulkUpload'])->name('shop.products.bulk-upload');
     // END - shop
 
     // start - profile

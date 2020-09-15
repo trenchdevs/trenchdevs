@@ -12,7 +12,7 @@
         <div class="card-body p-3">
 
             <div class="content d-flex justify-content-center p-4">
-                <form method="POST" action="{{route('shop.bulk-upload')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{route('shop.products.bulk-upload')}}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
