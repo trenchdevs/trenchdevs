@@ -19,7 +19,7 @@ class DeactivateInactiveUsers extends Command
      *
      * @var string
      */
-    protected $description = 'Deactivate inactive users for at least a month';
+    protected $description = 'Deactivate users who are inactive';
 
     /**
      * Create a new command instance.
