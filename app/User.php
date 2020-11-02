@@ -349,8 +349,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         $latestLogins = DB::table('site_access_logs')
             ->selectRaw('user_id, MAX(created_at) AS last_login')
             ->whereNotNull('user_id')
-            ->groupBy('user_id')
-            ->get();
+            ->groupBy('user_id');
 
         $newlyDeactivatedUsers = DB::table('users')
             ->leftJoinSub($latestLogins, 'latest_logins', function ($join) {
@@ -358,7 +357,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             })
             ->where('users.is_active', '=', 1)
             ->where('users.role', '=', $userTypeToDeactivate)
-            ->whereRaw('TIMESTAMPDIFF(MONTH, sal.last_login, NOW()) >= ?)', $inactiveMonths)
+            ->whereRaw('TIMESTAMPDIFF(MONTH, latest_logins.last_login, NOW()) >= ?', $inactiveMonths)
             ->update(['is_active' => 0]);
 
     }
