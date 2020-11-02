@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -335,6 +336,31 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         }
 
         return $emails;
+    }
+
+    /**
+     * @param int $inactiveMonths
+     */
+    public static function deactivateInactiveUsers(int $inactiveMonths = 1)
+    {
+
+        $userTypeToDeactivate = self::ROLE_CONTRIBUTOR;
+
+        $latestLogins = DB::table('site_access_logs')
+            ->selectRaw('user_id, MAX(created_at) AS last_login')
+            ->whereNotNull('user_id')
+            ->groupBy('user_id')
+            ->get();
+
+        $newlyDeactivatedUsers = DB::table('users')
+            ->leftJoinSub($latestLogins, 'latest_logins', function ($join) {
+                $join->on('users.id', '=', 'latest_logins.user_id');
+            })
+            ->where('users.is_active', '=', 1)
+            ->where('users.role', '=', $userTypeToDeactivate)
+            ->whereRaw('TIMESTAMPDIFF(MONTH, sal.last_login, NOW()) >= ?)', $inactiveMonths)
+            ->update(['is_active' => 0]);
+
     }
 
 }
