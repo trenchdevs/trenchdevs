@@ -75,7 +75,7 @@
                 </div>
             </header>
             @if(!empty($user->skills))
-                <section class="bg-white py-10">
+                <section class="bg-white py-4">
                     <div class="container">
                         <div class="text-uppercase-expanded small mb-2">
                             <i data-feather="zap"></i> Skills
@@ -107,7 +107,7 @@
                 </section>
             @endif
             @if(!empty($user->experiences))
-                <section class="bg-light py-10">
+                <section class="bg-light py-4">
                     <div class="container">
                         <div class="text-uppercase-expanded small mb-2">
                             <i data-feather="briefcase"></i> Experience
@@ -139,7 +139,7 @@
                 </section>
             @endif
             @if(!empty($user->certifications))
-                <section class="bg-white py-10">
+                <section class="bg-white py-4">
                     <div class="container">
                         <div class="text-uppercase-expanded small mb-2">
                             <i data-feather="award"></i> Certifications & Accomplishments
@@ -176,7 +176,7 @@
                 </section>
             @endif
             @if(!empty($user->degrees))
-                <section class="bg-light py-10">
+                <section class="bg-light py-4">
                     <div class="container">
                         <div class="text-uppercase-expanded small mb-2">
                             <i data-feather="book"></i> Education
@@ -206,7 +206,7 @@
             @endif
             @if(!empty($portfolio_details->interests))
 
-                <section class="bg-white py-10">
+                <section class="bg-white py-4">
                     <div class="container">
                         <div class="text-uppercase-expanded small mb-2">
                             <i data-feather="star"></i>  Interests
@@ -226,7 +226,7 @@
                     </div>
                 </section>
             @endif
-            <section class="bg-light py-10">
+            <section class="bg-light py-4">
                 <div class="container">
                     <div class="text-uppercase-expanded small mb-2">
                         <i data-feather="phone"></i> Contact
