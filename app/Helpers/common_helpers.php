@@ -8,10 +8,13 @@ if (!function_exists('get_base_url')) {
     function get_base_url()
     {
         $fullUrl = url('/');
-        $baseUrl = explode('//',$fullUrl)[1] ?? null;
+        $fullDomain = explode('//', $fullUrl)[1]; // c.trenchdevs.org
 
-        if (!empty($baseUrl)) {
-            return $baseUrl;
+        if (!empty($fullDomain)) {
+            $domainParts = explode('.', $fullDomain);
+            $tld = array_pop($domainParts);
+            $domain = array_pop($domainParts);
+            return "{$domain}.{$tld}";
         }
 
         return env('BASE_URL', 'trenchdevs.test');
