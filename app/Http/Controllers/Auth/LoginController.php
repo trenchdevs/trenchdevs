@@ -78,7 +78,7 @@ class LoginController extends Controller
         ]);
         $userLogin->save();
 
-        return redirect('/home');
+        return redirect(RouteServiceProvider::HOME);
     }
 
     /**

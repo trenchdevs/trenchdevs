@@ -48,26 +48,30 @@
         <main>
             <nav class="navbar navbar-marketing navbar-expand-lg bg-dark navbar-dark">
                 <div class="container">
-                    <a class="navbar-brand text-white" href="/">TRENCHDEVS BLOG</a>
+                    <a class="navbar-brand text-white" href="{{route('public.blogs')}}">TRENCHDEVS BLOG</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation"><i data-feather="menu"></i></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto mr-lg-5">
                             <li class="nav-item">
-                                <a class="nav-link text-white" target="_blank" href="https://trenchdevs.org">
+                                <a class="nav-link text-white" target="_blank" href="{{route('public.home')}}">
                                     TRENCHDEVS
                                 </a>
                             </li>
                         </ul>
-                        <a class="btn-primary btn rounded-pill px-4 ml-lg-4" href="{{env('APP_URL')}}/login">
-                            @if(empty($loggedInUser))
+                        @if(empty($loggedInUser))
+                            <a class="btn-primary btn rounded-pill px-4 ml-lg-4" href="{{env('APP_URL')}}/login">
                                 SIGN IN / JOIN
-                            @else
-                                PORTAL
-                            @endif
-                            <i class="fas fa-arrow-right ml-1"></i>
-                        </a>
+                                <i class="fas fa-arrow-right ml-1"></i>
+
+                            </a>
+                        @else
+                            <a class="btn-primary btn rounded-pill px-4 ml-lg-4" href="{{env('APP_URL')}}/portal/home">
+                                Portal
+                                <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        @endif
                     </div>
                 </div>
             </nav>
@@ -93,14 +97,14 @@
                     </div>
                 </div>
                 <hr class="my-5"/>
-                                <div class="row align-items-center">
-                                    <div class="col-md-6 small">Copyright &copy; TrenchDevs {{date('Y') }}</div>
-                                    <div class="col-md-6 text-md-right small">
-                                        <a href="{{route('documents.privacy')}}" target="_blank">Privacy Policy</a>
-                                        &middot;
-                                        <a href="{{route('documents.tnc')}}" target="_blank">Terms &amp; Conditions</a>
-                                    </div>
-                                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-6 small">Copyright &copy; TrenchDevs {{date('Y') }}</div>
+                    <div class="col-md-6 text-md-right small">
+                        <a href="{{route('documents.privacy')}}" target="_blank">Privacy Policy</a>
+                        &middot;
+                        <a href="{{route('documents.tnc')}}" target="_blank">Terms &amp; Conditions</a>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>

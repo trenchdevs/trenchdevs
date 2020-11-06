@@ -55,16 +55,17 @@
                         <div class="form-group">
                             <label for="username">
                                 Username <br>
-                                <small>This will be used as the subdomain for your portfolio (eg.
-                                    myusername.trenchdevs.org)</small>
+                                <small>This will be your trenchdevs handle  (eg.
+                                    trenchdevs.org/<em>myusername</em> )
+                                </small>
                             </label>
                             <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon2">trenchdevs.org/</span>
+                                </div>
                                 <input type="text" name="username" class="form-control"
                                        value="{{old('username', $user->username)}}"
                                 >
-                                <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">.trenchdevs.org</span>
-                                </div>
                             </div>
 
                         </div>

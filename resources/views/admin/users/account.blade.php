@@ -4,6 +4,7 @@
 
 @section('content')
 
+    @php /* @var \App\User $user */ @endphp
 
     @include('admin.shared.account')
 
@@ -17,17 +18,26 @@
 
             <div class="row">
 
-                <div class="col-md-3">
+                <div class="col-md-4 text-center">
 
-                    <img class="img-fluid img-thumbnail rounded-circle text-center"
+                    <img class="img-fluid img-thumbnail rounded-circle"
                          src="{{!empty($user->avatar_url) ? $user->avatar_url : '/assets/img/avataaars.svg'}}"
-                         alt="Avatar">
+                         alt="Avatar"
+                         style="max-height: 250px"
+                    >
                     <p class="text-center pt-2">
-                        {{!empty($user->username) ? "https://{$user->username}.trenchdevs.org" : 'N/A'}}
+                        @if(!empty($user->username))
+                            <small>
+                                <a target="_blank" href="{{$user->getPortfolioUrl()}}">{{$user->getPortfolioUrl()}}</a>
+                            </small>
+                        @else
+                            <small>N/A</small>
+
+                        @endif
                     </p>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-md-8">
 
                     <form action="{{route('portfolio.avatar')}}" method="post" enctype="multipart/form-data">
                         @csrf
@@ -35,8 +45,8 @@
                         <div class="form-group">
                             <label for="username">
                                 Username <br>
-                                <small>This will be used as the subdomain for your portfolio (eg.
-                                    myusername.trenchdevs.org)</small>
+                                <small>This will be used as your trenchdevs handle (eg.
+                                    trenchdevs.org/<em>myusername</em>)</small>
                             </label>
                             <input type="text" name="username" class="form-control"
                                    value="{{old('username', $user->username)}}"

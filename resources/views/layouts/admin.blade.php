@@ -2,7 +2,7 @@
 
 @section('body')
     <nav class="topnav navbar navbar-expand shadow navbar-light bg-white" id="sidenavAccordion">
-        <a class="navbar-brand d-none d-sm-block" href="/home">TRENCHDEVS PORTAL</a>
+        <a class="navbar-brand d-none d-sm-block" href="{{ route('portal.home')}}">TRENCHDEVS PORTAL</a>
         <button class="btn btn-icon btn-transparent-light order-1 order-lg-0 mr-lg-2" id="sidebarToggle" href="#">
             <i data-feather="menu"></i></button>
         <ul class="navbar-nav align-items-center ml-auto">
@@ -54,7 +54,7 @@
                 <div class="sidenav-menu">
                     <div class="nav accordion" id="accordionSidenav">
                         <div class="sidenav-menu-heading">Core</div>
-                        <a class="nav-link collapsed" href="/home">
+                        <a class="nav-link collapsed" href="{{ route('portal.home')}}">
                             <div class="nav-link-icon">
                                 <i data-feather="activity"></i>
                             </div>
@@ -85,7 +85,7 @@
                                     </div>
                                     Edit
                                 </a>
-                                <a class="nav-link" href="/portfolio/preview" target="_blank">
+                                <a class="nav-link" href="{{ route('portfolio.preview') }}" target="_blank">
                                     <div class="nav-link-icon">
                                         <i data-feather="eye"></i>
                                     </div>
@@ -107,7 +107,7 @@
 
                         <div class="collapse" id="blogs" data-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{route('blogs')}}">
+                                <a class="nav-link" href="{{route('public.blogs')}}">
                                     <div class="nav-link-icon">
                                         <i data-feather="book-open"></i>
                                     </div>
@@ -264,7 +264,7 @@
                             Accounts
                         </a>
 
-                        <a class="nav-link collapsed" href="/announcements">
+                        <a class="nav-link collapsed" href="{{route('announcements.index')}}">
                             <div class="nav-link-icon">
                                 <i data-feather="mic"></i>
                             </div>

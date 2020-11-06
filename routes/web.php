@@ -21,7 +21,7 @@ if (env('APP_ENV') === 'production') {
     URL::forceScheme('https');
 }
 
-$baseUrl = env('BASE_URL', 'trenchdevs.org');
+$baseUrl = get_base_url();
 
 if (empty($baseUrl)) {
     throw new Exception("Base url not found.");
@@ -32,10 +32,16 @@ if (empty($baseUrl)) {
 /**
  * Blogging Domain
  */
-Route::domain("blog.{$baseUrl}")->group(function () {
-    Route::get('/', [PublicBlogsController::class, 'index'])->name('blogs');
-    Route::get('{slug}', [PublicBlogsController::class, 'show']);
-});
+//Route::domain("blog.{$baseUrl}")->group(function () {
+//    Route::get('/', [PublicBlogsController::class, 'index'])->name('blogs');
+//    Route::get('{slug}', [PublicBlogsController::class, 'show']);
+//});
+
+Auth::routes(['verify' => true]);
+
+Route::get('blogs', [PublicBlogsController::class, 'index'])->name('public.blogs');
+// handler for both blogs and portfolio (w/ blog slug as priority)
+Route::get('{slug}', [PublicController::class, 'show'])->name('public.show');
 
 
 /**
@@ -58,10 +64,9 @@ Route::domain("{username}.{$baseUrl}")->group(function () {
 
 Route::get('/', [PublicController::class, 'index'])->name('public.home');
 
-Auth::routes(['verify' => true]);
 
-Route::middleware(['auth:web', 'verified'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index']);
+Route::middleware(['auth:web', 'verified'])->prefix('portal')->group(function () {
+    Route::get('home', [HomeController::class, 'index'])->name('portal.home');
 
     // START - users
     Route::get('admin/users/create', [UsersController::class, 'create'])->name('users.create');
@@ -93,7 +98,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::post('portfolio/avatar', 'PortfolioController@uploadAvatar')->name('portfolio.avatar');
     Route::post('portfolio/updateBasicInfo', 'PortfolioController@updateBasicInfo')->name('portfolio.updateBasicInfo');
     Route::post('portfolio/background', 'PortfolioController@uploadBackground')->name('portfolio.background');
-    Route::get('portfolio/preview', 'PortfolioController@preview');
+    Route::get('portfolio/preview', 'PortfolioController@preview')->name('portfolio.preview');
     // end - user_portfolio_details
 
     // start - user_experiences
@@ -125,7 +130,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::post('portfolio/projects/save', 'Portfolio\UserProjectsController@save')->name('portfolio.projects.save');
     Route::get('portfolio/projects/get', 'Portfolio\UserProjectsController@getProjects')->name('portfolio.projects.get');
 
-//    Route::get('projects', 'Portfolio\UserProjectsController@list')->name('projects.list');
+    // Route::get('projects', 'Portfolio\UserProjectsController@list')->name('projects.list');
     // end - user_projects
 
     /**
@@ -170,7 +175,6 @@ Route::view('documents/privacy', 'documents.privacy')->name('documents.privacy')
 Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
 // end - public documents
 
-Route::get('{username}', [PortfolioController::class, 'show']);
 
 // start - public email endpoints
 Route::get('emails/unsubscribe', [EmailTester::class, 'test']);

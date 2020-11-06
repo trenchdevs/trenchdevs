@@ -7,6 +7,13 @@ if (!function_exists('get_base_url')) {
      */
     function get_base_url()
     {
+        $fullUrl = url('/');
+        $baseUrl = explode('//',$fullUrl)[1] ?? null;
+
+        if (!empty($baseUrl)) {
+            return $baseUrl;
+        }
+
         return env('BASE_URL', 'trenchdevs.test');
     }
 }
@@ -29,7 +36,7 @@ if (!function_exists('get_portfolio_url')) {
      */
     function get_portfolio_url(string $username)
     {
-        return add_scheme_to_url(sprintf('%s.%s', $username, get_base_url()));
+        return add_scheme_to_url(sprintf('%s/%s', get_base_url(), $username));
     }
 }
 
