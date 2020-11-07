@@ -2182,7 +2182,7 @@ __webpack_require__.r(__webpack_exports__);
             message = data.message;
 
         if (status === 'success') {
-          window.location.href = "/announcements";
+          window.location.href = "/portal/announcements";
         } else {
           if (message) {
             alert(message);

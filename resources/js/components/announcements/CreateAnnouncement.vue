@@ -80,7 +80,7 @@
                         const {status, message} = data;
 
                         if (status === 'success') {
-                            window.location.href = "/announcements"
+                            window.location.href = "/portal/announcements"
                         } else {
                             if (message) {
                                 alert(message);
