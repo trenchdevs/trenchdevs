@@ -47,3 +47,4 @@ sudo chmod -R 755 public
 Executing a git pull from php does not work by default 
  
 Action: `chmod o+rw -R .git`
+
