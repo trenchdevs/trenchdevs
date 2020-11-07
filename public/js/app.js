@@ -2098,6 +2098,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-editor */ "./node_modules/vue2-editor/dist/vue2-editor.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2145,6 +2147,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2164,12 +2168,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     announce: function announce() {
+      var _this = this;
+
       var data = {
         title: this.title,
         message: this.message,
         emails: this.emails || null
       };
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/announcements/announce', data).then(function (_ref) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/portal/announcements/announce', data).then(function (_ref) {
         var _ref$data = _ref.data,
             data = _ref$data === void 0 ? {} : _ref$data;
         var status = data.status,
@@ -2183,7 +2189,19 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       })["catch"](function (e) {
-        console.error(e);
+        var _e$response = e.response,
+            response = _e$response === void 0 ? {} : _e$response;
+
+        if (!Object(lodash__WEBPACK_IMPORTED_MODULE_2__["isEmpty"])(response)) {
+          var _response$data = response.data,
+              message = _response$data.message,
+              _response$data$errors = _response$data.errors,
+              errors = _response$data$errors === void 0 ? [] : _response$data$errors;
+
+          if (!Object(lodash__WEBPACK_IMPORTED_MODULE_2__["isEmpty"])(errors)) {
+            _this.errors = Object(lodash__WEBPACK_IMPORTED_MODULE_2__["flatten"])(Object(lodash__WEBPACK_IMPORTED_MODULE_2__["flatMap"])(errors));
+          }
+        }
       });
     }
   }
@@ -50539,7 +50557,12 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", id: "title", placeholder: "Enter Title" },
+            attrs: {
+              type: "text",
+              id: "title",
+              placeholder: "Enter Title",
+              required: ""
+            },
             domProps: { value: _vm.title },
             on: {
               input: function($event) {
@@ -50615,11 +50638,12 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm.errors
-        ? _c("div", { staticClass: "alert alert-danger m-3" }, [
+        ? _c("div", { staticClass: "alert alert-danger m-3 p-2" }, [
             _c(
               "ul",
+              { staticClass: "list-unstyled" },
               _vm._l(_vm.errors, function(error) {
-                return _c("li", [_vm._v(_vm._s(error[0]))])
+                return _c("li", [_vm._v(_vm._s(error))])
               }),
               0
             )

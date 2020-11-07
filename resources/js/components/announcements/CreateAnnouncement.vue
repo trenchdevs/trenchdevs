@@ -13,6 +13,7 @@
                         class="form-control"
                         id="title"
                         placeholder="Enter Title"
+                        required
                     >
                 </div>
                 <div class="form-group">
@@ -36,9 +37,9 @@
                 </div>
             </div>
 
-            <div class="alert alert-danger m-3" v-if="errors">
-                <ul>
-                    <li v-for="error in errors">{{error[0]}}</li>
+            <div class="alert alert-danger m-3 p-2" v-if="errors">
+                <ul class="list-unstyled">
+                    <li v-for="error in errors">{{error}}</li>
                 </ul>
             </div>
         </div>
@@ -48,6 +49,7 @@
 <script>
     import {VueEditor} from "vue2-editor";
     import axios from 'axios';
+    import {isEmpty, flatMap, flatten} from 'lodash';
 
     export default {
         components: {
@@ -72,7 +74,7 @@
                     emails: this.emails || null,
                 };
 
-                axios.post('/announcements/announce', data)
+                axios.post('/portal/announcements/announce', data)
                     .then(({data = {}}) => {
 
                         const {status, message} = data;
@@ -88,7 +90,15 @@
 
                     })
                     .catch((e) => {
-                        console.error(e);
+                        const {response = {}}= e;
+
+                        if (!isEmpty(response)) {
+                            const {message, errors = []} = response.data;
+
+                            if (!isEmpty(errors)) {
+                                this.errors = flatten(flatMap(errors));
+                            }
+                        }
                     });
             }
         }
