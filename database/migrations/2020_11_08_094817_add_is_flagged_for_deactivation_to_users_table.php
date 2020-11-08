@@ -18,6 +18,9 @@ class AddIsFlaggedForDeactivationToUsersTable extends Migration
                 ->default(0)
                 ->after('is_active')
                 ->index();
+            $table->timestamp('deactivation_notice_sent_at', 0)
+                ->after('is_flagged_for_deactivation')
+                ->nullable();
         });
     }
 
@@ -30,6 +33,7 @@ class AddIsFlaggedForDeactivationToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('is_flagged_for_deactivation');
+            $table->dropColumn('deactivation_notice_sent_at');
         });
     }
 }

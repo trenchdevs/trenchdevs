@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use App\User;
 use Illuminate\Console\Command;
 
-class DeactivateInactiveUsers extends Command
+class SendDeactivationNoticeToUsers  extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'deactivate:inactive-users';
+    protected $signature = 'send:deactivation-notice';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Deactivates inactive users.';
+    protected $description = 'Send deactivation notice email to inactive users';
 
     /**
      * Create a new command instance.
@@ -38,6 +38,6 @@ class DeactivateInactiveUsers extends Command
      */
     public function handle()
     {
-        User::deactivateUsers(3);
+        User::sendDeactivationNotice(1);
     }
 }

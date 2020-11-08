@@ -26,6 +26,10 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('send:emails')->everyFiveMinutes();
         // $schedule->command('inspire')->everyMinute()->appendOutputTo('~/inspire.txt');
+
+        $schedule->command('send:deactivation-notice')->daily();
+        $schedule->command('deactivate:inactive-users')->daily();
+
     }
 
     /**
