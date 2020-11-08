@@ -38,6 +38,6 @@ class DeactivateInactiveUsers extends Command
      */
     public function handle()
     {
-        User::deactivateInactiveUsers(1);
+        User::deactivateUsers(1);
     }
 }

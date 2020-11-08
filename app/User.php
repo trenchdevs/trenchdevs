@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\EmailQueue;
 use App\Models\Users\UserCertification;
 use App\Models\Users\UserDegree;
 use App\Models\Users\UserExperience;
@@ -338,7 +339,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $emails;
     }
 
-    public  function lastLogin()
+    public function lastLogin()
     {
         return $this->hasOne(UserLogin::class)->latest();
     }
@@ -346,24 +347,95 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     /**
      * @param int $inactiveMonths
      */
-    public static function deactivateInactiveUsers(int $inactiveMonths = 1)
+    public static function deactivateUsers(int $inactiveMonths = 1, int $noticeDays = 3)
     {
 
-        $userTypeToDeactivate = self::ROLE_CONTRIBUTOR;
+        self::sendDeactivationNotice($inactiveMonths);
+        self::processUsersForDeactivation($noticeDays);
 
-        $latestLogins = DB::table('site_access_logs')
+    }
+
+    public static function sendDeactivationNotice(int $inactiveMonths = 1, string $userRole = self::ROLE_CONTRIBUTOR)
+    {
+
+        $latestLogins = DB::table('user_logins')
             ->selectRaw('user_id, MAX(created_at) AS last_login')
-            ->whereNotNull('user_id')
             ->groupBy('user_id');
 
-        $newlyDeactivatedUsers = DB::table('users')
-            ->leftJoinSub($latestLogins, 'latest_logins', function ($join) {
+        $usersFlaggedForDeactivation = DB::table('users')
+            ->joinSub($latestLogins, 'latest_logins', function ($join) {
                 $join->on('users.id', '=', 'latest_logins.user_id');
             })
-            ->where('users.is_active', '=', 1)
-            ->where('users.role', '=', $userTypeToDeactivate)
+            ->where('users.is_active', 1)
+            ->where('users.is_flagged_for_deactivation', 0)
+            ->where('users.role', '=', $userRole)
             ->whereRaw('TIMESTAMPDIFF(MONTH, latest_logins.last_login, NOW()) >= ?', $inactiveMonths)
-            ->update(['is_active' => 0]);
+            ->update(['is_flagged_for_deactivation' => 1]);
+
+        // sending of mails
+        self::sendDeactivationEmail($usersFlaggedForDeactivation);
+
+    }
+
+    public static function sendDeactivationEmail($users)
+    {
+
+        $title = "Account subject to deactivation";
+        $message = "Your account is subject to deactivation due to your idle time in Trenchdevs. Please login within the next 3 days to avoid this.";
+
+        foreach ($users as $user) {
+
+            $userName = "{$user->first_name} {$user->last_name}";
+
+            $viewData = [
+                'name' => $userName,
+                'email_body' => $message,
+            ];
+
+            EmailQueue::queue(
+                trim($user->email),
+                $title,
+                $viewData,
+                'emails.generic'
+            );
+
+        }
+
+    }
+
+    public static function processUsersForDeactivation(int $noticeDays = 3, string $userRole = self::ROLE_CONTRIBUTOR)
+    {
+
+        $latestLogins = DB::table('user_logins')
+            ->selectRaw('user_id, MAX(created_at) AS last_login')
+            ->groupBy('user_id');
+
+        // Deactivate flagged users who DID NOT sign in within 3 days from deactivation notice
+        DB::table('users')
+            ->joinSub($latestLogins, 'latest_logins', function ($join) {
+                $join->on('users.id', '=', 'latest_logins.user_id');
+            })
+            ->where('users.is_active', 1)
+            ->where('users.is_flagged_for_deactivation', 1)
+            ->where('users.role', $userRole)
+            ->whereRaw('TIMESTAMPDIFF(DAY, latest_logins.last_login, NOW()) > ?', $noticeDays)
+            ->update([
+                'is_active' => 0,
+                'is_flagged_for_deactivation' => 0
+            ]);
+
+        // Set deactivation flag to 0 for users who signed in within 3 days from deactivation notice
+        DB::table('users')
+            ->joinSub($latestLogins, 'latest_logins', function ($join) {
+                $join->on('users.id', '=', 'latest_logins.user_id');
+            })
+            ->where('users.is_active', 1)
+            ->where('users.is_flagged_for_deactivation', 1)
+            ->where('users.role', $userRole)
+            ->whereRaw('TIMESTAMPDIFF(DAY, latest_logins.last_login, NOW()) <= ?', $noticeDays)
+            ->update([
+                'is_flagged_for_deactivation' => 0
+            ]);
 
     }
 
