@@ -338,6 +338,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $emails;
     }
 
+    public  function lastLogin()
+    {
+        return $this->hasOne(UserLogin::class)->latest();
+    }
+
     /**
      * @param int $inactiveMonths
      */
