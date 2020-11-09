@@ -406,7 +406,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
 
         $title = "Account subject to deactivation";
-        $message = "Your account is subject to deactivation due to your inactivity in TrenchDevs. Please login within the next ${$noticeDays} days to avoid this.";
+        $message = "Your account is subject to deactivation due to your inactivity in TrenchDevs. Please login within the next {$noticeDays} days to avoid this.";
 
         $viewData = [
             'name' => $user->name(),
@@ -432,7 +432,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
 
         $latestLogins = DB::table('user_logins')
-            ->selectRaw('user_id, MAX(id) AS last_login')
+            ->selectRaw('user_id, MAX(created_at) AS last_login')
             ->groupBy('user_id');
 
         // Deactivate flagged users who DID NOT sign in within 3 days from deactivation notice
