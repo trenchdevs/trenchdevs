@@ -38,6 +38,6 @@ class SendDeactivationNoticeToUsers  extends Command
      */
     public function handle()
     {
-        User::sendDeactivationNotice(1);
+        User::sendDeactivationNotice(1, 20);
     }
 }

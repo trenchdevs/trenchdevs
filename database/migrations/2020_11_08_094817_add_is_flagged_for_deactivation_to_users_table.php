@@ -20,7 +20,8 @@ class AddIsFlaggedForDeactivationToUsersTable extends Migration
                 ->index();
             $table->timestamp('deactivation_notice_sent_at', 0)
                 ->after('is_flagged_for_deactivation')
-                ->nullable();
+                ->nullable()
+                ->index();
         });
     }
 

@@ -350,8 +350,14 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function isIdle(int $inactiveMonths = 1)
     {
 
-        $now = new DateTime('NOW');
-        $lastLogin = DateTime::createFromFormat('Y-m-d H:s:i', $this->lastLogin->created_at);
+        $lastLoginTimeStamp = $this->lastLogin->created_at;
+
+        if (empty($lastLoginTimeStamp)) {
+            return true;
+        }
+
+        $now = new DateTime();
+        $lastLogin = DateTime::createFromFormat('Y-m-d H:s:i', $lastLoginTimeStamp);
 
         return (($now->diff($lastLogin)->m) >= $inactiveMonths);
 
@@ -363,7 +369,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
      * @param int $inactiveMonths
      * @param string $userRole
      */
-    public static function sendDeactivationNotice(int $inactiveMonths = 1, string $userRole = self::ROLE_CONTRIBUTOR)
+    public static function sendDeactivationNotice(int $inactiveMonths = 1,
+                                                  int $noticeDays = 3,
+                                                  string $userRole = self::ROLE_CONTRIBUTOR
+    )
     {
 
         $users = self::where('is_active', 1)
@@ -376,10 +385,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             if ($user->isIdle($inactiveMonths)) {
 
                 $user->is_flagged_for_deactivation = 1;
-                $user->deactivation_notice_sent_at = date('Y-m-d H:s:i');
+                $user->deactivation_notice_sent_at = mysql_now();
                 $user->save();
 
-                self::sendDeactivationEmail($user);
+                self::sendDeactivationEmail($user, $noticeDays);
 
             }
 
@@ -393,11 +402,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
      * @param User $user
      * @throws Throwable
      */
-    public static function sendDeactivationEmail(User $user)
+    public static function sendDeactivationEmail(User $user, int $noticeDays = 3)
     {
 
         $title = "Account subject to deactivation";
-        $message = "Your account is subject to deactivation due to your inactivity in TrenchDevs. Please login within the next 3 days to avoid this.";
+        $message = "Your account is subject to deactivation due to your inactivity in TrenchDevs. Please login within the next ${$noticeDays} days to avoid this.";
 
         $viewData = [
             'name' => $user->name(),
@@ -423,7 +432,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
 
         $latestLogins = DB::table('user_logins')
-            ->selectRaw('user_id, MAX(created_at) AS last_login')
+            ->selectRaw('user_id, MAX(id) AS last_login')
             ->groupBy('user_id');
 
         // Deactivate flagged users who DID NOT sign in within 3 days from deactivation notice
