@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\DB;
 use Throwable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-
 /**
  * Class User
  * @property UserCertification[] $certifications
