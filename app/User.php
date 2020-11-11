@@ -435,7 +435,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             ->selectRaw('user_id, MAX(created_at) AS last_login')
             ->groupBy('user_id');
 
-        // Deactivate flagged users who DID NOT sign in within 3 days from deactivation notice
+        // Deactivate flagged users who DID NOT sign in within n days from deactivation notice
         DB::table('users')
             ->joinSub($latestLogins, 'latest_logins', function ($join) {
                 $join->on('users.id', '=', 'latest_logins.user_id');
@@ -451,7 +451,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
                 'deactivation_notice_sent_at' => null
             ]);
 
-        // Set deactivation flag to 0 for users who signed in within 3 days from deactivation notice
+        // Set deactivation flag to 0 for users who signed in within n days from deactivation notice
         DB::table('users')
             ->joinSub($latestLogins, 'latest_logins', function ($join) {
                 $join->on('users.id', '=', 'latest_logins.user_id');
