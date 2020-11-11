@@ -350,6 +350,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function isIdle(int $inactiveMonths = 1)
     {
 
+        if (!$this->lastLogin) {
+            return true;
+        }
+
         $lastLoginTimeStamp = $this->lastLogin->created_at;
 
         if (empty($lastLoginTimeStamp)) {
@@ -437,14 +441,17 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
         // Deactivate flagged users who DID NOT sign in within n days from deactivation notice
         DB::table('users')
-            ->joinSub($latestLogins, 'latest_logins', function ($join) {
+            ->leftJoinSub($latestLogins, 'latest_logins', function ($join) {
                 $join->on('users.id', '=', 'latest_logins.user_id');
             })
             ->where('users.is_active', 1)
             ->where('users.is_flagged_for_deactivation', 1)
             ->where('users.role', $userRole)
             ->whereRaw('TIMESTAMPDIFF(DAY, users.deactivation_notice_sent_at, NOW()) > ?', $noticeDays)
-            ->whereRaw('TIMESTAMPDIFF(DAY, latest_logins.last_login, NOW()) > ?', $noticeDays)
+            ->where(function ($query) use ($noticeDays) {
+                $query->whereRaw('TIMESTAMPDIFF(DAY, latest_logins.last_login, NOW()) > ?', $noticeDays)
+                    ->orWhereNull('latest_logins.last_login');
+            })
             ->update([
                 'is_active' => 0,
                 'is_flagged_for_deactivation' => 0,
