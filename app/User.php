@@ -2,17 +2,20 @@
 
 namespace App;
 
+use App\Models\EmailQueue;
 use App\Models\Users\UserCertification;
 use App\Models\Users\UserDegree;
 use App\Models\Users\UserExperience;
 use App\Models\Users\UserPortfolioDetail;
 use App\Models\Projects\Project;
 use App\Models\Users\UserSkill;
+use DateTime;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -74,6 +77,8 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'is_active',
         'account_id',
         'role',
+        'is_flagged_for_deactivation',
+        'deactivation_notice_sent_at',
     ];
 
     /**
@@ -335,6 +340,139 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         }
 
         return $emails;
+    }
+
+    public function lastLogin()
+    {
+        return $this->hasOne(UserLogin::class)->latest();
+    }
+
+    public function isIdle(int $inactiveMonths = 1)
+    {
+
+        if (!$this->lastLogin) {
+            return true;
+        }
+
+        $lastLoginTimeStamp = $this->lastLogin->created_at;
+
+        if (empty($lastLoginTimeStamp)) {
+            return true;
+        }
+
+        $now = new DateTime();
+        $lastLogin = DateTime::createFromFormat('Y-m-d H:s:i', $lastLoginTimeStamp);
+
+        return (($now->diff($lastLogin)->m) >= $inactiveMonths);
+
+    }
+
+    /**
+     * Check inactive users and sends deactivation notice email to inactive users
+     *
+     * @param int $inactiveMonths
+     * @param string $userRole
+     */
+    public static function sendDeactivationNotice(int $inactiveMonths = 1,
+                                                  int $noticeDays = 3,
+                                                  string $userRole = self::ROLE_CONTRIBUTOR
+    )
+    {
+
+        $users = self::where('is_active', 1)
+            ->where('is_flagged_for_deactivation', 0)
+            ->where('role', $userRole)
+            ->get();
+
+        foreach ($users as $user) {
+
+            if ($user->isIdle($inactiveMonths)) {
+
+                $user->is_flagged_for_deactivation = 1;
+                $user->deactivation_notice_sent_at = mysql_now();
+                $user->save();
+
+                self::sendDeactivationEmail($user, $noticeDays);
+
+            }
+
+        }
+
+    }
+
+    /**
+     * Sends deactivation notice email to inactive users
+     *
+     * @param User $user
+     * @throws Throwable
+     */
+    public static function sendDeactivationEmail(User $user, int $noticeDays = 3)
+    {
+
+        $title = "Account subject to deactivation";
+        $message = "Your account is subject to deactivation due to your inactivity in TrenchDevs. Please login within the next {$noticeDays} days to avoid this.";
+
+        $viewData = [
+            'name' => $user->name(),
+            'email_body' => $message,
+        ];
+
+        EmailQueue::queue(
+            trim($user->email),
+            $title,
+            $viewData,
+            'emails.generic'
+        );
+
+    }
+
+    /**
+     * Deactivates inactive users even after notice period
+     *
+     * @param int $noticeDays
+     * @param string $userRole
+     */
+    public static function deactivateUsers(int $noticeDays = 3, string $userRole = self::ROLE_CONTRIBUTOR)
+    {
+
+        $latestLogins = DB::table('user_logins')
+            ->selectRaw('user_id, MAX(created_at) AS last_login')
+            ->groupBy('user_id');
+
+        // Deactivate flagged users who DID NOT sign in within n days from deactivation notice
+        DB::table('users')
+            ->leftJoinSub($latestLogins, 'latest_logins', function ($join) {
+                $join->on('users.id', '=', 'latest_logins.user_id');
+            })
+            ->where('users.is_active', 1)
+            ->where('users.is_flagged_for_deactivation', 1)
+            ->where('users.role', $userRole)
+            ->whereRaw('TIMESTAMPDIFF(DAY, users.deactivation_notice_sent_at, NOW()) > ?', $noticeDays)
+            ->where(function ($query) use ($noticeDays) {
+                $query->whereRaw('TIMESTAMPDIFF(DAY, latest_logins.last_login, NOW()) > ?', $noticeDays)
+                    ->orWhereNull('latest_logins.last_login');
+            })
+            ->update([
+                'is_active' => 0,
+                'is_flagged_for_deactivation' => 0,
+                'deactivation_notice_sent_at' => null
+            ]);
+
+        // Set deactivation flag to 0 for users who signed in within n days from deactivation notice
+        DB::table('users')
+            ->joinSub($latestLogins, 'latest_logins', function ($join) {
+                $join->on('users.id', '=', 'latest_logins.user_id');
+            })
+            ->where('users.is_active', 1)
+            ->where('users.is_flagged_for_deactivation', 1)
+            ->where('users.role', $userRole)
+            ->whereRaw('TIMESTAMPDIFF(DAY, users.deactivation_notice_sent_at, NOW()) > ?', $noticeDays)
+            ->whereRaw('TIMESTAMPDIFF(DAY, latest_logins.last_login, NOW()) <= ?', $noticeDays)
+            ->update([
+                'is_flagged_for_deactivation' => 0,
+                'deactivation_notice_sent_at' => null
+            ]);
+
     }
 
 }
