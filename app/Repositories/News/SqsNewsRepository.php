@@ -4,6 +4,7 @@ namespace App\Repositories\News;
 
 use Aws\Exception\AwsException;
 use Aws\Sqs\SqsClient;
+use Illuminate\Support\Facades\App;
 use InvalidArgumentException;
 
 class SqsNewsRepository implements NewsRepositoryInterface
@@ -43,9 +44,14 @@ class SqsNewsRepository implements NewsRepositoryInterface
 
         try {
             $result = $this->client->sendMessage($params);
-            var_dump($result);
+
+            if (App::runningInConsole()) {
+                var_dump($result);
+            }
+
         } catch (AwsException $e) {
             $this->errorMessage = $e->getMessage();
+            return false;
         }
 
         return true;
