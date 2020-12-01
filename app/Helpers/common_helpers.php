@@ -119,3 +119,21 @@ if (!function_exists('str_to_date_format')) {
         return date($format, strtotime($str));
     }
 }
+
+
+if (!function_exists('is_valid_url')) {
+    /**
+     * @param $url
+     * @return string
+     */
+    function is_valid_url($url): string
+    {
+
+        if (!is_string($url)) {
+            return false;
+        }
+
+        return filter_var($url, FILTER_VALIDATE_URL) !== false;
+    }
+}
+

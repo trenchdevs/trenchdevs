@@ -21,7 +21,8 @@
         "laravel/ui": "^2.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "trenchdevs/csv": "dev-master",
-        "tymon/jwt-auth": "1.0.*"
+        "tymon/jwt-auth": "1.0.*",
+        "ext-json": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
