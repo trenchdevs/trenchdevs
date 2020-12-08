@@ -65751,16 +65751,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PORTFOLIO_CERTIFICATIONS_SAVE", function() { return PORTFOLIO_CERTIFICATIONS_SAVE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PORTFOLIO_PROJECTS_GET", function() { return PORTFOLIO_PROJECTS_GET; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PORTFOLIO_PROJECTS_SAVE", function() { return PORTFOLIO_PROJECTS_SAVE; });
-var PORTFOLIO_SAVE_DEGREES = '/portfolio/degrees/save';
-var PORTFOLIO_GET_DEGREES = '/portfolio/degrees/get';
-var PORTFOLIO_SKILLS_GET = '/portfolio/skills/get';
-var PORTFOLIO_SKILLS_SAVE = '/portfolio/skills/save';
-var PORTFOLIO_EXPERIENCES_GET = '/portfolio/experiences/get';
-var PORTFOLIO_EXPERIENCES_SAVE = '/portfolio/experiences/save';
-var PORTFOLIO_CERTIFICATIONS_GET = '/portfolio/certifications/get';
-var PORTFOLIO_CERTIFICATIONS_SAVE = '/portfolio/certifications/save';
-var PORTFOLIO_PROJECTS_GET = '/portfolio/projects/get';
-var PORTFOLIO_PROJECTS_SAVE = '/portfolio/projects/save';
+var ROUTE_PREFIX = '/portal';
+var PORTFOLIO_SAVE_DEGREES = "".concat(ROUTE_PREFIX, "/portfolio/degrees/save");
+var PORTFOLIO_GET_DEGREES = "".concat(ROUTE_PREFIX, "/portfolio/degrees/get");
+var PORTFOLIO_SKILLS_GET = "".concat(ROUTE_PREFIX, "/portfolio/skills/get");
+var PORTFOLIO_SKILLS_SAVE = "".concat(ROUTE_PREFIX, "/portfolio/skills/save");
+var PORTFOLIO_EXPERIENCES_GET = "".concat(ROUTE_PREFIX, "/portfolio/experiences/get");
+var PORTFOLIO_EXPERIENCES_SAVE = "".concat(ROUTE_PREFIX, "/portfolio/experiences/save");
+var PORTFOLIO_CERTIFICATIONS_GET = "".concat(ROUTE_PREFIX, "/portfolio/certifications/get");
+var PORTFOLIO_CERTIFICATIONS_SAVE = "".concat(ROUTE_PREFIX, "/portfolio/certifications/save");
+var PORTFOLIO_PROJECTS_GET = "".concat(ROUTE_PREFIX, "/portfolio/projects/get");
+var PORTFOLIO_PROJECTS_SAVE = "".concat(ROUTE_PREFIX, "/portfolio/projects/save");
 
 /***/ }),
 
@@ -65782,8 +65783,8 @@ var PORTFOLIO_PROJECTS_SAVE = '/portfolio/projects/save';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/chris/Sites/trenchdevs/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/chris/Sites/trenchdevs/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/seand/Sites/trenchdevs/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/seand/Sites/trenchdevs/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

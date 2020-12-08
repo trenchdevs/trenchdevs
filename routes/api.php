@@ -59,8 +59,3 @@ Route::group([
     Route::get('/', 'ProductsController@all');
     Route::get('/{productId}', 'ProductsController@one');
 });
-
-
-
-
-
