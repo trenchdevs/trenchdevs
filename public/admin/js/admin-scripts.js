@@ -16,11 +16,24 @@
         trigger: "focus"
     });
 
-    // Add active state to sidbar nav links
+    // Add active state to sidebar nav links
     var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
     $("#layoutSidenav_nav .sidenav a.nav-link").each(function () {
         if (this.href === path) {
+
             $(this).addClass("active");
+
+            // Show active nav link's nested nav link tree
+            if ($(this).closest("div").attr('data-parent') === '#accordionSidenav') {
+
+                var navLinkDivParent = $(this).closest("div");
+                var navLinkTreeToggle = $("a[data-target='#" + navLinkDivParent.attr("id") + "']")
+
+                navLinkDivParent.attr("class", "collapse show");
+                navLinkTreeToggle.attr("aria-expanded", "true");
+                navLinkTreeToggle.attr("class", "nav-link");
+
+            }
         }
     });
 
