@@ -31,13 +31,15 @@ class AdminDashboardMetrics
     private function initialize()
     {
         // we can cache these values in the future
-        $this->activeTrenchDevUsers = User::where('is_active', 1)
+        $this->activeTrenchDevUsers = User::query()
+            ->where('is_active', 1)
             ->where('account_id', Account::getTrenchDevsAccount()->id)
             ->count();
 
         $lastMonth = date('Y-m-d H:i:s', strtotime('-1 month'));
 
-        $this->userLoginsPastMonth = UserLogin::where('created_at', '>=', $lastMonth)
+        $this->userLoginsPastMonth = UserLogin::query()
+            ->where('created_at', '>=', $lastMonth)
             ->where('type', '=', UserLogin::DB_TYPE_LOGIN)
             ->count();
 

@@ -137,3 +137,21 @@ if (!function_exists('is_valid_url')) {
     }
 }
 
+if (!function_exists('s3_generate_file_path')) {
+    /**
+     * @param string $filePath eg. 'users/avatar'
+     * @return string
+     * @throws ErrorException
+     */
+    function s3_generate_file_path(string $filePath, string $fileName): string
+    {
+
+        $appEnv = env('APP_ENV');
+
+        if (!$appEnv) {
+            throw new ErrorException("APP_ENV not set");
+        }
+
+        return "{$appEnv}/{$filePath}/{$fileName}";
+    }
+}
