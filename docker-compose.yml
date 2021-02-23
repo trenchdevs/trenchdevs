@@ -30,7 +30,7 @@ services:
       # host:container
       - 80:80
     volumes:
-      - ./:/var/www/trenchdevs.org
+      - .:/var/www/trenchdevs.org
       - ./docker-compose/nginx:/etc/nginx/conf.d
     networks:
       - trenchdevs-docker-network
