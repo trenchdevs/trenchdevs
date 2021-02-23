@@ -43,11 +43,19 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
 
-        $this->mapApiRoutes();
-
-        $this->mapWebRoutes();
-
-        $this->mapWebApiV1Routes();
+        if (env('HIGH_STORAGE_ENABLED', false)) {
+            /**
+             * Only High Storage enabled routes
+             */
+            $this->mapHighStorageRoutes();
+        } else {
+            /**
+             * Regular routes
+             */
+            $this->mapApiRoutes();
+            $this->mapWebRoutes();
+            $this->mapWebApiV1Routes();
+        }
 
     }
 
@@ -88,5 +96,14 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->prefix('webapi')
             ->group(base_path('routes/webapi.php'));
+    }
+
+
+    protected function mapHighStorageRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            // ->prefix('highstorage')
+            ->group(base_path('routes/highstorage.php'));
     }
 }
