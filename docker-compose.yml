@@ -28,7 +28,7 @@ services:
       - app
     ports:
       # host:container
-      - 3000:80
+      - 80:80
     volumes:
       - ./:/var/www/trenchdevs.org
       - ./docker-compose/nginx:/etc/nginx/conf.d
