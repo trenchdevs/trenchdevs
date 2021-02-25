@@ -7,6 +7,7 @@ use App\Models\EmailQueue;
 use App\Models\Tag;
 use App\User;
 use Exception;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -34,6 +35,40 @@ class BlogsRepository
         Blog::DB_MODERATION_STATUS_REJECTED,
         Blog::DB_MODERATION_STATUS_PENDING,
     ];
+
+    /**
+     * @param array $filters
+     * @return Paginator
+     */
+    public function all(array $filters)
+    {
+        $query = Blog::query()
+            ->select(['b.*'])
+            ->from('blogs as b')
+            ->join('users as u', 'u.id', '=', 'b.user_id', 'left');
+
+        $query = $query->where('b.status', '=', Blog::DB_STATUS_PUBLISHED)
+            ->where('b.moderation_status', '=', Blog::DB_MODERATION_STATUS_APPROVED)
+            ->where('b.publication_date', '<=', mysql_now())
+            ->whereNotNull('b.publication_date')
+            ->orderBy('b.created_at', 'DESC')
+            ->orderBy('b.id', 'DESC');
+
+        foreach ($filters as $filterKey => $filterValue) {
+
+            switch ($filterKey) {
+                case 'username':
+                    if (!empty($filterValue) && is_string($filterValue)) {
+                        $query = $query->where('u.username', '=', $filterValue);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return $query->simplePaginate(6);
+    }
 
     /**
      * @param Blog $blog

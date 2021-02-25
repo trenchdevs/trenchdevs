@@ -29,12 +29,20 @@ class PublicController extends Controller
     }
 
 
-    public function show($slug){
+    public function show(string $slug)
+    {
+
+        $expectsJson = false;
+
+        if (strpos($slug, '.json')) {
+            $expectsJson = true;
+            $slug = str_replace('.json', '', $slug);
+        }
 
         $blog = Blog::findPublishedBySlug($slug);
 
         if (!empty($blog)) {
-            return view('blogs.public.show', [ 'blog' => $blog]);
+            return $expectsJson ? $blog : view('blogs.public.show', ['blog' => $blog]);
         }
 
         $customSite = PortfolioController::CUSTOM_URLS[$slug] ?? null;
@@ -51,12 +59,18 @@ class PublicController extends Controller
         if ($user) {
             $portfolioDetails = $user->getPortfolioDetails();
 
-            $view = $portfolioDetails->portfolio_view ?: 'portfolio.show';
-
-            return view($view, [
-                'user' => $user,
-                'portfolio_details' => $user->getPortfolioDetails(),
-            ]);
+            return $expectsJson ?
+                [
+                    'portfolio_details' => $user->getPortfolioDetails(),
+                    'degrees' => $user->degrees,
+                    'experiences' => $user->experiences,
+                    'certifications' => $user->certifications,
+                ]
+                :
+                view($portfolioDetails->portfolio_view ?: 'portfolio.show', [
+                    'user' => $user,
+                    'portfolio_details' => $user->getPortfolioDetails(),
+                ]);
         }
 
         abort(404);

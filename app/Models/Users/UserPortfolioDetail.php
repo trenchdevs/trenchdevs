@@ -42,7 +42,7 @@ class UserPortfolioDetail extends Model
     public static function findOrEmptyByUser(int $userId): self
     {
 
-        $detail = self::where('user_id', $userId)
+        $detail = self::query()->where('user_id', $userId)
             ->first();
 
         if (empty($detail)) {
