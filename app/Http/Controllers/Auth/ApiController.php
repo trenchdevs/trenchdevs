@@ -45,13 +45,16 @@ class ApiController extends Controller
 
         $this->validStatusOrFail($status);
 
-        $statusData = [
+        $response = [
             'status' => $status,
             'message' => $message
         ];
 
-        return response()
-            ->json(array_merge($statusData, ['data' => $data]));
+        if (!empty($data)) {
+            $response['data'] = $data;
+        }
+
+        return response()->json($response);
     }
 
 }

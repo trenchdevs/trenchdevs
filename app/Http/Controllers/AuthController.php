@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\ApiController;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Tymon\JWTAuth\JWTGuard;
@@ -13,15 +14,22 @@ use Tymon\JWTAuth\JWTGuard;
 class AuthController extends ApiController
 {
 
-
     /** @var JWTGuard */
     protected $auth = null;
 
+    /**
+     * AuthController constructor.
+     */
     public function __construct()
     {
         $this->auth = auth();
     }
 
+    /**
+     * Main Registration route
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function register(Request $request)
     {
 
@@ -41,7 +49,7 @@ class AuthController extends ApiController
             return $this->validationFailureResponse($validator);
         }
 
-        $user = User::create([
+        $user = User::query()->create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
@@ -50,17 +58,18 @@ class AuthController extends ApiController
             'account_id' => $request->account_id,
         ]);
 
-        $token = auth()->login($user);
-
-        return $this->respondWithToken($token);
-
+        return $this->respondWithToken($this->auth->login($user));
     }
 
+    /**
+     * Main login
+     * @return JsonResponse
+     */
     public function login()
     {
         $credentials = request(['email', 'password']);
 
-        if (!$token = auth()->attempt($credentials)) {
+        if (!$token = $this->auth->attempt($credentials)) {
             return response()->json(['error' => 'Invalid Credentials'], 401);
         }
 
@@ -74,7 +83,7 @@ class AuthController extends ApiController
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return $this->jsonApiResponse('success', 'Success', $this->auth->user());
     }
 
     /**
@@ -83,25 +92,20 @@ class AuthController extends ApiController
      */
     public function refreshToken()
     {
-
-        /** @var JWTGuard $auth */
-        $auth = auth();
-
-        return response()->json([
-            'token' => $auth->refresh()
+        return $this->jsonApiResponse(self::STATUS_SUCCESS, "Success", [
+            'token' => $this->auth->refresh(),
         ]);
     }
 
     /**
+     * Invalidates the token
      * @return JsonResponse
      */
     public function logout()
     {
-        auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
+        $this->auth->logout();
+        return $this->jsonApiResponse(self::STATUS_SUCCESS, 'Successfully logged out');
     }
-
 
     /**
      * @param $token
@@ -109,10 +113,10 @@ class AuthController extends ApiController
      */
     protected function respondWithToken($token)
     {
-        return response()->json([
+        return $this->jsonApiResponse(self::STATUS_SUCCESS, 'Success', [
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => $this->auth->factory()->getTTL() * 60
         ]);
     }
 }

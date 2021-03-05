@@ -57,9 +57,11 @@ class AuthenticationTest extends TestCase
         ]);
 
         $response->assertJsonStructure([
-            'access_token',
-            'token_type',
-            'expires_in'
+            'data' => [
+                'access_token',
+                'token_type',
+                'expires_in'
+            ]
         ]);
     }
 
@@ -72,12 +74,14 @@ class AuthenticationTest extends TestCase
         ]);
 
         $response->assertJsonStructure([
-            'access_token',
-            'token_type',
-            'expires_in'
+           'data' => [
+               'access_token',
+               'token_type',
+               'expires_in'
+           ]
         ]);
 
-        return $response['access_token'];
+        return $response['data']['access_token'];
     }
 
     /** @test */
@@ -106,14 +110,12 @@ class AuthenticationTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertNotEmpty($response->assertJson([
-            'email' => 'test@email.com',
+            'data' => [
+                'email' => 'test@email.com'
+            ],
         ]));
 
         $response->assertStatus(200);
-        $this->assertNotEmpty($response->assertJson([
-            'email' => 'test@email.com',
-        ]));
-
     }
 
     /**
@@ -131,6 +133,6 @@ class AuthenticationTest extends TestCase
 
         $responseArr = $response->json();
         $this->assertNotEmpty($responseArr);
-        $this->assertArrayHasKey('token', $responseArr);
+        $this->assertArrayHasKey('token', $responseArr['data']);
     }
 }
