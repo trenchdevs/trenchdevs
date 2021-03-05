@@ -103,7 +103,7 @@ class AuthController extends ApiController
                 throw new InvalidArgumentException("Access Denied.");
             }
 
-            $this->jsonApiResponse('success', 'Success', $loggedInUser);
+            return $loggedInUser;
         });
     }
 
@@ -135,7 +135,7 @@ class AuthController extends ApiController
      */
     protected function respondWithToken(string $token)
     {
-        return $this->jsonApiResponse(self::STATUS_SUCCESS, 'Success', $this->generateTokenResponse());
+        return $this->jsonApiResponse(self::STATUS_SUCCESS, 'Success', $this->generateTokenResponse($token));
     }
 
     /**

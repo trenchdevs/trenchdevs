@@ -92,8 +92,8 @@ class AuthenticationTest extends TestCase
             'password' => 'notlegitpassword'
         ]);
 
-        $response->assertJsonStructure([
-            'error',
+        $response->assertJson([
+            'status' => 'error',
         ]);
     }
 
