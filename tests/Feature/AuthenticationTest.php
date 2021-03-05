@@ -47,7 +47,7 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function it_will_register_a_user()
     {
-        $response = $this->post('api/register', [
+        $response = $this->post('api/auth/register', [
             'first_name' => 'Test',
             'last_name' => 'User1',
             'email' => 'test2@email.com',
@@ -66,7 +66,7 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function it_will_log_a_user_in()
     {
-        $response = $this->post('api/login', [
+        $response = $this->post('api/auth/login', [
             'email' => 'test@email.com',
             'password' => '123456'
         ]);
@@ -83,7 +83,7 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function it_will_not_log_an_invalid_user_in()
     {
-        $response = $this->post('api/login', [
+        $response = $this->post('api/auth/login', [
             'email' => 'test@email.com',
             'password' => 'notlegitpassword'
         ]);
@@ -102,7 +102,7 @@ class AuthenticationTest extends TestCase
     {
         $this->assertNotEmpty($accessToken);
         $response = $this->withHeader('Authorization', "Bearer $accessToken")
-            ->json('post', 'api/me', []);
+            ->json('post', 'api/auth/me', []);
 
         $response->assertStatus(200);
         $this->assertNotEmpty($response->assertJson([
