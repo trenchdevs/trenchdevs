@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use InvalidArgumentException;
 use Tymon\JWTAuth\JWTGuard;
 
 class AuthController extends ApiController
@@ -63,17 +64,28 @@ class AuthController extends ApiController
 
     /**
      * Main login
+     * @param Request $request
      * @return JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
+        return $this->responseHandler(function () use ($request) {
 
-        if (!$token = $this->auth->attempt($credentials)) {
-            return response()->json(['error' => 'Invalid Credentials'], 401);
-        }
+            $credentials = request(['email', 'password']);
 
-        return $this->respondWithToken($token);
+            $this->validate($request, [
+                'email' => 'required',
+                'password' => 'required'
+            ]);
+
+            $token = $this->auth->attempt($credentials);
+
+            if (empty($token)) {
+                throw new InvalidArgumentException("Invalid credentials");
+            }
+
+            return $this->generateTokenResponse($token);
+        });
     }
 
     /**
@@ -107,16 +119,26 @@ class AuthController extends ApiController
         return $this->jsonApiResponse(self::STATUS_SUCCESS, 'Successfully logged out');
     }
 
+
     /**
      * @param $token
      * @return JsonResponse
      */
-    protected function respondWithToken($token)
+    protected function respondWithToken(string $token)
     {
-        return $this->jsonApiResponse(self::STATUS_SUCCESS, 'Success', [
+        return $this->jsonApiResponse(self::STATUS_SUCCESS, 'Success', $this->generateTokenResponse());
+    }
+
+    /**
+     * @param string $token
+     * @return array
+     */
+    private function generateTokenResponse(string $token)
+    {
+        return [
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $this->auth->factory()->getTTL() * 60
-        ]);
+        ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use InvalidArgumentException;
 
@@ -55,6 +56,31 @@ class ApiController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    /**
+     * @param callable $fn
+     * @param string $successMessage
+     * @return JsonResponse
+     */
+    function responseHandler(callable $fn, string $successMessage = 'Success')
+    {
+        try {
+
+            $data = $fn();
+
+            return response()->json([
+                'data' => $data,
+                'status' => 'success',
+                'message' => $successMessage,
+            ]);
+
+        } catch (Exception $exception) {
+            return response()->json([
+                'status' => self::STATUS_ERROR,
+                'message' => $exception->getMessage(),
+            ]);
+        }
     }
 
 }
