@@ -109,13 +109,28 @@ class AuthenticationTest extends TestCase
             'email' => 'test@email.com',
         ]));
 
-        $response = $this->withHeader('Authorization', "Bearer $accessToken")
-            ->json('get', 'api/user', []);
-
         $response->assertStatus(200);
         $this->assertNotEmpty($response->assertJson([
             'email' => 'test@email.com',
         ]));
 
+    }
+
+    /**
+     * @test
+     * @param string $accessToken
+     * @depends it_will_log_a_user_in
+     */
+    public function aUserIsAbleToRefreshToken(string $accessToken)
+    {
+        $this->assertNotEmpty($accessToken);
+        $response = $this->withHeader('Authorization', "Bearer $accessToken")
+            ->json('post', 'api/auth/refresh', []);
+
+        $response->assertStatus(200);
+
+        $responseArr = $response->json();
+        $this->assertNotEmpty($responseArr);
+        $this->assertArrayHasKey('token', $responseArr);
     }
 }

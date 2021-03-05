@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Blogs\PublicBlogsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,15 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// ---------- Authentication Endpoints ---------- //
+// ---------- Start Authentication Endpoints ---------- //
 Route::group(['prefix' => 'auth'], function () {
-    Route::post('register', 'AuthController@register');
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('me', 'AuthController@me');
-    // todo: add refresh token
+
+    Route::post('register', [AuthController::class, 'register'])->name('api.register');
+    Route::post('login', [AuthController::class, 'login'])->name('api.login');
+    Route::post('logout', [AuthController::class, 'logout'])->name('api.logout');
+    Route::post('me', [AuthController::class, 'me'])->name('api.me');
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::post('refresh', [AuthController::class, 'refreshToken'])->name('api.refresh');
+    });
 });
 
+// ---------- End Authentication Endpoints ---------- //
 
 // commented out for now 20210304
 //

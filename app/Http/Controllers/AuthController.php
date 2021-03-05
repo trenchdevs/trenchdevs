@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\ApiController;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Tymon\JWTAuth\JWTGuard;
 
-class AuthController extends Controller
+class AuthController extends ApiController
 {
+
+
+    /** @var JWTGuard */
+    protected $auth = null;
+
+    public function __construct()
+    {
+        $this->auth = auth();
+    }
+
     public function register(Request $request)
     {
 
@@ -49,7 +61,7 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Invalid Credentials'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -63,6 +75,21 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json(auth()->user());
+    }
+
+    /**
+     * Invalidates the old token & returns a new one
+     * @return JsonResponse
+     */
+    public function refreshToken()
+    {
+
+        /** @var JWTGuard $auth */
+        $auth = auth();
+
+        return response()->json([
+            'token' => $auth->refresh()
+        ]);
     }
 
     /**
