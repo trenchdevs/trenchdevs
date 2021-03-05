@@ -67,11 +67,9 @@ class ApiController extends Controller
     {
         try {
 
-            $data = $fn();
-
             return response()->json([
-                'data' => $data,
-                'status' => 'success',
+                'data' => $fn(),
+                'status' => self::STATUS_SUCCESS,
                 'message' => $successMessage,
             ]);
 

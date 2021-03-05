@@ -50,6 +50,7 @@ class AuthController extends ApiController
             return $this->validationFailureResponse($validator);
         }
 
+        /** @var User $user */
         $user = User::query()->create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -97,6 +98,7 @@ class AuthController extends ApiController
     {
         return $this->responseHandler(function () {
 
+            /** @var User $loggedInUser */
             $loggedInUser = $this->auth->user();
 
             if (empty($loggedInUser)) {
