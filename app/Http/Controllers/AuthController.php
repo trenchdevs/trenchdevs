@@ -95,7 +95,16 @@ class AuthController extends ApiController
      */
     public function me()
     {
-        return $this->jsonApiResponse('success', 'Success', $this->auth->user());
+        return $this->responseHandler(function () {
+
+            $loggedInUser = $this->auth->user();
+
+            if (empty($loggedInUser)) {
+                throw new InvalidArgumentException("Access Denied.");
+            }
+
+            $this->jsonApiResponse('success', 'Success', $loggedInUser);
+        });
     }
 
     /**
