@@ -12,8 +12,8 @@ class SiteAccessMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -39,7 +39,7 @@ class SiteAccessMiddleware
         }
 
         if (!empty($requestData)) {
-            unset($requestData  ['password'], $requestData['password_confirmation']);
+            unset($requestData['password'], $requestData['password_confirmation']);
             $miscArr['request_encoded'] = $requestData;
         }
 
@@ -60,9 +60,13 @@ class SiteAccessMiddleware
 
         $siteAccess = new SiteAccessLog();
 
+        $fullUrl = $request->fullUrl();
+
+        $miscArr['full_url'] = $fullUrl;
+
         $data = [
             'user_id' => $user->id ?? null,
-            'url' => $request->fullUrl(),
+            'url' => substr($fullUrl, 0, 500),
             'ip' => $ip,
             'user_agent' => $userAgent,
             'referer' => $request->header('referer'),

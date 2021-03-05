@@ -25,13 +25,17 @@ Route::get('test', function () {
     ]);
 });
 
-// ---------- AUTH (UIs) ---------- //
-Route::post('/register', 'AuthController@register');
-Route::post('/login', 'AuthController@login');
-Route::post('/logout', 'AuthController@logout');
-Route::post('me', 'AuthController@me');
 
-Route::group(['prefix' => 'product_categories', 'middleware' => 'check.account'], function () {
+Route::group(['prefix' => 'auth'], function () {
+// ---------- AUTH (UIs) ---------- //
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('me', 'AuthController@me');
+});
+
+
+Route::group(['prefix' => 'shop', 'middleware' => 'check.account'], function () {
 
     // ---------- PRODUCTS ---------- //
     Route::group(['prefix' => 'products'], function () {
