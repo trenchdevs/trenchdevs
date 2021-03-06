@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiNotes;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Blogs\PublicBlogsController;
 use Illuminate\Http\Request;
@@ -28,6 +29,15 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('refresh', [AuthController::class, 'refreshToken'])->name('api.refresh');
     });
 });
+
+Route::group(['middleware' => 'auth'], function () {
+
+    // ---------- Start Notes ---------- //
+    Route::get('notes', [ApiNotes::class, 'index']);
+    // ---------- End Notes ---------- //
+
+});
+
 
 // ---------- End Authentication Endpoints ---------- //
 

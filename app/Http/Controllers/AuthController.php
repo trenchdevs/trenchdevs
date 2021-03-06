@@ -126,8 +126,10 @@ class AuthController extends ApiController
      */
     public function logout()
     {
-        $this->auth->logout();
-        return $this->jsonApiResponse(self::STATUS_SUCCESS, 'Successfully logged out');
+        return $this->responseHandler(function (){
+            $this->auth->logout();
+            return true;
+        });
     }
 
 
