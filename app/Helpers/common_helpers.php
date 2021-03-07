@@ -1,6 +1,8 @@
 <?php
 
 
+use Carbon\Carbon;
+
 if (!function_exists('get_base_url')) {
     /**
      * @return mixed|string
@@ -153,5 +155,21 @@ if (!function_exists('s3_generate_file_path')) {
         }
 
         return "{$appEnv}/{$filePath}/{$fileName}";
+    }
+}
+
+/**
+ * Dates
+ */
+
+if (!function_exists('is_valid_date')) {
+    /**
+     * @param string $dateString
+     * @param string $dateFormat
+     * @return string
+     */
+    function is_valid_date(string $dateString, string $dateFormat = "Y-m-d"): string
+    {
+        return Carbon::createFromFormat($dateFormat, $dateString);
     }
 }

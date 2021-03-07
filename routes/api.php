@@ -33,7 +33,7 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['middleware' => 'auth'], function () {
 
     // ---------- Start Notes ---------- //
-    Route::get('notes', [ApiNotes::class, 'index']);
+    Route::post('notes', [ApiNotes::class, 'index']);
     // ---------- End Notes ---------- //
 
 });
