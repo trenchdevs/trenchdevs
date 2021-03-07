@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use App\Models\EmailQueue;
 use ErrorException;
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +49,6 @@ class Handler extends ExceptionHandler
                 abort(500, "There was an error while processing your request. Admin has been notified");
             }
         }
-        
         parent::report($exception);
     }
 
@@ -63,6 +63,21 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+
+        // todo: refactor
+        switch (get_class($exception)) {
+            case AuthenticationException::class:
+                if (in_array('api', request()->route()->middleware())) {
+                    return \response()->json([
+                        'status' => 'error',
+                        'message' => $exception->getMessage()
+                    ]);
+                }
+                break;
+            default:
+                break;
+        }
+
         return parent::render($request, $exception);
     }
 
