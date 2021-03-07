@@ -85,7 +85,9 @@ class AuthController extends ApiController
                 throw new InvalidArgumentException("Invalid credentials");
             }
 
-            return $this->generateTokenResponse($token);
+            /** @var User $user */
+            $user = $this->auth->user();
+            return array_merge($this->generateTokenResponse($token), $user->toArray());
         });
     }
 
@@ -149,7 +151,7 @@ class AuthController extends ApiController
     private function generateTokenResponse(string $token)
     {
         return [
-            'access_token' => $token,
+            'jwt_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $this->auth->factory()->getTTL() * 60
         ];
