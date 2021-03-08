@@ -7,6 +7,7 @@ use App\Models\Notes\Note;
 use App\Repositories\Notes\NotesRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApiNotes extends ApiController
 {
@@ -28,7 +29,18 @@ class ApiNotes extends ApiController
     public function index(Request $request)
     {
         return $this->responseHandler(function () use ($request) {
-            return $this->notesRepo->all($request->all());
+            return $this->notesRepo->all($this->getLoggedInUser(), $request->all());
+        });
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function upsert(Request $request)
+    {
+        return $this->responseHandler(function () use ($request) {
+            return !!$this->notesRepo->upsert($this->getLoggedInUser(), $request->all());
         });
     }
 

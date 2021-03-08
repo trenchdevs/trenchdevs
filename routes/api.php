@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // ---------- Start Notes ---------- //
     Route::post('notes', [ApiNotes::class, 'index']);
+    Route::post('notes/upsert', [ApiNotes::class, 'upsert']);
     // ---------- End Notes ---------- //
 
 });

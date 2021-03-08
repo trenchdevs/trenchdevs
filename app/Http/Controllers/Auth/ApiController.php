@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Auth;
 
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
 
 class ApiController extends Controller
@@ -79,6 +81,16 @@ class ApiController extends Controller
                 'message' => $exception->getMessage(),
             ]);
         }
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getLoggedInUser(): ?User
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        return $user;
     }
 
 }
