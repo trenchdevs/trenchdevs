@@ -46,11 +46,17 @@ return [
 //            'provider' => 'users',
 //            'hash' => false,
 //        ],
+//        'api' => [
+//            'driver' => 'jwt',
+//            'provider' => 'users',
+////            'hash' => false,
+//        ],
+
         'api' => [
-            'driver' => 'jwt',
+            'driver' => 'sanctum',
             'provider' => 'users',
-//            'hash' => false,
-        ],
+            'hash' => false,
+        ]
     ],
 
     /*

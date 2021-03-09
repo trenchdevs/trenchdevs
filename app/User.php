@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use Laravel\Sanctum\HasApiTokens;
 use Throwable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -33,9 +34,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property $role
  * @package App
  */
-class User extends Authenticatable implements JWTSubject, MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     const ROLE_SUPER_ADMIN = 'superadmin';
     const ROLE_ADMIN = 'admin';
@@ -102,15 +103,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'updated_at' => 'datetime',
     ];
 
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
 
     public function canManage(User $user)
     {

@@ -7,6 +7,7 @@ use App\Models\Notes\Note;
 use App\User;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ApiNotesTest extends TestCase
@@ -36,6 +37,7 @@ class ApiNotesTest extends TestCase
             // 'type' => 'grocery',
             'title' => 'March 2, 2021',
             'date' => '2021-03-02',
+            'type' => 'note',
             'contents' => json_encode([
                 'cart' => [
                     [
@@ -55,7 +57,9 @@ class ApiNotesTest extends TestCase
                 ]
             ])
         ]);
-        $response = $this->actingAs($user)->get('api/notes');
+
+        Sanctum::actingAs($user, ['*']);
+        $response = $this->post('api/notes', ['type' => 'note']);
         $response->assertStatus(200);
         $response->assertJson([
             'data' => [

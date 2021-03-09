@@ -6,16 +6,17 @@ use App\Http\Controllers\Auth\ApiController;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
-use Tymon\JWTAuth\JWTGuard;
+use Laravel\Sanctum\Guard;
 
 class AuthController extends ApiController
 {
 
-    /** @var JWTGuard */
+    /** @var Guard */
     protected $auth = null;
 
     /**
@@ -60,7 +61,7 @@ class AuthController extends ApiController
             'account_id' => $request->account_id,
         ]);
 
-        return $this->respondWithToken($this->auth->login($user));
+        return $this->respondWithToken($user);
     }
 
     /**
@@ -72,22 +73,21 @@ class AuthController extends ApiController
     {
         return $this->responseHandler(function () use ($request) {
 
-            $credentials = request(['email', 'password']);
-
             $this->validate($request, [
                 'email' => 'required',
                 'password' => 'required'
             ]);
 
-            $token = $this->auth->attempt($credentials);
+            /** @var User $user */
+            $user = User::query()->where('email', $request->email)->first();
 
-            if (empty($token)) {
-                throw new InvalidArgumentException("Invalid credentials");
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                throw ValidationException::withMessages([
+                    'email' => ['The provided credentials are incorrect.'],
+                ]);
             }
 
-            /** @var User $user */
-            $user = $this->auth->user();
-            return array_merge($this->generateTokenResponse($token), $user->toArray());
+            return array_merge($this->generateTokenResponse($user), $user->toArray());
         });
     }
 
@@ -117,9 +117,11 @@ class AuthController extends ApiController
      */
     public function refreshToken()
     {
-        return $this->jsonApiResponse(self::STATUS_SUCCESS, "Success", [
-            'token' => $this->auth->refresh(),
-        ]);
+        return $this->responseHandler(function () {
+            /** @var User $user */
+            $user = $this->auth->user();
+            return $this->generateTokenResponse($user);
+        });
     }
 
     /**
@@ -128,32 +130,36 @@ class AuthController extends ApiController
      */
     public function logout()
     {
-        return $this->responseHandler(function (){
-            $this->auth->logout();
-            return true;
+        return $this->responseHandler(function () {
+            /** @var User $user */
+            $user = $this->auth->user();
+            $user->tokens()->delete();
         });
     }
 
 
     /**
-     * @param $token
+     * @param User $user
      * @return JsonResponse
      */
-    protected function respondWithToken(string $token)
+    protected function respondWithToken(User $user)
     {
-        return $this->jsonApiResponse(self::STATUS_SUCCESS, 'Success', $this->generateTokenResponse($token));
+        return $this->jsonApiResponse(self::STATUS_SUCCESS, 'Success', $this->generateTokenResponse($user));
     }
 
     /**
-     * @param string $token
+     * @param User $user
      * @return array
      */
-    private function generateTokenResponse(string $token)
+    private function generateTokenResponse(User $user)
     {
+        $user->tokens()->delete();
+
+        $name = request()->userAgent() ?: "N/A";
+
         return [
-            'jwt_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => $this->auth->factory()->getTTL() * 60
+            'access_token' => $user->createToken($name)->plainTextToken,
+            'access_token_type' => 'bearer',
         ];
     }
 }

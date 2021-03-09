@@ -25,12 +25,12 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('api.logout');
     Route::post('me', [AuthController::class, 'me'])->name('api.me');
 
-    Route::group(['middleware' => 'auth'], function () {
+    Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('refresh', [AuthController::class, 'refreshToken'])->name('api.refresh');
     });
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // ---------- Start Notes ---------- //
     Route::post('notes', [ApiNotes::class, 'index']);

@@ -7,8 +7,14 @@ use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
+/**
+ * @group auth.sanctum
+ * Class AuthenticationTest
+ * @package Tests\Feature
+ */
 class AuthenticationTest extends TestCase
 {
     use DatabaseMigrations;
@@ -35,7 +41,6 @@ class AuthenticationTest extends TestCase
             'data' => [
                 'access_token',
                 'token_type',
-                'expires_in'
             ]
         ]);
     }
@@ -52,7 +57,7 @@ class AuthenticationTest extends TestCase
            'data' => [
                'access_token',
                'token_type',
-               'expires_in'
+               'id',
            ]
         ]);
 
@@ -80,8 +85,10 @@ class AuthenticationTest extends TestCase
     public function it_will_get_user_details(string $accessToken)
     {
         $this->assertNotEmpty($accessToken);
+
+        Sanctum::actingAs(User::query()->find(1));
         $response = $this->withHeader('Authorization', "Bearer $accessToken")
-            ->json('post', 'api/auth/me', []);
+            ->post( 'api/auth/me', []);
 
         $response->assertStatus(200);
         $this->assertNotEmpty($response->assertJson([
@@ -101,13 +108,14 @@ class AuthenticationTest extends TestCase
     public function aUserIsAbleToRefreshToken(string $accessToken)
     {
         $this->assertNotEmpty($accessToken);
+        Sanctum::actingAs(User::query()->find(1));
+
         $response = $this->withHeader('Authorization', "Bearer $accessToken")
-            ->json('post', 'api/auth/refresh', []);
+            ->post( 'api/auth/refresh', []);
 
         $response->assertStatus(200);
-
         $responseArr = $response->json();
         $this->assertNotEmpty($responseArr);
-        $this->assertArrayHasKey('token', $responseArr['data']);
+        $this->assertArrayHasKey('access_token', $responseArr['data']);
     }
 }
