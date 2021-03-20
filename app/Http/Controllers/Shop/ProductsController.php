@@ -2,26 +2,32 @@
 
 namespace App\Http\Controllers\Shop;
 
+use App\Helpers\AmazonS3Helper;
 use App\Http\Controllers\Auth\ApiController;
 use App\Product;
 use App\ProductCategory;
 use App\Repositories\ProductsRepository;
 use App\Repositories\ShopProductsRepository;
 use App\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use InvalidArgumentException;
 
 class ProductsController extends ApiController
 {
     private $productsRepository;
+    private $s3;
 
     /**
      * UserCertificationsController constructor.
      * @param ProductsRepository $productsRepository
      */
-    public function __construct(ProductsRepository $productsRepository)
+    public function __construct(ProductsRepository $productsRepository, AmazonS3Helper $s3)
     {
         $this->productsRepository = $productsRepository;
+        $this->s3 = $s3;
     }
 
     public function showBulkUpload(Request $request)
@@ -74,74 +80,86 @@ class ProductsController extends ApiController
      * Returns all products according to corresponding account
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function all(Request $request)
     {
-        $products = Product::where('account_id', $request->header('x-account-id'))
-            ->orderBy('name', 'asc')
-            ->get();
-
-        return response()->json([
-            "products" => $products
-        ], 200);
+        return $this->responseHandler(function () use ($request) {
+            return Product::query()->where('owner_user_id', '=', auth()->id())
+                ->orderBy('id', 'desc')
+                ->get();
+        });
     }
 
     /**
      * @param Request $request
-     * @param string $categoryId
-     * @return \Illuminate\Http\JsonResponse
+     * @param string $productId
+     * @return JsonResponse
      */
     public function one(Request $request, string $productId)
     {
-        $product = Product::findOrfail($productId);
+        return $this->responseHandler(function () use ($productId) {
 
-        return response()->json(["product" => $product], 200);
+            $hiddenCols = ['product_category_id', 'account_id'];
+
+            if (!$product = Product::query()->find($productId)->makeHidden($hiddenCols)) {
+                throw new InvalidArgumentException("Product Not found");
+            }
+
+            return $product;
+        });
     }
 
     /**
      * Upsert product
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function upsert(Request $request)
     {
+        $editMode = !!$request->id;
 
-        $validator = Validator::make($request->all(), Product::$rules);
+        return $this->responseHandler(function () use ($request, $editMode) {
 
-        if ($validator->fails()) {
-            $errorBag = $validator->errors()->getMessageBag()->all();
-            return response()->json(["errors" => implode(' ', $errorBag)], 404);
-        }
+            $rules = Product::$rules;
 
-        $product_category = ProductCategory::find($request->product_category_id);
+            if ($editMode && $request->input('image_url')) {
+                // edit mode + image url is set. Do not require image
+                unset($rules['image']);
+                $rules['image_url'] = 'required';
+            }
 
-        if (!$product_category) {
-            return response()->json(["errors" => 'Product category not found'], 404);
-        }
+            $this->validate($request, $rules);
 
-        if (!empty($request->id)) {
-            // edit mode
-            $product = Product::findOrFail($request->id);
-        } else {
-            $product = new Product();
-            $product->account_id = $request->header('x-account-id');
-        }
+            if ($editMode) {
+                $product = Product::query()->findOrFail($request->id); // edit mode
+            } else {
+                $product = new Product();
+            }
 
-        $product->fill($request->all());
 
-        if (!$product->save()) {
-            return response()->json(["errors" => "An error occurred while saving entry"], 404);
-        }
+            $requestData = $request->all();
+            $image = $request->file('image');
 
-        return response()->json(['product' => $product], 200);
+            if ($image) {
+                $requestData['image_url'] = $this->s3->upload($request->image, 'shop/product-images', $image->getClientOriginalName());
+            }
+
+            $requestData['owner_user_id'] = auth()->user()->id;
+
+            $product->fill($requestData);
+            $product->save();
+
+            return $product;
+
+        }, sprintf('Successfully %s product', $editMode ? "updated" : "added new"));
     }
 
     /**
      * @param Request $request
      * @param string $categoryId
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function delete(Request $request, string $categoryId)
     {

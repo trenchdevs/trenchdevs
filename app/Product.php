@@ -37,19 +37,21 @@ class Product extends Model
         'final_cost',
         'markup_percentage',
         'attributes',
+        'owner_user_id',
     ];
 
     public static $rules = [
         'name' => 'required|string|max:255',
         'stock' => 'required|integer',
         'sku' => 'required|string|max:255',
-        'msrp' => 'required|numeric',
+        'final_cost' => 'required|numeric',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'msrp' => 'nullable|numeric',
         'product_category_id' => 'nullable|integer',
         'description' => 'nullable|string|max:255',
         'product_cost' => 'nullable|numeric',
         'shipping_cost' => 'nullable|numeric',
         'handling_cost' => 'nullable|numeric',
-        'final_cost' => 'nullable|numeric',
         'markup_percentage' => 'nullable|numeric',
         'attributes' => 'nullable|json',
     ];

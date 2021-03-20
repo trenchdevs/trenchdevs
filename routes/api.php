@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ApiNotes;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Blogs\PublicBlogsController;
+use App\Http\Controllers\Shop\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,10 +36,17 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // ---------- Start Notes ---------- //
     Route::post('notes', [ApiNotes::class, 'index']);
     Route::post('notes/upsert', [ApiNotes::class, 'upsert']);
+
     // ---------- End Notes ---------- //
 
 });
 
+
+Route::group(['prefix' => 'shop/products', 'middleware' => 'auth:sanctum'], function(){
+    Route::post('upsert', [ProductsController::class, 'upsert']);
+    Route::get('{productId}', [ProductsController::class, 'one']);
+    Route::get('/', [ProductsController::class, 'all']);
+});
 
 // ---------- End Authentication Endpoints ---------- //
 

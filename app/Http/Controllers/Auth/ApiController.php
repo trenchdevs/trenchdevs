@@ -9,6 +9,7 @@ use App\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 
 class ApiController extends Controller
@@ -75,7 +76,14 @@ class ApiController extends Controller
                 'message' => $successMessage,
             ]);
 
-        } catch (Exception $exception) {
+        } catch (ValidationException $exception)  {
+            return response()->json([
+                'status' => self::STATUS_ERROR,
+                'message' => $exception->getMessage(),
+                'errors' => $exception->errors(),
+            ]);
+        }catch (Exception $exception) {
+
             return response()->json([
                 'status' => self::STATUS_ERROR,
                 'message' => $exception->getMessage(),
