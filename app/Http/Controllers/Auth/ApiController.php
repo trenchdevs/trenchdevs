@@ -17,6 +17,8 @@ class ApiController extends Controller
     const STATUS_SUCCESS = 'success';
     const STATUS_ERROR = 'error';
 
+    private $successMessage;
+
     public function getValidApiStatuses()
     {
         return [
@@ -73,16 +75,18 @@ class ApiController extends Controller
             return response()->json([
                 'data' => $fn(),
                 'status' => self::STATUS_SUCCESS,
-                'message' => $successMessage,
+                'message' => $this->successMessage ?? $successMessage,
             ]);
 
-        } catch (ValidationException $exception)  {
+        } catch (ValidationException $exception) {
+
             return response()->json([
                 'status' => self::STATUS_ERROR,
                 'message' => $exception->getMessage(),
                 'errors' => $exception->errors(),
             ]);
-        }catch (Exception $exception) {
+
+        } catch (Exception $exception) {
 
             return response()->json([
                 'status' => self::STATUS_ERROR,
@@ -99,6 +103,11 @@ class ApiController extends Controller
         /** @var User $user */
         $user = Auth::user();
         return $user;
+    }
+
+    protected function setSuccessMessage(string $successMessage)
+    {
+        $this->successMessage = $successMessage;
     }
 
 }

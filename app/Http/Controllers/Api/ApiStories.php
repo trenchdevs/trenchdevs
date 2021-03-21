@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Auth\ApiController;
 use App\Models\Stories\Story;
+use App\Product;
 use App\User;
 use ErrorException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
 class ApiStories extends ApiController
@@ -35,8 +37,12 @@ class ApiStories extends ApiController
 
             $user = auth()->user();
 
+            $updatedMode = false;
+
             if (!empty($id)) {
-                // update mode
+
+                $updatedMode = true;
+
                 if (!$story = Story::query()->find($id)) {
                     throw new ErrorException("Story not found");
                 }
@@ -56,6 +62,10 @@ class ApiStories extends ApiController
             $story->fill($data);
             $story->save();
 
+            $verbiage = $updatedMode ? "updated" : "added a new";
+
+            $this->setSuccessMessage("Successfully {$verbiage} product.");
+
             return $story;
         });
     }
@@ -67,7 +77,9 @@ class ApiStories extends ApiController
     public function all()
     {
         return $this->responseHandler(function () {
-            return Story::query()->where('owner_user_id', auth()->id())->get();
+            return Story::query()
+                ->where('owner_user_id', auth()->id())
+                ->paginate();
         });
     }
 
@@ -76,13 +88,21 @@ class ApiStories extends ApiController
         return $this->responseHandler(function () use ($storyId) {
 
             /** @var Story $story */
-            $story = Story::query()->findOrFail($storyId ?? null);
+            $story = Story::query()->with('products')->findOrFail($storyId ?? null);
 
             if (!$story->hasAccess(auth()->user())) {
-                throw new InvalidArgumentException("Forbidden");
+                throw new InvalidArgumentException("Forbidden..");
             }
 
-            return $story;
+            return [
+                'story' => $story,
+                'added_products' => $story->products,
+                'products' => DB::table('products AS p')
+                    ->join('product_stories AS ps', 'p.id', '=', 'ps.product_id', 'LEFT')
+                    ->join('stories AS s', 's.id', '=', 'ps.story_id', 'LEFT')
+                    ->whereNull('s.id')
+                    ->get()
+            ];
         });
     }
 

@@ -39,7 +39,7 @@ class ApiProductStories extends ApiController
                 throw new InvalidArgumentException("Product Ids must be an array of ids");
             }
 
-            // todo: validate product ids 
+            // todo: validate product ids
 
             $story->products()->attach($productIds);
         });

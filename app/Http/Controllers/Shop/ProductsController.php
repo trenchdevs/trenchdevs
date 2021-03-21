@@ -108,7 +108,7 @@ class ProductsController extends ApiController
                 throw new InvalidArgumentException("Product Not found");
             }
 
-            if ($product->hasAccess(auth()->user())) {
+            if (!$product->hasAccess(auth()->user())) {
                 throw new InvalidArgumentException("Forbidden");
             }
 
