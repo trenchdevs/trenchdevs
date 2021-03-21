@@ -2,10 +2,16 @@
 
 namespace App;
 
+use App\Models\Stories\Story;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\Request;
 
+/**
+ * Class Product
+ * @package App
+ * @property $owner_user_id
+ */
 class Product extends Model
 {
     use SoftDeletes;
@@ -55,4 +61,17 @@ class Product extends Model
         'markup_percentage' => 'nullable|numeric',
         'attributes' => 'nullable|json',
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Story::class, 'product_stories');
+    }
+
+    /**
+     * @param Authenticatable $user
+     * @return bool
+     */
+    public function hasAccess(Authenticatable $user): bool{
+        return $this->owner_user_id === $user->id;
+    }
 }

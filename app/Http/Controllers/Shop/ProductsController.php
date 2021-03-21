@@ -9,6 +9,7 @@ use App\ProductCategory;
 use App\Repositories\ProductsRepository;
 use App\Repositories\ShopProductsRepository;
 use App\User;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -87,7 +88,7 @@ class ProductsController extends ApiController
         return $this->responseHandler(function () use ($request) {
             return Product::query()->where('owner_user_id', '=', auth()->id())
                 ->orderBy('id', 'desc')
-                ->get();
+                ->paginate(15);
         });
     }
 
@@ -102,8 +103,13 @@ class ProductsController extends ApiController
 
             $hiddenCols = ['product_category_id', 'account_id'];
 
+            /** @var Product $product */
             if (!$product = Product::query()->find($productId)->makeHidden($hiddenCols)) {
                 throw new InvalidArgumentException("Product Not found");
+            }
+
+            if ($product->hasAccess(auth()->user())) {
+                throw new InvalidArgumentException("Forbidden");
             }
 
             return $product;
@@ -134,6 +140,11 @@ class ProductsController extends ApiController
 
             if ($editMode) {
                 $product = Product::query()->findOrFail($request->id); // edit mode
+
+                if (!$product->hasAccess(auth()->user())) {
+                    throw new InvalidArgumentException("Forbidden");
+                }
+
             } else {
                 $product = new Product();
             }

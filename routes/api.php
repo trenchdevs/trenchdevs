@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiNotes;
+use App\Http\Controllers\Api\ApiStories;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Blogs\PublicBlogsController;
 use App\Http\Controllers\Shop\ProductsController;
@@ -46,6 +47,12 @@ Route::group(['prefix' => 'shop/products', 'middleware' => 'auth:sanctum'], func
     Route::post('upsert', [ProductsController::class, 'upsert']);
     Route::get('{productId}', [ProductsController::class, 'one']);
     Route::get('/', [ProductsController::class, 'all']);
+});
+
+Route::group(['prefix' => 'stories', 'middleware' => 'auth:sanctum'], function(){
+    Route::post('upsert', [ApiStories::class, 'upsert']);
+    Route::get('{storyId}', [ApiStories::class, 'one']);
+    Route::get('/', [ApiStories::class, 'all']);
 });
 
 // ---------- End Authentication Endpoints ---------- //
