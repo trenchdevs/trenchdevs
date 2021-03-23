@@ -41,23 +41,26 @@ class ApiProductStories extends ApiController
                 throw new InvalidArgumentException("Forbidden");
             }
 
-            if (!$productIds = $requestArr['product_ids'] ?? []) {
-                throw new InvalidArgumentException("Product Ids must be an array of ids");
+            $productIds = $requestArr['product_ids'] ?? [];
+
+            if (empty($productIds)) {
+                $story->products()->detach();
+            } else {
+                // validate if product ids belong to the same user
+                $validatedProductIds = $story->products()
+                    ->select('products.id')
+                    ->whereIn('products.id', $productIds)
+                    ->where('products.owner_user_id', $user->id)
+                    ->pluck('id')
+                    ->toArray();
+
+                if (!array_diff($productIds, $validatedProductIds)) { // expected 0
+                    throw new ErrorException("Forbidden");
+                }
+
+                $story->products()->sync($productIds);
             }
 
-            // validate if product ids belong to the same user
-            $validatedProductIds = $story->products()
-                ->select('products.id')
-                ->whereIn('products.id', $productIds)
-                ->where('products.owner_user_id', $user->id)
-                ->pluck('id')
-                ->toArray();
-
-            if (!array_diff($productIds, $validatedProductIds)) { // expected 0
-                throw new ErrorException("Forbidden");
-            }
-
-            $story->products()->sync($productIds);
         });
 
     }
