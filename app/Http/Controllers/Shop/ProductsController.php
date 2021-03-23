@@ -139,6 +139,8 @@ class ProductsController extends ApiController
             $this->validate($request, $rules);
 
             if ($editMode) {
+
+                /** @var Product $product */
                 $product = Product::query()->findOrFail($request->id); // edit mode
 
                 if (!$product->hasAccess(auth()->user())) {
@@ -158,6 +160,7 @@ class ProductsController extends ApiController
             }
 
             $requestData['owner_user_id'] = auth()->user()->id;
+            $requestData['final_cost'] = $request->product_cost + $request->shipping_cost;
 
             $product->fill($requestData);
             $product->save();
