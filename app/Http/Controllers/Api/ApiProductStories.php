@@ -23,6 +23,7 @@ class ApiProductStories extends ApiController
             /**
              * Associate all product id arrays (product_ids) to a story (story_id)
              * @var Story $story
+             * @var User $user
              */
             $requestArr = request()->all();
 
@@ -34,7 +35,6 @@ class ApiProductStories extends ApiController
                 throw new InvalidArgumentException("Unable to find story");
             }
 
-            /** @var User $user */
             $user = auth()->user();
 
             if (!$story->hasAccess($user)) {
@@ -54,8 +54,8 @@ class ApiProductStories extends ApiController
                     ->pluck('id')
                     ->toArray();
 
-                if (!array_diff($productIds, $validatedProductIds)) { // expected 0
-                    throw new ErrorException("Forbidden");
+                if (!empty(array_diff($productIds, $validatedProductIds))) { // expected []
+                    throw new ErrorException("Forbidden.");
                 }
 
                 $story->products()->sync($productIds);
