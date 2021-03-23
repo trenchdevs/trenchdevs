@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\ApiNotes;
+use App\Http\Controllers\Api\ApiProductStories;
 use App\Http\Controllers\Api\ApiStories;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Blogs\PublicBlogsController;
 use App\Http\Controllers\Shop\ProductsController;
+use App\Models\Stories\ProductStory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -53,7 +55,11 @@ Route::group(['prefix' => 'stories', 'middleware' => 'auth:sanctum'], function()
     Route::post('upsert', [ApiStories::class, 'upsert']);
     Route::get('{storyId}', [ApiStories::class, 'one']);
     Route::get('/', [ApiStories::class, 'all']);
+
+    Route::post('add-products', [ApiProductStories::class, 'addProductsToStories']);
 });
+
+Route::get('stories/s/{slug}', [ApiStories::class, 'slug']);
 
 // ---------- End Authentication Endpoints ---------- //
 

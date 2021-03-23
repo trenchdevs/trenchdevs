@@ -7,6 +7,7 @@ use App\Models\Stories\Story;
 use App\Product;
 use App\User;
 use ErrorException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
@@ -83,27 +84,58 @@ class ApiStories extends ApiController
         });
     }
 
-    public function one(int $storyId)
+    public function one($storyId)
     {
         return $this->responseHandler(function () use ($storyId) {
 
+            if (empty($storyId) || !is_numeric($storyId)) {
+                throw new InvalidArgumentException("Story id invalid");
+            }
+
             /** @var Story $story */
-            $story = Story::query()->with('products')->findOrFail($storyId ?? null);
+            $story = Story::query()->findOrFail($storyId ?? null);
 
             if (!$story->hasAccess(auth()->user())) {
                 throw new InvalidArgumentException("Forbidden..");
             }
 
+            $addedProducts = $story->products;
+
             return [
                 'story' => $story,
-                'added_products' => $story->products,
-                'products' => DB::table('products AS p')
-                    ->join('product_stories AS ps', 'p.id', '=', 'ps.product_id', 'LEFT')
-                    ->join('stories AS s', 's.id', '=', 'ps.story_id', 'LEFT')
-                    ->whereNull('s.id')
-                    ->get()
+                'added_products' => $addedProducts,
+                // get my products that have not been added yet
+                'products' => Product::query()
+                    ->where('products.owner_user_id', auth()->id())
+                    ->whereNotIn('products.id', $addedProducts->pluck('id'))
+                    ->get(),
             ];
+
+
         });
     }
+
+
+    //todo: chris - refactor to separate controller
+    public function slug($slug)
+    {
+
+        return $this->responseHandler(function () use ($slug) {
+
+            if (empty($slug)) {
+                throw new InvalidArgumentException("Slug invalid");
+            }
+
+            /** @var Story $story */
+            $story = Story::query()->where('slug', $slug)->first();
+
+            return [
+                'story' => $story,
+                'products' => $story->products,
+            ];
+        });
+
+    }
+
 
 }
