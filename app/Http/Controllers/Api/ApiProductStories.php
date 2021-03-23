@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Auth\ApiController;
 use App\Models\Stories\Story;
+use App\Product;
 use App\User;
 use ErrorException;
 use Illuminate\Http\JsonResponse;
@@ -47,10 +48,10 @@ class ApiProductStories extends ApiController
                 $story->products()->detach();
             } else {
                 // validate if product ids belong to the same user
-                $validatedProductIds = $story->products()
-                    ->select('products.id')
-                    ->whereIn('products.id', $productIds)
-                    ->where('products.owner_user_id', $user->id)
+                $validatedProductIds = Product::query()
+                    ->where('owner_user_id', $user->id)
+                    ->whereIn('id', $productIds)
+                    ->get()
                     ->pluck('id')
                     ->toArray();
 
