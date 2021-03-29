@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\ApiController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -36,15 +37,17 @@ class AuthController extends ApiController
     {
 
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|email',
-            'password' => 'required',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => RegisterController::PASSWORD_VALIDATION_RULE,
             'role' => [
                 'required',
                 Rule::in([User::ROLE_BUSINESS_OWNER, User::ROLE_CUSTOMER]),
             ],
             'account_id' => 'required',
+        ], [
+            'role.required' => 'Please specify if you would like to register as customer or a business owner.'
         ]);
 
         if ($validator->fails()) {
