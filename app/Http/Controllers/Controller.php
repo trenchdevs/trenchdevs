@@ -55,6 +55,16 @@ abstract class Controller extends BaseController
     }
 
     /**
+     * @param Validator $validator
+     * @param string $errorMsg
+     * @return JsonResponse
+     */
+    protected function validationFailuresResponse(Validator $validator, string $errorMsg = "Validation Error")
+    {
+        return $this->jsonResponse(self::STATUS_ERROR, $errorMsg, [], $validator->errors()->toArray());
+    }
+
+    /**
      * @return bool
      */
     protected function isLoggedInUserAdmin(): bool{

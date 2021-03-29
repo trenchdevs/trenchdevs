@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use App\Http\Controllers\Auth\ApiController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\User;
@@ -36,6 +37,25 @@ class AuthController extends ApiController
     public function register(Request $request)
     {
 
+        // START: Temporary code
+        $accountId = $request->header('x-account-id');
+
+        if (!$accountId) {
+            throw new InvalidArgumentException("Access Denied.");
+        }
+
+        $account = Account::query()->where('id', $accountId)->first();
+
+        if (!$account) {
+            throw new InvalidArgumentException("Access Denied.");
+        }
+
+        if ($account->business_name === "TrenchDevs Marketale") {
+            $request['account_id'] = $account->id;
+            $request['role'] = User::ROLE_BUSINESS_OWNER;
+        }
+        // END: Temporary code
+
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -46,12 +66,10 @@ class AuthController extends ApiController
                 Rule::in([User::ROLE_BUSINESS_OWNER, User::ROLE_CUSTOMER]),
             ],
             'account_id' => 'required',
-        ], [
-            'role.required' => 'Please specify if you would like to register as customer or a business owner.'
         ]);
 
         if ($validator->fails()) {
-            return $this->validationFailureResponse($validator);
+            return $this->validationFailuresResponse($validator);
         }
 
         /** @var User $user */
