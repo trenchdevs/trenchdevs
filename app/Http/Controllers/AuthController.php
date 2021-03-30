@@ -49,7 +49,7 @@ class AuthController extends ApiController
                 throw new ErrorException("Forbidden");
             }
 
-            $request['role'] =$site->getDefaultRole();
+            $request['role'] = $site->getDefaultRole();
 
             $validator = Validator::make($request->all(), $site->registrationValidationRules());
 
@@ -58,7 +58,7 @@ class AuthController extends ApiController
             }
 
             $appType = $site->getAppType();
-            
+
             $existingAccount = Account::findByAccountIdAndBusinessName($appType->id, $request->shop_name);
 
             if ($existingAccount) {
