@@ -63,7 +63,7 @@ class AuthController extends ApiController
 
             if ($existingAccount) {
                 throw ValidationException::withMessages([
-                    'shop_name'  => ['This shop name has already been taken.'] // todo: this should only be validated if request came from Marketale
+                    'shop_name' => ['This shop name has already been taken.'] // todo: this should only be validated if request came from Marketale
                 ]);
             }
 
