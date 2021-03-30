@@ -21,4 +21,10 @@ class ApplicationType extends Model
     protected $fillable = [
         'name'
     ];
+
+    public static function getEcommerceApplicationType(){
+        return self::query()
+            ->where('name', 'ecommerce')
+            ->first();
+    }
 }

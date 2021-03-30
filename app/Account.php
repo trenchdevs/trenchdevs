@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Account extends Model
 {
@@ -37,5 +38,12 @@ class Account extends Model
     public static function getTrenchDevsAccount()
     {
         return self::findByBusinessName(self::TRENCHDEVS_BUSINESS_NAME);
+    }
+
+    public static function findByAccountIdAndBusinessName(string $appId, string $businessName)
+    {
+        return Account::query()->where('application_type_id', $appId)
+            ->where(DB::raw('lower(business_name)'), 'like', '%' . strtolower($businessName) . '%')
+            ->first();
     }
 }

@@ -3,20 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\ApplicationType;
 use App\Http\Controllers\Auth\ApiController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use Laravel\Sanctum\Guard;
+use Exception;
 
 class AuthController extends ApiController
 {
+
+    const VALID_ECOMMERCE_DOMAINS = [
+        'http://localhost:3000',
+        'https://localhost:3000',
+        'https://marketale.trenchapps.com/',
+    ];
 
     /** @var Guard */
     protected $auth = null;
@@ -37,52 +46,77 @@ class AuthController extends ApiController
     public function register(Request $request)
     {
 
-        // START: Temporary code
-        $accountId = $request->header('x-account-id');
+        return $this->responseHandler(function () use ($request) {
 
-        if (!$accountId) {
-            throw new InvalidArgumentException("Access Denied.");
-        }
+            // todo: Consult Chris as this can be spoofed
+            if (in_array($request->header('origin'), self::VALID_ECOMMERCE_DOMAINS)) {
+                $request['role'] = User::ROLE_BUSINESS_OWNER;
+            }
 
-        $account = Account::query()->where('id', $accountId)->first();
+            $validator = Validator::make($request->all(), [
+                'shop_name' => 'required|string|max:255', // todo: this should only be validated if request came from Marketale
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => RegisterController::PASSWORD_VALIDATION_RULE,
+                'password_confirmation' => 'required|string|min:8',
+                'role' => [
+                    'required',
+                    Rule::in([User::ROLE_BUSINESS_OWNER, User::ROLE_CUSTOMER]),
+                ]
+            ]);
 
-        if (!$account) {
-            throw new InvalidArgumentException("Access Denied.");
-        }
+            if ($validator->fails()) {
+                throw ValidationException::withMessages($validator->errors()->toArray());
+            }
 
-        if ($account->business_name === "TrenchDevs Marketale") {
-            $request['account_id'] = $account->id;
-            $request['role'] = User::ROLE_BUSINESS_OWNER;
-        }
-        // END: Temporary code
+            $ecommerceAppType = ApplicationType::getEcommerceApplicationType();
 
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => RegisterController::PASSWORD_VALIDATION_RULE,
-            'role' => [
-                'required',
-                Rule::in([User::ROLE_BUSINESS_OWNER, User::ROLE_CUSTOMER]),
-            ],
-            'account_id' => 'required',
-        ]);
+            if (!$ecommerceAppType) {
+                throw new InvalidArgumentException("Non existing ecommerce application type.");
+            }
 
-        if ($validator->fails()) {
-            return $this->validationFailuresResponse($validator);
-        }
+            $existingAccount = Account::findByAccountIdAndBusinessName($ecommerceAppType->id, $request->shop_name);
 
-        /** @var User $user */
-        $user = User::query()->create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'role' => $request->role,
-            'account_id' => $request->account_id,
-        ]);
+            if ($existingAccount) {
+                throw ValidationException::withMessages([
+                    'shop_name' => ['This shop name has already been taken.'] // todo: this should only be validated if request came from Marketale
+                ]);
+            }
 
-        return $this->respondWithToken($user);
+            try {
+
+                DB::beginTransaction();
+
+                /** @var Account $account */
+                $account = Account::query()->create([
+                    'application_type_id' => $ecommerceAppType->id,
+                    'business_name' => $request->shop_name,
+                ]);
+
+                /** @var User $user */
+                $user = User::query()->create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'role' => $request->role,
+                    'account_id' => $account->id,
+                ]);
+
+                $account->owner_user_id = $user->id;
+                $account->saveOrFail();
+
+                DB::commit();
+
+            } catch (Exception $exception) {
+                DB::rollBack();
+                throw new Exception("There was a problem in processing your registration.");
+            }
+
+            return array_merge($this->generateTokenResponse($user), $user->toArray());
+
+        });
     }
 
     /**
