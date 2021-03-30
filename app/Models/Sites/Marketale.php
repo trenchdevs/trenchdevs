@@ -15,7 +15,7 @@ class Marketale extends AbstractSite
         return [
             'http://localhost:3000',
             'https://localhost:3000',
-            'https://marketale.trenchapps.com/',
+            'https://marketale.trenchapps.com',
         ];
     }
 

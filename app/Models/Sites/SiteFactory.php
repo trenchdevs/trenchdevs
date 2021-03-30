@@ -8,7 +8,7 @@ class SiteFactory {
     const VALID_ECOMMERCE_DOMAINS = [
         'http://localhost:3000',
         'https://localhost:3000',
-        'https://marketale.trenchapps.com/',
+        'https://marketale.trenchapps.com',
     ];
 
     /**
