@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicationType extends Model
@@ -22,9 +23,14 @@ class ApplicationType extends Model
         'name'
     ];
 
-    public static function getEcommerceApplicationType(){
-        return self::query()
-            ->where('name', 'ecommerce')
-            ->first();
+    /**
+     * @param string $name
+     * @return Builder|Model
+     */
+    public static function findOrCreateByName(string $name){
+
+        return self::query()->firstOrCreate([
+            'name' => $name
+        ]);
     }
 }

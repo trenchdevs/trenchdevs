@@ -6,7 +6,9 @@ use App\Account;
 use App\ApplicationType;
 use App\Http\Controllers\Auth\ApiController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Models\Sites\SiteFactory;
 use App\User;
+use ErrorException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,11 +23,6 @@ use Exception;
 class AuthController extends ApiController
 {
 
-    const VALID_ECOMMERCE_DOMAINS = [
-        'http://localhost:3000',
-        'https://localhost:3000',
-        'https://marketale.trenchapps.com/',
-    ];
 
     /** @var Guard */
     protected $auth = null;
@@ -48,35 +45,21 @@ class AuthController extends ApiController
 
         return $this->responseHandler(function () use ($request) {
 
-            // todo: Consult Chris as this can be spoofed
-            if (in_array($request->header('origin'), self::VALID_ECOMMERCE_DOMAINS)) {
-                $request['role'] = User::ROLE_BUSINESS_OWNER;
+            if (!$site = SiteFactory::getInstanceOrNull()) {
+                throw new ErrorException("Forbidden");
             }
 
-            $validator = Validator::make($request->all(), [
-                'shop_name' => 'required|string|max:255', // todo: this should only be validated if request came from Marketale
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'email' => 'required|email|max:255|unique:users',
-                'password' => RegisterController::PASSWORD_VALIDATION_RULE,
-                'password_confirmation' => 'required|string|min:8',
-                'role' => [
-                    'required',
-                    Rule::in([User::ROLE_BUSINESS_OWNER, User::ROLE_CUSTOMER]),
-                ]
-            ]);
+            $request['role'] =$site->getDefaultRole();
+
+            $validator = Validator::make($request->all(), $site->registrationValidationRules());
 
             if ($validator->fails()) {
                 throw ValidationException::withMessages($validator->errors()->toArray());
             }
 
-            $ecommerceAppType = ApplicationType::getEcommerceApplicationType();
-
-            if (!$ecommerceAppType) {
-                throw new InvalidArgumentException("Non existing ecommerce application type.");
-            }
-
-            $existingAccount = Account::findByAccountIdAndBusinessName($ecommerceAppType->id, $request->shop_name);
+            $appType = $site->getAppType();
+            
+            $existingAccount = Account::findByAccountIdAndBusinessName($appType->id, $request->shop_name);
 
             if ($existingAccount) {
                 throw ValidationException::withMessages([
@@ -90,7 +73,7 @@ class AuthController extends ApiController
 
                 /** @var Account $account */
                 $account = Account::query()->create([
-                    'application_type_id' => $ecommerceAppType->id,
+                    'application_type_id' => $appType->id,
                     'business_name' => $request->shop_name,
                 ]);
 
