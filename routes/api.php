@@ -60,7 +60,7 @@ Route::group(['prefix' => 'stories', 'middleware' => 'auth:sanctum'], function (
     Route::post('add-products', [ApiProductStories::class, 'addProductsToStories']);
 });
 
-Route::group(['prefix' => 'product-reactions', 'middleware' => 'auth:sanctum'], function () {
+Route::group(['prefix' => 'product-reactions'], function () {
     Route::post('react', [ApiProductReactions::class, 'react']);
 });
 
