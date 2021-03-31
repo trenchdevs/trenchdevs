@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $id
  * @property $slug
  * @property $owner_user_id
+ * @property $is_active
  */
 class Story extends Model
 {

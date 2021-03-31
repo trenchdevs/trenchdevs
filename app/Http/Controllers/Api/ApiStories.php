@@ -116,7 +116,6 @@ class ApiStories extends ApiController
     }
 
 
-    //todo: chris - refactor to separate controller
     public function slug($slug)
     {
 
@@ -128,6 +127,14 @@ class ApiStories extends ApiController
 
             /** @var Story $story */
             $story = Story::query()->where('slug', $slug)->first();
+
+            if (!$story) {
+                throw new InvalidArgumentException("Sorry, can't seem find what you're looking for..");
+            }
+
+            if ($story->is_active != 1) {
+                throw new InvalidArgumentException("Story is deactivated by owner..");
+            }
 
             return [
                 'story' => $story,
