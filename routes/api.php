@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiNotes;
+use App\Http\Controllers\Api\ApiProductReactions;
 use App\Http\Controllers\Api\ApiProductStories;
 use App\Http\Controllers\Api\ApiStories;
 use App\Http\Controllers\AuthController;
@@ -45,18 +46,22 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 
-Route::group(['prefix' => 'shop/products', 'middleware' => 'auth:sanctum'], function(){
+Route::group(['prefix' => 'shop/products', 'middleware' => 'auth:sanctum'], function () {
     Route::post('upsert', [ProductsController::class, 'upsert']);
     Route::get('{productId}', [ProductsController::class, 'one']);
     Route::get('/', [ProductsController::class, 'all']);
 });
 
-Route::group(['prefix' => 'stories', 'middleware' => 'auth:sanctum'], function(){
+Route::group(['prefix' => 'stories', 'middleware' => 'auth:sanctum'], function () {
     Route::post('upsert', [ApiStories::class, 'upsert']);
     Route::get('{storyId}', [ApiStories::class, 'one']);
     Route::get('/', [ApiStories::class, 'all']);
 
     Route::post('add-products', [ApiProductStories::class, 'addProductsToStories']);
+});
+
+Route::group(['prefix' => 'product-reactions', 'middleware' => 'auth:sanctum'], function () {
+    Route::post('react', [ApiProductReactions::class, 'react']);
 });
 
 Route::get('stories/s/{slug}', [ApiStories::class, 'slug']);
