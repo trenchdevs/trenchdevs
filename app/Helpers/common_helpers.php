@@ -173,3 +173,42 @@ if (!function_exists('is_valid_date')) {
         return Carbon::createFromFormat($dateFormat, $dateString);
     }
 }
+
+
+/**
+ *
+ */
+if (!function_exists('request_meta')) {
+    /**
+     * @param bool $encode
+     * @return array|string
+     */
+    function request_meta($encode = false): string
+    {
+        $request = request();
+
+        $user = $request->user('web');
+        $ip = $request->ip();
+        $userAgent = $request->header('User-Agent');
+        $method = $request->method();
+        $requestData = $request->all();
+        $fullUrl = $request->fullUrl();
+
+        $meta = [
+            'user' => $user,
+            'ip' => $ip,
+            'user_agent' => $userAgent,
+            'method' => $method,
+            'request_data' => $requestData,
+            'full_url' => $fullUrl,
+        ];
+
+        if ($encode) {
+            return json_encode($meta);
+        } else {
+            // return array
+            return $meta;
+        }
+    }
+}
+

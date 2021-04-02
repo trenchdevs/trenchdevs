@@ -54,6 +54,7 @@ Route::group(['prefix' => 'shop/products', 'middleware' => 'auth:sanctum'], func
 
 Route::group(['prefix' => 'stories', 'middleware' => 'auth:sanctum'], function () {
     Route::post('upsert', [ApiStories::class, 'upsert']);
+    Route::get('metrics', [ApiStories::class, 'metrics']);
     Route::get('{storyId}', [ApiStories::class, 'one']);
     Route::get('/', [ApiStories::class, 'all']);
 

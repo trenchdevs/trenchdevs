@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Auth\ApiController;
 use App\Models\Stories\Story;
+use App\Models\Stories\StoryActionLog;
 use App\Product;
+use App\Repositories\StoryDashboardMetrics;
 use App\User;
 use ErrorException;
 use Illuminate\Database\Eloquent\Builder;
@@ -111,7 +113,6 @@ class ApiStories extends ApiController
                     ->get(),
             ];
 
-
         });
     }
 
@@ -136,12 +137,50 @@ class ApiStories extends ApiController
                 throw new InvalidArgumentException("Story is deactivated by owner..");
             }
 
+            $metaJson = request_meta(true);
+
+            StoryActionLog::query()->create([
+                'story_id' => $story->id,
+                'hash' => md5("$story->id|$metaJson"),
+                'meta_json' => $metaJson,
+            ]);
+
             return [
                 'story' => $story,
                 'products' => $story->products,
             ];
         });
 
+    }
+
+    public function metrics()
+    {
+
+        return $this->responseHandler(function () {
+            /**
+             * story_visits_total
+             * story_visits_past_month
+             * likes_total
+             * unlikes_total
+             * stories_active_total
+             * products_active_total
+             */
+
+            /** @var User $user */
+            $user = auth()->user();
+
+            $metrics = StoryDashboardMetrics::instance()->setOwner($user);
+
+            return [
+                'story_visits_total' => $metrics->storyVisitsCount(),
+                'story_visits_past_month' => $metrics->storyVisitsCount(),
+                'likes_total' => $metrics->reactionTotal('like'),
+                'unlikes_total' => $metrics->reactionTotal('dislike'),
+                'stories_active_total' => Story::query()->where('owner_user_id', $user->id)->count(),
+                'products_active_total' => Product::query()->where('owner_user_id', $user->id)->count(),
+            ];
+
+        });
     }
 
 
