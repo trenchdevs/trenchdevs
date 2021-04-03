@@ -49,7 +49,7 @@ class Product extends Model
     public static $rules = [
         'name' => 'required|string|max:255',
         'stock' => 'required|integer',
-        'sku' => 'required|string|max:255',
+        'sku' => 'required|string|max:32',
         'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10000',
         'msrp' => 'nullable|numeric',
         'product_category_id' => 'nullable|integer',
