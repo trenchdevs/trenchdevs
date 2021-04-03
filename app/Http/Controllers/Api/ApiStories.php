@@ -137,6 +137,14 @@ class ApiStories extends ApiController
                 throw new InvalidArgumentException("Story is deactivated by owner..");
             }
 
+            /** @var Product[] $storyProducts */
+            $storyProducts = $story->products;
+
+
+            if (!$storyProducts || $storyProducts->isEmpty()) {
+                throw new InvalidArgumentException("No products found for this story...");
+            }
+
             $metaJson = request_meta(true);
 
             StoryActionLog::query()->create([
@@ -147,7 +155,7 @@ class ApiStories extends ApiController
 
             return [
                 'story' => $story,
-                'products' => $story->products,
+                'products' => $storyProducts,
             ];
         });
 
