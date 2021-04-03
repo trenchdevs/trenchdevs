@@ -196,7 +196,7 @@ class AuthController extends ApiController
         $name = request()->userAgent() ?: "N/A";
 
         return [
-            'access_token' => $user->createToken($name)->plainTextToken,
+            'access_token' => $user->createToken(md5($name))->plainTextToken, // md5 - temp edit
             'access_token_type' => 'bearer',
         ];
     }
