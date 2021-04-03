@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\ProductReaction;
 use App\Models\Stories\StoryActionLog;
+use App\Product;
 use App\User;
 use Illuminate\Support\Facades\DB;
 
@@ -61,6 +62,43 @@ class StoryDashboardMetrics
         }
 
         return $query->first()->total_count ?? 0;
+    }
+
+    public function productMetrics(): array
+    {
+        $query = Product::query()->selectRaw('products.id, products.name, products.sku, pr.reaction, count(pr.id) AS total_reactions')
+            ->from('products')
+            ->join('product_reactions AS pr', 'products.id', '=', 'pr.product_id', 'left')
+            ->groupBy('products.id', 'pr.reaction');
+
+        if ($this->owner) {
+            $query->where('products.owner_user_id', '=', $this->owner->id);
+        }
+
+        if (empty($results = $query->get()->toArray())) {
+            return [];
+        }
+
+        $formattedResults = [];
+
+        foreach ($results as $result) {
+
+            $productId = $result['id'];
+
+            if (!isset($formattedResults[$productId])) {
+                $formattedResults[$productId] = [
+                    'name' => $result['sku'],
+                    'like' => 0,
+                    'dislike' => 0,
+                ];
+            }
+
+            if (!empty($result['total_reactions'])) {
+                $formattedResults[$productId][$result['reaction']] =  $result['total_reactions'];
+            }
+        }
+
+        return array_values($formattedResults);
     }
 
 }

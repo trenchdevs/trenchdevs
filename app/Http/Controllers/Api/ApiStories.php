@@ -178,6 +178,9 @@ class ApiStories extends ApiController
                 'unlikes_total' => $metrics->reactionTotal('dislike'),
                 'stories_active_total' => Story::query()->where('owner_user_id', $user->id)->count(),
                 'products_active_total' => Product::query()->where('owner_user_id', $user->id)->count(),
+
+                // graphs
+                'product_metrics' => $metrics->productMetrics(),
             ];
 
         });
