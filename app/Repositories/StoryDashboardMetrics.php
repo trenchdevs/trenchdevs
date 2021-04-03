@@ -66,10 +66,20 @@ class StoryDashboardMetrics
 
     public function productMetrics(): array
     {
-        $query = Product::query()->selectRaw('products.id, products.name, products.sku, pr.reaction, count(pr.id) AS total_reactions')
+
+        $rawSelect = [
+            'products.id',
+            'products.name',
+            'products.sku',
+            'pr.reaction',
+            'count(pr.id) AS total_reactions',
+        ];
+
+        $query = Product::query()->selectRaw(implode(',', $rawSelect))
             ->from('products')
             ->join('product_reactions AS pr', 'products.id', '=', 'pr.product_id', 'left')
-            ->groupBy('products.id', 'pr.reaction');
+            ->groupBy('products.id', 'pr.reaction')
+            ->orderBy('total_reactions', 'desc');
 
         if ($this->owner) {
             $query->where('products.owner_user_id', '=', $this->owner->id);
@@ -94,7 +104,7 @@ class StoryDashboardMetrics
             }
 
             if (!empty($result['total_reactions'])) {
-                $formattedResults[$productId][$result['reaction']] =  $result['total_reactions'];
+                $formattedResults[$productId][$result['reaction']] = $result['total_reactions'];
             }
         }
 
