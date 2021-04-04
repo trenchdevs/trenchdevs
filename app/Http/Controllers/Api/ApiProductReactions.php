@@ -37,15 +37,16 @@ class ApiProductReactions extends ApiController
             ];
 
             $userIdentifier = md5("$productId|$ip|$userAgent");
+            $productReaction = ProductReaction::query()->where('user_identifier', $userIdentifier)->firstOrNew();
 
-            return ProductReaction::query()->firstOrCreate([
-                'user_identifier' => $userIdentifier,
-            ], [
+            $productReaction->save([
                 'product_id' => $product->id,
                 'reaction' => $reaction,
                 'user_identifier' => $userIdentifier,
                 'meta_json' => json_encode($meta),
             ]);
+
+            return $productReaction;
         });
     }
 }
