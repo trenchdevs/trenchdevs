@@ -187,11 +187,14 @@ class AuthController extends ApiController
 
     /**
      * @param User $user
+     * @param bool $deleteTokens
      * @return array
      */
-    private function generateTokenResponse(User $user)
+    private function generateTokenResponse(User $user, bool $deleteTokens = false)
     {
-        $user->tokens()->delete();
+        if ($deleteTokens) {
+            $user->tokens()->delete();
+        }
 
         $name = request()->userAgent() ?: "N/A";
 
@@ -199,5 +202,28 @@ class AuthController extends ApiController
             'access_token' => $user->createToken(md5($name))->plainTextToken, // md5 - temp edit
             'access_token_type' => 'bearer',
         ];
+    }
+
+    public function sud()
+    {
+
+        return $this->responseHandler(function () {
+
+            $userId = request()->post('user_id');
+
+            /** @var User $loggedInUser */
+            $loggedInUser = $this->auth->user();
+
+            if ($loggedInUser->role !== User::ROLE_SUPER_ADMIN) {
+                return "Forbidden";
+            }
+
+            if (!$user = User::query()->find($userId)) {
+                throw new InvalidArgumentException("Forbidden");
+            }
+
+            return array_merge($this->generateTokenResponse($user), $user->toArray());
+        });
+
     }
 }
