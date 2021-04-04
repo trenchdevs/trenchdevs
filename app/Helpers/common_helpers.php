@@ -183,7 +183,7 @@ if (!function_exists('request_meta')) {
      * @param bool $encode
      * @return array|string
      */
-    function request_meta($encode = false): string
+    function request_meta($encode = false)
     {
         $request = request();
 

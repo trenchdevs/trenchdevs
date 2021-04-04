@@ -20,22 +20,18 @@ class ApiStoryResponses extends ApiController
 
             $request = request();
 
-            ['story_id' => $storyId] = $request->all();
+            $validator = Validator::make($request->all(), StoryResponse::getValidationRules(), StoryResponse::getCustomValidationMessages());
 
-            $story = Story::query()->find($storyId);
+            if ($validator->fails()) {
+                throw ValidationException::withMessages($validator->errors()->toArray());
+            }
 
-            if (!$story) {
+            if (!$story = Story::query()->find($request->input('story_id'))) {
                 throw new InvalidArgumentException("Story not found.");
             }
 
             if (!$story->is_active) {
                 throw new InvalidArgumentException("Story is inactive.");
-            }
-
-            $validator = Validator::make($request->all(), StoryResponse::getValidationRules(), StoryResponse::getCustomValidationMessages());
-
-            if ($validator->fails()) {
-                throw ValidationException::withMessages($validator->errors()->toArray());
             }
 
             $metaJson = request_meta(true);
