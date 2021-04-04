@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApiNotes;
 use App\Http\Controllers\Api\ApiProductReactions;
 use App\Http\Controllers\Api\ApiProductStories;
 use App\Http\Controllers\Api\ApiStories;
+use App\Http\Controllers\Api\ApiStoryResponses;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Blogs\PublicBlogsController;
 use App\Http\Controllers\Shop\ProductsController;
@@ -63,6 +64,10 @@ Route::group(['prefix' => 'stories', 'middleware' => 'auth:sanctum'], function (
 
 Route::group(['prefix' => 'product-reactions'], function () {
     Route::post('react', [ApiProductReactions::class, 'react']);
+});
+
+Route::group(['prefix' => 'story-responses'], function () {
+    Route::post('add', [ApiStoryResponses::class, 'store']);
 });
 
 Route::get('stories/s/{slug}', [ApiStories::class, 'slug']);
