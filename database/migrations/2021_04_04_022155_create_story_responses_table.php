@@ -16,7 +16,7 @@ class CreateStoryResponsesTable extends Migration
         Schema::create('story_responses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('story_id')->index();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->nullable();
             $table->string('contact_number', 32)->nullable();
             $table->text('response_text');
             $table->string('hash', 32);
