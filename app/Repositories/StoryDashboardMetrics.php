@@ -3,10 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\ProductReaction;
+use App\Models\Stories\Story;
 use App\Models\Stories\StoryActionLog;
+use App\Models\Stories\StoryResponse;
 use App\Product;
 use App\User;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 class StoryDashboardMetrics
 {
@@ -31,18 +33,17 @@ class StoryDashboardMetrics
             ->from('story_action_logs AS sal')
             ->join('stories AS s', 's.id', '=', 'sal.story_id', 'inner');
 
-        if ($this->owner) {
-            $query->where('owner_user_id', $this->owner->id);
-        }
+        $this->appendOwnerFilter($query);
 
         foreach ($filters as $filterKey => $filterVal) {
             switch ($filterKey) {
                 case 'date_greater_than':
-                    $query->where('created_at', $filterVal);
+                    $query->where('sal.created_at', '>', $filterVal);
+                    break;
+                default:
                     break;
             }
         }
-
 
         return $query->first()->total_count ?? 0;
     }
@@ -57,9 +58,7 @@ class StoryDashboardMetrics
             ->join('products AS p', 'p.id', '=', 'pr.product_id', 'inner')
             ->where('pr.reaction', $reaction);
 
-        if ($this->owner) {
-            $query->where('p.owner_user_id', '=', $this->owner->id);
-        }
+        $query = $this->appendOwnerFilter($query);
 
         return $query->first()->total_count ?? 0;
     }
@@ -81,9 +80,7 @@ class StoryDashboardMetrics
             ->groupBy('products.id', 'pr.reaction')
             ->orderBy('total_reactions', 'desc');
 
-        if ($this->owner) {
-            $query->where('products.owner_user_id', '=', $this->owner->id);
-        }
+        $query = $this->appendOwnerFilter($query);
 
         if (empty($results = $query->get()->toArray())) {
             return [];
@@ -110,5 +107,47 @@ class StoryDashboardMetrics
 
         return array_values($formattedResults);
     }
+
+    private function appendOwnerFilter(Builder $query, string $ownerColumn = 'owner_user_id')
+    {
+
+        if ($this->owner) {
+            $query->where($ownerColumn, $this->owner->id);
+        }
+
+        return $query;
+
+    }
+
+    public function storiesActiveTotal(): int
+    {
+        return $this->appendOwnerFilter(Story::query())->count();
+    }
+
+    public function productsTotal()
+    {
+        return $this->appendOwnerFilter(Product::query())->count();
+    }
+
+    public function storyResponsesTotal(array $filters = [])
+    {
+        $query = StoryResponse::query()
+            ->join('stories', 'story_responses.story_id', '=', 'stories.id');
+
+        foreach ($filters as $filterKey => $filterVal) {
+            switch ($filterKey) {
+                case 'date_greater_than':
+                    $query->where('story_responses.created_at', '>', $filterVal);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        $query = $this->appendOwnerFilter($query);
+
+        return $query->count();
+    }
+
 
 }

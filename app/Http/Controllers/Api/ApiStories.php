@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Auth\ApiController;
 use App\Models\Stories\Story;
 use App\Models\Stories\StoryActionLog;
+use App\Models\Stories\StoryResponse;
 use App\Product;
 use App\Repositories\StoryDashboardMetrics;
 use App\User;
@@ -179,13 +180,19 @@ class ApiStories extends ApiController
 
             $metrics = StoryDashboardMetrics::instance()->setOwner($user);
 
+            $pastMonthFilter = [
+                'date_greater_than' => date('Y-m-d H:i:s', strtotime('-1 month'))
+            ];
+
             return [
                 'story_visits_total' => $metrics->storyVisitsCount(),
-                'story_visits_past_month' => $metrics->storyVisitsCount(),
+                'story_visits_past_month' => $metrics->storyVisitsCount($pastMonthFilter),
                 'likes_total' => $metrics->reactionTotal('like'),
                 'unlikes_total' => $metrics->reactionTotal('dislike'),
-                'stories_active_total' => Story::query()->where('owner_user_id', $user->id)->count(),
-                'products_active_total' => Product::query()->where('owner_user_id', $user->id)->count(),
+                'stories_active_total' => $metrics->storiesActiveTotal(),
+                'products_active_total' => $metrics->productsTotal(),
+                'story_responses_total' => $metrics->storyResponsesTotal(),
+                'story_responses_past_month' => $metrics->storyResponsesTotal($pastMonthFilter),
 
                 // graphs
                 'product_metrics' => $metrics->productMetrics(),
