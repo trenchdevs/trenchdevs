@@ -45,7 +45,7 @@ class ApiProductReactions extends ApiController
                 'user_identifier' => $userIdentifier,
                 'meta_json' => json_encode($meta),
             ]);
-            
+
             $productReaction->save();
 
             return $productReaction;

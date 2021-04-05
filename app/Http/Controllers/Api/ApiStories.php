@@ -148,9 +148,11 @@ class ApiStories extends ApiController
 
             $metaJson = request_meta(true);
 
-            StoryActionLog::query()->create([
+            $hash = md5("$story->id|$metaJson");
+
+            StoryActionLog::query()->firstOrCreate(['hash' => $hash], [
                 'story_id' => $story->id,
-                'hash' => md5("$story->id|$metaJson"),
+                'hash' => $hash,
                 'meta_json' => $metaJson,
             ]);
 
