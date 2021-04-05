@@ -144,7 +144,7 @@ class StoryDashboardMetrics
             }
         }
 
-        $query = $this->appendOwnerFilter($query);
+        $query = $this->appendOwnerFilter($query, 'story_responses.owner_user_id');
 
         return $query->count();
     }

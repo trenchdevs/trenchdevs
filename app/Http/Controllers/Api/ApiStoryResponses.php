@@ -21,7 +21,9 @@ class ApiStoryResponses extends ApiController
     {
         return $this->responseHandler(function () {
             return StoryResponse::query()
-                ->where('owner_user_id', auth()->id())
+                ->join('stories', 'story_responses.story_id', '=', 'stories.id')
+                ->select('story_responses.*', 'stories.title', 'stories.slug')
+                ->where('story_responses.owner_user_id', auth()->id())
                 ->orderBy('created_at', 'desc')
                 ->paginate();
         });
