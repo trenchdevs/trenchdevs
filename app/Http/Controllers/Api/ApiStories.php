@@ -111,6 +111,7 @@ class ApiStories extends ApiController
                 'products' => Product::query()
                     ->where('products.owner_user_id', auth()->id())
                     ->whereNotIn('products.id', $addedProducts->pluck('id'))
+                    ->orderBy('id', 'desc')
                     ->get(),
             ];
 
