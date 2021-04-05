@@ -10,6 +10,7 @@ class StoryResponse extends Model
 
     protected $fillable = [
         'story_id',
+        'owner_user_id',
         'email',
         'contact_number',
         'response_text',
@@ -20,8 +21,8 @@ class StoryResponse extends Model
     public static function getValidationRules(): array
     {
         return [
-            'email' => 'email|max:255|required_without:contact_number',
-            'contact_number' => 'string|max:32|required_without:email',
+            'email' => 'email|max:255|required_without:contact_number|nullable',
+            'contact_number' => 'string|max:32|required_without:email|nullable',
             'response_text' => 'required|string|max:500',
         ];
     }

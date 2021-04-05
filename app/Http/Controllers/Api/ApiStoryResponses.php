@@ -5,13 +5,27 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Auth\ApiController;
 use App\Models\Stories\Story;
 use App\Models\Stories\StoryResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 
 class ApiStoryResponses extends ApiController
 {
+
+    /**
+     * Returns all stories for currently logged in users
+     * @return JsonResponse
+     */
+    public function all()
+    {
+        return $this->responseHandler(function () {
+            return StoryResponse::query()
+                ->where('owner_user_id', auth()->id())
+                ->orderBy('created_at', 'desc')
+                ->paginate();
+        });
+    }
 
     public function store()
     {
@@ -38,6 +52,7 @@ class ApiStoryResponses extends ApiController
 
             return StoryResponse::query()->create([
                 'story_id' => $story->id,
+                'owner_user_id' => $story->owner_user_id,
                 'email' => $request->email,
                 'contact_number' => $request->contact_number,
                 'response_text' => $request->response_text,
