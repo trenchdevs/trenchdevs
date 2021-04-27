@@ -110,7 +110,7 @@
                     {!! $user->skills->fluent ?? '' !!}
                 </div>
                 <div class="col-md-4">
-                    <div class="subheading mb-6">Conversationally Fluent</div>
+                    <div class="subheading mb-4">Conversationally Fluent</div>
                     {!! $user->skills->conversationally_fluent ?? '' !!}
                 </div>
             </div>
