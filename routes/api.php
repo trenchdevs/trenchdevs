@@ -68,6 +68,7 @@ Route::group(['prefix' => 'product-reactions'], function () {
 });
 
 Route::group(['prefix' => 'story-responses'], function () {
+    Route::get('/', [ApiStoryResponses::class, 'all']);
     Route::post('add', [ApiStoryResponses::class, 'store']);
 });
 
