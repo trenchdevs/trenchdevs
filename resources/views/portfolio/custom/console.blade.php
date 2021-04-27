@@ -113,10 +113,6 @@
                     <div class="subheading mb-4">Conversationally Fluent</div>
                     {!! $user->skills->conversationally_fluent ?? '' !!}
                 </div>
-                <div class="col-md-4">
-                    <div class="subheading mb-4">Tourist</div>
-                    {!! $user->skills->tourist ?? '' !!}
-                </div>
             </div>
         </div>
     </section>
