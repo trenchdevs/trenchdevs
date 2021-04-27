@@ -37,13 +37,15 @@
             max-width: 1028px;
             margin: 0 auto;
         }
+
+
     </style>
 
 </head>
 <body id="page-top p-3">
 <!-- Navigation-->
 <nav class="my-3 border-bottom">
-    <ul class="mt-3 justify-content-center list-unstyled overflow-auto d-md-flex">
+    <ul class="mt-3 list-unstyled d-flex justify-content-center flex-wrap">
         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
