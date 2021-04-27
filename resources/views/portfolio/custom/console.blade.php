@@ -31,38 +31,37 @@
         body {
             font-family: 'Roboto Mono', monospace !important;
             color: black;
-        }
-
-        .container-fluid {
             max-width: 1028px;
             margin: 0 auto;
         }
-
 
     </style>
 
 </head>
 <body id="page-top p-3">
-<!-- Navigation-->
-<nav class="my-3 border-bottom">
-    <ul class="mt-3 list-unstyled d-flex justify-content-center flex-wrap">
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Proejcts</a></li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Certifications</a></li>
-        <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{{route('public.blogs')}}?username={{$user->username}}">
-                Blogs
-            </a>
-        </li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{get_site_url()}}">TrenchDevs</a></li>
-    </ul>
-</nav>
 
 <!-- Page Content-->
-<div class="container-fluid p-5">
+<div class="container-fluid p-5 pt-0">
+
+    <!-- Navigation-->
+    <nav>
+        <ul class="mt-3 list-unstyled d-flex justify-content-center flex-wrap">
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Proejcts</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Certifications</a></li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{{route('public.blogs')}}?username={{$user->username}}">
+                    Blogs
+                </a>
+            </li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{get_site_url()}}">TrenchDevs</a></li>
+        </ul>
+    </nav>
+
+    <hr class="mb-5">
 
     <!-- About-->
     <section class="resume-section" id="about">
@@ -74,12 +73,16 @@
                 {{$user->first_name}}
                 <span>{{ $user->last_name }}</span>
             </h1>
-            <div class="subheading mb-5 text-center">
+            <div class="subheading mb-3 text-center">
                 {{$portfolio_details->primary_phone ?? ''}} ·
                 <a href="mailto:{{$user->email}}" id="email" target="_blank">{{$user->email}}</a> ·
             </div>
-            <p class="lead mb-5">
+
+            <p class="lead mb-3">
                 {{$portfolio_details->tagline}}
+            </p>
+
+            <p class="d-flex align-items-start justify-content-end">
                 <a href="//{{$portfolio_details->linkedin_url}}" target="_blank">
                     <i data-feather="linkedin"></i>
                 </a> ·
@@ -92,7 +95,7 @@
     </section>
 
     <!-- Skills-->
-    <section class="resume-section" id="skills">
+    <section class="resume-section mt-5" id="skills">
         <div class="resume-section-content">
 
             <div class="row">
@@ -144,7 +147,7 @@
     <section class="projects-section mb-5" id="projects">
 
         <h2 class="mb-5">Projects</h2>
-        <div class="row  d-flex justify-content-center flex-wrap align-items-end h-100 w-100">
+        <div class="row d-flex justify-content-center flex-wrap align-items-center h-100 w-100">
             @foreach($user->projects()->orderBy('id', 'desc')->get() as $project)
                 <div class="col-sm-6 col-md-4 col-xs-6  text-center p-5">
                     <img class="img-fluid " src="{{$project->image_url}}" alt="{{$project->title}}">
@@ -204,7 +207,7 @@
                 <li class="nav-item"><a class=" js-scroll-trigger" href="#skills">Skills</a></li>
                 <li class="nav-item"><a class=" js-scroll-trigger" href="#experience">Experience</a></li>
                 <li class="nav-item"><a class=" js-scroll-trigger" href="#education">Education</a></li>
-                <li class="nav-item"><a class=" js-scroll-trigger" href="#projects">Proejcts</a></li>
+                <li class="nav-item"><a class=" js-scroll-trigger" href="#projects">Projects</a></li>
                 <li class="nav-item"><a class=" js-scroll-trigger" href="#awards">Certifications</a></li>
             </ul>
         </nav>
