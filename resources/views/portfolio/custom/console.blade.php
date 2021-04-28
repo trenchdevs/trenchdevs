@@ -50,7 +50,7 @@
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Proejcts</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Projects</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Certifications</a></li>
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="{{route('public.blogs')}}?username={{$user->username}}">
