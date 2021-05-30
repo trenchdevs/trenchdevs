@@ -31,7 +31,7 @@ class UserExperiencesController extends Controller
             'experiences' => 'required|array|present',
             'experiences.*.title' => 'required|string|max:128',
             'experiences.*.company' => 'required|string|max:128',
-            'experiences.*.description' => 'required|string|max:2048',
+            'experiences.*.description' => 'required|string|max:6144', // consult Chris later on (database column type is TEXT)
             'experiences.*.start_date' => 'required|date',
             'experiences.*.end_date' => 'nullable|date'
         ]);
