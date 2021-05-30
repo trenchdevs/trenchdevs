@@ -63,7 +63,7 @@ class LoginController extends Controller
         }
 
         // else all good, login user and redirect to homepage
-        Auth::login($user);
+        Auth::guard('web')->login($user);
 
         $userLogin = new UserLogin;
         $userLogin->fill([

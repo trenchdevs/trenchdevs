@@ -13,7 +13,7 @@
     <title>{{ $user->name()  }} - {{env('APP_NAME')}}</title>
     <link rel="icon" href="/favicon.png"/>
     <link href="/portfolio/css/styles.css" rel="stylesheet"/>
-@include('layouts.partials.ga')
+    @include('layouts.partials.ga')
 <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -53,9 +53,10 @@
         #about {
             color: #d1deec !important;
             @if(!empty($portfolio_details))
-                background-size: cover;
-                background-image: url({{$portfolio_details->background_cover_url}});
-            @endif
+                 background-size: cover;
+            background-image: url({{$portfolio_details->background_cover_url}});
+        @endif
+
         }
 
         #about h1 {
@@ -149,8 +150,6 @@
                     <div class="flex-grow-1">
                         <h3 class="mb-0">{{$degree->educational_institution}}</h3>
                         <div class="subheading mb-3">{{$degree->degree}}</div>
-                        {{--                    <div>Computer Science - Web Development Track</div>--}}
-                        {{--                    <p>GPA: 3.23</p>--}}
                     </div>
                     <div class="flex-shrink-0">
                     <span class="text-primary">

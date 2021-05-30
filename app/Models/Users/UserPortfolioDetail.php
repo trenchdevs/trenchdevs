@@ -37,6 +37,7 @@ class UserPortfolioDetail extends Model
         // view => label
         'portfolio.show' => 'Default',
         'portfolio.custom.basic' => 'Basic (StartBootstrap Template)',
+        'portfolio.custom.console' => 'Console (Text Theme)',
     ];
 
     public static function findOrEmptyByUser(int $userId): self
