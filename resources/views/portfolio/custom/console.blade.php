@@ -147,7 +147,20 @@
             @foreach($user->projects()->orderBy('id', 'desc')->get() as $project)
                 <div class="col-sm-6 col-md-4 col-xs-6  text-center p-5">
                     <img class="img-fluid " src="{{$project->image_url}}" alt="{{$project->title}}">
-                    <div class="mt-5">{{$project->title}}</div>
+
+                    <div class="mt-5">
+
+                        @if(!empty($project->url) || !empty($project->repository_url))
+                            <a href="{{ !empty($project->url) ? $project->url : $project->repository_url }}"
+                               target="_blank">
+                                {{$project->title}}
+                            </a>
+                        @else
+                            {{$project->title}}
+                        @endif
+
+                    </div>
+
                 </div>
             @endforeach
         </div>
