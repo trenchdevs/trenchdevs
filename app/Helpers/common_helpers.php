@@ -5,9 +5,10 @@ use Carbon\Carbon;
 
 if (!function_exists('get_base_url')) {
     /**
+     * @param bool $removePort
      * @return mixed|string
      */
-    function get_base_url()
+    function get_base_url(bool $removePort = false)
     {
         $fullUrl = url('/');
         $fullDomain = explode('//', $fullUrl)[1]; // c.trenchdevs.org
@@ -16,12 +17,18 @@ if (!function_exists('get_base_url')) {
             $domainParts = explode('.', $fullDomain);
             $tld = array_pop($domainParts);
             $domain = array_pop($domainParts);
+
+            if ($removePort) {
+                $tld = explode(":",$tld)[0] ?? '';
+            }
+
             return "{$domain}.{$tld}";
         }
 
         return env('BASE_URL', 'trenchdevs.test');
     }
 }
+
 
 if (!function_exists('get_site_url')) {
     /**
@@ -211,4 +218,13 @@ if (!function_exists('request_meta')) {
         }
     }
 }
+
+if (!function_exists('get_domain')) {
+
+    function get_domain(): string
+    {
+        return request()->getHost();
+    }
+}
+
 

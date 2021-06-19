@@ -17,11 +17,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-//    if (env('APP_ENV') !== 'production') {
-//        // can be used for testing on react app
-//        Auth::guard('web')->loginUsingId(2);
-//    }
-
 Route::middleware(['auth:web', 'webapi'])->group(function () {
 
     Route::get('blogs', 'Blogs\BlogsController@index');

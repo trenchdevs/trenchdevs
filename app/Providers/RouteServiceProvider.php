@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Site;
+use Exception;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +51,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebApiV1Routes();
 
+        $this->mapSiteRoutes();
+
     }
 
     /**
@@ -88,5 +92,26 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->prefix('webapi')
             ->group(base_path('routes/webapi.php'));
+    }
+
+    private function mapSiteRoutes()
+    {
+        try {
+            if ($site = Site::getInstance()) { // can be null when migrating
+
+                // routes shared for all sites
+                $domain = get_domain();
+                // Route::middleware('web')->namespace($this->namespace)->domain($domain)->group(base_path('routes/web-shared.php'));
+
+                $siteRoutesPath = "routes/sites/$site->identifier.php";
+
+                if (file_exists(base_path($siteRoutesPath))) {
+                    // these routes overrides web-shared routes
+                    Route::middleware('web')->namespace($this->namespace)->domain($domain)->group(base_path($siteRoutesPath));
+                }
+            }
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
+        }
     }
 }
