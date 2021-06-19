@@ -111,7 +111,7 @@ class RouteServiceProvider extends ServiceProvider
                 }
             }
         } catch (Exception $exception) {
-            dd($exception->getMessage());
+            // dd($exception->getMessage());
         }
     }
 }
