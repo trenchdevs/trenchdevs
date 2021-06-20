@@ -38,19 +38,23 @@ class Site extends Model
         }
 
         $domain = get_domain();
-        $wildcardDomain = $domain;
+        $strippedDomain = $domain;
 
         if (count($domainParts = explode('.', $domain)) > 2) {
-            $wildcardDomain = implode('.', array_slice($domainParts, -2, 2, false));
+            $strippedDomain = implode('.', array_slice($domainParts, -2, 2, false));
         }
 
         /** @var self singleton */
         self::$singleton = self::query()
-            ->where(function (Builder $inner) use ($domain, $wildcardDomain) {
+            ->where(function (Builder $inner) use ($domain, $strippedDomain) {
+
+                // it exactly match the domain
                 $inner->where('domain', '=', $domain)
-                    ->orWhere(function(Builder $inner) use ($wildcardDomain){
+
+
+                    ->orWhere(function (Builder $inner) use ($strippedDomain) {
                         $inner->where('allow_wildcard_for_domain', 1)
-                            ->where('domain', 'like', "%$wildcardDomain%");
+                            ->where('domain', '=', "$strippedDomain");
                     });
 
             })

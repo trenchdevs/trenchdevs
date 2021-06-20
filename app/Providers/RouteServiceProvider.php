@@ -107,7 +107,9 @@ class RouteServiceProvider extends ServiceProvider
 
                 if (file_exists(base_path($siteRoutesPath))) {
                     // these routes overrides web-shared routes
-                    Route::middleware('web')->namespace($this->namespace)->domain($domain)->group(base_path($siteRoutesPath));
+                    Route::middleware('web')->namespace($this->namespace)
+                        ->domain($domain)
+                        ->group(base_path($siteRoutesPath));
                 }
             }
         } catch (Exception $exception) {
