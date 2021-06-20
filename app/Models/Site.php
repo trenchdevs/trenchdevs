@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -37,14 +38,23 @@ class Site extends Model
         }
 
         $domain = get_domain();
+        $wildcardDomain = $domain;
 
-        // todo: add flag for subdomain routes like trenchdevs
         if (count($domainParts = explode('.', $domain)) > 2) {
-            $domain = implode('.', array_slice($domainParts, -2, 2, false ));
+            $wildcardDomain = implode('.', array_slice($domainParts, -2, 2, false));
         }
 
         /** @var self singleton */
-        self::$singleton = self::query()->where('domain', '=', $domain)->first();
+        self::$singleton = self::query()
+            ->where(function (Builder $inner) use ($domain, $wildcardDomain) {
+                $inner->where('domain', '=', $domain)
+                    ->orWhere(function(Builder $inner) use ($wildcardDomain){
+                        $inner->where('allow_wildcard_for_domain', 1)
+                            ->where('domain', 'like', "%$wildcardDomain%");
+                    });
+
+            })
+            ->first();
         return self::$singleton;
     }
 

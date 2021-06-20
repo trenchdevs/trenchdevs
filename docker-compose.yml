@@ -9,6 +9,7 @@ services:
     tmpfs: /var/lib/mysql
     volumes:
       - ./database/docker-init:/docker-entrypoint-initdb.d
+      - ./docker_local/volumes/mysql:/var/lib/mysql
     ports:
       - ${DB_PORT}:3306
     healthcheck:

@@ -15,3 +15,5 @@ yarn-error.log
 .idea
 .idea/
 .env.testing
+
+docker_local/volumes/
