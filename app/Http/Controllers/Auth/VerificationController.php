@@ -94,4 +94,15 @@ class VerificationController extends Controller
             : redirect($this->redirectPath())->with('verified', true);
     }
 
+
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+
+    }
+
 }

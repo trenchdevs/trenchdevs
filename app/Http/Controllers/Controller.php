@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Site;
 use App\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -15,8 +16,15 @@ abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /** @var Site */
+    protected $site;
+
     const STATUS_SUCCESS = 'success';
     const STATUS_ERROR = 'error';
+
+    public function __constructor(){
+        $this->site = Site::getInstance();
+    }
 
     /**
      * @param string $status

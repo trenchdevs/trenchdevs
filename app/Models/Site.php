@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Site
  * @package App\Models
+ * @property $id
  * @property $domain
  * @property $identifier
  */
@@ -25,6 +26,8 @@ class Site extends Model
         'company_name',
         'identifier'
     ];
+
+    const DB_IDENTIFIER_TRENCHDEVS = 'trenchdevs';
 
 
     /** @var self */
@@ -72,6 +75,16 @@ class Site extends Model
         }
 
         return $instance;
+    }
+
+    /**
+     * @param string $identifier
+     * @return static|null
+     */
+    public static function getByIdentifier(string $identifier): ?self{
+        /** @var Site $site */
+        $site = self::query()->where('identifier', $identifier)->first();
+        return $site;
     }
 
 }

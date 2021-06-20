@@ -34,7 +34,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property $role
  * @package App
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable // implements MustVerifyEmail
 {
     use Notifiable, HasApiTokens;
 
@@ -77,6 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'is_active',
         'account_id',
+        'site_id',
         'role',
         'is_flagged_for_deactivation',
         'deactivation_notice_sent_at',

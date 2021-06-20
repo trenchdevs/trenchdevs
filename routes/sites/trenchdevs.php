@@ -3,17 +3,15 @@
 
 use App\Http\Controllers\Admin\AccountsController;
 use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\AwsController;
 use App\Http\Controllers\Blogs\PublicBlogsController;
-use App\Http\Controllers\EmailTester;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Notifications\EmailPreferencesController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Projects\ProjectsController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\Shop\ProductsController;
 use App\Http\Controllers\SuperAdmin\CommandsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 $baseUrl = get_base_url(true);
@@ -21,6 +19,8 @@ $baseUrl = get_base_url(true);
 if (empty($baseUrl)) {
     throw new Exception("Base url not found.");
 }
+
+Auth::routes(['verify' => true]);
 
 Route::get('blogs', [PublicBlogsController::class, 'index'])->name('public.blogs');
 // handler for both blogs and portfolio (w/ blog slug as priority)
@@ -40,7 +40,6 @@ Route::get('{slug}', [PublicController::class, 'show'])->name('public.show');
 // END - Special subdomains here
 
 
-
 // START - Portfolio Routes
 Route::domain("{username}.{$baseUrl}")->group(function () {
     Route::get('/', [PortfolioController::class, 'show']);
@@ -48,8 +47,6 @@ Route::domain("{username}.{$baseUrl}")->group(function () {
 
 
 // END - Portfolio Routes
-
-Route::get('/', [PublicController::class, 'index'])->name('public.home');
 
 
 Route::middleware(['auth:web', 'verified'])->prefix('portal')->group(function () {
@@ -157,17 +154,4 @@ Route::middleware(['auth:web', 'verified'])->prefix('portal')->group(function ()
 
 });
 
-// start - public documents
-Route::view('documents/privacy', 'documents.privacy')->name('documents.privacy');
-Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
-// end - public documents
-
-
-// start - public email endpoints
-Route::get('emails/unsubscribe', [EmailTester::class, 'test']);
-Route::get('emails/testsend', [EmailTester::class, 'testSend']);
-
-Route::get('emails/unsubscribe', [EmailPreferencesController::class, 'showUnsubscribeForm'])->name('notifications.emails.showUnsubscribeForm');
-Route::post('emails/unsubscribe', [EmailPreferencesController::class, 'unsubscribe'])->name('notifications.emails.unsubscribe');
-// end - public email endpoints
-Route::post('aws/sns', [AwsController::class, 'sns']);
+Route::get('/', [PublicController::class, 'index'])->name('public.home');

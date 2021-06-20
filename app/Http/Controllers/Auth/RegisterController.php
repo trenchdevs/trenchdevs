@@ -8,10 +8,14 @@ use App\Models\EmailQueue;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use ErrorException;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Throwable;
 
 class RegisterController extends Controller
@@ -45,6 +49,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
+        parent::__constructor();
         $this->middleware('guest');
     }
 
@@ -59,7 +64,15 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => [
+                'required', 'string',
+                'email',
+                'max:255',
+                Rule::unique('users')->where(function (Builder $query) {
+                    return $query->where('email', $data['email'] ?? '')
+                        ->where('site_id', $this->site->id);
+                })
+            ],
             'password' => self::PASSWORD_VALIDATION_RULE,
             'tnc' => 'required',
         ]);
@@ -75,6 +88,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
+        // todo: remove
         $account = Account::getTrenchDevsAccount();
 
         if (!$account) {
@@ -86,6 +100,7 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'account_id' => $account->id,
+            'site_id' => $this->site->id,
             'is_active' => 1,
             'password' => Hash::make($data['password']),
             'role' => User::ROLE_CONTRIBUTOR,
@@ -96,7 +111,7 @@ class RegisterController extends Controller
     {
         $this->notifyOnNewUserRegistered($user);
 
-        return view('auth.verify');
+//        return view('auth.verify');
     }
 
     /**
@@ -121,5 +136,15 @@ class RegisterController extends Controller
         } catch (Throwable $throwable) {
             // suppress
         }
+    }
+
+    /**
+     * Get the guard to be used during registration.
+     *
+     * @return StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('web');
     }
 }

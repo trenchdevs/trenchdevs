@@ -1,8 +1,8 @@
-@extends('layouts.home')
+@extends('layouts.auth')
 
 @section('content')
 
-    <div class="bg-primary mt-5">
+    <div class="bg-primary">
 
         <div id="layoutAuthentication mt-5" style="padding: 120px 0;">
             <div id="layoutAuthentication_content">

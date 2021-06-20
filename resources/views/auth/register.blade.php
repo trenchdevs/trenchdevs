@@ -3,7 +3,7 @@
 @section('content')
     <div class="bg-primary">
 
-        <div id="layoutAuthentication" style="padding: 120px 0;">
+        <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">

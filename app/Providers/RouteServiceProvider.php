@@ -45,13 +45,13 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
 
+        $this->mapSiteRoutes();
+
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
 
         $this->mapWebApiV1Routes();
-
-        $this->mapSiteRoutes();
 
     }
 
@@ -97,21 +97,26 @@ class RouteServiceProvider extends ServiceProvider
     private function mapSiteRoutes()
     {
         try {
-            if ($site = Site::getInstance()) { // can be null when migrating
 
-                // routes shared for all sites
-                $domain = get_domain();
-                // Route::middleware('web')->namespace($this->namespace)->domain($domain)->group(base_path('routes/web-shared.php'));
-
-                $siteRoutesPath = "routes/sites/$site->identifier.php";
-
-                if (file_exists(base_path($siteRoutesPath))) {
-                    // these routes overrides web-shared routes
-                    Route::middleware('web')->namespace($this->namespace)
-                        ->domain($domain)
-                        ->group(base_path($siteRoutesPath));
-                }
+            if (!$site = Site::getInstance()) { // can be null when migrating
+                return;
             }
+
+            // routes shared for all sites
+            $domain = get_domain();
+            // Route::middleware('web')->namespace($this->namespace)->domain($domain)->group(base_path('routes/web-shared.php'));
+
+            $siteRoutesPath = "routes/sites/$site->identifier.php";
+
+            if (!file_exists(base_path($siteRoutesPath))) {
+                return;
+            }
+
+            // these routes overrides web-shared routes
+            Route::middleware('web')->namespace($this->namespace)
+                ->domain($domain)
+                ->group(base_path($siteRoutesPath));
+
         } catch (Exception $exception) {
             // dd($exception->getMessage());
         }
