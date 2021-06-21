@@ -8,9 +8,12 @@ use App\Models\EmailQueue;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use ErrorException;
+use Exception;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -68,7 +71,7 @@ class RegisterController extends Controller
                 'required', 'string',
                 'email',
                 'max:255',
-                Rule::unique('users')->where(function (Builder $query) {
+                Rule::unique('users')->where(function (Builder $query) use ($data) {
                     return $query->where('email', $data['email'] ?? '')
                         ->where('site_id', $this->site->id);
                 })
@@ -76,6 +79,31 @@ class RegisterController extends Controller
             'password' => self::PASSWORD_VALIDATION_RULE,
             'tnc' => 'required',
         ]);
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+
+        // basic validations
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 201)
+            : redirect($this->redirectPath());
     }
 
     /**
@@ -121,6 +149,10 @@ class RegisterController extends Controller
     private function notifyOnNewUserRegistered($user): void
     {
         try {
+
+            if (app()->environment('production')) {
+                throw new Exception("Not needed on locals");
+            }
 
             $email = $user->email ?? '';
             $id = $user->id ?? '';
