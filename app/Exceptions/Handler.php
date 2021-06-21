@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -45,7 +46,8 @@ class Handler extends ExceptionHandler
 
         if (env('APP_ENV') !== 'local') {
             if ($exception instanceof ErrorException) {
-                $this->sendEmailToSupport($exception);
+                // $this->sendEmailToSupport($exception);
+                Log::error($exception->getMessage());
                 abort(500, "There was an error while processing your request. Admin has been notified");
             }
         }
@@ -100,7 +102,7 @@ class Handler extends ExceptionHandler
                 $title,
                 $viewData = [
                     'name' => null,
-                    'email_body' => "<pre>" .$throwable->getMessage() . "\n" . $throwable->getTraceAsString() . "</pre>",
+                    'email_body' => "<pre>" . $throwable->getMessage() . "\n" . $throwable->getTraceAsString() . "</pre>",
                 ],
                 'emails.generic'
             );
