@@ -84,7 +84,7 @@ class EmailQueue extends Model
 
         if (
             $emailQueue->id &&
-            $emailQueue->status == 'pending' &&
+            $emailQueue->status == self::DB_STATUS_PENDING &&
             empty($emailQueue->sent_at)
         ) {
 
