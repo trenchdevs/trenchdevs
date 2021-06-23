@@ -8,9 +8,30 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     tmpfs: /var/lib/mysql
     volumes:
-      - ./database/docker-init:/docker-entrypoint-initdb.d
-      - ./docker_local/volumes/mysql:/var/lib/mysql
+      - './database/docker-init:/docker-entrypoint-initdb.d'
+      - './docker/volumes/mysql:/var/lib/mysql'
     ports:
       - ${DB_PORT}:3306
     healthcheck:
       test: mysqladmin ping
+    networks:
+      - trenchdevs-docker-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    image: trenchdevs/trenchdevs
+    container_name: trenchdevs-app
+    restart: unless-stopped
+    working_dir: /var/www/trenchdevs
+    volumes:
+      - ./:/var/www/trenchdevs
+    networks:
+      - trenchdevs-docker-network
+
+networks:
+  trenchdevs-docker-network:
+    driver: bridge

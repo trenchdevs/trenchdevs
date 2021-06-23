@@ -1,22 +1,28 @@
-FROM lorisleiva/laravel-docker:7.4 AS builder
+FROM ubuntu:20.04
 
-WORKDIR /tmp
-ADD . .
+RUN apt update
+RUN apt-get install -y \
+    nginx \
+    php-fpm \
+    php-mysql \
+    php-xml \
+    php7.4-zip
 
-RUN composer install --no-progress && npm ci
 
-FROM php:7.4-apache AS runtime
-WORKDIR /var/www/html
+RUN apt-get install -y composer
 
-COPY --from=builder /tmp /var/www/html
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
-    docker-php-ext-install pdo_mysql mysqli && \
-    rm /etc/apache2/sites-enabled/* && \
-    rm -rf /etc/apache2/sites-available && \
-    mv apache /etc/apache2/sites-available && \
-    ln -s /etc/apache2/sites-available/10-trenchdev.conf /etc/apache2/sites-enabled/. && \
-    chown -R $USER:www-data /var/www/html && \
-    chmod -R 775 storage && \
-    chmod -R 775 bootstrap/cache && \
-    a2enmod rewrite
+RUN mkdir /var/www/trenchdevs
+RUN chown -R $USER:$USER /var/www/trenchdevs
+
+COPY ./docker/nginx/trenchdevs /etc/nginx/sites-available/trenchdevs
+COPY . /var/www/trenchdevs
+
+RUN ln -s /etc/nginx/sites-available/trenchdevs /etc/nginx/sites-enabled
+RUN unlink /etc/nginx/sites-enabled/default
+
+EXPOSE 80
+
+CMD service nginx start && \
+    service php7.4-fpm start && \
+    exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
 

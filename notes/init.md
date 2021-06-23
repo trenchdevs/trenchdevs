@@ -19,3 +19,7 @@ Reference: [JWT Tutorial](https://medium.com/employbl/build-authentication-into-
 
 1. Crete database `trenchdevs_testing`
 2. Duplicate .env and add credentials for testing database
+   
+## Docker 
+docker buid . -t trenchdevs
+docker run -d -p 80:80 -v $(pwd):/var/www/trenchdevs trenchdevs
