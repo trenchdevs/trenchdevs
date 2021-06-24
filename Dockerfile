@@ -16,6 +16,7 @@ RUN chown -R $USER:$USER /var/www/trenchdevs
 
 COPY ./docker/nginx/trenchdevs /etc/nginx/sites-available/trenchdevs
 COPY . /var/www/trenchdevs
+RUN composer install
 
 RUN ln -s /etc/nginx/sites-available/trenchdevs /etc/nginx/sites-enabled
 RUN unlink /etc/nginx/sites-enabled/default
