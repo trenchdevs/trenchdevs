@@ -26,16 +26,18 @@ class CreateSitesTable extends Migration
 
         if (app()->environment('local')) {
             Site::query()->create([
+                'domain' => 'trenchdevs.localhost',
+                'company_name' => 'TrenchDevs',
+                'identifier' => 'trenchdevs'
+            ]);
+
+            Site::query()->create([
                 'domain' => 'demo.localhost',
                 'company_name' => 'Demo',
                 'identifier' => 'demo'
             ]);
 
-            Site::query()->create([
-                'domain' => 'trenchdevs.localhost',
-                'company_name' => 'TrenchDevs',
-                'identifier' => 'trenchdevs'
-            ]);
+
         } else {
 
             Site::query()->create([

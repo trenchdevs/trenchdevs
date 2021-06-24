@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Site;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use stdClass;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,24 +28,27 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        $this->injectLoggedInUserToViews();
+        $this->injectGlobalViewVariables();
 
     }
 
     /**
      * Inject authenticated user to all views if user is logged in
      */
-    private function injectLoggedInUserToViews(): void
+    private function injectGlobalViewVariables(): void
     {
 
         View::share('loggedInUser', null); // set var default to null
+        View::share('site', new stdClass); // set var default to null
 
         view()->composer('*', function ($view) {
 
-            $loggedInUser = Auth::guard('web')->user();
-
-            if ($loggedInUser) {
+            if ($loggedInUser = Auth::guard('web')->user()) {
                 $view->with('loggedInUser', $loggedInUser);
+            }
+
+            if ($site = Site::getInstance()) {
+                $view->with('site', $site);
             }
 
         });

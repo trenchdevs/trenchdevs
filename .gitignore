@@ -16,4 +16,4 @@ yarn-error.log
 .idea/
 .env.testing
 
-docker_local/volumes/
+docker/volumes/mysql

@@ -12,7 +12,10 @@
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header justify-content-center">
-                                        <h3 class="font-weight-light my-4 text-white">{{ __('Login') }}</h3>
+                                        <h3 class="font-weight-light my-4 text-white text-center">
+                                            {{ $site->company_name }}
+                                            Login
+                                        </h3>
                                     </div>
                                     <div class="card-body">
                                         @include('admin.shared.errors')
@@ -28,8 +31,8 @@
                                                        autocomplete="email" autofocus placeholder="Enter email address">
                                                 @error('email')
                                                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -43,8 +46,8 @@
 
                                                 @error('password')
                                                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
@@ -67,7 +70,7 @@
                                                         {{ __('Forgot Your Password?') }}
                                                     </a>
                                                 @endif
-                                                <button type="submit" class="btn btn-primary">
+                                                <button type="submit" class="btn btn-primary float-right">
                                                     {{ __('Login') }}
                                                 </button>
                                             </div>
