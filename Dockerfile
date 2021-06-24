@@ -12,12 +12,11 @@ RUN apt-get install -y \
 RUN apt-get install -y composer
 
 RUN mkdir /var/www/trenchdevs
-RUN cd /var/www/trenchdevs
 RUN chown -R $USER:$USER /var/www/trenchdevs
 
 COPY ./docker/nginx/trenchdevs /etc/nginx/sites-available/trenchdevs
 COPY . /var/www/trenchdevs
-RUN composer install
+RUN cd /var/www/trenchdevs && composer install
 
 RUN ln -s /etc/nginx/sites-available/trenchdevs /etc/nginx/sites-enabled
 RUN unlink /etc/nginx/sites-enabled/default
