@@ -57,7 +57,7 @@ class CreateSiteConfigsTable extends Migration
         if (!empty($cloudCraft = Site::getByIdentifier(Site::DB_IDENTIFIER_CLOUDCRAFT))) {
             SiteConfig::query()->updateOrCreate(
                 ['key_name' => SiteConfig::KEY_NAME_SYSTEM_LOGIN_REDIRECT_PATH, 'site_id' => $cloudCraft->id],
-                ['key_value' => '/', 'comments' => 'Redirect path after login']
+                ['key_value' => '/home', 'comments' => 'Redirect path after login']
             );
         }
     }
