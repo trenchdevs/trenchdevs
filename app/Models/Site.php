@@ -29,9 +29,10 @@ class Site extends Model
 
     protected $fillable = [
         'domain',
-        'theme',
+        'allow_wildcard_for_domain',
         'company_name',
-        'identifier'
+        'identifier',
+        'theme',
     ];
 
     const DB_IDENTIFIER_TRENCHDEVS = 'trenchdevs';
