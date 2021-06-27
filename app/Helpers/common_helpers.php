@@ -149,6 +149,8 @@ if (!function_exists('is_valid_url')) {
 if (!function_exists('s3_generate_file_path')) {
     /**
      * @param string $filePath eg. 'users/avatar'
+     * @param string $fileName
+     *
      * @return string
      * @throws ErrorException
      */

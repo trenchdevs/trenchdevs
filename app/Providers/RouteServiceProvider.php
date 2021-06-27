@@ -106,7 +106,7 @@ class RouteServiceProvider extends ServiceProvider
             $domain = get_domain();
             // Route::middleware('web')->namespace($this->namespace)->domain($domain)->group(base_path('routes/web-shared.php'));
 
-            $siteRoutesPath = "routes/sites/$site->identifier.php";
+            $siteRoutesPath = "routes/themes/$site->theme.php";
 
             if (!file_exists(base_path($siteRoutesPath))) {
                 return;

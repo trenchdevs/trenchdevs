@@ -43,9 +43,9 @@ class ArchiveSiteLogs extends Command
 
         try {
 
-            $this->line(sprintf("Processing Start Time: " . date('Y-m-d H:i:s')));
+            $this->line(sprintf("Processing Start Time: %s", date('Y-m-d H:i:s')));
             $archiver->process();
-            $this->line(sprintf("Processing End Time: " . date('Y-m-d H:i:s')));
+            $this->line(sprintf("Processing End Time: %s", date('Y-m-d H:i:s')));
 
         }catch (Exception $exception) {
             $this->error($exception->getMessage());

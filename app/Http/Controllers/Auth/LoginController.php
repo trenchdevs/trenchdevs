@@ -46,15 +46,13 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__constructor();
         $this->middleware('guest')->except('logout');
     }
 
 
-    protected function guard()
-    {
+    protected function guard() {
         return Auth::guard('web');
     }
 
@@ -62,11 +60,11 @@ class LoginController extends Controller
      * The user has been authenticated.
      *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return mixed
      */
-    protected function authenticated(Request $request, $user)
-    {
+    protected function authenticated(Request $request, $user) {
 
         if (!$user->isActive()) {
             return view('auth.inactive-user');
@@ -89,17 +87,17 @@ class LoginController extends Controller
 
         $userLogin->save();
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect($this->redirectPath());
     }
 
     /**
      * Increment the login attempts for the user.
      *
      * @param Request $request
+     *
      * @return void
      */
-    protected function incrementLoginAttempts(Request $request)
-    {
+    protected function incrementLoginAttempts(Request $request) {
 
         $userLogin = new UserLogin;
         $userLogin->fill([
@@ -125,8 +123,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function showLoginForm()
-    {
+    public function showLoginForm() {
         return view('auth.login');
     }
 
@@ -134,12 +131,12 @@ class LoginController extends Controller
      * Handle a login request to the application.
      *
      * @param Request $request
+     *
      * @return RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function login(Request $request)
-    {
+    public function login(Request $request) {
         /**
          * 1. Validate
          */
@@ -201,12 +198,12 @@ class LoginController extends Controller
      * Get the failed login response instance.
      *
      * @param Request $request
+     *
      * @return Response
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function sendFailedLoginResponse(Request $request)
-    {
+    protected function sendFailedLoginResponse(Request $request) {
         throw ValidationException::withMessages([
             $this->username() => [trans('auth.failed')],
         ]);
@@ -217,8 +214,7 @@ class LoginController extends Controller
      *
      * @return string
      */
-    public function username()
-    {
+    public function username() {
         return 'email';
     }
 
@@ -226,10 +222,10 @@ class LoginController extends Controller
      * Log the user out of the application.
      *
      * @param Request $request
+     *
      * @return RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function logout(Request $request)
-    {
+    public function logout(Request $request) {
         $this->guard()->logout();
 
         $request->session()->invalidate();
@@ -249,11 +245,20 @@ class LoginController extends Controller
      * The user has logged out of the application.
      *
      * @param Request $request
+     *
      * @return mixed
      */
-    protected function loggedOut(Request $request)
-    {
+    protected function loggedOut(Request $request) {
         //
+    }
+
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath(): string {
+        return $this->site->getRedirectPath();
     }
 
 

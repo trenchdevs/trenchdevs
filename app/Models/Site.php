@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Sites\SiteConfig;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +15,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $id
  * @property $domain
  * @property $identifier
+ * @property $theme
+ * @property $created_at
+ * @property $updated_at
+ * @property $deleted_at
  */
 class Site extends Model
 {
@@ -23,18 +29,20 @@ class Site extends Model
 
     protected $fillable = [
         'domain',
+        'theme',
         'company_name',
         'identifier'
     ];
 
     const DB_IDENTIFIER_TRENCHDEVS = 'trenchdevs';
+    const DB_IDENTIFIER_TRENCHAPPS = 'trenchapps';
+    const DB_IDENTIFIER_CLOUDCRAFT = 'cloudcraft';
 
 
     /** @var self */
     private static $singleton;
 
-    public static function getInstance(): ?self
-    {
+    public static function getInstance(): ?self {
 
         if (isset(self::$singleton) && !empty(self::$singleton)) {
             return self::$singleton;
@@ -53,8 +61,6 @@ class Site extends Model
 
                 // it exactly match the domain
                 $inner->where('domain', '=', $domain)
-
-
                     ->orWhere(function (Builder $inner) use ($strippedDomain) {
                         $inner->where('allow_wildcard_for_domain', 1)
                             ->where('domain', '=', "$strippedDomain");
@@ -62,11 +68,11 @@ class Site extends Model
 
             })
             ->first();
+
         return self::$singleton;
     }
 
-    public static function getInstanceOrFail()
-    {
+    public static function getInstanceOrFail() {
 
         $instance = self::getInstance();
 
@@ -79,12 +85,25 @@ class Site extends Model
 
     /**
      * @param string $identifier
+     *
      * @return static|null
      */
-    public static function getByIdentifier(string $identifier): ?self{
+    public static function getByIdentifier(string $identifier): ?self {
         /** @var Site $site */
         $site = self::query()->where('identifier', $identifier)->first();
         return $site;
+    }
+
+    public function getConfigValueByKey(string $keyName): ?string {
+        return SiteConfig::findByKeyName($this->id, $keyName)->key_value ?? null;
+    }
+
+    public function getRedirectPath(): ?string {
+
+        $redirectPath = $this->getConfigValueByKey(SiteConfig::KEY_NAME_SYSTEM_LOGIN_REDIRECT_PATH);
+
+        return !empty($redirectPath) ? $redirectPath : RouteServiceProvider::HOME;
+
     }
 
 }

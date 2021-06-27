@@ -179,4 +179,14 @@ class RegisterController extends Controller
     {
         return Auth::guard('web');
     }
+
+
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath(): string {
+        return $this->site->getRedirectPath();
+    }
 }
