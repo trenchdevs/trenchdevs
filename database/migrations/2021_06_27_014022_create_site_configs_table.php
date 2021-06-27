@@ -45,7 +45,7 @@ class CreateSiteConfigsTable extends Migration
             Site::query()->updateOrCreate(
                 ['identifier' => Site::DB_IDENTIFIER_CLOUDCRAFT],
                 [
-                    'domain' => 'cloudcraft.trenchapps.localhostt',
+                    'domain' => 'cloudcraft.trenchapps.localhost',
                     'allow_wildcard_for_domain' => 0,
                     'company_name' => 'CloudCraft',
                     'theme' => 'cloudcraft'
