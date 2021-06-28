@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "ext-json": "*",
         "aws/aws-sdk-php": "^3.148",
         "box/spout": "^3.1",
         "doctrine/dbal": "^2.10",
@@ -21,9 +22,9 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "league/flysystem-aws-s3-v3": "^1.0",
+        "livewire/livewire": "^2.5",
         "trenchdevs/csv": "dev-master",
-        "tymon/jwt-auth": "1.0.*",
-        "ext-json": "*"
+        "tymon/jwt-auth": "1.0.*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
