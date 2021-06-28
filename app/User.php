@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\EmailQueue;
+use App\Models\Site;
 use App\Models\Users\UserCertification;
 use App\Models\Users\UserDegree;
 use App\Models\Users\UserExperience;
@@ -103,6 +104,19 @@ class User extends Authenticatable // implements MustVerifyEmail
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::addGlobalScope(function (Builder $builder) {
+
+            // add a constraint for only users under the current site
+            if ($site = Site::S()) {
+                $builder->where('site_id', $site->id);
+            }
+        });
+    }
 
 
     public function canManage(User $user)
