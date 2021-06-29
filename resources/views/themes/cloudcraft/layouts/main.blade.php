@@ -61,6 +61,13 @@
                             Dashboard
                         </a>
 
+                        <a class="nav-link collapsed" href="{{route('cloudcraft.activity-list')}}">
+                            <div class="nav-link-icon">
+                                <i data-feather="users"></i>
+                            </div>
+                            Activities
+                        </a>
+
                         <a class="nav-link collapsed" href="{{route('cloudcraft.members')}}">
                             <div class="nav-link-icon">
                                 <i data-feather="users"></i>

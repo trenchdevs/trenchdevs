@@ -112,7 +112,7 @@ class User extends Authenticatable // implements MustVerifyEmail
         self::addGlobalScope(function (Builder $builder) {
 
             // add a constraint for only users under the current site
-            if ($site = Site::S()) {
+            if ($site = site()) {
                 $builder->where('site_id', $site->id);
             }
         });

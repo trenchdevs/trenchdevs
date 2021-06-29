@@ -1,3 +1,7 @@
 <div>
-    {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
+    @foreach($activities as $activity)
+        <div class="alert alert-warning">
+            {{$activity->title}}
+        </div>
+    @endforeach
 </div>
