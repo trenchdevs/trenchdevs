@@ -24,6 +24,7 @@ abstract class Controller extends BaseController
     const STATUS_ERROR = 'error';
 
     public function __constructor(){
+        $this->site = Site::getInstance();
     }
 
     /**
