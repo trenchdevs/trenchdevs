@@ -40,6 +40,14 @@ class Site extends Model
     const DB_IDENTIFIER_CLOUDCRAFT = 'cloudcraft';
 
 
+    /**
+     * Alias to getInstance
+     * @return static|null
+     */
+    public static function S(){
+        return self::getInstance();
+    }
+
     /** @var self */
     private static $singleton;
 
