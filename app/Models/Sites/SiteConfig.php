@@ -18,12 +18,21 @@ class SiteConfig extends Model
     ];
 
     const KEY_NAME_SYSTEM_LOGIN_REDIRECT_PATH = 'SYSTEM__LOGIN_REDIRECT_PATH';
+    const KEY_NAME_SITE_WHITELISTED_IPS = 'SITE_WHITELISTED_IPS'; // json arr
 
+    /**
+     * @param int    $siteId
+     * @param string $keyName
+     *
+     * @return self|null
+     */
     public static function findByKeyName(int $siteId, string $keyName): ?self {
-        return self::query()
+        /** @var self $config */
+        $config = self::query()
             ->where('site_id', $siteId)
             ->where('key_name', $keyName)
             ->first();
+        return $config;
 
     }
 

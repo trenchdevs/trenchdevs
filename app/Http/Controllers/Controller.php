@@ -11,6 +11,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 
 abstract class Controller extends BaseController
 {
@@ -23,6 +24,22 @@ abstract class Controller extends BaseController
     const STATUS_ERROR = 'error';
 
     public function __constructor(){
+    }
+
+    /**
+     * AuthWebController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->middlewareOnConstructorCalled();
+            return $next($request);
+        });
+    }
+
+
+    public function middlewareOnConstructorCalled(): void {
+        // do custom logic per controller
         $this->site = Site::getInstance();
     }
 

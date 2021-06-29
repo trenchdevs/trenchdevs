@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\Site;
 use Carbon\Carbon;
 
 if (!function_exists('get_base_url')) {
@@ -230,3 +231,34 @@ if (!function_exists('get_domain')) {
 }
 
 
+if (!function_exists('site')) {
+
+    function site(): Site {
+        $site = Site::getInstance();
+
+        if (!$site) {
+            $site = new Site;
+        }
+
+        return $site;
+    }
+}
+
+/**
+ * @param $string
+ *
+ * @return bool
+ */
+function td_is_json($string): bool {
+    json_decode($string);
+    return json_last_error() === JSON_ERROR_NONE;
+}
+
+function json_decode_or_default($var, bool $default = null, $assoc = true) {
+
+    if (td_is_json($var)) {
+        return json_decode($var, $assoc);
+    }
+
+    return $default;
+}

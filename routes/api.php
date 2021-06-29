@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiActivities;
 use App\Http\Controllers\Api\ApiNotes;
 use App\Http\Controllers\Api\ApiProductReactions;
 use App\Http\Controllers\Api\ApiProductStories;
@@ -75,6 +76,8 @@ Route::group(['prefix' => 'story-responses'], function () {
 Route::get('stories/s/{slug}', [ApiStories::class, 'slug']);
 
 // ---------- End Authentication Endpoints ---------- //
+
+Route::post('activities', [ApiActivities::class, 'store'])->middleware(['ip-restricted']);
 
 // commented out for now 20210304
 //

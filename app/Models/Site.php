@@ -104,7 +104,20 @@ class Site extends Model
         $redirectPath = $this->getConfigValueByKey(SiteConfig::KEY_NAME_SYSTEM_LOGIN_REDIRECT_PATH);
 
         return !empty($redirectPath) ? $redirectPath : RouteServiceProvider::HOME;
+    }
 
+    /**
+     * Whitelisted ips for a site
+     *      used in conjunction with the IpRestricted middleware
+     * @return array
+     */
+    public function getWhitelistedIps(): array {
+
+        if (empty($whitelistedIps = json_decode_or_default($this->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_WHITELISTED_IPS)))) {
+            return [];
+        }
+
+        return $whitelistedIps;
     }
 
 }
