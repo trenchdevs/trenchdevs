@@ -10,10 +10,10 @@ class ApiActivities extends Controller
 {
 
     public function store(Request $request) {
-        Activity::query()->create(array_merge(
-            $request->all(),
-            ['site_id' => $this->site->id]
-        ));
+
+        $data = $request->all();
+        $data['site_id'] = $this->site->id;
+        Activity::query()->create($data);
         return $this->jsonResponse('success', 'Success');
     }
 
