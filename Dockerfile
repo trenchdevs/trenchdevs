@@ -54,6 +54,10 @@ RUN chown -R www-data:www-data /var/www/trenchdevs/bootstrap/cache
 # front-end production build
 #RUN yarn run production
 
+# extra packages
+RUN apt update
+RUN apt install -y php-curl
+
 EXPOSE 80
 
 # RUN sed -i -e "s/;clear_env\s*=\s*no/clear_env = no/g" /etc/php/7.4/fpm/pool.d/www.conf
