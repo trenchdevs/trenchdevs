@@ -26,7 +26,7 @@ Route::get('blogs', [PublicBlogsController::class, 'index'])->name('public.blogs
 // handler for both blogs and portfolio (w/ blog slug as priority)
 Route::get('{slug}', [PublicController::class, 'show'])->name('public.show');
 
-
+Auth::routes();
 /**
  * Sample local domain - react
  */
