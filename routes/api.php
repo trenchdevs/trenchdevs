@@ -1,16 +1,13 @@
 <?php
 
 use App\Domains\Activities\Http\Controllers\ActivitiesController;
-use App\Domains\Stories\Http\Controllers\ApiNotes;
+use App\Domains\Notes\Http\Controllers\ApiNotes;
 use App\Domains\Stories\Http\Controllers\ProductReactionsController;
 use App\Domains\Stories\Http\Controllers\ProductStoriesController;
 use App\Domains\Stories\Http\Controllers\Stories;
 use App\Domains\Stories\Http\Controllers\StoryResponsesController;
 use App\Http\Controllers\AuthController;
-use App\Domains\Blogs\Http\Controllers\PublicBlogsController;
 use App\Domains\Products\Http\Controllers\ProductsController;
-use App\Domains\Stories\Models\ProductStory;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,34 +75,3 @@ Route::get('stories/s/{slug}', [Stories::class, 'slug']);
 // ---------- End Authentication Endpoints ---------- //
 
 Route::post('activities', [ActivitiesController::class, 'store'])->middleware(['ip-restricted']);
-
-// commented out for now 20210304
-//
-//Route::group(['prefix' => 'shop', 'middleware' => 'check.account'], function () {
-//
-//    // ---------- PRODUCTS ---------- //
-//    Route::group(['prefix' => 'products'], function () {
-//
-//        Route::group(['middleware' => 'auth:api'], function () {
-//            Route::post('upsert', 'ProductsController@upsert');
-//            Route::post('delete/{productId}', 'ProductsController@delete');
-//        });
-//
-//        Route::get('/', 'ProductsController@all');
-//        Route::get('{productId}', 'ProductsController@one');
-//    });
-//
-//    // ---------- PRODUCTS CATEGORIES ---------- //
-//    Route::group(['prefix' => 'product_categories'], function () {
-//        Route::group(['middleware' => 'auth:api'], function () {
-//            Route::get('parent_categories', 'ProductCategoriesController@allParentCategories');
-//            Route::post('upsert', 'ProductCategoriesController@upsert');
-//            Route::post('delete/{categoryId}', 'ProductCategoriesController@delete');
-//            Route::post('toggle_is_featured/{categoryId}', 'ProductCategoriesController@toggleIsFeatured');
-//        });
-//
-//        Route::get('/', 'ProductCategoriesController@all');
-//        Route::get('/{categoryId}', 'ProductCategoriesController@one');
-//    });
-//
-//});
