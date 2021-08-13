@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Models\EmailQueue;
+use App\Domains\Emails\Models\EmailQueue;
 use ErrorException;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
@@ -66,18 +66,13 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
 
-        // todo: refactor
-        switch (get_class($exception)) {
-            case AuthenticationException::class:
-                if (in_array('api', request()->route()->middleware())) {
-                    return \response()->json([
-                        'status' => 'error',
-                        'message' => $exception->getMessage()
-                    ]);
-                }
-                break;
-            default:
-                break;
+        if ($exception instanceof AuthenticationException) {
+            if (in_array('api', request()->route()->middleware())) {
+                return \response()->json([
+                    'status' => 'error',
+                    'message' => $exception->getMessage()
+                ]);
+            }
         }
 
         return parent::render($request, $exception);

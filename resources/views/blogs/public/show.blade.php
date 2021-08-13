@@ -30,7 +30,7 @@
 
 @section('contents')
 
-    @php /** @var \App\Models\Blog $blog */ @endphp
+    @php /** @var \App\Domains\Blogs\Models\Blog $blog */ @endphp
 
     <section class="bg-light py-10">
         <div class="container">

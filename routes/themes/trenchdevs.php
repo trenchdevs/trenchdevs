@@ -1,16 +1,23 @@
 <?php
 
 
-use App\Http\Controllers\Admin\AccountsController;
-use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\Blogs\PublicBlogsController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PortfolioController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Projects\ProjectsController;
-use App\Http\Controllers\PublicController;
-use App\Http\Controllers\Shop\ProductsController;
-use App\Http\Controllers\SuperAdmin\CommandsController;
+use App\Domains\Announcements\Http\Controllers\AnnouncementsController;
+use App\Domains\Blogs\Http\Controllers\BlogsController;
+use App\Domains\Sites\Http\Controllers\AccountsController;
+use App\Domains\Users\Http\Controllers\UserCertificationsController;
+use App\Domains\Users\Http\Controllers\UserDegreesController;
+use App\Domains\Users\Http\Controllers\UserExperiencesController;
+use App\Domains\Users\Http\Controllers\UserProjectsController;
+use App\Domains\Users\Http\Controllers\UsersController;
+use App\Domains\Blogs\Http\Controllers\PublicBlogsController;
+use App\Domains\TrenchDevs\Http\Controllers\HomeController;
+use App\Domains\Users\Http\Controllers\PortfolioController;
+use App\Domains\Users\Http\Controllers\ProfileController;
+use App\Domains\Projects\Http\Controllers\ProjectsController;
+use App\Domains\TrenchDevs\Http\Controllers\PublicController;
+use App\Domains\Products\Http\Controllers\ProductsController;
+use App\Domains\SuperAdmin\Http\Controllers\CommandsController;
+use App\Domains\Users\Http\Controllers\UserSkillsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -63,11 +70,10 @@ Route::middleware(['auth:web', 'verified'])->prefix('portal')->group(function ()
     // End - users
 
     // START - mailers
-    // Route::get('emails/generic', 'EmailTester@genericMail');
     // Announcements
-    Route::get('announcements', 'Admin\AnnouncementsController@list')->name('announcements.index');
-    Route::get('announcements/create', 'Admin\AnnouncementsController@create')->name('announcements.create');
-    Route::post('announcements/announce', 'Admin\AnnouncementsController@announce')->name('announcements.announce');
+    Route::get('announcements', [AnnouncementsController::class, 'list'])->name('announcements.index');
+    Route::get('announcements/create', [AnnouncementsController::class, 'create'])->name('announcements.create');
+    Route::post('announcements/announce', [AnnouncementsController::class, 'announce'])->name('announcements.announce');
     // END - mailers
 
     /**
@@ -76,45 +82,44 @@ Route::middleware(['auth:web', 'verified'])->prefix('portal')->group(function ()
 
     // start - user_portfolio_details
     Route::get('portfolio/account', 'Admin\UsersController@account')->name('portfolio.account');
-    Route::get('portfolio/edit', 'PortfolioController@edit')->name('portfolio.edit');
-    Route::get('portfolio/security', 'PortfolioController@showSecurity')->name('portfolio.security');
-    Route::post('portfolio/update', 'PortfolioController@update')->name('portfolio.update');
-    Route::post('portfolio/avatar', 'PortfolioController@uploadAvatar')->name('portfolio.avatar');
-    Route::post('portfolio/updateBasicInfo', 'PortfolioController@updateBasicInfo')->name('portfolio.updateBasicInfo');
-    Route::post('portfolio/background', 'PortfolioController@uploadBackground')->name('portfolio.background');
-    Route::get('portfolio/preview', 'PortfolioController@preview')->name('portfolio.preview');
+    Route::get('portfolio/edit', [PortfolioController::class, 'edit'])->name('portfolio.edit');
+    Route::get('portfolio/security', [PortfolioController::class, 'showSecurity'])->name('portfolio.security');
+    Route::post('portfolio/update', [PortfolioController::class, 'update'])->name('portfolio.update');
+    Route::post('portfolio/avatar', [PortfolioController::class, 'uploadAvatar'])->name('portfolio.avatar');
+    Route::post('portfolio/updateBasicInfo', [PortfolioController::class, 'updateBasicInfo'])->name('portfolio.updateBasicInfo');
+    Route::post('portfolio/background', [PortfolioController::class, 'uploadBackground'])->name('portfolio.background');
+    Route::get('portfolio/preview', [PortfolioController::class, 'preview'])->name('portfolio.preview');
     // end - user_portfolio_details
 
     // start - user_experiences
     Route::view('portfolio/experiences/edit', 'portfolio.experiences')->name('portfolio.experiences');
-    Route::post('portfolio/experiences/save', 'Portfolio\UserExperiencesController@save')->name('portfolio.experiences.save');
-    Route::get('portfolio/experiences/get', 'Portfolio\UserExperiencesController@getExperiences')->name('portfolio.experiences.get');
+    Route::post('portfolio/experiences/save', [UserExperiencesController::class, 'save'])->name('portfolio.experiences.save');
+    Route::get('portfolio/experiences/get', [UserExperiencesController::class, 'getExperiences'])->name('portfolio.experiences.get');
     // end - user_experiences
 
     // start - user_degrees
     Route::view('portfolio/degrees/edit', 'portfolio.degrees')->name('portfolio.degrees');
-    Route::post('portfolio/degrees/save', 'Portfolio\UserDegreesController@save')->name('portfolio.degrees.save');
-    Route::get('portfolio/degrees/get', 'Portfolio\UserDegreesController@getDegrees')->name('portfolio.degrees.get');
+    Route::post('portfolio/degrees/save', [UserDegreesController::class, 'save'])->name('portfolio.degrees.save');
+    Route::get('portfolio/degrees/get', [UserDegreesController::class, 'getDegrees'])->name('portfolio.degrees.get');
     // end - user_degrees
 
     // start - user_skills
     Route::view('portfolio/skills/edit', 'portfolio.skills')->name('portfolio.skills');
-    Route::get('portfolio/skills/get', 'Portfolio\UserSkillsController@getSkills')->name('portfolio.skills.get');
-    Route::post('portfolio/skills/save', 'Portfolio\UserSkillsController@save')->name('portfolio.skills.save');
+    Route::get('portfolio/skills/get', [UserSkillsController::class, 'getSkills'])->name('portfolio.skills.get');
+    Route::post('portfolio/skills/save', [UserSkillsController::class, 'save'])->name('portfolio.skills.save');
     //  end - user_skills
 
     // start - user_experiences
     Route::view('portfolio/certifications/edit', 'portfolio.certifications')->name('portfolio.certifications');
-    Route::post('portfolio/certifications/save', 'Portfolio\UserCertificationsController@save')->name('portfolio.certifications.save');
-    Route::get('portfolio/certifications/get', 'Portfolio\UserCertificationsController@getCertifications')->name('portfolio.certifications.get');
+    Route::post('portfolio/certifications/save', [UserCertificationsController::class, 'save'])->name('portfolio.certifications.save');
+    Route::get('portfolio/certifications/get', [UserCertificationsController::class, 'getCertifications'])->name('portfolio.certifications.get');
     // end - user_experiences
 
     // start - user_projects
     Route::view('portfolio/projects/edit', 'portfolio.projects')->name('portfolio.projects');
-    Route::post('portfolio/projects/save', 'Portfolio\UserProjectsController@save')->name('portfolio.projects.save');
-    Route::get('portfolio/projects/get', 'Portfolio\UserProjectsController@getProjects')->name('portfolio.projects.get');
-
-    // Route::get('projects', 'Portfolio\UserProjectsController@list')->name('projects.list');
+    Route::post('portfolio/projects/save', [UserProjectsController::class, 'save'])->name('portfolio.projects.save');
+    Route::get('portfolio/projects/get', [UserProjectsController::class, 'getProjects'])->name('portfolio.projects.get');
+    // Route::get('projects',[\App\Domains\Users\Http\Controllers\UserProjectsController::class, 'list])->name('projects.list');
     // end - user_projects
 
     /**
@@ -122,11 +127,11 @@ Route::middleware(['auth:web', 'verified'])->prefix('portal')->group(function ()
      */
 
     // start - blogs
-    Route::get('blogs', 'Blogs\BlogsController@index')->name('blogs.index');
-    Route::get('blogs/upsert/{blogId?}', 'Blogs\BlogsController@upsert')->name('blogs.upsert');
-    Route::post('blogs/store', 'Blogs\BlogsController@store')->name('blogs.store');
-    Route::get('blogs/show/{id}', 'Blogs\BlogsController@show')->name('blogs.show');
-    Route::post('blogs/moderate/{id}', 'Blogs\BlogsController@moderate')->name('blogs.moderate');
+    Route::get('blogs', [BlogsController::class, 'index'])->name('blogs.index');
+    Route::get('blogs/upsert/{blogId?}', [BlogsController::class, 'upsert'])->name('blogs.upsert');
+    Route::post('blogs/store', [BlogsController::class, 'store'])->name('blogs.store');
+    Route::get('blogs/show/{id}', [BlogsController::class, 'show'])->name('blogs.show');
+    Route::post('blogs/moderate/{id}', [BlogsController::class, 'moderate'])->name('blogs.moderate');
     // end - blogs
 
     // START - shop

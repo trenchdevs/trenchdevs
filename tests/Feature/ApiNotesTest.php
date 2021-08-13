@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Models\Notes\GroceryNote;
-use App\Models\Notes\Note;
-use App\User;
+use App\Domains\Notes\Models\GroceryNote;
+use App\Domains\Notes\Models\Note;
+use App\Domains\Users\Models\User;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Sanctum\Sanctum;

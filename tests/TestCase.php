@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\User;
+use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;

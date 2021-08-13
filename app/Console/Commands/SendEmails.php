@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\EmailQueue;
+use App\Domains\Emails\Models\EmailQueue;
 use Illuminate\Console\Command;
 
 class SendEmails extends Command

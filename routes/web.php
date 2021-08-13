@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\AwsController;
+use App\Domains\Aws\Http\Controllers\AwsController;
 use App\Http\Controllers\EmailTester;
-use App\Http\Controllers\Notifications\EmailPreferencesController;
+use App\Domains\Emails\Http\Controllers\EmailPreferencesController;
 use Illuminate\Support\Facades\Route;
 
 $baseUrl = get_base_url();

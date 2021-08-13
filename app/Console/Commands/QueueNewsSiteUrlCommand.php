@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Repositories\News\NewsRepositoryFactory;
+use App\Domains\News\Repositories\NewsRepositoryFactory;
 use Exception;
 use Illuminate\Console\Command;
 use InvalidArgumentException;

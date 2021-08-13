@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Helpers\TrenchDevsArchives\SiteAccessLogsArchiver;
+use App\Domains\Sites\Services\SiteAccessLogsArchiverService;
 use Exception;
 use Illuminate\Console\Command;
 
@@ -35,10 +35,10 @@ class ArchiveSiteLogs extends Command
     /**
      * Execute the console command.
      *
-     * @param SiteAccessLogsArchiver $archiver
+     * @param SiteAccessLogsArchiverService $archiver
      * @return void
      */
-    public function handle(SiteAccessLogsArchiver $archiver)
+    public function handle(SiteAccessLogsArchiverService $archiver)
     {
 
         try {

@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @php /* @var \App\User $user */ @endphp
+    @php /* @var \App\Domains\Users\Models\User $user */ @endphp
 
     @include('admin.shared.account')
 

@@ -29,7 +29,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @php /** @var \App\User[] $users */ @endphp
+                        @php /** @var \App\Domains\Users\Models\User[] $users */ @endphp
                         @foreach($users as $user)
                             <tr>
                                 <td>

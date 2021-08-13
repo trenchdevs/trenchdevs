@@ -1,6 +1,6 @@
 @php
-    /** @var \App\User $user */
-    /** @var \App\Models\Users\UserPortfolioDetail $portfolio_details */
+    /** @var \App\Domains\Users\Models\User $user */
+    /** @var \App\Domains\Users\Models\UserPortfolioDetail $portfolio_details */
 @endphp
     <!DOCTYPE html>
 <html lang="en">

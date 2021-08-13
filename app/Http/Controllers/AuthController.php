@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Account;
-use App\ApplicationType;
+use App\Domains\Sites\Models\Account;
+use App\Domains\Sites\Models\ApplicationType;
 use App\Http\Controllers\Auth\ApiController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Models\Sites\SiteFactory;
-use App\User;
+use App\Domains\Sites\Models\Sites\SiteFactory;
+use App\Domains\Users\Models\User;
 use ErrorException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

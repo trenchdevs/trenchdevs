@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Site;
+use App\Domains\Sites\Models\Site;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;

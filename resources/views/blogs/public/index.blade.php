@@ -52,7 +52,7 @@
 
                 @foreach($blogs as $blog)
 
-                    @php /** @var \App\Models\Blog $blog */ @endphp
+                    @php /** @var \App\Domains\Blogs\Models\Blog $blog */ @endphp
                     <div class="col-md-6 col-xl-4 mb-5">
                         <a class="card post-preview lift h-100" href="/{{$blog->slug}}?user={{$blog->user->username}}">
                             <img class="card-img-top"

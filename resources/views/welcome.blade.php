@@ -83,7 +83,7 @@
             </div>
             <!-- Portfolio Grid Items-->
 
-            @php /** @var \App\Models\Projects\Project[] $projects */ @endphp
+            @php /** @var \App\Domains\Projects\Models\Project[] $projects */ @endphp
             @if (!empty($projects))
                 <div class="row justify-content-center text-center">
                 @foreach($projects as $project)

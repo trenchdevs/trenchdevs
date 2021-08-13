@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Site;
+use App\Domains\Sites\Models\Site;
 use Closure;
 use Illuminate\Http\Request;
 

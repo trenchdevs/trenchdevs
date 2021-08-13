@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Models\Site;
+use App\Domains\Sites\Models\Site;
 use Carbon\Carbon;
 
 if (!function_exists('get_base_url')) {

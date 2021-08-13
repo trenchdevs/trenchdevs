@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Site;
-use App\User;
+use App\Domains\Sites\Models\Site;
+use App\Domains\Users\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Auth;
 
 abstract class Controller extends BaseController
 {

@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\Api\ApiActivities;
-use App\Http\Controllers\Api\ApiNotes;
-use App\Http\Controllers\Api\ApiProductReactions;
-use App\Http\Controllers\Api\ApiProductStories;
-use App\Http\Controllers\Api\ApiStories;
-use App\Http\Controllers\Api\ApiStoryResponses;
+use App\Domains\Activities\Http\Controllers\ActivitiesController;
+use App\Domains\Stories\Http\Controllers\ApiNotes;
+use App\Domains\Stories\Http\Controllers\ProductReactionsController;
+use App\Domains\Stories\Http\Controllers\ProductStoriesController;
+use App\Domains\Stories\Http\Controllers\Stories;
+use App\Domains\Stories\Http\Controllers\StoryResponsesController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Blogs\PublicBlogsController;
-use App\Http\Controllers\Shop\ProductsController;
-use App\Models\Stories\ProductStory;
+use App\Domains\Blogs\Http\Controllers\PublicBlogsController;
+use App\Domains\Products\Http\Controllers\ProductsController;
+use App\Domains\Stories\Models\ProductStory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -56,28 +56,28 @@ Route::group(['prefix' => 'shop/products', 'middleware' => 'auth:sanctum'], func
 });
 
 Route::group(['prefix' => 'stories', 'middleware' => 'auth:sanctum'], function () {
-    Route::post('upsert', [ApiStories::class, 'upsert']);
-    Route::get('metrics', [ApiStories::class, 'metrics']);
-    Route::get('{storyId}', [ApiStories::class, 'one']);
-    Route::get('/', [ApiStories::class, 'all']);
+    Route::post('upsert', [Stories::class, 'upsert']);
+    Route::get('metrics', [Stories::class, 'metrics']);
+    Route::get('{storyId}', [Stories::class, 'one']);
+    Route::get('/', [Stories::class, 'all']);
 
-    Route::post('add-products', [ApiProductStories::class, 'addProductsToStories']);
+    Route::post('add-products', [ProductStoriesController::class, 'addProductsToStories']);
 });
 
 Route::group(['prefix' => 'product-reactions'], function () {
-    Route::post('react', [ApiProductReactions::class, 'react']);
+    Route::post('react', [ProductReactionsController::class, 'react']);
 });
 
 Route::group(['prefix' => 'story-responses'], function () {
-    Route::get('/', [ApiStoryResponses::class, 'all']);
-    Route::post('add', [ApiStoryResponses::class, 'store']);
+    Route::get('/', [StoryResponsesController::class, 'all']);
+    Route::post('add', [StoryResponsesController::class, 'store']);
 });
 
-Route::get('stories/s/{slug}', [ApiStories::class, 'slug']);
+Route::get('stories/s/{slug}', [Stories::class, 'slug']);
 
 // ---------- End Authentication Endpoints ---------- //
 
-Route::post('activities', [ApiActivities::class, 'store'])->middleware(['ip-restricted']);
+Route::post('activities', [ActivitiesController::class, 'store'])->middleware(['ip-restricted']);
 
 // commented out for now 20210304
 //

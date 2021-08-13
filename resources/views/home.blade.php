@@ -9,7 +9,7 @@
 @section('content')
 
     @php
-        /** @var \App\Repositories\AdminDashboardMetrics $dashboard_metrics */
+        /** @var \App\Domains\TrenchDevs\Repositories\AdminDashboardMetrics $dashboard_metrics */
     @endphp
 
 

@@ -42,7 +42,7 @@
 
     <div class="row">
         @foreach($blogs as $blog)
-            @php /** @var \App\Models\Blog $blog */ @endphp
+            @php /** @var \App\Domains\Blogs\Models\Blog $blog */ @endphp
             <div class="col-md-6 mb-5">
                 <div class="card">
                     <div class="card-header" style="display: block">

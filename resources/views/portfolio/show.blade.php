@@ -1,5 +1,5 @@
 @php
-    /** @var \App\User $user */
+    /** @var \App\Domains\Users\Models\User $user */
 @endphp
     <!DOCTYPE html>
 <html lang="en">

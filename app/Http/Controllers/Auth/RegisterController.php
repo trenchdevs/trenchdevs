@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Account;
+use App\Domains\Sites\Models\Account;
 use App\Http\Controllers\Controller;
-use App\Models\EmailQueue;
+use App\Domains\Emails\Models\EmailQueue;
 use App\Providers\RouteServiceProvider;
-use App\User;
+use App\Domains\Users\Models\User;
 use ErrorException;
 use Exception;
 use Illuminate\Auth\Events\Registered;

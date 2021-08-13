@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @php /** @var \App\Models\Blog $blog */ @endphp
+    @php /** @var \App\Domains\Blogs\Models\Blog $blog */ @endphp
 
     <div class="card">
         <div class="card-header">{{!empty($blog->id) ? 'Update' : 'Create'}} Blog</div>
