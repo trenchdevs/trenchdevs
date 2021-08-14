@@ -13,18 +13,25 @@
 |
 */
 
-use Illuminate\Support\Facades\Auth;
+
+use App\Domains\Users\Http\Controllers\WebApi\UsersController;
+use App\Http\Controllers\WebApiController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware(['auth:web', 'webapi'])->group(function () {
-
-    Route::get('blogs', 'Blogs\BlogsController@index');
-
-    Route::get('me', function () {
-        return response()->json(auth()->user());
-    });
-
+Route::get('hello', function () {
+    return response()->json(['hellao']);
 });
+Route::middleware(['auth:web'])->group(function () {
+    Route::get('init', [WebApiController::class, 'init']);
+    Route::get('init_site', [WebApiController::class, 'initSite']);
+    Route::get('init_user', [WebApiController::class, 'initUser']);
+    Route::post('users/all', [UsersController::class, 'getUsers']);
+});
+
+
+// Route::get('blogs', [BlogsController::class, 'index']);
+
+
 
 

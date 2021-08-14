@@ -3,6 +3,7 @@
 namespace App\Domains\Users\Models;
 
 use App\Domains\Emails\Models\EmailQueue;
+use App\Domains\Sites\Models\Site;
 use App\Domains\Users\Models\ProjectUser;
 use App\Domains\Users\Models\UserCertification;
 use App\Domains\Users\Models\UserDegree;
@@ -14,6 +15,8 @@ use App\Domains\Users\Models\UserLogin;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +35,8 @@ use Throwable;
  * @property $avatar_url
  * @property $username
  * @property $role
+ * @property $site_id
+ * @property Site $site
  * @package App
  */
 class User extends Authenticatable // implements MustVerifyEmail
@@ -108,13 +113,13 @@ class User extends Authenticatable // implements MustVerifyEmail
     protected static function boot()
     {
         parent::boot();
-        self::addGlobalScope(function (Builder $builder) {
-
-            // add a constraint for only users under the current site
-            if ($site = site()) {
-                $builder->where('site_id', $site->id);
-            }
-        });
+//        self::addGlobalScope(function (Builder $builder) {
+//
+//            // add a constraint for only users under the current site
+//            if ($site = site()) {
+//                $builder->where('site_id', $site->id);
+//            }
+//        });
     }
 
 
@@ -480,5 +485,18 @@ class User extends Authenticatable // implements MustVerifyEmail
             ]);
 
     }
+
+    ###########################################################################
+    #                           Relationships
+    ###########################################################################
+
+    /**
+     * @return BelongsTo
+     */
+    public function site(): BelongsTo
+    {
+        return $this->belongsTo(Site::class);
+    }
+
 
 }

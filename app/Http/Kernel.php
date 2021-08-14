@@ -78,6 +78,7 @@ class Kernel extends HttpKernel
 
         'webapi' => [
             WebApiMiddleware::class,
+            SubstituteBindings::class,
         ],
     ];
 

@@ -44,6 +44,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        $this->mapWebApiV1Routes();
 
         $this->mapSiteRoutes();
 
@@ -51,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        $this->mapWebApiV1Routes();
+        // $this->mapWebApiV1Routes();
 
     }
 
@@ -88,10 +89,15 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebApiV1Routes()
     {
 
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->prefix('webapi')
-            ->group(base_path('routes/webapi.php'));
+        if (!empty($site = Site::getInstance()) && $site->theme == 'sjp') {
+
+            $this->__inject_local_credentials();
+            Route::middleware('webapi')
+                ->namespace($this->namespace)
+                ->prefix('webapi')
+                ->group(base_path('routes/webapi.php'));
+        }
+
     }
 
     private function mapSiteRoutes()
@@ -119,6 +125,13 @@ class RouteServiceProvider extends ServiceProvider
 
         } catch (Exception $exception) {
             // dd($exception->getMessage());
+        }
+    }
+
+    private function __inject_local_credentials(){
+
+        if (app()->environment('local')) {
+            auth('web')->loginUsingId(21);
         }
     }
 }

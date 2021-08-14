@@ -17,3 +17,5 @@ yarn-error.log
 .env.testing
 
 docker/volumes/mysql
+.DS_Store
+public/.DS_Store

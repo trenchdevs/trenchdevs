@@ -1,7 +1,6 @@
 <?php
 
 use App\Domains\Aws\Http\Controllers\AwsController;
-use App\Http\Controllers\EmailTester;
 use App\Domains\Emails\Http\Controllers\EmailPreferencesController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,8 +35,8 @@ Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
 
 
 // start - public email endpoints
-Route::get('emails/unsubscribe', [EmailTester::class, 'test']);
-Route::get('emails/testsend', [EmailTester::class, 'testSend']);
+//Route::get('emails/unsubscribe', [Eamil::class, 'test']);
+// Route::get('emails/testsend', [EmailTester::class, 'testSend']);
 
 Route::get('emails/unsubscribe', [EmailPreferencesController::class, 'showUnsubscribeForm'])->name('notifications.emails.showUnsubscribeForm');
 Route::post('emails/unsubscribe', [EmailPreferencesController::class, 'unsubscribe'])->name('notifications.emails.unsubscribe');
