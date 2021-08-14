@@ -24,8 +24,6 @@ Route::get('hello', function () {
 });
 Route::middleware(['auth:web'])->group(function () {
     Route::get('init', [WebApiController::class, 'init']);
-    Route::get('init_site', [WebApiController::class, 'initSite']);
-    Route::get('init_user', [WebApiController::class, 'initUser']);
     Route::post('users/all', [UsersController::class, 'getUsers']);
 });
 

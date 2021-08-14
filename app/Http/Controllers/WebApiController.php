@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Domains\Sites\Models\Site;
-
 class WebApiController extends AuthWebController
 {
 
@@ -12,25 +9,18 @@ class WebApiController extends AuthWebController
     {
 
         $site = $this->user->site;
-        $now = now();
+        $siteDetails = $site->attributesToArray();
+        $siteDetails['full_domain'] = app()->environment('local') ? "http://{$site->domain}" : "https://{$site->domain}";
+
+        $userDetails = $this->user->attributesToArray();
 
         return [
-            'site' => $site,
-            'user' => $this->user->attributesToArray(),
+            'site' => $siteDetails,
+            'user' => $userDetails,
             'server' => [
-                'time' => $now->format('Y-m-d H:i:s'),
+                'time' => date('Y-m-d H:i:s'),
             ]
         ];
-    }
-
-    public function initSite()
-    {
-        return Site::getInstance()->attributesToArray();
-    }
-
-    public function initUser()
-    {
-        return $this->user->attributesToArray();
     }
 
 }
