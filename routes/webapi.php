@@ -14,6 +14,7 @@
 */
 
 
+use App\Domains\Events\Http\Controllers\EventsController;
 use App\Domains\Users\Http\Controllers\WebApi\UsersController;
 use App\Http\Controllers\WebApiController;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,15 @@ Route::get('hello', function () {
 });
 Route::middleware(['auth:web'])->group(function () {
     Route::get('init', [WebApiController::class, 'init']);
-    Route::post('users/all', [UsersController::class, 'getUsers']);
+
+    Route::prefix('users')->group(function(){
+        Route::post('all', [UsersController::class, 'getUsers']);
+    });
+
+    Route::prefix('events')->group(function(){
+        Route::post('all', [EventsController::class, 'getEvents']);
+    });
+
 });
 
 

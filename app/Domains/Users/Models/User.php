@@ -12,6 +12,7 @@ use App\Domains\Users\Models\UserPortfolioDetail;
 use App\Domains\Projects\Models\Project;
 use App\Domains\Users\Models\UserSkill;
 use App\Domains\Users\Models\UserLogin;
+use App\Support\Traits\SiteScoped;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -41,7 +42,9 @@ use Throwable;
  */
 class User extends Authenticatable // implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable;
+    use HasApiTokens;
+    use SiteScoped;
 
     const ROLE_SUPER_ADMIN = 'superadmin';
     const ROLE_ADMIN = 'admin';
@@ -110,17 +113,6 @@ class User extends Authenticatable // implements MustVerifyEmail
     ];
 
 
-    protected static function boot()
-    {
-        parent::boot();
-//        self::addGlobalScope(function (Builder $builder) {
-//
-//            // add a constraint for only users under the current site
-//            if ($site = site()) {
-//                $builder->where('site_id', $site->id);
-//            }
-//        });
-    }
 
 
     public function canManage(User $user)
