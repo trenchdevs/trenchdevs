@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Illuminate\Support\Facades\DB;
+
 class WebApiController extends AuthWebController
 {
 
@@ -21,6 +24,29 @@ class WebApiController extends AuthWebController
                 'time' => date('Y-m-d H:i:s'),
             ]
         ];
+    }
+
+    public function webApiResponse (string $successMessage, callable $fn){
+
+        $response = [
+            'status' => 'error',
+            'message' => 'There was a problem while processing your request'
+        ];
+
+        try {
+            DB::beginTransaction();
+            $data = $fn();
+            DB::commit();
+
+            $response['data'] = $data;
+            $response['status'] = 'success';
+            $response['message'] = !empty($successMessage) ? $successMessage : 'Success';
+
+        }catch (Exception $exception) {
+            DB::rollBack();
+        }
+
+        return response()->json($response);
     }
 
 }
