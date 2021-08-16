@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class WebApiController extends AuthWebController
 {
@@ -43,9 +44,29 @@ class WebApiController extends AuthWebController
             $response['status'] = 'success';
             $response['message'] = !empty($successMessage) ? $successMessage : 'Success';
 
-        } catch (Exception $exception) {
-            $response['message'] = $exception->getMessage();
+        } catch (ValidationException $exception) {
             DB::rollBack();
+            $allErrors = $exception->validator->errors()->all(); // all error messages in a single array
+            $response['errors'] = $exception->errors();
+            $response['errors_all'] = $allErrors;
+
+            $errorMessage = $exception->getMessage();
+
+            if (!empty($allErrors)) {
+                $errorMessage = sprintf("$errorMessage %s", implode(' ', $allErrors));
+            }
+
+            $response['message'] = $errorMessage;
+        } catch (Exception $exception) {
+            DB::rollBack();
+            $errorMessage = $exception->getMessage();
+
+            if (app()->environment('local')) {
+                $className = get_class($exception);
+                $errorMessage = "$errorMessage ($className)";
+            }
+
+            $response['message'] = $errorMessage;
         }
 
         return response()->json($response);

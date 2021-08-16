@@ -17,8 +17,8 @@ class CreateEventsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('site_id');
             $table->string('name', 64);
-            $table->string('description', 64)->nullable();
-            $table->string("location", 128);
+            $table->string('description', 128)->nullable();
+            $table->string("location", 64)->nullable();
             $table->dateTime('from_date')->nullable();
             $table->dateTime('to_date')->nullable();
             $table->timestamps();

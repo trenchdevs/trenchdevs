@@ -36,6 +36,16 @@ class EventsController extends WebApiController
     public function upsert(Request $request)
     {
         return $this->webApiResponse(function () use ($request) {
+
+            $this->validate($request, [
+                'id' => 'nullable|numeric',
+                'name' => 'required|max:64',
+                'location' => 'nullable|max:64',
+                'description' => 'nullable|max:128',
+                'from_date' => 'nullable|date',
+                'to_date' => 'nullable|date',
+            ]);
+
             return Event::query()->updateOrCreate(
                 [
                     'site_id' => site()->id,
