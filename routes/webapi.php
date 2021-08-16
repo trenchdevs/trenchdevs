@@ -33,6 +33,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::prefix('events')->group(function(){
         Route::post('all', [EventsController::class, 'getEvents']);
         Route::get('details/{id}', [EventsController::class, 'details']);
+        Route::post('upsert', [EventsController::class, 'upsert']);
     });
 
 });

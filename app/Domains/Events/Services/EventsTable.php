@@ -9,7 +9,7 @@ class EventsTable extends MaterialTableService {
 
     public function query()
     {
-        return Event::query();
+        return Event::query()->orderBy('id', 'desc');
     }
 
     public function filter()

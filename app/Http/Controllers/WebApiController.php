@@ -26,7 +26,8 @@ class WebApiController extends AuthWebController
         ];
     }
 
-    public function webApiResponse (string $successMessage, callable $fn){
+    protected function webApiResponse(callable $fn, string $successMessage = 'Success')
+    {
 
         $response = [
             'status' => 'error',
@@ -42,7 +43,8 @@ class WebApiController extends AuthWebController
             $response['status'] = 'success';
             $response['message'] = !empty($successMessage) ? $successMessage : 'Success';
 
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
+            $response['message'] = $exception->getMessage();
             DB::rollBack();
         }
 
