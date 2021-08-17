@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/alph/static/css/main.d11a19c4.chunk.css",
-    "main.js": "/alph/static/js/main.15292940.chunk.js",
-    "main.js.map": "/alph/static/js/main.15292940.chunk.js.map",
+    "main.js": "/alph/static/js/main.10c18cb2.chunk.js",
+    "main.js.map": "/alph/static/js/main.10c18cb2.chunk.js.map",
     "runtime-main.js": "/alph/static/js/runtime-main.481741e8.js",
     "runtime-main.js.map": "/alph/static/js/runtime-main.481741e8.js.map",
     "static/css/2.6318cc0b.chunk.css": "/alph/static/css/2.6318cc0b.chunk.css",
@@ -29,6 +29,6 @@
     "static/css/2.6318cc0b.chunk.css",
     "static/js/2.224c4620.chunk.js",
     "static/css/main.d11a19c4.chunk.css",
-    "static/js/main.15292940.chunk.js"
+    "static/js/main.10c18cb2.chunk.js"
   ]
 }
