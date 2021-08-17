@@ -12,17 +12,12 @@
 | eg. trenchdevs.org/webapi/*
 |
 */
-
-
 use App\Domains\Events\Http\Controllers\EventsController;
 use App\Domains\Users\Http\Controllers\WebApi\UsersController;
 use App\Http\Controllers\WebApiController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('hello', function () {
-    return response()->json(['hellao']);
-});
 Route::middleware(['auth:web'])->group(function () {
     Route::get('init', [WebApiController::class, 'init']);
 
@@ -37,9 +32,6 @@ Route::middleware(['auth:web'])->group(function () {
     });
 
 });
-
-
-// Route::get('blogs', [BlogsController::class, 'index']);
 
 
 

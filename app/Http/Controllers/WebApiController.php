@@ -3,27 +3,36 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class WebApiController extends AuthWebController
 {
 
-    public function init()
+    public function init(Request $request)
     {
 
         $site = $this->user->site;
         $siteDetails = $site->attributesToArray();
         $siteDetails['full_domain'] = app()->environment('local') ? "http://{$site->domain}" : "https://{$site->domain}";
 
+        $serverDetails = [
+            'time' => date('Y-m-d H:i:s'),
+        ];
+
+        if(app()->environment('local')) {
+            $serverDetails = array_merge($serverDetails, [
+                'origin' => $request->server('HTTP_ORIGIN'),
+            ]);
+        }
+
         $userDetails = $this->user->attributesToArray();
 
         return [
             'site' => $siteDetails,
             'user' => $userDetails,
-            'server' => [
-                'time' => date('Y-m-d H:i:s'),
-            ]
+            'server' => $serverDetails,
         ];
     }
 

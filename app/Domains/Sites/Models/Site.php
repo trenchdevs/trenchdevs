@@ -44,14 +44,21 @@ class Site extends Model
      * Alias to getInstance
      * @return static|null
      */
-    public static function S(){
+    public static function S()
+    {
         return self::getInstance();
+    }
+
+    public static function setSiteInstance(Site $site)
+    {
+        self::$singleton = $site;
     }
 
     /** @var self */
     private static $singleton;
 
-    public static function getInstance(): ?self {
+    public static function getInstance(): ?self
+    {
 
         if (isset(self::$singleton) && !empty(self::$singleton)) {
             return self::$singleton;
@@ -81,7 +88,8 @@ class Site extends Model
         return self::$singleton;
     }
 
-    public static function getInstanceOrFail() {
+    public static function getInstanceOrFail()
+    {
 
         $instance = self::getInstance();
 
@@ -97,17 +105,20 @@ class Site extends Model
      *
      * @return static|null
      */
-    public static function getByIdentifier(string $identifier): ?self {
+    public static function getByIdentifier(string $identifier): ?self
+    {
         /** @var Site $site */
         $site = self::query()->where('identifier', $identifier)->first();
         return $site;
     }
 
-    public function getConfigValueByKey(string $keyName): ?string {
+    public function getConfigValueByKey(string $keyName): ?string
+    {
         return SiteConfig::findByKeyName($this->id, $keyName)->key_value ?? null;
     }
 
-    public function getRedirectPath(): ?string {
+    public function getRedirectPath(): ?string
+    {
 
         $redirectPath = $this->getConfigValueByKey(SiteConfig::KEY_NAME_SYSTEM_LOGIN_REDIRECT_PATH);
 
@@ -119,7 +130,8 @@ class Site extends Model
      *      used in conjunction with the IpRestricted middleware
      * @return array
      */
-    public function getWhitelistedIps(): array {
+    public function getWhitelistedIps(): array
+    {
 
         if (empty($whitelistedIps = json_decode_or_default($this->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_WHITELISTED_IPS)))) {
             return [];

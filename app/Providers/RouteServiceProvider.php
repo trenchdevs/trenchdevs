@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Domains\Sites\Models\Site;
+use App\Domains\Users\Models\User;
 use Exception;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -89,10 +90,11 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebApiV1Routes()
     {
 
+        $this->__inject_local_credentials();
+
         if (!empty($site = Site::getInstance()) && $site->theme == 'sjp') {
 
-            $this->__inject_local_credentials();
-            Route::middleware('webapi')
+            Route::middleware(['web', 'webapi'])
                 ->namespace($this->namespace)
                 ->prefix('webapi')
                 ->group(base_path('routes/webapi.php'));
@@ -128,10 +130,14 @@ class RouteServiceProvider extends ServiceProvider
         }
     }
 
-    private function __inject_local_credentials(){
-
-        if (app()->environment('local')) {
-            auth('web')->loginUsingId(21);
+    private function __inject_local_credentials()
+    {
+        // Ensure we only do this on the react app
+        if (app()->environment('local') && request()->server('HTTP_ORIGIN') === 'http://localhost:3000') {
+            /** @var User $user */
+            $user = User::query()->withoutGlobalScopes()->findOrFail(21);
+            auth('web')->login($user);
+            Site::setSiteInstance($user->site);
         }
     }
 }
