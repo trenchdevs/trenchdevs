@@ -16,13 +16,13 @@ abstract class AuthWebController extends Controller
      */
     public function __construct()
     {
-        parent::__construct();
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             $this->middlewareOnConstructorCalled();
             return $next($request);
         });
+        parent::__construct();
     }
 
 
