@@ -81,7 +81,7 @@ Route::middleware(['auth:web', 'verified'])->prefix('portal')->group(function ()
      */
 
     // start - user_portfolio_details
-    Route::get('portfolio/account', 'Admin\UsersController@account')->name('portfolio.account');
+    Route::get('portfolio/account', [UsersController::class, 'account'])->name('portfolio.account');
     Route::get('portfolio/edit', [PortfolioController::class, 'edit'])->name('portfolio.edit');
     Route::get('portfolio/security', [PortfolioController::class, 'showSecurity'])->name('portfolio.security');
     Route::post('portfolio/update', [PortfolioController::class, 'update'])->name('portfolio.update');

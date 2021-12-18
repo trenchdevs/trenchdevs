@@ -7,6 +7,7 @@ use App\Domains\TrenchDevs\Repositories\AdminDashboardMetrics;
 use App\Domains\Users\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -18,7 +19,7 @@ class HomeController extends Controller
      * @param AdminDashboardMetrics $dashboardMetrics
      * @return Renderable
      */
-    public function index(Request  $request, AdminDashboardMetrics $dashboardMetrics)
+    public function index(Request  $request, AdminDashboardMetrics $dashboardMetrics): Renderable
     {
 
         /** @var User $user */
