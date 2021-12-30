@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.5'
 
 services:
   db:
@@ -34,4 +34,6 @@ services:
 
 networks:
   trenchdevs-docker-network:
+    external: false
     driver: bridge
+    name: trenchdevs-docker-network
