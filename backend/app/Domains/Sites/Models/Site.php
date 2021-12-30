@@ -71,19 +71,24 @@ class Site extends Model
             $strippedDomain = implode('.', array_slice($domainParts, -2, 2, false));
         }
 
-        /** @var self singleton */
-        self::$singleton = self::query()
-            ->where(function (Builder $inner) use ($domain, $strippedDomain) {
+        try {
 
-                // it exactly match the domain
-                $inner->where('domain', '=', $domain)
-                    ->orWhere(function (Builder $inner) use ($strippedDomain) {
-                        $inner->where('allow_wildcard_for_domain', 1)
-                            ->where('domain', '=', "$strippedDomain");
-                    });
+            /** @var self singleton */
+            self::$singleton = self::query()
+                ->where(function (Builder $inner) use ($domain, $strippedDomain) {
 
-            })
-            ->first();
+                    // it exactly match the domain
+                    $inner->where('domain', '=', $domain)
+                        ->orWhere(function (Builder $inner) use ($strippedDomain) {
+                            $inner->where('allow_wildcard_for_domain', 1)
+                                ->where('domain', '=', "$strippedDomain");
+                        });
+
+                })
+                ->first();
+        } catch (\Throwable $throwable) {
+            // ignore
+        }
 
         return self::$singleton;
     }

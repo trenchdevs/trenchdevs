@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www/trenchdevs
     volumes:
-      - .:/var/www/trenchdevs
+      - ./backend:/var/www/
     ports:
       - ${FORWARD_APP_PORT:-80}:80
     networks:

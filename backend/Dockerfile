@@ -1,69 +1,64 @@
-FROM ubuntu:20.04
+FROM php:8.0-fpm
 
-# disable installs with choices
-# e.g. Geographic area
-ARG DEBIAN_FRONTEND=noninteractive
+# Set working directory
+WORKDIR /var/www
 
-RUN apt update
-RUN apt-get install -y \
-    nginx \
+# Add docker php ext repo
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+# Install php extensions
+RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
+    install-php-extensions mbstring pdo_mysql zip exif pcntl gd memcached
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    unzip \
+    git \
     curl \
-    php-fpm \
-    php-mysql \
-    php-xml \
-    php7.4-zip \
-    php-mbstring \
-    nodejs \
-    npm
+    lua-zlib-dev \
+    libmemcached-dev \
+    nginx
 
-RUN npm install --global yarn
+# Install supervisor
+RUN apt-get install -y supervisor
 
+# Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# nginx
-RUN ln -s /etc/nginx/sites-available/trenchdevs /etc/nginx/sites-enabled
-RUN unlink /etc/nginx/sites-enabled/default
-COPY ./docker/nginx/trenchdevs /etc/nginx/sites-available/trenchdevs
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# directories
-RUN mkdir /var/www/trenchdevs
-RUN chown -R $USER:$USER /var/www/trenchdevs
+# Add user for laravel application
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
 
-WORKDIR /var/www/trenchdevs
+# Copy code to /var/www
+COPY --chown=www:www-data . /var/www
 
+# add root to www group
+RUN chmod -R ug+w /var/www/storage
 
+# Copy nginx/php/supervisor configs
+RUN cp docker/supervisor.conf /etc/supervisord.conf
+RUN cp docker/php.ini /usr/local/etc/php/conf.d/app.ini
+RUN cp docker/nginx.conf /etc/nginx/sites-enabled/default
 
-# back end dependencies
-COPY composer.json composer.json
-COPY composer.lock composer.lock
-RUN composer install --prefer-dist --no-scripts --no-dev --no-autoloader && rm -rf /root/.composer
+# PHP Error Log Files
+RUN mkdir /var/log/php
+RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
 
-# copy all files not on on .dockerignore
-COPY . .
+# Deployment steps
+RUN composer update
 
-# Finish composer
-RUN composer dump-autoload --no-scripts --no-dev --optimize
-
-RUN chown -R www-data:www-data /var/www/trenchdevs/storage
-RUN chown -R www-data:www-data /var/www/trenchdevs/bootstrap/cache
-
-# front end dependencies
-#COPY package.json package-lock.json ./
-#RUN yarn install
-
-# front-end production build
-#RUN yarn run production
-
-# extra packages
-RUN apt update
-RUN apt install -y php-curl
+RUN composer install --optimize-autoloader --no-dev
+RUN chmod +x /var/www/docker/run.sh
 
 EXPOSE 80
-
-# RUN sed -i -e "s/;clear_env\s*=\s*no/clear_env = no/g" /etc/php/7.4/fpm/pool.d/www.conf
-
-# on boot start nginx + fpm without the need of supervisord
-CMD service nginx start && \
-    service php7.4-fpm start && \
-    exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
-
+ENTRYPOINT ["/var/www/docker/run.sh"]
