@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "--init--": "----------------------------------------------------------------------",
+    "init:env": "cp -n .env.docker.example .env && cp -n backend/.env.example .env",
+    "--server--": "----------------------------------------------------------------------",
     "server:up": "docker-compose up -d",
     "server:down": "docker-compose down",
     "server:ssh": "docker exec -it trenchdevs-app bash"
