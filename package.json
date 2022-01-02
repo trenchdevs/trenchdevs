@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "--init--": "----------------------------------------------------------------------",
-    "init:env": "cp -n .env.docker.example .env && cp -n backend/.env.example .env",
+    "init:env": "cp -n .env.docker.example .env && cp -n backend/.env.example backend/.env",
     "--server--": "----------------------------------------------------------------------",
     "server:up": "docker-compose up -d",
     "server:down": "docker-compose down",
