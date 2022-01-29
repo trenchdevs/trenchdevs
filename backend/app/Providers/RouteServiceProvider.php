@@ -105,25 +105,26 @@ class RouteServiceProvider extends ServiceProvider
     private function mapSiteRoutes()
     {
         try {
+            $sites = Site::query()->whereNotNull('theme')->get();
 
-            if (!$site = Site::getInstance()) { // can be null when migrating
-                return;
-            }
+            foreach ($sites as $site) {
 
             // routes shared for all sites
-            $domain = get_domain();
+            // $domain = get_domain();
             // Route::middleware('web')->namespace($this->namespace)->domain($domain)->group(base_path('routes/web-shared.php'));
 
             $siteRoutesPath = "routes/themes/$site->theme.php";
 
             if (!file_exists(base_path($siteRoutesPath))) {
-                return;
+                continue;
             }
 
             // these routes overrides web-shared routes
             Route::middleware('web')->namespace($this->namespace)
-                ->domain($domain)
+                ->domain($site->domain)
                 ->group(base_path($siteRoutesPath));
+
+            }
 
         } catch (Exception $exception) {
             // dd($exception->getMessage());
