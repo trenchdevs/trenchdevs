@@ -1,21 +1,21 @@
 version: '3.5'
 
 services:
-  db:
-    image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-    volumes:
-      - ./database/docker-init:/docker-entrypoint-initdb.d
-      - ./docker/volumes/mysql:/var/lib/mysql
-    ports:
-      - ${FORWARD_DB_PORT:-3306}:3306
-    healthcheck:
-      test: mysqladmin ping
-    networks:
-      - trenchdevs-docker-network
+#  db:
+#    image: mysql:8.0
+#    command: --default-authentication-plugin=mysql_native_password
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+#    volumes:
+#      - ./database/docker-init:/docker-entrypoint-initdb.d
+#      - ./docker/volumes/mysql:/var/lib/mysql
+#    ports:
+#      - ${FORWARD_DB_PORT:-3306}:3306
+#    healthcheck:
+#      test: mysqladmin ping
+#    networks:
+#      - trenchdevs-docker-network
 
   app:
     build:
