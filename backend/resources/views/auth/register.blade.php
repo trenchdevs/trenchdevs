@@ -15,7 +15,7 @@
                                     </div>
                                     <hr class="my-0"/>
                                     <div class="card-body p-5">
-                                        <form method="POST" action="{{ route('register') }}">
+                                        <form method="POST" action="/register">
                                             @csrf
                                             <div class="form-row">
                                                 <div class="col-md-6">

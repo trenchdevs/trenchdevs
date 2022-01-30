@@ -30,7 +30,7 @@
                                                     </h3>
                                                 </div>
 
-                                                <form method="POST" action="{{ route('login') }}">
+                                                <form method="POST" action="/login">
 
                                                     @csrf
                                                     <div class="form-group">
@@ -84,7 +84,7 @@
                                                         class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                                                         @if (Route::has('password.request'))
                                                             <a class="btn btn-link"
-                                                               href="{{ route('password.request') }}">
+                                                               href="/password/reset">
                                                                 {{ __('Forgot Your Password?') }}
                                                             </a>
                                                         @endif
@@ -100,7 +100,7 @@
                                     <div class="card-footer text-center">
                                         <div class="small">
                                             @if (Route::has('register'))
-                                            <a href="{{ route('register') }}">Register</a>
+                                            <a href="/register">Register</a>
                                             @endif
                                         </div>
                                     </div>
