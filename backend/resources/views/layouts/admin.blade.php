@@ -34,7 +34,7 @@
                         <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                         Account
                     </a>
-                    <form action="{{ route('logout') }}" method="post" style="display: inline">
+                    <form action="/logout" method="post" style="display: inline">
                         {{csrf_field()}}
                         <button type="submit" class="dropdown-item">
                         <span class="dropdown-item-icon">
