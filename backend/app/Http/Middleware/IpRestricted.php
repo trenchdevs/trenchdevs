@@ -18,7 +18,7 @@ class IpRestricted
     public function handle(Request $request, Closure $next) {
 
         if (
-            empty($ips = site()->getWhitelistedIps())
+            !empty($ips = site()->getWhitelistedIps())
             &&
             !in_array($request->ip(), $ips)
         ) {
