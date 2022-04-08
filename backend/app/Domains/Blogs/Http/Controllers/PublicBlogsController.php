@@ -9,6 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class PublicBlogsController extends Controller
@@ -31,8 +32,8 @@ class PublicBlogsController extends Controller
         return view('blogs.public.index', ['blogs' => $blogs]);
     }
 
-    public function show($slugOrId){
-
+    public function show($slugOrId): Factory|\Illuminate\Contracts\View\View|Application
+    {
         // todo: implement id in future
         $blog = Blog::findPublishedBySlug($slugOrId);
 

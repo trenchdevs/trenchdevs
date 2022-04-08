@@ -65,7 +65,6 @@ Route::middleware(['auth:web', 'verified'])->prefix('portal')->group(function ()
     Route::post('admin/users/password_reset', [UsersController::class, 'passwordReset'])->name('users.password_reset');
     Route::get('admin/users/{id}', [UsersController::class, 'edit'])->name('users.edit');
     Route::get('admin/users', [UsersController::class, 'index'])->name('users.index');
-
     Route::post('users/change_password', [UsersController::class, 'changePassword'])->name('users.change_password');
     // End - users
 

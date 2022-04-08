@@ -11,6 +11,7 @@ use App\Domains\Users\Models\UserPortfolioDetail;
 use App\Domains\Users\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -57,7 +58,10 @@ class UsersController extends AuthWebController
         ];
 
         if ($create) {
-            $defaultValidator['email'] = ['required', 'string', 'email', 'max:255', 'unique:users'];
+            $defaultValidator['email'] = ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function(Builder $query){
+                $query->where('email', '=', request()->input('email'));
+                $query->where('site_id', '=',site_id());
+            })];
             $defaultValidator['password'] = ['required', 'string', 'min:8'];
         }
 
@@ -67,11 +71,11 @@ class UsersController extends AuthWebController
     /**
      * Show the form for creating a new resource.
      *
-     * @return Application|Factory|Response|View
+     * @return Application|Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(): \Illuminate\Contracts\View\View|Factory|Application
     {
-        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
+        $this->adminCheckOrAbort();
 
         return view('admin.users.upsert', [
             'user' => new User,
@@ -121,6 +125,7 @@ class UsersController extends AuthWebController
         $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
 
         $data = $request->all();
+        $data['site_id'] = site_id();
 
         /** @var User $user */
         if ($request->id) {
@@ -148,6 +153,7 @@ class UsersController extends AuthWebController
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'email' => $data['email'],
+                'site_id' => site_id(),
                 'account_id' => Account::getTrenchDevsAccount()->id, // todo: can modify later
                 'is_active' => $data['is_active'],
                 'email_verified_at' => date('Y-m-d H:i:s'),

@@ -3,6 +3,7 @@
 
 use App\Domains\Sites\Models\Site;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Route;
 
 if (!function_exists('get_base_url')) {
     /**
@@ -11,16 +12,16 @@ if (!function_exists('get_base_url')) {
      */
     function get_base_url(bool $removePort = false)
     {
-        $fullUrl = url('/');
+        $fullUrl    = url('/');
         $fullDomain = explode('//', $fullUrl)[1]; // c.trenchdevs.org
 
         if (!empty($fullDomain)) {
             $domainParts = explode('.', $fullDomain);
-            $tld = array_pop($domainParts);
-            $domain = array_pop($domainParts);
+            $tld         = array_pop($domainParts);
+            $domain      = array_pop($domainParts);
 
             if ($removePort) {
-                $tld = explode(":",$tld)[0] ?? '';
+                $tld = explode(":", $tld)[0] ?? '';
             }
 
             return "{$domain}.{$tld}";
@@ -75,7 +76,7 @@ if (!function_exists('get_site_url')) {
     /**
      * @return string
      */
-    function get_site_url()
+    function get_site_url(): string
     {
         return add_scheme_to_url(get_base_url());
     }
@@ -197,20 +198,20 @@ if (!function_exists('request_meta')) {
     {
         $request = request();
 
-        $user = $request->user('web');
-        $ip = $request->ip();
-        $userAgent = $request->header('User-Agent');
-        $method = $request->method();
+        $user        = $request->user('web');
+        $ip          = $request->ip();
+        $userAgent   = $request->header('User-Agent');
+        $method      = $request->method();
         $requestData = $request->all();
-        $fullUrl = $request->fullUrl();
+        $fullUrl     = $request->fullUrl();
 
         $meta = [
-            'user' => $user,
-            'ip' => $ip,
-            'user_agent' => $userAgent,
-            'method' => $method,
+            'user'         => $user,
+            'ip'           => $ip,
+            'user_agent'   => $userAgent,
+            'method'       => $method,
             'request_data' => $requestData,
-            'full_url' => $fullUrl,
+            'full_url'     => $fullUrl,
         ];
 
         if ($encode) {
@@ -233,7 +234,8 @@ if (!function_exists('get_domain')) {
 
 if (!function_exists('site')) {
 
-    function site(): Site {
+    function site(): Site
+    {
         $site = Site::getInstance();
 
         if (!$site) {
@@ -244,21 +246,69 @@ if (!function_exists('site')) {
     }
 }
 
+if (!function_exists('site_id')) {
+
+    function site_id(): ?int
+    {
+        return site()->id;
+    }
+}
+
 /**
  * @param $string
  *
  * @return bool
  */
-function td_is_json($string): bool {
+function td_is_json($string): bool
+{
     json_decode($string);
     return json_last_error() === JSON_ERROR_NONE;
 }
 
-function json_decode_or_default($var, bool $default = null, $assoc = true) {
+function json_decode_or_default($var, bool $default = null, $assoc = true)
+{
 
     if (td_is_json($var)) {
         return json_decode($var, $assoc);
     }
 
     return $default;
+}
+
+/**
+ * Returns true if route is available for current site
+ * @param mixed ...$routes
+ * @return bool
+ */
+function route_has_all(...$routes): bool
+{
+    foreach ($routes as $route) {
+        if (!Route::has($route)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * @param ...$routes
+ * @return bool
+ */
+function route_has_any(...$routes){
+    foreach ($routes as $route) {
+        if (Route::has($route)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * @param string $route
+ * @return bool
+ */
+function route_has(string $route): bool
+{
+    return route_has_all($route);
 }

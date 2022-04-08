@@ -47,7 +47,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebApiV1Routes();
 
-        $this->mapSiteRoutes();
+        // $this->mapSiteRoutes();
+        $this->mapSiteRoutesTemp();
 
         $this->mapApiRoutes();
 
@@ -102,32 +103,53 @@ class RouteServiceProvider extends ServiceProvider
 
     }
 
-    private function mapSiteRoutes()
+//    private function mapSiteRoutes()
+//    {
+//        try {
+//            $sites = Site::query()->whereNotNull('theme')->get();
+//
+//            foreach ($sites as $site) {
+//
+//            // routes shared for all sites
+//            // $domain = get_domain();
+//            // Route::middleware('web')->namespace($this->namespace)->domain($domain)->group(base_path('routes/web-shared.php'));
+//
+//            $siteRoutesPath = "routes/themes/$site->theme.php";
+//
+//            if (!file_exists(base_path($siteRoutesPath))) {
+//                continue;
+//            }
+//
+//            // these routes overrides web-shared routes
+//            Route::middleware('web')->namespace($this->namespace)
+//                ->domain($site->domain)
+//                ->group(base_path($siteRoutesPath));
+//
+//            }
+//
+//        } catch (Exception $exception) {
+//            // dd($exception->getMessage());
+//        }
+//    }
+
+    private function mapSiteRoutesTemp()
     {
         try {
-            $sites = Site::query()->whereNotNull('theme')->get();
-
-            foreach ($sites as $site) {
-
-            // routes shared for all sites
-            // $domain = get_domain();
-            // Route::middleware('web')->namespace($this->namespace)->domain($domain)->group(base_path('routes/web-shared.php'));
-
+            $site           = site();
             $siteRoutesPath = "routes/themes/$site->theme.php";
 
             if (!file_exists(base_path($siteRoutesPath))) {
-                continue;
+                throw new Exception("$siteRoutesPath not found");
             }
 
-            // these routes overrides web-shared routes
             Route::middleware('web')->namespace($this->namespace)
                 ->domain($site->domain)
                 ->group(base_path($siteRoutesPath));
 
-            }
-
         } catch (Exception $exception) {
-            // dd($exception->getMessage());
+            if (app()->environment('local')) {
+                dd($exception->getMessage());
+            }
         }
     }
 

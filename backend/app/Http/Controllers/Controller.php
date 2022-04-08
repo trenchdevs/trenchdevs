@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Domains\Sites\Models\Site;
 use App\Domains\Users\Models\User;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -34,7 +37,8 @@ abstract class Controller extends BaseController
     }
 
 
-    public function middlewareOnConstructorCalled(): void {
+    public function middlewareOnConstructorCalled(): void
+    {
         // do custom logic per controller
         $this->site = Site::getInstance();
     }
@@ -50,7 +54,7 @@ abstract class Controller extends BaseController
     {
 
         $response = [
-            'status' => $status,
+            'status'  => $status,
             'message' => $message,
         ];
 
@@ -88,7 +92,8 @@ abstract class Controller extends BaseController
     /**
      * @return bool
      */
-    protected function isLoggedInUserAdmin(): bool{
+    protected function isLoggedInUserAdmin(): bool
+    {
 
         /** @var User $loggedInUser */
         $loggedInUser = request()->user();
@@ -104,6 +109,23 @@ abstract class Controller extends BaseController
         if (!$this->isLoggedInUserAdmin()) {
             abort('403', $message);
         }
+    }
+
+    /**
+     * @param string $view
+     * @param array $data
+     * @param array $mergeData
+     * @return View
+     */
+    public function siteViewOrDefault(string $view, array $data = [], array $mergeData = []): View
+    {
+        $theme = site()->theme;
+
+        if (view()->exists("$view:$theme")) {
+            return view("$view:$theme", $data, $mergeData);
+        }
+
+        return view($view, $data, $mergeData);
     }
 
 }

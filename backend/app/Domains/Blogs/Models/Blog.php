@@ -5,6 +5,8 @@ namespace App\Domains\Blogs\Models;
 use App\Domains\Blogs\Models\BlogTag;
 use App\Domains\Sites\Models\Tag;
 use App\Domains\Users\Models\User;
+use App\Support\Traits\SiteScoped;
+use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +26,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Blog extends Model
 {
+
+    use SiteScoped;
+
     protected $table = 'blogs';
 
     const DB_STATUS_DRAFT = 'draft';
@@ -35,6 +40,8 @@ class Blog extends Model
 
     protected $fillable = [
         'user_id',
+        'site_id',
+
         'slug',
         'title',
         'tagline',
@@ -87,7 +94,7 @@ class Blog extends Model
 
     /**
      * @param string $slug
-     * @return Blog|Builder|Model|object
+     * @return Builder|Model|object
      */
     public static function findPublishedBySlug(string $slug)
     {
@@ -122,7 +129,7 @@ class Blog extends Model
     /**
      * @return mixed
      */
-    public function markdownContentsAsHtml()
+    public function markdownContentsAsHtml(): mixed
     {
         return Markdown::convertToHtml($this->markdown_contents);
     }
@@ -132,16 +139,17 @@ class Blog extends Model
      * Get public blog url
      * @return string
      */
-    public function getPublicUrl()
+    public function getPublicUrl(): string
     {
 
-        $baseUrl = env('BASE_URL');
+        $baseUrl = site()->domain;
         $environment = env('APP_ENV');
 
         $scheme = $environment === 'production' ? 'https://' : 'http://';
 
-        return "{$scheme}blog.{$baseUrl}/{$this->slug}";
+        return str_replace('///', '//', "{$scheme}{$baseUrl}/b/{$this->slug}");
     }
+
 
 
     /**
@@ -161,5 +169,13 @@ class Blog extends Model
         }
 
         return $tagsCsv;
+    }
+
+    ###########################################################################
+    #                           Attributes
+    ###########################################################################
+    public function getHumanizedDiff(): string
+    {
+        return Carbon::parse($this->publication_date)->diffForHumans();
     }
 }

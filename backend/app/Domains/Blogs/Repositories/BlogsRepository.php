@@ -23,9 +23,9 @@ class BlogsRepository
 
     /**
      * BlogsRepository constructor.
-     * @param User $user
+     * @param User|null $user
      */
-    public function __construct(User $user)
+    public function __construct(User $user = null)
     {
         $this->user = $user;
     }
@@ -40,19 +40,19 @@ class BlogsRepository
      * @param array $filters
      * @return Paginator
      */
-    public function all(array $filters)
+    public function all(array $filters): Paginator
     {
         $query = Blog::query()
-            ->select(['b.*'])
-            ->from('blogs as b')
-            ->join('users as u', 'u.id', '=', 'b.user_id', 'left');
-
-        $query = $query->where('b.status', '=', Blog::DB_STATUS_PUBLISHED)
-            ->where('b.moderation_status', '=', Blog::DB_MODERATION_STATUS_APPROVED)
-            ->where('b.publication_date', '<=', mysql_now())
-            ->whereNotNull('b.publication_date')
-            ->orderBy('b.created_at', 'DESC')
-            ->orderBy('b.id', 'DESC');
+            ->withoutGlobalScopes()
+            ->selectRaw('blogs.*')
+            ->join('users as u', 'u.id', '=', 'blogs.user_id', 'left')
+            ->where('blogs.status', '=', Blog::DB_STATUS_PUBLISHED)
+            ->where('blogs.site_id', '=', site()->id)
+            ->where('blogs.moderation_status', '=', Blog::DB_MODERATION_STATUS_APPROVED)
+            ->where('blogs.publication_date', '<=', mysql_now())
+            ->whereNotNull('blogs.publication_date')
+            ->orderBy('blogs.created_at', 'DESC')
+            ->orderBy('blogs.id', 'DESC');
 
         foreach ($filters as $filterKey => $filterValue) {
 
@@ -187,6 +187,7 @@ class BlogsRepository
                 $blog = new Blog;
             }
 
+            $data['site_id'] = site()->id;
             $blog->fill($data);
             $blog->saveOrFail();
 

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Domains\Sites\Models\Site;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use stdClass;
@@ -49,6 +50,16 @@ class AppServiceProvider extends ServiceProvider
 
             if ($site = Site::getInstance()) {
                 $view->with('site', $site);
+            }
+
+            if ($site->theme === 'growingbokchoy') {
+                $view->with('tags', $tags = DB::select(DB::raw("
+                    SELECT t.id, tag_name
+                    FROM tags t
+                    INNER JOIN blog_tags bt ON t.id = bt.tag_id
+                    INNER JOIN blogs b ON bt.blog_id = b.id
+                    WHERE b.site_id = {$site->id}
+                ")));
             }
 
         });

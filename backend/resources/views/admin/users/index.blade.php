@@ -23,7 +23,9 @@
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Portfolio</th>
+                            @if(route_has('portfolio.preview'))
+                                <th>Portfolio</th>
+                            @endif
                             <th>Is Active</th>
                             <th>Actions</th>
                         </tr>
@@ -38,16 +40,18 @@
                                         src="{{$user->avatar_url ?: '/assets/img/avataaars.svg'}}" alt="User Avatar">
                                     {{$user->name()}}
                                 </td>
-                                <td>
-                                    @if(!empty($user->getPortfolioUrl()))
-                                        <a target="_blank"
-                                           href="{{$user->getPortfolioUrl()}}">
-                                            {{$user->getPortfolioUrl()}}
-                                        </a>
-                                    @else
-                                        N/A
-                                    @endif
-                                </td>
+                                @if(route_has('portfolio.preview'))
+                                    <td>
+                                        @if(!empty($user->getPortfolioUrl()))
+                                            <a target="_blank"
+                                               href="{{$user->getPortfolioUrl()}}">
+                                                {{$user->getPortfolioUrl()}}
+                                            </a>
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                @endif
                                 <td>{{!!$user->is_active ? "Yes": "No"}}</td>
                                 <td>
                                     <a href="{{ route('users.edit', $user->id, '') }}" class="btn btn-sm btn-warning">

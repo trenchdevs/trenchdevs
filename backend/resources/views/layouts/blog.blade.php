@@ -48,16 +48,20 @@
         <main>
             <nav class="navbar navbar-marketing navbar-expand-lg bg-dark navbar-dark">
                 <div class="container">
-                    <a class="navbar-brand text-white" href="{{route('public.blogs')}}">TRENCHDEVS BLOG</a>
+                    @if(route_has('public.blogs'))
+                        <a class="navbar-brand text-white" href="{{route('public.blogs')}}">TRENCHDEVS BLOG</a>
+                    @endif
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation"><i data-feather="menu"></i></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto mr-lg-5">
                             <li class="nav-item">
-                                <a class="nav-link text-white" target="_blank" href="{{route('public.home')}}">
-                                    TRENCHDEVS
-                                </a>
+                                @if(route_has('public.home'))
+                                    <a class="nav-link text-white" target="_blank" href="{{route('public.home')}}">
+                                        TRENCHDEVS
+                                    </a>
+                                @endif
                             </li>
                         </ul>
                         @if(empty($loggedInUser))

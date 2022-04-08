@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
 @section('scripts')
-        <script data-search-pseudo-elements defer
-                src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
-                crossorigin="anonymous"></script>
+    <script data-search-pseudo-elements defer
+            src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
+            crossorigin="anonymous"></script>
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
     @endphp
 
 
-    @if(!$portfolio_details->id)
+    @if(!$portfolio_details->id && site()->theme === 'trenchdevs')
         <div class="alert alert-primary border-0 mb-4 mt-5 px-md-5">
             <div class="position-relative">
                 <div class="row align-items-center justify-content-between">
@@ -23,9 +23,11 @@
                             Thanks for your interest in joining the team - you can start by filling up your portfolio
                             page
                         </p>
-                        <a class="btn btn-teal" href="{{route('portfolio.edit')}}">Get started
-                            <i class="ml-1" data-feather="arrow-right"></i>
-                        </a>
+                        @if(route_has_all('portfolio.edit'))
+                            <a class="btn btn-teal" href="{{route('portfolio.edit')}}">Get started
+                                <i class="ml-1" data-feather="arrow-right"></i>
+                            </a>
+                        @endif
                     </div>
                     <div class="col d-none d-md-block text-right pt-3">
                         <img class="img-fluid mt-n5"
