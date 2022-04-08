@@ -52,7 +52,7 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('site', $site);
             }
 
-            if ($site->theme === 'growingbokchoy') {
+            if ($site && $site->theme === 'growingbokchoy') {
                 $view->with('tags', $tags = DB::select(DB::raw("
                     SELECT t.id, tag_name
                     FROM tags t
