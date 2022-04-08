@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['ip-restricted'])->group(function(){
-    Auth::routes(['verify' => true, 'register' => true]);
+    Auth::routes(['verify' => true, 'register' => false]);
 
 // start - blogs - public
 //Route::get('b/{id}', [PublicBlogsController::class, 'show'])->name('blogs.show');
