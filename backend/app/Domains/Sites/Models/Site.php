@@ -5,10 +5,14 @@ namespace App\Domains\Sites\Models;
 use App\Domains\Sites\Models\Sites\SiteConfig;
 use App\Domains\Sites\Models\Sites\SiteFactory;
 use App\Providers\RouteServiceProvider;
+use ArrayAccess;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 /**
@@ -95,9 +99,70 @@ class Site extends Model
         return $site;
     }
 
-    public function getConfigValueByKey(string $keyName): ?string
+    /**
+     * @param string $keyName
+     * @param string|null $defaultValue
+     * @return string|null
+     */
+    public function getConfigValueByKey(string $keyName, string $defaultValue = null): ?string
     {
-        return SiteConfig::findByKeyName($this->id, $keyName)->key_value ?? null;
+        if (!isset($this->config)) {
+            $this->config = SiteConfig::query()->where('site_id', '=', $this->id)->get()->keyBy('key_name');
+        }
+
+        return $this->config->get($keyName, $defaultValue)->key_value ?? $defaultValue;
+    }
+
+    /**
+     * @param string $configKey
+     * @param string $jsonKey
+     * @param string $default
+     * @return string
+     */
+    public function getConfigValueFromJson(string $configKey, string $jsonKey, string $default): string
+    {
+        $json = $this->getConfigValueByKey($configKey, $default);
+
+        if (!td_is_json($json)) {
+            return $default;
+        }
+
+        $jsonArray = td_json_decode_or_default($json);
+
+        return Arr::get($jsonArray, $jsonKey, $default);
+    }
+
+    public function getSiteJson(string $key, $default = [])
+    {
+        $value = DB::table('site_jsons')->where('site_id', '=', $this->id)
+            ->where('key', '=', $key)
+            ->first()
+            ->value ?? null;
+
+        if (empty($value)) {
+            return $default;
+        }
+
+        return td_json_decode_or_default($value);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getFaqs(): Collection
+    {
+        return collect($this->getSiteJson('content::faqs', []));
+    }
+
+    /**
+     * @param $key
+     * @param $jsonKey
+     * @param $default
+     * @return array|ArrayAccess|mixed
+     */
+    public function getSiteJsonValueFromKey($key, $jsonKey, $default): mixed
+    {
+        return Arr::get($this->getSiteJson($key, $default), $jsonKey, []);
     }
 
     public function getRedirectPath(): ?string
@@ -116,7 +181,7 @@ class Site extends Model
     public function getWhitelistedIps(): array
     {
 
-        if (empty($whitelistedIps = json_decode_or_default($this->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_WHITELISTED_IPS)))) {
+        if (empty($whitelistedIps = td_json_decode_or_default($this->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_WHITELISTED_IPS)))) {
             return [];
         }
 

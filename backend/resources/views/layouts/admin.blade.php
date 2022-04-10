@@ -31,14 +31,14 @@
                         </div>
                     </h6>
                     <div class="dropdown-divider"></div>
-                    @if(route_has('portfolio.security'))
+                    @if(route_exists('portfolio.security'))
                         <a class="dropdown-item" href="{{route('portfolio.security')}}">
                             <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                             Account
                         </a>
                     @endif
 
-                    @if(route_has('logout'))
+                    @if(route_exists('logout'))
                         <form action="{{route('logout')}}" method="post" style="display: inline">
                             {{csrf_field()}}
                             <button type="submit" class="dropdown-item">
@@ -261,7 +261,7 @@
                         @endif
 
 
-                        @if(route_has('shop.products.show-bulk-upload') && Auth::user()->canManageShop())
+                        @if(route_exists('shop.products.show-bulk-upload') && Auth::user()->canManageShop())
 
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
                                data-target="#shop" aria-expanded="false" aria-controls="shop">

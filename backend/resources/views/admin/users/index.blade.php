@@ -23,7 +23,7 @@
                         <thead>
                         <tr>
                             <th>Name</th>
-                            @if(route_has('portfolio.preview'))
+                            @if(route_exists('portfolio.preview'))
                                 <th>Portfolio</th>
                             @endif
                             <th>Is Active</th>
@@ -40,7 +40,7 @@
                                         src="{{$user->avatar_url ?: '/assets/img/avataaars.svg'}}" alt="User Avatar">
                                     {{$user->name()}}
                                 </td>
-                                @if(route_has('portfolio.preview'))
+                                @if(route_exists('portfolio.preview'))
                                     <td>
                                         @if(!empty($user->getPortfolioUrl()))
                                             <a target="_blank"

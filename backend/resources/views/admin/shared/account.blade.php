@@ -1,5 +1,5 @@
 <nav class="nav nav-borders mb-5">
-    @if(route_has('portfolio.edit'))
+    @if(route_exists('portfolio.edit'))
         <a class="nav-link ml-0" href="{{route('portfolio.edit')}}">
             <div class="badge badge-cyan-soft p-3">
                 <i data-feather="user"></i>
@@ -8,7 +8,7 @@
         </a>
     @endif
 
-    @if(route_has('portfolio.security'))
+    @if(route_exists('portfolio.security'))
         <a class="nav-link active" href="{{route('portfolio.security')}}">
             <div class="badge badge-blue-soft p-3">
                 <i data-feather="lock"></i>

@@ -4,6 +4,7 @@
 use App\Domains\Sites\Models\Site;
 use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -267,7 +268,7 @@ function td_is_json($string): bool
     return json_last_error() === JSON_ERROR_NONE;
 }
 
-function json_decode_or_default($var, bool $default = null, $assoc = true)
+function td_json_decode_or_default($var, bool $default = null, $assoc = true)
 {
 
     if (td_is_json($var)) {
@@ -311,7 +312,7 @@ function route_has_any(...$routes)
  * @param string $route
  * @return bool
  */
-function route_has(string $route): bool
+function route_exists(string $route): bool
 {
     return route_has_all($route);
 }
@@ -326,4 +327,16 @@ function route_has(string $route): bool
     echo vsprintf(str_replace('?', '%s', $addSlashes), $builder->getBindings());
 
     die;
+}
+
+
+/**
+ * @param string $configKey
+ * @param string $jsonKey
+ * @param string $default
+ * @return string
+ */
+function site_get_config_from_json(string $configKey, string $jsonKey, string $default): string
+{
+    return site()->getConfigValueFromJson($configKey, $jsonKey, $default);
 }

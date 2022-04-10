@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccountsTable extends Migration
+class CreateSiteJsonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('site_jsons', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('application_type_id');
-            $table->string('business_name');
+            $table->unsignedBigInteger('site_id')->index();
+            $table->string('key', 128)->index();
+            $table->json('value');
             $table->timestamps();
-
-            $table->foreign('application_type_id')->references('id')->on('application_types');
+            $table->index(['site_id', 'key'], 'main_idx');
+            $table->foreign('site_id')->references('id')->on('sites');
         });
     }
 
@@ -30,7 +31,6 @@ class CreateAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('site_jsons');
     }
 }

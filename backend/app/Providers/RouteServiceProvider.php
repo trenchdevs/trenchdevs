@@ -47,8 +47,12 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebApiV1Routes();
 
-        // $this->mapSiteRoutes();
-        $this->mapSiteRoutesTemp();
+        if (!app()->runningInConsole()) {
+            // we don't need site specific routes on console
+            // e.g. when doing php artisan route:list
+            // site instance is not available
+            $this->mapSiteRoutes();
+        }
 
         $this->mapApiRoutes();
 
@@ -103,7 +107,7 @@ class RouteServiceProvider extends ServiceProvider
 
     }
 
-//    private function mapSiteRoutes()
+//    private function mapSiteRoutesOld()
 //    {
 //        try {
 //            $sites = Site::query()->whereNotNull('theme')->get();
@@ -132,7 +136,7 @@ class RouteServiceProvider extends ServiceProvider
 //        }
 //    }
 
-    private function mapSiteRoutesTemp()
+    private function mapSiteRoutes()
     {
         try {
             $site           = site();

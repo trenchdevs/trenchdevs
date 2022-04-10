@@ -40,6 +40,6 @@ Route::middleware(['ip-restricted'])->group(function(){
 //    Route::get('blogs', [PublicBlogsController::class, 'index'])->name('public.blogs.index');
 //
 //    Route::get('pages/about', [PublicPagesController::class, 'about'])->name('public.pages.about');
-//    Route::get('/', [PublicHomeController::class, 'index'])->name('public.home');
+    Route::get('/', [PublicHomeController::class, 'index'])->name('public.home');
 
 });
