@@ -3,7 +3,9 @@
 
 use App\Domains\Sites\Models\Site;
 use Carbon\Carbon;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Route;
+use JetBrains\PhpStorm\NoReturn;
 
 if (!function_exists('get_base_url')) {
     /**
@@ -295,7 +297,8 @@ function route_has_all(...$routes): bool
  * @param ...$routes
  * @return bool
  */
-function route_has_any(...$routes){
+function route_has_any(...$routes)
+{
     foreach ($routes as $route) {
         if (Route::has($route)) {
             return true;
@@ -311,4 +314,16 @@ function route_has_any(...$routes){
 function route_has(string $route): bool
 {
     return route_has_all($route);
+}
+
+/**
+ * @param $builder \Illuminate\Database\Eloquent\Builder|Builder
+ * @return void
+ */
+#[NoReturn] function td_echo_builder_query(\Illuminate\Database\Eloquent\Builder|Builder $builder): void
+{
+    $addSlashes = str_replace('?', "'?'", $builder->toSql());
+    echo vsprintf(str_replace('?', '%s', $addSlashes), $builder->getBindings());
+
+    die;
 }

@@ -158,7 +158,7 @@
                                 <div class="nav-link-icon">
                                     <i data-feather="users"></i>
                                 </div>
-                                Participants
+                                Users
                             </a>
                         @endif
 

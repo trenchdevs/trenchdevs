@@ -3,11 +3,13 @@
 namespace App\Domains\Sites\Models;
 
 use App\Domains\Sites\Models\Sites\SiteConfig;
+use App\Domains\Sites\Models\Sites\SiteFactory;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Throwable;
 
 /**
  * Class Site
@@ -54,55 +56,31 @@ class Site extends Model
         self::$singleton = $site;
     }
 
-    /** @var self */
-    private static $singleton;
+    /**
+     * @var static
+     */
+    private static Site $singleton;
 
-    public static function getInstance(): ?self
+    /**
+     * @return static|null
+     */
+    public static function getInstance(): ?static
     {
-
-        if (isset(self::$singleton) && !empty(self::$singleton)) {
-            return self::$singleton;
-        }
-
-        $domain = get_domain();
-        $strippedDomain = $domain;
-
-        if (count($domainParts = explode('.', $domain)) > 2) {
-            $strippedDomain = implode('.', array_slice($domainParts, -2, 2, false));
-        }
-
         try {
 
-            /** @var self singleton */
-            self::$singleton = self::query()
-                ->where(function (Builder $inner) use ($domain, $strippedDomain) {
+            if (isset(self::$singleton) && !empty(self::$singleton)) {
+                return self::$singleton;
+            }
+            return SiteFactory::getInstanceOrNull();
 
-                    // it exactly match the domain
-                    $inner->where('domain', '=', $domain)
-                        ->orWhere(function (Builder $inner) use ($strippedDomain) {
-                            $inner->where('allow_wildcard_for_domain', 1)
-                                ->where('domain', '=', "$strippedDomain");
-                        });
-
-                })
-                ->first();
-        } catch (\Throwable $throwable) {
-            // ignore
+        } catch (Throwable $throwable) {
+            // ignore on production - 404
+            if (app()->environment('local')) {
+                dd($throwable->getMessage());
+            }
         }
 
         return self::$singleton;
-    }
-
-    public static function getInstanceOrFail()
-    {
-
-        $instance = self::getInstance();
-
-        if (!$instance) {
-            abort(404, "Site not found");
-        }
-
-        return $instance;
     }
 
     /**
