@@ -17,15 +17,14 @@ class CreatePhotosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('site_id') ->comment('What account the entry is associated')->index();
             $table->unsignedBigInteger('user_id')->comment('User who created entry')->index();
-            $table->string('path')->unique();
-            $table->string('url');
+            $table->unsignedBigInteger('s3_id')->comment('File id')->index();
             $table->boolean('is_active');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
 
-
-            $table->foreign('site_id')->references('id')->on('accounts');
+            $table->foreign('site_id')->references('id')->on('sites');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('s3_id')->references('id')->on('aws_s3_uploads');
         });
     }
 

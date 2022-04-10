@@ -140,7 +140,7 @@ class PortfolioController extends Controller
         $avatarFile = $request->file('avatar_url');
 
         $fileName = sprintf("%s_%s", $user->id, md5($user->name()));
-        $s3FullPath = $this->s3Helper->upload($avatarFile, 'users/avatars', $fileName);
+        $s3FullPath = $this->s3Helper->upload('users::portfolio::avatar::legacy', $avatarFile, 'users/avatars', $fileName)->s3_url ?? null;
 
         $user->avatar_url = $s3FullPath;
         $user->saveOrFail();
@@ -194,7 +194,7 @@ class PortfolioController extends Controller
         $avatarFile = $request->file('background_cover_url');
 
         $fileName = sprintf("%s_%s", $user->id, md5($user->name()));
-        $s3FullPath = $this->s3Helper->upload($avatarFile, 'users/background_covers', $fileName);
+        $s3FullPath = $this->s3Helper->upload('users::portfolio::background::legacy', $avatarFile, 'users/background_covers', $fileName)->s3_url ?? null;
 
         $portfolioDetails = $user->getPortfolioDetails();
         $portfolioDetails->background_cover_url = $s3FullPath;

@@ -1,6 +1,7 @@
 <?php
 
 use App\Domains\Blogs\Http\Controllers\BlogsController;
+use App\Domains\Photos\Http\Controllers\AdminPhotosController;
 use App\Domains\TrenchDevs\Http\Controllers\HomeController;
 use App\Domains\Users\Http\Controllers\PortfolioController;
 use App\Domains\Users\Http\Controllers\UsersController;
@@ -10,7 +11,7 @@ use App\Public\Controllers\PublicHomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['ip-restricted'])->group(function(){
+Route::middleware(['ip-restricted'])->group(function () {
     Auth::routes(['verify' => true, 'register' => true]);
 
 // start - blogs - public
@@ -22,17 +23,22 @@ Route::middleware(['ip-restricted'])->group(function(){
 
 
         // START - users
-        Route::get('admin/users/create', [UsersController::class, 'create'])->name('users.create');
-        Route::post('admin/users/upsert', [UsersController::class, 'upsert'])->name('users.upsert');
-        Route::post('admin/users/password_reset', [UsersController::class, 'passwordReset'])->name('users.password_reset');
-        Route::get('admin/users/{id}', [UsersController::class, 'edit'])->name('users.edit');
-        Route::get('admin/users', [UsersController::class, 'index'])->name('users.index');
-
+        Route::get('users/create', [UsersController::class, 'create'])->name('users.create');
+        Route::post('users/upsert', [UsersController::class, 'upsert'])->name('users.upsert');
+        Route::post('users/password_reset', [UsersController::class, 'passwordReset'])->name('users.password_reset');
+        Route::get('users', [UsersController::class, 'index'])->name('users.index');
         // change password
-        Route::get('portfolio/security', [PortfolioController::class, 'showSecurity'])->name('portfolio.security');
         Route::post('users/change_password', [UsersController::class, 'changePassword'])->name('users.change_password');
+        Route::get('security', [PortfolioController::class, 'showSecurity'])->name('portfolio.security');
+        Route::get('users/{id}', [UsersController::class, 'edit'])->name('users.edit');
 
         // End - users
+
+        // Start - Photos
+        Route::post('photos/upload', [AdminPhotosController::class, 'upload'])->name('admin.photos.upload');
+        Route::post('photos/delete/{id}', [AdminPhotosController::class, 'delete'])->name('admin.photos.delete');
+        Route::get('photos', [AdminPhotosController::class, 'index'])->name('admin.photos.index');
+        // End - Photos
     });
 
 //

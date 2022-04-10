@@ -107,7 +107,7 @@ class UsersController extends AuthWebController
         $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
 
         return view('admin.users.upsert', [
-            'user' => User::findOrFail($id),
+            'user' => User::query()->findOrFail($id),
             'action' => route('users.upsert'),
             'editMode' => true,
         ]);

@@ -106,6 +106,36 @@
                             </div>
                         @endif
 
+                        @if(route_exists('admin.photos.index'))
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                               data-target="#my-portfolio" aria-expanded="false" aria-controls="my-portfolio">
+                                <div class="nav-link-icon">
+                                    <i data-feather="briefcase"></i>
+                                </div>
+                                Photos
+                                <div class="sidenav-collapse-arrow">
+                                    <i data-feather="chevron-down"></i>
+                                </div>
+                            </a>
+
+                            <div class="collapse" id="my-portfolio" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{{ route('admin.photos.index') }}">
+                                        <div class="nav-link-icon">
+                                            <i data-feather="edit"></i>
+                                        </div>
+                                        All Photos
+                                    </a>
+                                    <a class="nav-link" href="#" target="_blank">
+                                        <div class="nav-link-icon">
+                                            <i data-feather="eye"></i>
+                                        </div>
+                                        Photo Albums
+                                    </a>
+                                </nav>
+                            </div>
+                        @endif
+
                         @if(route_has_any('public.blogs', 'blogs.upsert', 'blogs.index'))
 
 

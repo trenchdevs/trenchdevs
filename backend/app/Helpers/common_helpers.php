@@ -61,13 +61,14 @@ if (!function_exists('get_portfolio_url')) {
 if (!function_exists('add_scheme_to_url')) {
     /**
      * @param string $url
+     * @param bool $alwaysHttp
      * @return string
      */
-    function add_scheme_to_url(string $url)
+    function add_scheme_to_url(string $url, bool $alwaysHttp = true): string
     {
         $scheme = "http://";
 
-        if (env('APP_ENV') === 'production') {
+        if (app()->environment('production') || $alwaysHttp) {
             $scheme = 'https://';
         }
 

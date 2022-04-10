@@ -13,7 +13,7 @@ trait SiteScoped {
 
             // add a constraint for only users under the current site
             if ($site = site()) {
-                $builder->where('site_id', $site->id);
+                $builder->where((new static())->getTable() . '.site_id', $site->id);
             }
         });
     }
