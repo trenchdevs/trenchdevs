@@ -1,5 +1,6 @@
 <?php
 
+use App\Domains\Announcements\Http\Controllers\AnnouncementsController;
 use App\Domains\Blogs\Http\Controllers\BlogsController;
 use App\Domains\Photos\Http\Controllers\AdminPhotosController;
 use App\Domains\TrenchDevs\Http\Controllers\HomeController;
@@ -39,6 +40,12 @@ Route::middleware(['ip-restricted'])->group(function () {
         Route::post('photos/delete/{id}', [AdminPhotosController::class, 'delete'])->name('admin.photos.delete');
         Route::get('photos', [AdminPhotosController::class, 'index'])->name('admin.photos.index');
         // End - Photos
+
+        // Start - Announcements
+        Route::get('announcements', [AnnouncementsController::class, 'list'])->name('announcements.index');
+        Route::get('announcements/create', [AnnouncementsController::class, 'create'])->name('announcements.create');
+        Route::post('announcements/announce', [AnnouncementsController::class, 'announce'])->name('announcements.announce');
+        // End - Announcements
     });
 
 //

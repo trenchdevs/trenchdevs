@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Domains\Announcements\Models\Announcement;
 use App\Domains\Emails\Models\EmailQueue;
 use App\Domains\Users\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ use Throwable;
 
 class AnnouncementsController extends AuthWebController
 {
-    public function list()
+    public function list(): View
     {
         $announcements = Announcement::query()
             ->orderBy('id', 'desc')
@@ -46,7 +47,7 @@ class AnnouncementsController extends AuthWebController
         $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
 
         $this->validate($request, [
-            'title' => 'required',
+            'title'   => 'required',
             'message' => 'required'
         ]);
 
@@ -54,13 +55,13 @@ class AnnouncementsController extends AuthWebController
         $user = Auth::user();
 
         $message = $request->message;
-        $title = $request->title;
+        $title   = $request->title;
 
-        $announcement = new Announcement();
+        $announcement          = new Announcement();
         $announcement->user_id = $user->id;
-        $announcement->account_id = 1;
-        $announcement->title = $title;
-        $announcement->status = 'processed'; // change later on cron
+        $announcement->site_id = site_id();
+        $announcement->title   = $title;
+        $announcement->status  = 'processed'; // change later on cron
         $announcement->message = $message;
         $announcement->saveOrFail();
 
@@ -76,7 +77,7 @@ class AnnouncementsController extends AuthWebController
             foreach ($emails as $email) {
 
                 $viewData = [
-                    'name' => null,
+                    'name'       => null,
                     'email_body' => $message,
                 ];
 
@@ -96,7 +97,7 @@ class AnnouncementsController extends AuthWebController
             foreach ($users as $user) {
 
                 $viewData = [
-                    'name' => $user->name(),
+                    'name'       => $user->name(),
                     'email_body' => $message,
                 ];
 
