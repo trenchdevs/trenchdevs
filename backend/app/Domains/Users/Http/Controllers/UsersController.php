@@ -128,15 +128,11 @@ class UsersController extends AuthWebController
         $data['site_id'] = site_id();
 
         /** @var User $user */
-        if ($request->id) {
-
+        if ($request->id) { // no id - update mode
             $this->validate($request, $this->validator(false));
-
+            $user = User::query()->findOrFail($request->id);
+            // password update is disabled via this panel
             unset($data['password'], $data['email']);
-            /**
-             * Update
-             */
-            $user = User::findOrFail($request->id);
             $user->fill($data);
             $user->saveOrFail();
 
@@ -146,10 +142,7 @@ class UsersController extends AuthWebController
 
             $this->validate($request, $this->validator(true));
 
-            /**
-             * Create
-             */
-            $user = User::create([
+            $user = User::query()->create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'email' => $data['email'],
@@ -158,7 +151,7 @@ class UsersController extends AuthWebController
                 'is_active' => $data['is_active'],
                 'email_verified_at' => date('Y-m-d H:i:s'),
                 'role' => $data['role'],
-                'password' => $data['password'],
+                'password' => Hash::make($data['password'])
             ]);
 
             Session::flash('message', "Successfully created new user " . $user->name());
@@ -176,7 +169,7 @@ class UsersController extends AuthWebController
      */
     public function passwordReset(Request $request)
     {
-        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
+        $this->adminCheckOrAbort();
 
         $id = $request->id ?? null;
 
@@ -185,7 +178,7 @@ class UsersController extends AuthWebController
         }
 
         /** @var User $user */
-        $user = User::findOrFail($id);
+        $user = User::query()->findOrFail($id);
 
         $token = Password::getRepository()->create($user);
         $user->sendPasswordResetNotification($token);

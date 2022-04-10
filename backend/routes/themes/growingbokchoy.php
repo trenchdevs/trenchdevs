@@ -2,6 +2,7 @@
 
 use App\Domains\Blogs\Http\Controllers\BlogsController;
 use App\Domains\TrenchDevs\Http\Controllers\HomeController;
+use App\Domains\Users\Http\Controllers\PortfolioController;
 use App\Domains\Users\Http\Controllers\UsersController;
 use App\Public\Controllers\Blogs\PublicBlogsController;
 use App\Public\Controllers\Pages\PublicPagesController;
@@ -32,6 +33,7 @@ Route::middleware(['ip-restricted'])->group(function(){
         Route::post('admin/users/password_reset', [UsersController::class, 'passwordReset'])->name('users.password_reset');
         Route::get('admin/users/{id}', [UsersController::class, 'edit'])->name('users.edit');
         Route::get('admin/users', [UsersController::class, 'index'])->name('users.index');
+        Route::get('portfolio/security', [PortfolioController::class, 'showSecurity'])->name('portfolio.security');
         Route::post('users/change_password', [UsersController::class, 'changePassword'])->name('users.change_password');
         // End - users
     });

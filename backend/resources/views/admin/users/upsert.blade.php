@@ -59,8 +59,7 @@
                     <div class="form-group col-6">
                         @if(!isset($user->id))
                             <label for="password">Password</label>
-                            <input class="form-control" id="password" name="password" type="password"
-                                   value="">
+                            <input class="form-control" id="password" name="password" type="password" value="">
                         @endif
                     </div>
 

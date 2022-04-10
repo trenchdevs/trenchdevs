@@ -4,7 +4,8 @@
     <nav class="topnav navbar navbar-expand shadow navbar-light bg-white" id="sidenavAccordion">
         <a class="navbar-brand d-none d-sm-block" href="{{ route('portal.home')}}">{{site()->company_name}} PORTAL</a>
         <button class="btn btn-icon btn-transparent-light order-1 order-lg-0 mr-lg-2" id="sidebarToggle" href="#">
-            <i data-feather="menu"></i></button>
+            <i data-feather="menu"></i>
+        </button>
         <ul class="navbar-nav align-items-center ml-auto">
             <li class="nav-item dropdown no-caret mr-3 dropdown-user">
                 <span class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
@@ -30,8 +31,8 @@
                         </div>
                     </h6>
                     <div class="dropdown-divider"></div>
-                    @if(route_has('portfolio.edit'))
-                        <a class="dropdown-item" href="{{route('portfolio.edit')}}">
+                    @if(route_has('portfolio.security'))
+                        <a class="dropdown-item" href="{{route('portfolio.security')}}">
                             <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                             Account
                         </a>
