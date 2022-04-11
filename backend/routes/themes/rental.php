@@ -2,6 +2,7 @@
 
 use App\Domains\Announcements\Http\Controllers\AnnouncementsController;
 use App\Domains\Blogs\Http\Controllers\BlogsController;
+use App\Domains\Photos\Http\Controllers\AdminPhotoAlbumsController;
 use App\Domains\Photos\Http\Controllers\AdminPhotosController;
 use App\Domains\TrenchDevs\Http\Controllers\HomeController;
 use App\Domains\Users\Http\Controllers\PortfolioController;
@@ -39,6 +40,11 @@ Route::middleware(['ip-restricted'])->group(function () {
         Route::post('photos/upload', [AdminPhotosController::class, 'upload'])->name('admin.photos.upload');
         Route::post('photos/delete/{id}', [AdminPhotosController::class, 'delete'])->name('admin.photos.delete');
         Route::get('photos', [AdminPhotosController::class, 'index'])->name('admin.photos.index');
+        Route::get('photos/albums', [AdminPhotoAlbumsController::class, 'getIndex'])->name('admin.photos.albums');
+        Route::get('photos/albums/upsert/{id?}', [AdminPhotoAlbumsController::class, 'getUpsert'])->name('admin.photos.albums.upsert');
+        Route::post('photos/albums/upsert', [AdminPhotoAlbumsController::class, 'postUpsert'])->name('admin.photos.albums.post_upsert');
+        Route::post('photos/albums/associate', [AdminPhotoAlbumsController::class, 'postAssociate'])->name('admin.photos.albums.associate');
+        Route::post('photos/albums/disassociate', [AdminPhotoAlbumsController::class, 'postDisassociate'])->name('admin.photos.albums.disassociate');
         // End - Photos
 
         // Start - Announcements

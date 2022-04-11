@@ -126,7 +126,7 @@
                                         </div>
                                         All Photos
                                     </a>
-                                    <a class="nav-link" href="#" target="_blank">
+                                    <a class="nav-link" href="{{ route('admin.photos.albums') }}" target="_blank">
                                         <div class="nav-link-icon">
                                             <i data-feather="eye"></i>
                                         </div>
@@ -144,7 +144,7 @@
                                 <div class="nav-link-icon">
                                     <i data-feather="edit-3"></i>
                                 </div>
-                                Blog Posts
+                                Blogs
                                 <div class="sidenav-collapse-arrow">
                                     <i data-feather="chevron-down"></i>
                                 </div>
@@ -171,7 +171,7 @@
                                         <div class="nav-link-icon">
                                             <i data-feather="users"></i>
                                         </div>
-                                        All Blog Posts
+                                        All Blogs
                                     </a>
                                     <a class="nav-link" href="{{route('blogs.index', ['me' => '1'])}}">
                                         <div class="nav-link-icon">

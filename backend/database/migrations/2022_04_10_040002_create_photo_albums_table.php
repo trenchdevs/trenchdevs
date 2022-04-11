@@ -20,10 +20,11 @@ class CreatePhotoAlbumsTable extends Migration
             $table->string('name', 191);
             $table->string('description', 191);
             $table->boolean('is_featured')->nullable();
-            $table->mediumInteger('rank')->comment("Priority rank in displaying featured album")->default(100);
-            $table->softDeletes();
+            $table->mediumInteger('listing_order')->comment("Priority rank in displaying featured album")->default(100)->index();
             $table->timestamps();
-            $table->foreign('site_id')->references('id')->on('accounts');
+            $table->softDeletes();
+
+            $table->foreign('site_id')->references('id')->on('sites');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

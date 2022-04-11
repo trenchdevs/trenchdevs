@@ -5,6 +5,7 @@ namespace App\Domains\Photos\Models;
 use App\Domains\Aws\Models\AwsS3Upload;
 use App\Support\Traits\SiteScoped;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
@@ -51,6 +52,11 @@ class Photo extends Model
     {
         $this->file->markForRemoval();
         return parent::delete();
+    }
+
+    public function albums(): BelongsToMany
+    {
+        return $this->belongsToMany(PhotoAlbum::class);
     }
 
 }

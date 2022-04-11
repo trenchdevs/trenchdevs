@@ -7,7 +7,7 @@
     @php /** @var \App\Domains\Blogs\Models\Blog $blog */ @endphp
 
     <div class="card">
-        <div class="card-header">{{!empty($blog->id) ? 'Update' : 'Create'}} Blog</div>
+        <div class="card-header">{{!empty($blog->id) ? 'Update' : 'Create'}} Content</div>
         <div class="card-body">
 
             <div>
@@ -41,15 +41,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="markdown_contents">Markdown Contents</label>
+                    <label for="markdown_contents">Body</label>
                     <textarea name="markdown_contents" id="markdown_contents" cols="30" rows="30"
                     >{{old('markdown_contents', $blog->markdown_contents ?? '')}}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="primary_image_url">
-                        Primary Image URL <small>(shown on the blog listing and below title and tagline on blog
-                            details)
+                        Primary Image URL <small>(shown on the blog listing and below title and tagline on blog details)
                         </small>
                     </label>
                     <p>Tip: you can try using the unsplash to get free images <br> (eg.

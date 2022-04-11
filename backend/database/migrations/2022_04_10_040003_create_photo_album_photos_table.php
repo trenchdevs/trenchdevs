@@ -14,7 +14,6 @@ class CreatePhotoAlbumPhotosTable extends Migration
     public function up()
     {
         Schema::create('photo_album_photos', function (Blueprint $table) {
-            $table->id();
             $table->unsignedBigInteger('photo_id')  ->comment('What photo the entry is associated')->index();
             $table->unsignedBigInteger('photo_album_id')->comment('What photo album the entry is associated')->index();
             $table->boolean('is_featured')->nullable();

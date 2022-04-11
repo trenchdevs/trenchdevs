@@ -1,5 +1,6 @@
 <?php
 
+use App\Domains\Announcements\Http\Controllers\AnnouncementsController;
 use App\Domains\Blogs\Http\Controllers\BlogsController;
 use App\Domains\TrenchDevs\Http\Controllers\HomeController;
 use App\Domains\Users\Http\Controllers\PortfolioController;
@@ -37,8 +38,14 @@ Route::middleware(['ip-restricted'])->group(function(){
         // change password
         Route::get('portfolio/security', [PortfolioController::class, 'showSecurity'])->name('portfolio.security');
         Route::post('users/change_password', [UsersController::class, 'changePassword'])->name('users.change_password');
-
         // End - users
+
+        // Start - Announcements
+        Route::get('announcements', [AnnouncementsController::class, 'list'])->name('announcements.index');
+        Route::get('announcements/create', [AnnouncementsController::class, 'create'])->name('announcements.create');
+        Route::post('announcements/announce', [AnnouncementsController::class, 'announce'])->name('announcements.announce');
+        // End - Announcements
+
     });
 
 
