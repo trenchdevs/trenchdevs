@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Domains\Emails\Models\EmailQueue;
 use Illuminate\Console\Command;
+use Throwable;
 
 class SendEmails extends Command
 {
@@ -34,7 +35,7 @@ class SendEmails extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @throws Throwable
      */
     public function handle()
     {

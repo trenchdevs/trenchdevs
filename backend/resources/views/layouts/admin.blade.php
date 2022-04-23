@@ -126,7 +126,7 @@
                                         </div>
                                         All Photos
                                     </a>
-                                    <a class="nav-link" href="{{ route('admin.photos.albums') }}" target="_blank">
+                                    <a class="nav-link" href="{{ route('admin.photos.albums') }}">
                                         <div class="nav-link-icon">
                                             <i data-feather="eye"></i>
                                         </div>

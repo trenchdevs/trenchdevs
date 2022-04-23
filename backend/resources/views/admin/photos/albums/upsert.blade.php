@@ -1,5 +1,15 @@
 @extends('layouts.admin')
 
+@section('styles')
+
+    <style>
+
+        form.border {
+            border-radius: 15px;
+        }
+    </style>
+@endsection
+
 @section('content')
 
 
@@ -18,11 +28,15 @@
                 <div class="row justify-content-between mt-4">
                     <div class="col-md-6">
                         <form action="{{ route('admin.photos.albums.associate') }}" method="POST"
-                              class="text-right row">
+                              class="text-right row border p-3 mx-3" style="min-height: 300px">
                             <input type="hidden" name="album_id" value="{{$album->id}}">
                             @if ($photos_available->isEmpty())
                                 No photos available...
                             @else
+                                <div class="col-12">
+                                    @csrf
+                                    <button class="btn btn-success btn-sm">Add Photos</button>
+                                </div>
                                 @foreach($photos_available as $photo)
                                     <div class="col-2 mb-2">
                                         {{--                            <form action="{{route('admin.photos.delete', $photo->id)}}" class="d-inline" method="POST">--}}
@@ -42,39 +56,35 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                <div class="col-12">
-                                    @csrf
-                                    <button class="btn btn-success btn-sm">Add to Album</button>
-                                </div>
+
 
                             @endif
                         </form>
                     </div>
                     <div class="col-md-6">
                         <form action="{{ route('admin.photos.albums.disassociate') }}" method="POST"
-                              class="text-right row">
+                              class="text-right row border p-3 mx-3" style="min-height: 300px">
                             <input type="hidden" name="album_id" value="{{$album->id}}">
-                            <div class="row">
-                                @if ($photos_assigned->isEmpty())
-                                    No photos available...
-                                @else
-                                    @foreach($photos_assigned as $photo)
-                                        <div class="col-2 mb-2">
-                                            <div class="text-center">
-                                                <input type="checkbox" name="ids[]" value="{{$photo->id}}">
-                                                <img
-                                                    class="img-thumbnail img-fluid"
-                                                    src="{{$photo->image_url}}"
-                                                    alt="{{$photo->id}}"
-                                                >
-                                            </div>
+                            @if ($photos_assigned->isEmpty())
+                                No photos available...
+                            @else
+                                <div class="col-12">
+                                    @csrf
+                                    <button class="btn btn-danger btn-sm float-right">Remove Photos</button>
+                                </div>
+                                @foreach($photos_assigned as $photo)
+                                    <div class="col-2 mb-2">
+                                        <div class="text-center">
+                                            <input type="checkbox" name="ids[]" value="{{$photo->id}}">
+                                            <img
+                                                class="img-thumbnail img-fluid"
+                                                src="{{$photo->image_url}}"
+                                                alt="{{$photo->id}}"
+                                            >
                                         </div>
-                                    @endforeach
-                                    <div class="col-12">
-                                        @csrf
-                                        <button class="btn btn-danger btn-sm">Disassociate from Album</button>
                                     </div>
-                            </div>
+                                @endforeach
+
                             @endif
                         </form>
                     </div>

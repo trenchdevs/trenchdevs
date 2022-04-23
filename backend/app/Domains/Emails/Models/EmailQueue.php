@@ -122,7 +122,7 @@ class EmailQueue extends Model
     public static function processPending(int $limit = 100)
     {
 
-        $queues = self::where('status', 'pending')
+        $queues = self::query()->where('status', 'pending')
             ->whereNull('sent_at')
             ->limit($limit)
             ->orderBy('id', 'ASC')
@@ -148,6 +148,7 @@ class EmailQueue extends Model
             'name' => 'TrenchDevs Member',
             'email_body' => $message,
         ];
+
         return self::queue($email, $subject, $viewData, 'emails.generic');
     }
 }
