@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Domains\Sites\Models\SiteAccessLog;
 use App\Domains\Sites\Models\SiteBlacklistedIp;
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
 
 class SiteAccessMiddleware
@@ -29,7 +30,7 @@ class SiteAccessMiddleware
         ];
 
         $requestData = $request->all();
-        $userAgent = $request->header('User-Agent');
+        $userAgent   = $request->header('User-Agent');
 
         if ($userAgent === 'ELB-HealthChecker/2.0') {
             /**
@@ -65,11 +66,11 @@ class SiteAccessMiddleware
         $miscArr['full_url'] = $fullUrl;
 
         $data = [
-            'user_id' => $user->id ?? null,
-            'url' => substr($fullUrl, 0, 500),
-            'ip' => $ip,
+            'user_id'    => $user->id ?? null,
+            'url'        => substr($fullUrl, 0, 500),
+            'ip'         => $ip,
             'user_agent' => $userAgent,
-            'referer' => $request->header('referer'),
+            'referer'    => substr($request->header('referer'), 0, 250),
         ];
 
         if (!empty($miscArr)) {

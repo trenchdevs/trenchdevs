@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Domains\Sso\Http\Middleware\SamlIdpEnabled;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckAccount;
 use App\Http\Middleware\CheckForMaintenanceMode;
@@ -102,5 +103,6 @@ class Kernel extends HttpKernel
         'verified' => EnsureEmailIsVerified::class,
         'check.account' => CheckAccount::class,
         'ip-restricted' => IpRestricted::class,
+        'samlidp.enabled' => SamlIdpEnabled::class,
     ];
 }

@@ -20,18 +20,22 @@ class SiteConfig extends Model
     const KEY_NAME_SYSTEM_LOGIN_REDIRECT_PATH = 'SYSTEM__LOGIN_REDIRECT_PATH';
     const KEY_NAME_SITE_WHITELISTED_IPS = 'SITE_WHITELISTED_IPS'; // json arr
 
+    const KEY_NAME_SITE_SAMLIDP_ENABLED = 'samlidp::enabled';     // json object
+
     /**
-     * @param int    $siteId
+     * @param int $siteId
      * @param string $keyName
      *
      * @return self|null
      */
-    public static function findByKeyName(int $siteId, string $keyName): ?self {
+    public static function findByKeyName(int $siteId, string $keyName): ?self
+    {
         /** @var self $config */
         $config = self::query()
             ->where('site_id', $siteId)
             ->where('key_name', $keyName)
             ->first();
+
         return $config;
 
     }

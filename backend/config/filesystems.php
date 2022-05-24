@@ -75,6 +75,10 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'samlidp' => [
+            'driver' => 'local',
+            'root' => storage_path() . '/samlidp',
+        ]
     ],
 
     /*

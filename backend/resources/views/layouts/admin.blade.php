@@ -8,49 +8,16 @@
         </button>
         <ul class="navbar-nav align-items-center ml-auto">
             <li class="nav-item dropdown no-caret mr-3 dropdown-user">
-                <span class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
-                      href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true"
-                      aria-expanded="false"
-                >
-                    <img
-                        class="img-fluid"
-                        src="{{ !empty(Auth::user()->avatar_url) ?Auth::user()->avatar_url : '/assets/img/avataaars.svg'  }}"
-                    />
-                </span>
-                <div id="navbarDropdownUserImage"
-                     class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up"
-                     aria-labelledby="navbarDropdownUserImage">
-                    <h6 class="dropdown-header d-flex align-items-center">
-                        <img
-                            class="dropdown-user-img"
-                            src="{{ !empty(Auth::user()->avatar_url) ? Auth::user()->avatar_url : '/assets/img/avataaars.svg'  }}"
-                        />
-                        <div class="dropdown-user-details">
-                            <div class="dropdown-user-details-name">{{ Auth::user()->name() }}</div>
-                            <div class="dropdown-user-details-email">{{ Auth::user()->email }}</div>
-                        </div>
-                    </h6>
-                    <div class="dropdown-divider"></div>
-                    @if(route_exists('portfolio.security'))
-                        <a class="dropdown-item" href="{{route('portfolio.security')}}">
-                            <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
-                            Account
-                        </a>
-                    @endif
-
-                    @if(route_exists('logout'))
-                        <form action="{{route('logout')}}" method="post" style="display: inline">
-                            {{csrf_field()}}
-                            <button type="submit" class="dropdown-item">
+                @if(route_exists('logout'))
+                    <form action="{{route('logout')}}" method="post" style="display: inline">
+                        {{csrf_field()}}
+                        <button type="submit" class="list-unstyled bg-transparent border-0">
                                 <span class="dropdown-item-icon">
-                                    <i data-feather="log-out"></i>
+                                    <i data-feather="log-out" class="text-white"></i>
                                 </span>
-                                Logout
-                            </button>
-                        </form>
-                    @endif
-
-                </div>
+                        </button>
+                    </form>
+                @endif
             </li>
         </ul>
     </nav>
@@ -264,6 +231,16 @@
 
 
                             <div class="sidenav-menu-heading">Modules</div>
+
+                            @if(!empty(config('samlidp')) && $user->role === \App\Domains\Users\Models\User::ROLE_SUPER_ADMIN)
+                                <a class="nav-link collapsed"
+                                   href="{{config('samlidp.sp.login_url')}}">
+                                    <div class="nav-link-icon">
+                                        <i data-feather="alert-circle"></i>
+                                    </div>
+                                    SSO
+                                </a>
+                            @endif
 
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
                                data-target="#api-clients" aria-expanded="false" aria-controls="api-clients">

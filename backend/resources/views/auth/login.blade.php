@@ -33,6 +33,7 @@
                                                 <form method="POST" action="/login">
 
                                                     @csrf
+                                                    @samlidp
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="email">Email</label>
                                                         <input id="email" type="email"

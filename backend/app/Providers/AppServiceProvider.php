@@ -3,6 +3,15 @@
 namespace App\Providers;
 
 use App\Domains\Sites\Models\Site;
+use App\Domains\Sites\Models\SiteJson;
+use App\Domains\Sites\Models\Sites\SiteConfig;
+use App\Domains\Sso\Http\Controllers\TdMetadataController;
+use App\Domains\Sso\Jobs\TdSamlSso;
+use App\Domains\Sso\Traits\TdPerformsSingleSignOn;
+use CodeGreenCreative\SamlIdp\Http\Controllers\MetadataController;
+use CodeGreenCreative\SamlIdp\Jobs\SamlSso;
+use CodeGreenCreative\SamlIdp\Traits\PerformsSingleSignOn;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -18,7 +27,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $loader = AliasLoader::getInstance();
+
+        // override necessary samlidp classes
+        $loader->alias(PerformsSingleSignOn::class, TdPerformsSingleSignOn::class);
+        $loader->alias(MetadataController::class, TdMetadataController::class);
     }
 
     /**
@@ -30,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
     {
 
         $this->injectGlobalViewVariables();
-
+        $this->injectSamlIdpConfig();
     }
 
     /**
@@ -63,5 +76,24 @@ class AppServiceProvider extends ServiceProvider
             }
 
         });
+    }
+
+    /**
+     * @return void
+     */
+    private function injectSamlIdpConfig(): void
+    {
+        if (empty($site = site()) ||
+            $site->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_SAMLIDP_ENABLED) != 1 ||
+            empty($samlIdpSettings = $site->getSiteJson(SiteJson::KEY_SAMLIDP))) {
+            config(['samlidp' => []]);
+            return;
+        }
+
+        // defaults
+        $original = config('samlidp');
+
+        // override the defaults from DB
+        config(['samlidp' => array_merge($original, $samlIdpSettings)]);
     }
 }

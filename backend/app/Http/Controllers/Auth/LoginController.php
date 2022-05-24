@@ -77,9 +77,9 @@ class LoginController extends Controller
         $userLogin->fill([
             'user_id' => $user->id,
             'type' => UserLogin::DB_TYPE_LOGIN,
-            'ip' => $request->ip(),
-            'user_agent' => $request->header('User-Agent'),
-            'referer' => $request->header('referer'),
+            'ip' => substr($request->ip(), 0, 45),
+            'user_agent' => substr($request->header('User-Agent'),0, 250),
+            'referer' => substr($request->header('referer'),0, 250),
             'misc_json' => json_encode([
                 'email' => $request->email,
             ]),
@@ -103,9 +103,9 @@ class LoginController extends Controller
         $userLogin->fill([
             'user_id' => null,
             'type' => UserLogin::DB_TYPE_LOGIN_ATTEMPT,
-            'ip' => $request->ip(),
-            'user_agent' => $request->header('User-Agent'),
-            'referer' => $request->header('referer'),
+            'ip' => substr($request->ip(), 0, 45),
+            'user_agent' => substr($request->header('User-Agent'),0, 250),
+            'referer' => substr($request->header('referer'),0, 250),
             'misc_json' => json_encode([
                 'email' => $request->email,
             ]),
