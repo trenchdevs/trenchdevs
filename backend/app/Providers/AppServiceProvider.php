@@ -82,7 +82,7 @@ class AppServiceProvider extends ServiceProvider
     private function injectSamlIdpConfig(): void
     {
         if (empty($site = site()) ||
-            // $site->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_SAMLIDP_ENABLED) != 1 ||
+            $site->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_SAMLIDP_ENABLED) != 1 ||
             empty($samlIdpSettings = $site->getSiteJson(SiteJson::KEY_SAMLIDP))) {
             config(['samlidp' => []]);
             return;
