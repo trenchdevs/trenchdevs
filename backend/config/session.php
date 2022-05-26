@@ -157,9 +157,11 @@ return [
     |
     */
 
+    // previous value commented below and is only for reference (it does not work well with multi-site setup)
     // enable cross domain cookies (eg. blog.trenchdevs.com)
     // https://stackoverflow.com/questions/30338518/persisting-sessions-across-subdomains-in-laravel-5
-    'domain' => env('SESSION_DOMAIN', ".{$base_url}"),
+    // 'domain' => env('SESSION_DOMAIN', ".{$base_url}"),
+    'domain' => env('SESSION_DOMAIN', null),
 
     /*
     |--------------------------------------------------------------------------

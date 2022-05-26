@@ -33,16 +33,16 @@ class SamlIdpCreateServiceProvider extends Command
 
         $samlidp = [
             // idp
-            'certificate' => '',
-            'key'         => '',
+            'certificate' => 'TODO: To be manually filled up',
+            'key'         => 'TODO: To be manually filled up',
 
             'sp' => [
+                'login_url'    => $loginUrl,
                 $encodedAcsUrl => [
                     'destination'  => $acsUrl,
                     'logout'       => $logoutUrl,
-                    'login_url'    => $loginUrl,
                     'query_params' => false,
-                    'certificate'  => 'To be manually filled up',
+                    'certificate'  => 'TODO: To be manually filled up',
                 ]
             ],
         ];

@@ -6,10 +6,8 @@ use App\Domains\Sites\Models\Site;
 use App\Domains\Sites\Models\SiteJson;
 use App\Domains\Sites\Models\Sites\SiteConfig;
 use App\Domains\Sso\Http\Controllers\TdMetadataController;
-use App\Domains\Sso\Jobs\TdSamlSso;
 use App\Domains\Sso\Traits\TdPerformsSingleSignOn;
 use CodeGreenCreative\SamlIdp\Http\Controllers\MetadataController;
-use CodeGreenCreative\SamlIdp\Jobs\SamlSso;
 use CodeGreenCreative\SamlIdp\Traits\PerformsSingleSignOn;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Auth;
@@ -84,7 +82,7 @@ class AppServiceProvider extends ServiceProvider
     private function injectSamlIdpConfig(): void
     {
         if (empty($site = site()) ||
-            $site->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_SAMLIDP_ENABLED) != 1 ||
+            // $site->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_SAMLIDP_ENABLED) != 1 ||
             empty($samlIdpSettings = $site->getSiteJson(SiteJson::KEY_SAMLIDP))) {
             config(['samlidp' => []]);
             return;

@@ -4,12 +4,6 @@ use App\Domains\Aws\Http\Controllers\AwsController;
 use App\Domains\Emails\Http\Controllers\EmailPreferencesController;
 use Illuminate\Support\Facades\Route;
 
-$baseUrl = get_base_url();
-
-if (empty($baseUrl)) {
-    throw new Exception("Base url not found.");
-}
-
 /*
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

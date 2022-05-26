@@ -232,16 +232,6 @@
 
                             <div class="sidenav-menu-heading">Modules</div>
 
-                            @if(!empty(config('samlidp')) && $user->role === \App\Domains\Users\Models\User::ROLE_SUPER_ADMIN)
-                                <a class="nav-link collapsed"
-                                   href="{{config('samlidp.sp.login_url')}}">
-                                    <div class="nav-link-icon">
-                                        <i data-feather="alert-circle"></i>
-                                    </div>
-                                    SSO
-                                </a>
-                            @endif
-
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
                                data-target="#api-clients" aria-expanded="false" aria-controls="api-clients">
                                 <div class="nav-link-icon">
@@ -267,6 +257,17 @@
 
                         @endif
 
+                        <div class="sidenav-menu-heading">SSO</div>
+
+                        @if(!empty(config('samlidp.sp.login_url')))
+                            <a class="nav-link collapsed"
+                               href="{{config('samlidp.sp.login_url')}}">
+                                <div class="nav-link-icon">
+                                    <i data-feather="alert-circle"></i>
+                                </div>
+                                {{config('samlidp.sp.login_label', 'SSO')}}
+                            </a>
+                        @endif
 
                         @if(route_exists('shop.products.show-bulk-upload') && Auth::user()->canManageShop())
 

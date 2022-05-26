@@ -5,6 +5,7 @@ use App\Domains\Sites\Models\Site;
 use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -340,4 +341,31 @@ function route_exists(string $route): bool
 function site_get_config_from_json(string $configKey, string $jsonKey, string $default): string
 {
     return site()->getConfigValueFromJson($configKey, $jsonKey, $default);
+}
+
+
+/**
+ * @param string $path
+ * @return string
+ */
+function domains_path(string $path): string
+{
+    return app_path('Domains/' . $path);
+}
+
+
+/**
+ * @param string $key
+ * @param $default
+ * @return mixed
+ */
+function app_config(string $key, $default = null): mixed
+{
+    static $configurations;
+
+    if (empty($configurations)) {
+        $configurations = DB::table('app_configurations')->get()->keyBy('key');
+    }
+
+    return $configurations->get($key, $default)->value ?? $default;
 }

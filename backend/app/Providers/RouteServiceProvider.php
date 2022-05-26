@@ -4,8 +4,12 @@ namespace App\Providers;
 
 use App\Domains\Sites\Models\Site;
 use App\Domains\Users\Models\User;
+use App\Services\TDCache;
 use Exception;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Routing\RouteCollection;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
@@ -36,6 +40,44 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+    }
+
+    public function register()
+    {
+        $this->booted(function () {
+            $this->setRootControllerNamespace();
+
+            $cacheKey = $this->getCacheKey();
+
+            if (!empty($rawRoutes = TDCache::get($cacheKey))) {
+                Log::info('reading from cache');
+                eval($rawRoutes);
+            } else {
+                $this->loadRoutes();
+
+                $this->app->booted(function () {
+                    $this->app['router']->getRoutes()->refreshNameLookups();
+                    $this->app['router']->getRoutes()->refreshActionLookups();
+                });
+
+                // td -- caching -- start
+                Log::info('caching');
+
+                /** @var RouteCollection $routes */
+                $routes = Route::getRoutes();
+
+                if (count($routes) > 0) {
+
+                    foreach ($routes as $route) {
+                        $route->prepareForSerialization();
+                    }
+                    $stub = file_get_contents(domains_path('Routing/stubs/routes.stub'));
+                    $raw = str_replace('{{routes}}', var_export($routes->compile(), true), $stub);
+                    Cache::put($cacheKey, str_replace('<?php', '', $raw), 60 * 5);
+                }
+                // td -- caching -- end
+            }
+        });
     }
 
     /**
@@ -107,39 +149,14 @@ class RouteServiceProvider extends ServiceProvider
 
     }
 
-//    private function mapSiteRoutesOld()
-//    {
-//        try {
-//            $sites = Site::query()->whereNotNull('theme')->get();
-//
-//            foreach ($sites as $site) {
-//
-//            // routes shared for all sites
-//            // $domain = get_domain();
-//            // Route::middleware('web')->namespace($this->namespace)->domain($domain)->group(base_path('routes/web-shared.php'));
-//
-//            $siteRoutesPath = "routes/themes/$site->theme.php";
-//
-//            if (!file_exists(base_path($siteRoutesPath))) {
-//                continue;
-//            }
-//
-//            // these routes overrides web-shared routes
-//            Route::middleware('web')->namespace($this->namespace)
-//                ->domain($site->domain)
-//                ->group(base_path($siteRoutesPath));
-//
-//            }
-//
-//        } catch (Exception $exception) {
-//            // dd($exception->getMessage());
-//        }
-//    }
-
     private function mapSiteRoutes()
     {
         try {
-            $site           = site();
+
+            if (empty($site = site()) || empty($site->theme)) {
+                throw new Exception("Theme not found on site");
+            }
+
             $siteRoutesPath = "routes/themes/$site->theme.php";
 
             if (!file_exists(base_path($siteRoutesPath))) {
@@ -166,5 +183,10 @@ class RouteServiceProvider extends ServiceProvider
             auth('web')->login($user);
             Site::setSiteInstance($user->site);
         }
+    }
+
+    private function getCacheKey(): string
+    {
+        return sprintf('%s::%s', static::class, site_id());
     }
 }
