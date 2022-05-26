@@ -84,7 +84,7 @@ class AppServiceProvider extends ServiceProvider
         if (empty($site = site()) ||
             $site->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_SAMLIDP_ENABLED) != 1 ||
             empty($samlIdpSettings = $site->getSiteJson(SiteJson::KEY_SAMLIDP))) {
-            config(['samlidp' => []]);
+            // don't inject anything, just use default
             return;
         }
 
