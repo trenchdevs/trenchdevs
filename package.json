@@ -10,8 +10,8 @@
     "server:up": "docker-compose up -d",
     "server:up:lite": "docker-compose up app -d",
     "server:down": "docker-compose down",
-    "server:connect": "docker exec -it --user www:www trenchdevs-web bash",
-    "server:connect:root": "docker exec -it trenchdevs-web bash"
+    "server:connect": "docker exec -it --user www:www trenchdevs-backend bash",
+    "server:connect:root": "docker exec -it trenchdevs-backend bash"
   },
   "repository": {
     "type": "git",
