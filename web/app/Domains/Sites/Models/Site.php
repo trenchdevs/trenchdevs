@@ -63,7 +63,7 @@ class Site extends Model
     /**
      * @var static
      */
-    private static Site $singleton;
+    private static $singleton;
 
     /**
      * @return static|null
