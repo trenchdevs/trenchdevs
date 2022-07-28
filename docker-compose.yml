@@ -17,15 +17,15 @@ services:
     networks:
       - trenchdevs-docker-network
 
-  app:
+  web:
     build:
-      context: ./backend
+      context: ./web
       dockerfile: Dockerfile
-    container_name: trenchdevs-app
+    container_name: trenchdevs-web
     restart: unless-stopped
     working_dir: /var/www
     volumes:
-      - ./backend:/var/www/
+      - ./web:/var/www/
     ports:
       - ${FORWARD_APP_PORT:-80}:80
     networks:
