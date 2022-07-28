@@ -23,7 +23,7 @@ class CreateAppConfigurationsTable extends Migration
 
         DB::table('app_configurations')->updateOrInsert(
             ['key' => 'TD_CACHE_BUST'],
-            ['value' => '0', 'description' => 'Bust the cache for TDCache?']
+            ['value' => '1', 'description' => 'Bust the cache for TDCache?']
         );
     }
 

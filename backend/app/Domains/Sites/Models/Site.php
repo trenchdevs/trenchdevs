@@ -42,9 +42,20 @@ class Site extends Model
     ];
 
     const DB_IDENTIFIER_TRENCHDEVS = 'trenchdevs';
-    const DB_IDENTIFIER_TRENCHAPPS = 'trenchapps';
+    const DB_IDENTIFIER_DEMO = 'demo';
     const DB_IDENTIFIER_CLOUDCRAFT = 'cloudcraft';
 
+
+    /**
+     * @param string $identifier
+     * @return Site|null
+     */
+    public static function fromIdentifier(string $identifier): ?static
+    {
+        /** @var Site $site */
+        $site = self::query()->where('identifier', '=', $identifier)->first();
+        return $site;
+    }
 
     /**
      * Alias to getInstance

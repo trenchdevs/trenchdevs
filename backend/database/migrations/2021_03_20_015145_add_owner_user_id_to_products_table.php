@@ -16,7 +16,6 @@ class AddOwnerUserIdToProductsTable extends Migration
         Schema::table('products', function (Blueprint $table) {
             $table->unsignedBigInteger('owner_user_id')->nullable()->after('id');
             $table->foreign('owner_user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('account_id')->nullable()->change();
         });
     }
 

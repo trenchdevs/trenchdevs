@@ -59,14 +59,6 @@ class AuthController extends ApiController
 
             $appType = $site->getAppType();
 
-            $existingAccount = Account::findByAccountIdAndBusinessName($appType->id, $request->shop_name);
-
-            if ($existingAccount) {
-                throw ValidationException::withMessages([
-                    'shop_name' => ['This shop name has already been taken.'] // todo: this should only be validated if request came from Marketale
-                ]);
-            }
-
             try {
 
                 DB::beginTransaction();

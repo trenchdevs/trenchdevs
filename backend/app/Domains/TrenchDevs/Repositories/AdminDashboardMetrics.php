@@ -33,7 +33,7 @@ class AdminDashboardMetrics
         // we can cache these values in the future
         $this->activeTrenchDevUsers = User::query()
             ->where('is_active', 1)
-            ->where('account_id', Account::getTrenchDevsAccount()->id)
+            ->where('site_id', 1)
             ->count();
 
         $lastMonth = date('Y-m-d H:i:s', strtotime('-1 month'));

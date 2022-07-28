@@ -116,18 +116,10 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        // todo: remove
-        $account = Account::getTrenchDevsAccount();
-
-        if (!$account) {
-            throw new ErrorException("TrenchDevs Account not found");
-        }
-
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
-            'account_id' => $account->id,
             'site_id' => $this->site->id,
             'is_active' => 1,
             'password' => Hash::make($data['password']),

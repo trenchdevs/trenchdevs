@@ -27,7 +27,7 @@ class CreateBlogTagsTable extends Migration
             $table->unsignedBigInteger('tag_id');
             $table->timestamps();
             $table->foreign('blog_id')->references('id')->on('blogs');
-            $table->foreign('tag_Id')->references('id')->on('tags');
+            $table->foreign('tag_id')->references('id')->on('tags');
         });
     }
 

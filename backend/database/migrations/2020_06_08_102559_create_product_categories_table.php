@@ -16,14 +16,14 @@ class CreateProductCategoriesTable extends Migration
         Schema::create('product_categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->unsignedBigInteger('account_id');
+            $table->unsignedBigInteger('site_id')->nullable();
             $table->string('name');
             $table->boolean('is_featured')->default(false);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
 
             $table->foreign('parent_id')->references('id')->on('product_categories');
-            $table->foreign('account_id')->references('id')->on('accounts');
+            $table->foreign('site_id')->references('id')->on('sites');
         });
     }
 

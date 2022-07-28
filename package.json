@@ -6,12 +6,13 @@
   "scripts": {
     "--init--": "----------------------------------------------------------------------",
     "init:env": "cp -n .env.docker.example .env && cp -n backend/.env.example backend/.env",
-    "--server--": "----------------------------------------------------------------------",
-    "server:up": "docker-compose up -d",
-    "server:up:lite": "docker-compose up app -d",
-    "server:down": "docker-compose down",
-    "server:connect": "docker exec -it --user www:www trenchdevs-backend bash",
-    "server:connect:root": "docker exec -it trenchdevs-backend bash"
+    "--Backend--": "----------------------BACK END COMMANDS----------------------------",
+    "be:up": "docker-compose up -d",
+    "be:up:lite": "docker-compose up app -d",
+    "be:down": "docker-compose down",
+    "be:connect": "docker exec -it --user www:www trenchdevs-backend bash",
+    "be:connect:root": "docker exec -it trenchdevs-backend bash",
+    "be:fix:permissions": "docker exec -i trenchdevs-backend bash -c 'chown -R www:www-data /var/www/storage && chmod ug+w -R /var/www/storage'"
   },
   "repository": {
     "type": "git",

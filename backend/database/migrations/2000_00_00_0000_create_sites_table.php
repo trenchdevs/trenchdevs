@@ -16,9 +16,15 @@ class CreateSitesTable extends Migration
     {
         Schema::create('sites', function (Blueprint $table) {
             $table->id();
-            $table->string('domain', 128)->unique()->index();
-            $table->string('company_name', 64)->nullable()->index();
             $table->string('identifier', 32)->index()->unique()->comment('Unique identifier for code');
+            $table->string('theme', 64)->index();
+            $table->string('company_name', 64)->nullable()->index();
+            $table->string('domain', 128)->unique()->index();
+            $table->boolean('allow_wildcard_for_domain')
+                ->comment('1: allow * wildcard for subdomain e.g. for trenchdevs')
+                ->default(false)
+                ->index();
+            $table->string('logo', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,13 +34,15 @@ class CreateSitesTable extends Migration
             Site::query()->create([
                 'domain' => 'trenchdevs.localhost',
                 'company_name' => 'TrenchDevs',
-                'identifier' => 'trenchdevs'
+                'identifier' => 'trenchdevs',
+                'theme' => 'trenchdevs'
             ]);
 
             Site::query()->create([
                 'domain' => 'demo.localhost',
                 'company_name' => 'Demo',
-                'identifier' => 'demo'
+                'identifier' => 'demo',
+                'theme' => 'demo',
             ]);
 
 
@@ -43,13 +51,15 @@ class CreateSitesTable extends Migration
             Site::query()->create([
                 'domain' => 'trenchdevs.org',
                 'company_name' => 'TrenchDevs',
-                'identifier' => 'trenchdevs'
+                'identifier' => 'trenchdevs',
+                'theme' => 'trenchdevs',
             ]);
 
             Site::query()->create([
-                'domain' => 'trenchapps.com',
+                'domain' => 'demo.trenchapps.com',
                 'company_name' => 'TrenchApps',
-                'identifier' => 'trenchapps'
+                'identifier' => 'trenchapps',
+                'theme' => 'demo',
             ]);
         }
 
