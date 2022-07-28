@@ -79,7 +79,7 @@ class Site extends Model
 
         } catch (Throwable $throwable) {
             // ignore on production - 404
-            if (app()->environment('local')) {
+            if (app()->environment('local') && !app()->runningInConsole()) {
                 dd($throwable->getMessage());
             }
         }
@@ -106,6 +106,11 @@ class Site extends Model
      */
     public function getConfigValueByKey(string $keyName, string $defaultValue = null): ?string
     {
+
+        if (!$this->id) {
+            return $defaultValue;
+        }
+
         if (!isset($this->config)) {
             $this->config = SiteConfig::query()->where('site_id', '=', $this->id)->get()->keyBy('key_name');
         }
@@ -135,9 +140,9 @@ class Site extends Model
     public function getSiteJson(string $key, $default = [])
     {
         $value = DB::table('site_jsons')->where('site_id', '=', $this->id)
-            ->where('key', '=', $key)
-            ->first()
-            ->value ?? null;
+                ->where('key', '=', $key)
+                ->first()
+                ->value ?? null;
 
         if (empty($value)) {
             return $default;
