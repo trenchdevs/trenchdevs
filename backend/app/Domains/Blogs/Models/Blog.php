@@ -11,6 +11,7 @@ use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 /**
  * Class Blog
@@ -131,7 +132,8 @@ class Blog extends Model
      */
     public function markdownContentsAsHtml(): mixed
     {
-        return Markdown::convertToHtml($this->markdown_contents);
+        return app(MarkdownRenderer::class)->toHtml($this->markdown_contents);
+//        return Markdown::convert($this->markdown_contents)->getContent();
     }
 
 

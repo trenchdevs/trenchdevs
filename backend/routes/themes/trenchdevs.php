@@ -30,10 +30,11 @@ if (empty($baseUrl)) {
 Auth::routes(['verify' => true]);
 
 Route::get('blogs', [PublicBlogsController::class, 'index'])->name('public.blogs');
-// handler for both blogs and portfolio (w/ blog slug as priority)
-Route::get('{slug}', [PublicController::class, 'show'])->name('public.show');
 
-Auth::routes();
+// handler for both blogs and portfolio (w/ blog slug as priority)
+//Route::get('{slug}', [PublicController::class, 'show'])->name('public.show');
+
+//Auth::routes();
 /**
  * Sample local domain - react
  */
@@ -56,8 +57,8 @@ Route::domain("{username}.{$baseUrl}")->group(function () {
 // END - Portfolio Routes
 
 
-Route::middleware(['auth:web', 'verified'])->prefix('portal')->group(function () {
-    Route::get('home', [HomeController::class, 'index'])->name('portal.home');
+Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('portal.home');
 
     // START - users
     Route::get('admin/users/create', [UsersController::class, 'create'])->name('users.create');
@@ -159,3 +160,7 @@ Route::middleware(['auth:web', 'verified'])->prefix('portal')->group(function ()
 });
 
 Route::get('/', [PublicController::class, 'index'])->name('public.home');
+// start - public documents
+Route::view('documents/privacy', 'documents.privacy')->name('documents.privacy');
+Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
+// end - public documents

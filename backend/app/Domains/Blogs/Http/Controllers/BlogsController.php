@@ -61,14 +61,14 @@ class BlogsController extends AuthWebController
         return view('blogs.index', $data);
     }
 
-    public function upsert($blogId = null, Request $request)
+    public function upsert($blogId = null)
     {
 
         $blog = new Blog();
 
         if (!empty($blogId)) {
             /** @var User $loggedInUser */
-            $loggedInUser = $request->user();
+            $loggedInUser = request()->user();
 
             $blog = Blog::find($blogId);
             if (!$this->isLoggedInUserAdmin() &&

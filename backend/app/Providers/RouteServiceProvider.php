@@ -28,7 +28,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/portal/home';
+    public const HOME = '/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -71,9 +71,12 @@ class RouteServiceProvider extends ServiceProvider
                     foreach ($routes as $route) {
                         $route->prepareForSerialization();
                     }
+
                     $stub = file_get_contents(domains_path('Routing/stubs/routes.stub'));
                     $raw = str_replace('{{routes}}', var_export($routes->compile(), true), $stub);
-                    Cache::put($cacheKey, str_replace('<?php', '', $raw), 60 * 5);
+                    $raw = str_replace('<?php', '', $raw);
+                    eval($raw);
+                    Cache::put($cacheKey, $raw, 60 * 5);
                 }
                 // td -- caching -- end
             }

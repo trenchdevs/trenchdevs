@@ -12,7 +12,7 @@
     "be:down": "docker-compose down",
     "be:connect": "docker exec -it --user www:www trenchdevs-backend bash",
     "be:connect:root": "docker exec -it trenchdevs-backend bash",
-    "be:fix:permissions": "docker exec -i trenchdevs-backend bash -c 'chown -R www:www-data /var/www/storage && chmod ug+w -R /var/www/storage'"
+    "be:fix:permissions": "docker exec -i trenchdevs-backend bash -c 'chown -R www:www-data /var/www/storage /var/www/resources && chmod ug+w -R /var/www/storage /var/www/resources'"
   },
   "repository": {
     "type": "git",

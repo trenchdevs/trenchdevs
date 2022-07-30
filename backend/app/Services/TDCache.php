@@ -45,7 +45,7 @@ class TDCache
 
     private static function bust(): bool
     {
-        return !app()->runningInConsole() && (app_config('TD_CACHE_BUST') == 1);
+        return app_config('TD_CACHE_BUST') == 1;
     }
 
 
