@@ -413,7 +413,7 @@ class User extends Authenticatable // implements MustVerifyEmail
     {
 
         $title = "Account subject to deactivation";
-        $message = "Your account is subject to deactivation due to your inactivity in TrenchDevs. Please login within the next {$noticeDays} days to avoid this.";
+        $message = "Your account is subject to deactivation due to your inactivity in Sbadmin. Please login within the next {$noticeDays} days to avoid this.";
 
         $viewData = [
             'name' => $user->name(),

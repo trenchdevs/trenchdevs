@@ -59,7 +59,7 @@ class UtilitiesCommand extends Command
 
         $projectsArr = [
             [
-                'title' => 'TrenchDevs',
+                'title' => 'Sbadmin',
                 'repository_url' => 'https://github.com/trenchdevs/trenchdevs',
                 'image_url' => '/logo/v1/logo.png',
             ],

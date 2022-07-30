@@ -7,7 +7,7 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ env('APP_NAME', 'TrenchDevs')  }} Blog</title>
+    <title>{{ env('APP_NAME', 'Sbadmin')  }} Blog</title>
     <link rel="icon" href="/favicon.png"/>
 
     <link href="/sbui/css/styles.css" rel="stylesheet"/>

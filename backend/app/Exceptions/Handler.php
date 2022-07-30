@@ -90,7 +90,7 @@ class Handler extends ExceptionHandler
                 throw new Exception("Suppress error");
             }
 
-            $title = "TrenchDevs: Error Reporting";
+            $title = "Sbadmin: Error Reporting";
 
             $emailer = EmailQueue::queue(
                 trim('support@trenchdevs.org'),
