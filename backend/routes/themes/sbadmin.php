@@ -8,10 +8,10 @@ use Inertia\Inertia;
 
 Route::get('blogs', [PublicBlogsController::class, 'index'])->name('public.blogs');
 Route::get('/', [PublicController::class, 'index'])->name('public.home');
+
 // start - public documents
 Route::view('documents/privacy', 'documents.privacy')->name('documents.privacy');
 Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
-
 // end - public documents
 
 //Route::get('/', function () {

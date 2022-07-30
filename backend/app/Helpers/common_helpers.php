@@ -259,6 +259,27 @@ if (!function_exists('site_id')) {
     }
 }
 
+if (!function_exists('site_identifier')) {
+
+    function site_identifier(): string
+    {
+        return site()->identifier ?? '';
+    }
+}
+
+
+
+if (!function_exists('site_is')) {
+
+    function site_is(string $siteIdentifier): string
+    {
+        return site()->identifier === $siteIdentifier;
+    }
+}
+
+
+
+
 /**
  * @param $string
  *
