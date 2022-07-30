@@ -1,8 +1,8 @@
 @php
-    /** @var \App\Domains\Users\Models\User $user */
-    /** @var \App\Domains\Users\Models\UserPortfolioDetail $portfolio_details */
+    /** @var \App\Modules\Users\Models\User $user */
+    /** @var \App\Modules\Users\Models\UserPortfolioDetail $portfolio_details */
 @endphp
-    <!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -14,7 +14,7 @@
     <link rel="icon" href="/favicon.png"/>
     <link href="/portfolio/css/styles.css" rel="stylesheet"/>
     @include('layouts.partials.ga')
-<!-- Font Awesome icons (free version)-->
+    <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet"
@@ -53,9 +53,10 @@
         #about {
             color: #d1deec !important;
             @if(!empty($portfolio_details))
-                 background-size: cover;
+                  background-size: cover;
             background-image: url({{$portfolio_details->background_cover_url}});
         @endif
+
 
         }
 
@@ -76,7 +77,7 @@
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
-            class="navbar-toggler-icon"></span></button>
+                class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>

@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Domains\Projects\Models\Project;
-use App\Domains\Users\Models\User;
+use App\Modules\Projects\Models\Project;
+use App\Modules\Users\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Throwable;

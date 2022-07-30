@@ -1,8 +1,8 @@
 @php
-    /** @var \App\Domains\Users\Models\User $user */
-    /** @var \App\Domains\Users\Models\UserPortfolioDetail $portfolio_details */
+    /** @var \App\Modules\Users\Models\User $user */
+    /** @var \App\Modules\Users\Models\UserPortfolioDetail $portfolio_details */
 @endphp
-    <!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>

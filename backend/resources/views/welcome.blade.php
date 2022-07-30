@@ -3,7 +3,8 @@
 @section('content')
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
         <div class="container"><a class="navbar-brand js-scroll-trigger" href="{{route('public.home')}}">TRENCHDEVS</a>
-            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button"
+            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
+                    type="button"
                     data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                     aria-expanded="false" aria-label="Toggle navigation">
                 Menu <i class="fas fa-bars"></i>
@@ -11,30 +12,35 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{route('public.home')}}#portfolio">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                           href="{{route('public.home')}}#portfolio">
                             PROJECTS
                         </a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{route('public.home')}}#about">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                           href="{{route('public.home')}}#about">
                             ABOUT
                         </a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{route('public.home')}}#contact">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                           href="{{route('public.home')}}#contact">
                             CONTACT US
                         </a>
                     </li>
 
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{route('public.blogs')}}">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                           href="{{route('public.blogs')}}">
                             BLOG
                         </a>
                     </li>
 
                     @if($loggedInUser)
                         <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{route('portal.home')}}">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                               href="{{route('portal.home')}}">
                                 PORTAL
                             </a>
                         </li>
@@ -83,25 +89,25 @@
             </div>
             <!-- Portfolio Grid Items-->
 
-            @php /** @var \App\Domains\Projects\Models\Project[] $projects */ @endphp
+            @php /** @var \App\Modules\Projects\Models\Project[] $projects */ @endphp
             @if (!empty($projects))
                 <div class="row justify-content-center text-center">
-                @foreach($projects as $project)
-                    <!-- Portfolio Items-->
+                    @foreach($projects as $project)
+                        <!-- Portfolio Items-->
                         <div class="col-md-6 col-lg-4 mb-5">
                             <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal0">
                                 <a href="{{ $project->url }}" target="_blank">
                                     <div
-                                        class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                         <div class="portfolio-item-caption-content text-center text-white">
                                             <i class="fas fa-plus fa-3x"></i>
                                         </div>
                                     </div>
                                     <img
-                                        style="height: 200px; width: 200px; object-fit:scale-down;"
-                                        class="img-fluid rounded"
-                                        src="{{$project->image_url}}"
-                                        alt="{{ $project->title }}"/>
+                                            style="height: 200px; width: 200px; object-fit:scale-down;"
+                                            class="img-fluid rounded"
+                                            src="{{$project->image_url}}"
+                                            alt="{{ $project->title }}"/>
 
                                     <p class="text-center mt-3">{{$project->title}}</p>
                                 </a>
@@ -171,10 +177,10 @@
                         <div class="col-md-3 my-3 text-center">
                             <a target="_blank" href="{{$coreDev->getPortfolioUrl()}}" class="text-white">
                                 <img
-                                    src="{{$coreDev->avatar_url}}"
-                                    alt="Avatar URL"
-                                    class="text-center rounded-circle img-thumbnail text-white"
-                                    style="max-width: 150px;"
+                                        src="{{$coreDev->avatar_url}}"
+                                        alt="Avatar URL"
+                                        class="text-center rounded-circle img-thumbnail text-white"
+                                        style="max-width: 150px;"
                                 >
                                 <h5 class="mt-3">{{$coreDev->name()}}</h5>
                             </a>

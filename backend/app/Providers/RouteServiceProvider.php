@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Domains\Sites\Models\Site;
-use App\Domains\Users\Models\User;
+use App\Modules\Sites\Models\Site;
+use App\Modules\Users\Models\User;
 use App\Services\TDCache;
 use Exception;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -72,7 +72,7 @@ class RouteServiceProvider extends ServiceProvider
                         $route->prepareForSerialization();
                     }
 
-                    $stub = file_get_contents(domains_path('Routing/stubs/routes.stub'));
+                    $stub = file_get_contents(module_path('Routing/stubs/routes.stub'));
                     $raw = str_replace('{{routes}}', var_export($routes->compile(), true), $stub);
                     $raw = str_replace('<?php', '', $raw);
                     eval($raw);

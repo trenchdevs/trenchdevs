@@ -55,7 +55,7 @@
                         <div class="form-group">
                             <label for="username">
                                 Username <br>
-                                <small>This will be your trenchdevs handle  (eg.
+                                <small>This will be your trenchdevs handle (eg.
                                     trenchdevs.org/<em>myusername</em> )
                                 </small>
                             </label>
@@ -75,7 +75,7 @@
                                 Template / Custom View
                             </label>
                             <select name="portfolio_view" id="portfolio_view" class="form-control">
-                                @foreach(\App\Domains\Users\Models\UserPortfolioDetail::VALID_VIEWS as $view => $label)
+                                @foreach(\App\Modules\Users\Models\UserPortfolioDetail::VALID_VIEWS as $view => $label)
                                     <option value="{{$view}}" {{ $view === old('portfolio_view', $portfolio_detail->portfolio_view ?? '') ? 'selected' : ''  }}>
                                         {{$label}}
                                     </option>
@@ -225,7 +225,5 @@
             </div>
         </div>
     </div>
-
-
 
 @endsection

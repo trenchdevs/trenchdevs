@@ -1,10 +1,10 @@
 <?php
 
-use App\Domains\Announcements\Http\Controllers\AnnouncementsController;
-use App\Domains\Blogs\Http\Controllers\BlogsController;
-use App\Domains\TrenchDevs\Http\Controllers\HomeController;
-use App\Domains\Users\Http\Controllers\PortfolioController;
-use App\Domains\Users\Http\Controllers\UsersController;
+use App\Modules\Announcements\Http\Controllers\AnnouncementsController;
+use App\Modules\Blogs\Http\Controllers\BlogsController;
+use App\Modules\TrenchDevs\Http\Controllers\HomeController;
+use App\Modules\Users\Http\Controllers\PortfolioController;
+use App\Modules\Users\Http\Controllers\UsersController;
 use App\Public\Controllers\Blogs\PublicBlogsController;
 use App\Public\Controllers\Pages\PublicPagesController;
 use App\Public\Controllers\PublicHomeController;

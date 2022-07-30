@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Domains\Emails\Models\EmailQueue;
+use App\Modules\Emails\Models\EmailQueue;
 use Illuminate\Console\Command;
 use Throwable;
 

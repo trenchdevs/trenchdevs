@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Domains\Users\Models\User;
+use App\Modules\Users\Models\User;
 use Illuminate\Console\Command;
 
 class SendDeactivationNoticeToUsers  extends Command

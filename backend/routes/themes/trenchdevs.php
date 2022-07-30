@@ -1,23 +1,23 @@
 <?php
 
 
-use App\Domains\Announcements\Http\Controllers\AnnouncementsController;
-use App\Domains\Blogs\Http\Controllers\BlogsController;
-use App\Domains\Sites\Http\Controllers\AccountsController;
-use App\Domains\Users\Http\Controllers\UserCertificationsController;
-use App\Domains\Users\Http\Controllers\UserDegreesController;
-use App\Domains\Users\Http\Controllers\UserExperiencesController;
-use App\Domains\Users\Http\Controllers\UserProjectsController;
-use App\Domains\Users\Http\Controllers\UsersController;
-use App\Domains\Blogs\Http\Controllers\PublicBlogsController;
-use App\Domains\TrenchDevs\Http\Controllers\HomeController;
-use App\Domains\Users\Http\Controllers\PortfolioController;
-use App\Domains\Users\Http\Controllers\ProfileController;
-use App\Domains\Projects\Http\Controllers\ProjectsController;
-use App\Domains\TrenchDevs\Http\Controllers\PublicController;
-use App\Domains\Products\Http\Controllers\ProductsController;
-use App\Domains\SuperAdmin\Http\Controllers\CommandsController;
-use App\Domains\Users\Http\Controllers\UserSkillsController;
+use App\Modules\Announcements\Http\Controllers\AnnouncementsController;
+use App\Modules\Blogs\Http\Controllers\BlogsController;
+use App\Modules\Sites\Http\Controllers\AccountsController;
+use App\Modules\Users\Http\Controllers\UserCertificationsController;
+use App\Modules\Users\Http\Controllers\UserDegreesController;
+use App\Modules\Users\Http\Controllers\UserExperiencesController;
+use App\Modules\Users\Http\Controllers\UserProjectsController;
+use App\Modules\Users\Http\Controllers\UsersController;
+use App\Modules\Blogs\Http\Controllers\PublicBlogsController;
+use App\Modules\TrenchDevs\Http\Controllers\HomeController;
+use App\Modules\Users\Http\Controllers\PortfolioController;
+use App\Modules\Users\Http\Controllers\ProfileController;
+use App\Modules\Projects\Http\Controllers\ProjectsController;
+use App\Modules\TrenchDevs\Http\Controllers\PublicController;
+use App\Modules\Products\Http\Controllers\ProductsController;
+use App\Modules\SuperAdmin\Http\Controllers\CommandsController;
+use App\Modules\Users\Http\Controllers\UserSkillsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Domains\Sites\Models\SiteAccessLog;
-use App\Domains\Sites\Models\SiteBlacklistedIp;
+use App\Modules\Sites\Models\SiteAccessLog;
+use App\Modules\Sites\Models\SiteBlacklistedIp;
 use Closure;
 use Exception;
 use Illuminate\Http\Request;

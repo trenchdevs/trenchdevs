@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @php /** @var \App\Domains\Blogs\Models\Blog $blog */ @endphp
+    @php /** @var \App\Modules\Blogs\Models\Blog $blog */ @endphp
 
     <div class="card">
         <div class="card-header">{{!empty($blog->id) ? 'Update' : 'Create'}} Content</div>
@@ -81,10 +81,10 @@
                     <label for="status">Status</label>
                     <select class="form-control" name="status" id="status">
                         <option
-                            value="draft" {{old('status', $blog->status ?? '') === 'draft' ? 'selected' : ''}}>Draft
+                                value="draft" {{old('status', $blog->status ?? '') === 'draft' ? 'selected' : ''}}>Draft
                         </option>
                         <option
-                            value="published" {{old('status', $blog->status ?? '') === 'published' ? 'selected' : ''}}>
+                                value="published" {{old('status', $blog->status ?? '') === 'published' ? 'selected' : ''}}>
                             Published
                         </option>
                     </select>

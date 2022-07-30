@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Domains\Sites\Models\Account;
-use App\Domains\Users\Models\User;
+use App\Modules\Sites\Models\Account;
+use App\Modules\Users\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;

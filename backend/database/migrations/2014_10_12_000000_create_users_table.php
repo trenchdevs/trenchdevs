@@ -1,7 +1,7 @@
 <?php
 
-use App\Domains\Sites\Models\Site;
-use App\Domains\Users\Models\User;
+use App\Modules\Sites\Models\Site;
+use App\Modules\Users\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Hash;

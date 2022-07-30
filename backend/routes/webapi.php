@@ -12,8 +12,8 @@
 | eg. trenchdevs.org/webapi/*
 |
 */
-use App\Domains\Events\Http\Controllers\EventsController;
-use App\Domains\Users\Http\Controllers\WebApi\UsersController;
+use App\Modules\Events\Http\Controllers\EventsController;
+use App\Modules\Users\Http\Controllers\WebApi\UsersController;
 use App\Http\Controllers\WebApiController;
 use Illuminate\Support\Facades\Route;
 

@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Domains\Sites\Models\Site;
+use App\Modules\Sites\Models\Site;
 use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
@@ -348,9 +348,9 @@ function site_get_config_from_json(string $configKey, string $jsonKey, string $d
  * @param string $path
  * @return string
  */
-function domains_path(string $path): string
+function module_path(string $path): string
 {
-    return app_path('Domains/' . $path);
+    return app_path('Modules/' . $path);
 }
 
 

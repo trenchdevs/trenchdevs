@@ -2,8 +2,8 @@
 
 namespace App\Public\Controllers\Blogs;
 
-use App\Domains\Blogs\Models\Blog;
-use App\Domains\Sites\Models\Tag;
+use App\Modules\Blogs\Models\Blog;
+use App\Modules\Sites\Models\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;

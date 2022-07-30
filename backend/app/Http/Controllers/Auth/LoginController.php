@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Domains\Sites\Models\Site;
+use App\Modules\Sites\Models\Site;
 use App\Providers\RouteServiceProvider;
-use App\Domains\Users\Models\User;
-use App\Domains\Users\Models\UserLogin;
+use App\Modules\Users\Models\User;
+use App\Modules\Users\Models\UserLogin;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;

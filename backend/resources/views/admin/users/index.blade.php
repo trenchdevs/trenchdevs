@@ -31,13 +31,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @php /** @var \App\Domains\Users\Models\User[] $users */ @endphp
+                        @php /** @var \App\Modules\Users\Models\User[] $users */ @endphp
                         @foreach($users as $user)
                             <tr>
                                 <td>
                                     <img
-                                        class="avatar avatar-sm"
-                                        src="{{$user->avatar_url ?: '/assets/img/avataaars.svg'}}" alt="User Avatar">
+                                            class="avatar avatar-sm"
+                                            src="{{$user->avatar_url ?: '/assets/img/avataaars.svg'}}"
+                                            alt="User Avatar">
                                     {{$user->name()}}
                                 </td>
                                 @if(route_exists('portfolio.preview'))
@@ -58,8 +59,8 @@
                                         <i data-feather="eye"></i>
                                     </a>
                                     <form
-                                        class="d-inline" action="{{ route('users.password_reset') }}" method="post"
-                                        onsubmit="return confirm('Are you sure you want to send a password reset link to {{$user->email}}?');">
+                                            class="d-inline" action="{{ route('users.password_reset') }}" method="post"
+                                            onsubmit="return confirm('Are you sure you want to send a password reset link to {{$user->email}}?');">
                                         @csrf
                                         <input type="hidden" name="id" value="{{$user->id}}">
                                         <button class="btn btn-sm btn-indigo" type="submit">
@@ -83,6 +84,5 @@
         </div>
 
     </div>
-
 
 @endsection

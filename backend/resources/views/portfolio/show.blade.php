@@ -1,7 +1,7 @@
 @php
-    /** @var \App\Domains\Users\Models\User $user */
+    /** @var \App\Modules\Users\Models\User $user */
 @endphp
-    <!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -209,7 +209,7 @@
                 <section class="bg-white py-4">
                     <div class="container">
                         <div class="text-uppercase-expanded small mb-2">
-                            <i data-feather="star"></i>  Interests
+                            <i data-feather="star"></i> Interests
                         </div>
                         <hr class="mt-0 mb-5"/>
                         <div class="row">

@@ -1,13 +1,13 @@
 <?php
 
-use App\Domains\Activities\Http\Controllers\ActivitiesController;
+use App\Modules\Activities\Http\Controllers\ActivitiesController;
 use App\Domains\Notes\Http\Controllers\ApiNotes;
-use App\Domains\Stories\Http\Controllers\ProductReactionsController;
-use App\Domains\Stories\Http\Controllers\ProductStoriesController;
-use App\Domains\Stories\Http\Controllers\Stories;
-use App\Domains\Stories\Http\Controllers\StoryResponsesController;
+use App\Modules\Stories\Http\Controllers\ProductReactionsController;
+use App\Modules\Stories\Http\Controllers\ProductStoriesController;
+use App\Modules\Stories\Http\Controllers\Stories;
+use App\Modules\Stories\Http\Controllers\StoryResponsesController;
 use App\Http\Controllers\AuthController;
-use App\Domains\Products\Http\Controllers\ProductsController;
+use App\Modules\Products\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 
 /*

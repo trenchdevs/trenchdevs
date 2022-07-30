@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Domains\Sites\Models\Site;
+use App\Modules\Sites\Models\Site;
 use Illuminate\Database\Eloquent\Builder;
 
 abstract class MaterialTableService

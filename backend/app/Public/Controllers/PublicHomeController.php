@@ -2,9 +2,9 @@
 
 namespace App\Public\Controllers;
 
-use App\Domains\Blogs\Models\Blog;
-use App\Domains\Blogs\Repositories\BlogsRepository;
-use App\Domains\Sites\Models\Tag;
+use App\Modules\Blogs\Models\Blog;
+use App\Modules\Blogs\Repositories\BlogsRepository;
+use App\Modules\Sites\Models\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;

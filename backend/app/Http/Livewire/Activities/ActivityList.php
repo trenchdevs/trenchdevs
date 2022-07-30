@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Activities;
 
-use App\Domains\Activities\Models\Activity;
+use App\Modules\Activities\Models\Activity;
 use Livewire\Component;
 
 class ActivityList extends Component

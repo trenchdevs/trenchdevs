@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Sites\Models\Site;
-use App\Domains\Users\Models\User;
+use App\Modules\Sites\Models\Site;
+use App\Modules\Users\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Contracts\View\Factory;

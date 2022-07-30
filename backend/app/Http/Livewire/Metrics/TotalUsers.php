@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Metrics;
 
-use App\Domains\Users\Models\User;
+use App\Modules\Users\Models\User;
 use Livewire\Component;
 
 class TotalUsers extends Component

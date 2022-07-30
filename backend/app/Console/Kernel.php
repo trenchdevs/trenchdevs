@@ -2,8 +2,8 @@
 
 namespace App\Console;
 
-use App\Domains\Aws\Console\Commands\S3ImageRemoverCommand;
-use App\Domains\Sso\Console\Commands\SamlIdpCreateServiceProvider;
+use App\Modules\Aws\Console\Commands\S3ImageRemoverCommand;
+use App\Modules\Sso\Console\Commands\SamlIdpCreateServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 

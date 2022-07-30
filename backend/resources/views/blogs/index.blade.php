@@ -42,7 +42,7 @@
 
     <div class="row">
         @foreach($blogs as $blog)
-            @php /** @var \App\Domains\Blogs\Models\Blog $blog */ @endphp
+            @php /** @var \App\Modules\Blogs\Models\Blog $blog */ @endphp
             <div class="col-md-6 mb-5">
                 <div class="card">
                     <div class="card-header" style="display: block">
@@ -61,7 +61,8 @@
                         <p><strong>Author:</strong>
 
                             @if(!empty($blog->user->avatar_url))
-                                <img class="ml-3 avatar avatar-sm" src="{{$blog->user->avatar_url}}" alt="author avatar">
+                                <img class="ml-3 avatar avatar-sm" src="{{$blog->user->avatar_url}}"
+                                     alt="author avatar">
                             @endif
                             {{$blog->user->name()}}
                         </p>
@@ -70,7 +71,8 @@
                         </p>
 
                         <p>
-                            <strong>Publication Date:</strong> {{ !empty($blog->publication_date) ? str_to_date_format($blog->publication_date, 'l, F Y h:i:s A') : 'N/A'}}
+                            <strong>Publication
+                                Date:</strong> {{ !empty($blog->publication_date) ? str_to_date_format($blog->publication_date, 'l, F Y h:i:s A') : 'N/A'}}
                         </p>
 
                         <p>
@@ -112,10 +114,10 @@
                                 <div class="form-group">
                                     <label for="moderation_notes"><strong>Moderation Notes</strong></label>
                                     <textarea
-                                        class="form-control"
-                                        name="moderation_notes"
-                                        id="moderation_notes"
-                                        cols="30" rows="3"
+                                            class="form-control"
+                                            name="moderation_notes"
+                                            id="moderation_notes"
+                                            cols="30" rows="3"
                                     >{{old('moderation_notes',$blog->moderation_notes ?? '')}}</textarea>
                                 </div>
                                 <div class="mt-3">

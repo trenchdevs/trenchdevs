@@ -1,8 +1,8 @@
 <?php
 
 // START - users
-use App\Domains\Users\Http\Controllers\PortfolioController;
-use App\Domains\Users\Http\Controllers\UsersController;
+use App\Modules\Users\Http\Controllers\PortfolioController;
+use App\Modules\Users\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('admin/users/create', [UsersController::class, 'create'])->name('users.create');

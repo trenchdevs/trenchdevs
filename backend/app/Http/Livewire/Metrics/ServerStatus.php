@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Metrics;
 
-use App\Domains\Sites\Models\Site;
-use App\Domains\Http\Services\ServerUtilitiesService;
+use App\Modules\Sites\Models\Site;
+use App\Modules\Http\Services\ServerUtilitiesService;
 use Livewire\Component;
 
 class ServerStatus extends Component

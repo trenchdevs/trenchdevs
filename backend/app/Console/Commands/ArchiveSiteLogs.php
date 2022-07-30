@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Domains\Sites\Services\SiteAccessLogsArchiverService;
+use App\Modules\Sites\Services\SiteAccessLogsArchiverService;
 use Exception;
 use Illuminate\Console\Command;
 

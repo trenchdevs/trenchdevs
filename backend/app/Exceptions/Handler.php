@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Domains\Emails\Models\EmailQueue;
+use App\Modules\Emails\Models\EmailQueue;
 use ErrorException;
 use Exception;
 use Illuminate\Auth\AuthenticationException;

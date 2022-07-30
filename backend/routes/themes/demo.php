@@ -1,6 +1,6 @@
 <?php
 
-use App\Domains\TrenchDevs\Http\Controllers\HomeController;
+use App\Modules\TrenchDevs\Http\Controllers\HomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;

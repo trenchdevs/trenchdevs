@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Domains\Sites\Models\Account;
+use App\Modules\Sites\Models\Account;
 use Closure;
 
 class CheckAccount

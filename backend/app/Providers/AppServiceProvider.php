@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Domains\Sites\Models\Site;
-use App\Domains\Sites\Models\SiteJson;
-use App\Domains\Sites\Models\Sites\SiteConfig;
-use App\Domains\Sso\Http\Controllers\TdMetadataController;
-use App\Domains\Sso\Traits\TdPerformsSingleSignOn;
+use App\Modules\Sites\Models\Site;
+use App\Modules\Sites\Models\SiteJson;
+use App\Modules\Sites\Models\Sites\SiteConfig;
+use App\Modules\Sso\Http\Controllers\TdMetadataController;
+use App\Modules\Sso\Traits\TdPerformsSingleSignOn;
 use CodeGreenCreative\SamlIdp\Http\Controllers\MetadataController;
 use CodeGreenCreative\SamlIdp\Traits\PerformsSingleSignOn;
 use Illuminate\Foundation\AliasLoader;

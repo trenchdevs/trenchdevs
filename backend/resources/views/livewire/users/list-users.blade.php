@@ -16,13 +16,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @php /** @var \App\Domains\Users\Models\User[] $users */ @endphp
+                    @php /** @var \App\Modules\Users\Models\User[] $users */ @endphp
                     @foreach($users as $user)
                         <tr>
                             <td>
                                 <img
-                                    class="avatar avatar-sm"
-                                    src="{{$user->avatar_url ?: '/assets/img/avataaars.svg'}}" alt="User Avatar">
+                                        class="avatar avatar-sm"
+                                        src="{{$user->avatar_url ?: '/assets/img/avataaars.svg'}}" alt="User Avatar">
                                 {{$user->name()}}
                             </td>
                             <td>
