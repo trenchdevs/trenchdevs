@@ -93,7 +93,7 @@ export default function TrenchDevsAdminLayout(props) {
                                 </div>
 
                                 <a className="nav-link collapsed" data-toggle="collapse"
-                                   data-target="#my-portfolio" aria-expanded="false" aria-controls="my-portfolio">
+                                   data-target="#photos-module" aria-expanded="false" aria-controls="photos-module">
                                     <div className="nav-link-icon">
                                         <Icon.Briefcase {...ICON_DEFAULT_PROPS}/>
                                     </div>
@@ -103,7 +103,7 @@ export default function TrenchDevsAdminLayout(props) {
                                     </div>
                                 </a>
 
-                                <div className="collapse" id="my-portfolio" data-parent="#accordionSidenav">
+                                <div className="collapse" id="photos-module" data-parent="#accordionSidenav">
                                     <nav className="sidenav-menu-nested nav">
                                         <a className="nav-link" href="index">
                                             <div className="nav-link-icon">

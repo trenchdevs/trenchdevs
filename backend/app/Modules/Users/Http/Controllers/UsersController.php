@@ -34,7 +34,7 @@ class UsersController extends Controller
      */
     public function index(): \Inertia\Response
     {
-        return Inertia::render('Themes/TrenchDevsAdmin/Users/UsersIndex', [
+        return Inertia::render('Themes/TrenchDevsAdmin/Users/UsersList', [
             'data' => User::query()->paginate(10),
         ]);
     }
@@ -118,7 +118,7 @@ class UsersController extends Controller
      */
     public function upsertForm(int $id = null): \Inertia\Response
     {
-        return Inertia::render('Themes/TrenchDevsAdmin/Users/UsersUpsert', [
+        return Inertia::render('Themes/TrenchDevsAdmin/Users/UserUpsert', [
             'user' => User::query()->find($id),
         ]);
     }

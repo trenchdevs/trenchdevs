@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Blogs\Http\Controllers\BlogsController;
 use App\Modules\TrenchDevs\Http\Controllers\PublicController;
 use App\Modules\Users\Http\Controllers\UsersController;
 use App\Public\Controllers\Blogs\PublicBlogsController;
@@ -29,6 +30,9 @@ Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function
     Route::get('users/upsert/{id?}', [UsersController::class, 'upsertForm'])->name('dashboard.users.upsertForm');
     Route::post('users', [UsersController::class, 'upsertPost'])->name('dashboard.users.upsertPost');
     Route::post('users/password-reset', [UsersController::class, 'passwordReset'])->name('dashboard.users.passwordReset');
+
+    Route::get('blogs', [BlogsController::class, 'displayBlogs']);
+    Route::get('blogs/upsert/{id?}', [BlogsController::class, 'upsertForm']);
 });
 
 

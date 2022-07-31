@@ -3,7 +3,7 @@ import {Link, useForm} from "@inertiajs/inertia-react";
 import {Inertia} from "@inertiajs/inertia";
 import * as Icon from 'react-feather'
 
-export default function UsersUpsert(props) {
+export default function UserUpsert(props) {
 
     const {
         user = {},

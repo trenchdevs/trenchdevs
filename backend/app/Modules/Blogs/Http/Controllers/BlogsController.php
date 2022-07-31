@@ -8,11 +8,14 @@ use App\Modules\Blogs\Repositories\BlogsRepository;
 use App\Modules\Users\Models\User;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
+use Inertia\Response;
 use Throwable;
 
 class BlogsController extends AuthWebController
@@ -30,35 +33,29 @@ class BlogsController extends AuthWebController
         $this->blogsRepo = new BlogsRepository($this->user);
     }
 
-    public function index(Request $request)
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function displayBlogs(Request $request): Response
     {
-        $me = $request->get('me');
+        return Inertia::render('Themes/TrenchDevsAdmin/Blogs/BlogsList', [
+            'data' => Blog::query()
+                ->when(!empty($request->get('me')), fn(Builder $query) => $query->where('user_id', '=', $request->user()->id ?? null))
+                ->orderBy('id', 'desc')
+                ->paginate(1)
+        ]);
+    }
 
-        /** @var User $user */
-        $user = $request->user();
-
-        $blogs = Blog::query();
-
-        if (!empty($me)) {
-            $blogs->where('user_id', $user->id);
-        }
-
-        $blogs = $blogs->orderBy('id', 'desc')
-            ->simplePaginate(6);
-
-        $blogStatistics = $this->blogsRepo->getStatistics();
-
-
-        $data = [
-            'blog_statistics' => $blogStatistics,
-            'blogs' => $blogs,
-        ];
-
-        if ($request->expectsJson()) {
-            return response()->json($data);
-        }
-
-        return view('blogs.index', $data);
+    /**
+     * @param int|null $id
+     * @return Response
+     */
+    public function upsertForm(int $id = null): Response
+    {
+        return Inertia::render('Themes/TrenchDevsAdmin/Blogs/BlogUpsert', [
+            'blog' => Blog::query()->find($id),
+        ]);
     }
 
     public function upsert($blogId = null)

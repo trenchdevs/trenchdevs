@@ -1,0 +1,45 @@
+import {Link, usePage} from "@inertiajs/inertia-react";
+import CustomTable from "@/Components/Themes/TrenchDevsAdmin/CustomTable";
+import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
+import * as Icon from "react-feather";
+
+export default function BlogsList() {
+
+    const {data} = usePage().props;
+
+    return (
+        <TrenchDevsAdminLayout>
+            <div className="card">
+                <div className="card-header">
+                    Blogs
+                </div>
+                <div className="card-body">
+
+                    <CustomTable links={data.links} rows={data.data} columns={[
+                        {
+                            key: 'primary_image_url', 'label': 'Image', render: row => {
+                                return <img className="img-thumbnail img-fluid" style={{maxHeight: '50px'}}
+                                            src={row.primary_image_url} alt={row.title}/>
+                            }
+                        },
+                        {key: 'id', 'label': 'ID'},
+                        {key: 'title', 'label': 'Title'},
+                        {key: 'slug', 'label': 'Slug'},
+                        {key: 'status', 'label': 'Status'},
+                        {key: 'publication_date', 'label': 'Publication Status'},
+                        {key: 'created_at', 'label': 'Created At'},
+                        {
+                            key: '', 'label': 'Actions', render: row => (
+                                <>
+                                    <Link href={`/dashboard/blogs/upsert/${row.id}`}
+                                          className="btn btn-warning"><Icon.Edit size={12}/>
+                                    </Link>
+                                </>
+                            )
+                        },
+                    ]}/>
+                </div>
+            </div>
+        </TrenchDevsAdminLayout>
+    )
+}
