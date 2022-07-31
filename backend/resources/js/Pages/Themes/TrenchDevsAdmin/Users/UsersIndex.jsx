@@ -1,13 +1,23 @@
 import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
-import {Link} from "@inertiajs/inertia-react";
+import {Link, usePage} from "@inertiajs/inertia-react";
 import * as Icon from "react-feather";
+import Paginator from "@/Components/Themes/TrenchDevsAdmin/Paginator";
+import {Inertia} from "@inertiajs/inertia";
 
 export default function UsersIndex(props) {
 
-    console.log(props);
+    const {auth} = usePage().props;
+
     const {
         data: {data, links},
     } = props;
+
+    function sendResetPasswordEmail(id, email){
+
+        if (confirm(`Are you sure you want to send a password confirmation link to this email ${email}?`)) {
+            Inertia.post(`/dashboard/users/password-reset`, {id});
+        }
+    }
 
     return (
         <TrenchDevsAdminLayout>
@@ -28,25 +38,39 @@ export default function UsersIndex(props) {
 
                     <div className="row">
                         <div className="col">
-                            <table className="table table-striped table-responsive">
+                            <table className="table table-striped">
                                 <thead>
                                 <tr>
-                                    <td>ID</td>
-                                    <td>Name</td>
-                                    <td>Email</td>
-                                    <td>Actions</td>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Is Active?</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {data.map(({id, email, name}) => {
+                                {data.map(({id, email, name, is_active}) => {
                                     return (
                                         <tr key={id}>
                                             <td>{id}</td>
                                             <td>{name}</td>
                                             <td>{email}</td>
+                                            <td>{is_active ? 'Yes' : 'No'}</td>
                                             <td>
                                                 <Link href={`/dashboard/users/upsert/${id}`}
-                                                      className="btn btn-warning"><Icon.Edit size={12}/></Link>
+                                                      className="btn btn-warning"><Icon.Edit size={12}/>
+                                                </Link>
+                                                {['superadmin', 'admin'].includes(auth.user.role) &&
+                                                    <button
+                                                        onClick={() => sendResetPasswordEmail(id, email)}
+                                                        // href={'/dashboard/users/password-reset'}
+                                                        // method={"POST"}
+                                                        className="btn btn-info ml-2"
+                                                        // data={{id}}
+                                                    >
+                                                        <Icon.Key size={12}/>
+                                                    </button>
+                                                }
                                             </td>
                                         </tr>
                                     );
@@ -54,22 +78,7 @@ export default function UsersIndex(props) {
                                 </tbody>
                             </table>
 
-                            {/* todo: chris - make a component out of this */}
-                            <nav className="mt-5">
-                                <ul className="pagination float-right">
-                                    {
-                                        links.map(({url, label, active}) =>
-                                            (
-                                                <li key={label}
-                                                    className={`page-item ${active && 'active'} ${!url && 'disabled'}`}>
-                                                    <Link className={`page-link`} href={url}>
-                                                        <span dangerouslySetInnerHTML={{__html: label}}/></Link>
-
-                                                </li>
-                                            )
-                                        )}
-                                </ul>
-                            </nav>
+                            <Paginator links={links}/>
                         </div>
                     </div>
                 </div>

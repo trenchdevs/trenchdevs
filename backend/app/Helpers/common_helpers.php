@@ -277,6 +277,13 @@ if (!function_exists('site_is')) {
     }
 }
 
+if (!function_exists('theme_is')) {
+
+    function theme_is(...$siteTheme): string
+    {
+        return  in_array(site()->theme, $siteTheme);
+    }
+}
 
 
 

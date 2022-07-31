@@ -28,6 +28,7 @@ Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function
     Route::get('users', [UsersController::class, 'index'])->name('dashboard.users');
     Route::get('users/upsert/{id?}', [UsersController::class, 'upsertForm'])->name('dashboard.users.upsertForm');
     Route::post('users', [UsersController::class, 'upsertPost'])->name('dashboard.users.upsertPost');
+    Route::post('users/password-reset', [UsersController::class, 'passwordReset'])->name('dashboard.users.passwordReset');
 });
 
 

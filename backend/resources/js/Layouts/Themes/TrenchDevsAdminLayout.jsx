@@ -6,12 +6,21 @@ import {get} from 'lodash';
 const ICON_DEFAULT_PROPS = {color: 'grey', size: 18}
 
 
-export default function TrenchDevsAdminLayout({auth, header, children}) {
+export default function TrenchDevsAdminLayout(props) {
+
+    const {props: pageProps, component, url} = usePage();
+
+    props = {
+        ...pageProps,
+        ...props
+    };
 
     const {
         flash = {},
-        server = {}
-    } = usePage().props;
+        server = {},
+        auth: {user = {}},
+        children
+    } = props;
 
     return (
         <>
@@ -156,7 +165,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 </div>
 
 
-                                <Link className="nav-link collapsed" href="/dashboard/users">
+                                <Link className={`nav-link collapsed ${url.startsWith('/dashboard/users')  && 'active'}`} href="/dashboard/users">
                                     <div className="nav-link-icon">
                                         <Icon.Users{...ICON_DEFAULT_PROPS}/>
                                     </div>
@@ -321,8 +330,8 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                         <div className="sidenav-footer">
                             <div className="sidenav-footer-content">
                                 <div className="sidenav-footer-subtitle">Logged in as:</div>
-                                <div
-                                    className="sidenav-footer-title">first_name last_name
+                                <div className="sidenav-footer-title">
+                                    {user.name} <br/> <small>{user.email}</small>
                                 </div>
                             </div>
                         </div>

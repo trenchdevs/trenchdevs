@@ -1,5 +1,5 @@
 import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
-import {useForm} from "@inertiajs/inertia-react";
+import {Link, useForm} from "@inertiajs/inertia-react";
 import {Inertia} from "@inertiajs/inertia";
 import * as Icon from 'react-feather'
 
@@ -120,8 +120,12 @@ export default function UsersUpsert(props) {
                             </div>
 
                             <div className="col-12 text-right">
+                                <Link className="btn btn-warning mr-2" href="/dashboard/users">
+                                    <Icon.SkipBack size={14}/>
+                                    <span className="ml-2">Cancel</span>
+                                </Link>
                                 <button className="btn btn-success">
-                                    <Icon.Save size={16}/>
+                                    <Icon.Save size={14}/>
                                     <span className="ml-2">Save</span>
                                 </button>
                             </div>
