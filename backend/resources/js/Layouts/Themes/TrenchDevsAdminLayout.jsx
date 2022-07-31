@@ -19,15 +19,16 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                 <a className="navbar-brand d-none d-sm-block"
                    href="/dashboard">TRENCHDEVS PORTAL</a>
                 <button className="btn btn-icon btn-transparent-light order-1 order-lg-0 mr-lg-2" id="sidebarToggle"
+                        onClick={() => $("body").toggleClass("sidenav-toggled")}
                         href="#">
-                    <Icon.Menu {...ICON_DEFAULT_PROPS}/>
+                    <Icon.Menu {...ICON_DEFAULT_PROPS} color="white"/>
                 </button>
-                <ul className="navbar-nav align-items-center ml-auto">
+                <ul className="navbar-nav align-items-center ml-auto mt-2">
                     <li className="nav-item dropdown no-caret mr-3 dropdown-user">
                         <form method="post">
                             <button type="submit" className="list-unstyled bg-transparent border-0">
                                 <span className="dropdown-item-icon">
-                                    <Icon.LogOut {...ICON_DEFAULT_PROPS}/>
+                                    <Icon.LogOut size={ICON_DEFAULT_PROPS.size} color={"white"}/>
                                 </span>
                             </button>
                         </form>
@@ -337,9 +338,9 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                     <h6 className="mb-0">Server Time (UTC)</h6>
                                     <div className="small">
                                         <span className="font-weight-500 text-primary">
-                                            {get(server,'time.day_of_week')}</span>  &middot;
-                                        {get(server,'time.date_human')} &middot;
-                                        {get(server,'time.time_human')}
+                                            {get(server, 'time.day_of_week')}</span>  &middot;
+                                        {get(server, 'time.date_human')} &middot;
+                                        {get(server, 'time.time_human')}
 
                                     </div>
                                 </div>

@@ -55,8 +55,8 @@ export default function UsersIndex(props) {
                             </table>
 
                             {/* todo: chris - make a component out of this */}
-                            <nav aria-label="Page navigation example">
-                                <ul className="pagination">
+                            <nav className="mt-5">
+                                <ul className="pagination float-right">
                                     {
                                         links.map(({url, label, active}) =>
                                             (
