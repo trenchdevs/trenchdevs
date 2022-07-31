@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import * as Icon from 'react-feather';
+
+const ICON_DEFAULT_PROPS = {color: 'white', size: 18}
 
 
 export default function TrenchDevsAdminLayout({auth, header, children}) {
@@ -10,14 +13,14 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                    href="/dashboard">TRENCHDEVS PORTAL</a>
                 <button className="btn btn-icon btn-transparent-light order-1 order-lg-0 mr-lg-2" id="sidebarToggle"
                         href="#">
-                    <i data-feather="menu"></i>
+                    <Icon.Menu {...ICON_DEFAULT_PROPS}/>
                 </button>
                 <ul className="navbar-nav align-items-center ml-auto">
                     <li className="nav-item dropdown no-caret mr-3 dropdown-user">
                         <form method="post">
                             <button type="submit" className="list-unstyled bg-transparent border-0">
                                 <span className="dropdown-item-icon">
-                                    <i data-feather="log-out" className="text-white"></i>
+                                    <Icon.LogOut {...ICON_DEFAULT_PROPS}/>
                                 </span>
                             </button>
                         </form>
@@ -32,14 +35,14 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 <div className="sidenav-menu-heading">Core</div>
                                 <a className="nav-link collapsed" href="">
                                     <div className="nav-link-icon">
-                                        <i data-feather="activity"></i>
+                                        <Icon.Activity {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Dashboard
                                 </a>
                                 <a className="nav-link collapsed" href="">
                                     <div className="nav-link-icon">
-                                        <i data-feather="user"></i>
-                                    </div>
+                                        <Icon.Users {...ICON_DEFAULT_PROPS}/>
+                                        </div>
                                     Account
                                 </a>
 
@@ -47,11 +50,11 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 <a className="nav-link collapsed" data-toggle="collapse"
                                    data-target="#my-portfolio" aria-expanded="false" aria-controls="my-portfolio">
                                     <div className="nav-link-icon">
-                                        <i data-feather="briefcase"></i>
+                                        <Icon.Briefcase {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     My Portfolio Page
                                     <div className="sidenav-collapse-arrow">
-                                        <i data-feather="chevron-down"></i>
+                                        <Icon.ChevronDown {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                 </a>
 
@@ -59,13 +62,13 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                     <nav className="sidenav-menu-nested nav">
                                         <a className="nav-link" href=" ">
                                             <div className="nav-link-icon">
-                                                <i data-feather="edit"></i>
-                                            </div>
+                                                <Icon.Edit {...ICON_DEFAULT_PROPS}/>
+                                                </div>
                                             Edit
                                         </a>
                                         <a className="nav-link" href=" " target="_blank">
                                             <div className="nav-link-icon">
-                                                <i data-feather="eye"></i>
+                                                <Icon.Eye {...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             Page
                                         </a>
@@ -75,11 +78,11 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 <a className="nav-link collapsed" data-toggle="collapse"
                                    data-target="#my-portfolio" aria-expanded="false" aria-controls="my-portfolio">
                                     <div className="nav-link-icon">
-                                        <i data-feather="briefcase"></i>
+                                        <Icon.Briefcase {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Photos
                                     <div className="sidenav-collapse-arrow">
-                                        <i data-feather="chevron-down"></i>
+                                        <Icon.ChevronDown {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                 </a>
 
@@ -87,13 +90,13 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                     <nav className="sidenav-menu-nested nav">
                                         <a className="nav-link" href="index">
                                             <div className="nav-link-icon">
-                                                <i data-feather="edit"></i>
-                                            </div>
+                                                <Icon.Edit {...ICON_DEFAULT_PROPS}/>
+                                                </div>
                                             All Photos
                                         </a>
-                                        <a className="nav-link" href="albums">
+                                        <a className="nav-link" href="">
                                             <div className="nav-link-icon">
-                                                <i data-feather="eye"></i>
+                                                <Icon.Eye {...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             Photo Albums
                                         </a>
@@ -104,11 +107,11 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 <a className="nav-link collapsed" data-toggle="collapse"
                                    data-target="#blogs" aria-expanded="false" aria-controls="blogs">
                                     <div className="nav-link-icon">
-                                        <i data-feather="edit-3"></i>
+                                        <Icon.Edit3 {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Blogs
                                     <div className="sidenav-collapse-arrow">
-                                        <i data-feather="chevron-down"></i>
+                                        <Icon.ChevronDown {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                 </a>
 
@@ -118,26 +121,26 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
 
                                         <a className="nav-link" href="">
                                             <div className="nav-link-icon">
-                                                <i data-feather="book-open"></i>
+                                                <Icon.BookOpen {...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             Blog Page
                                         </a>
 
                                         <a className="nav-link" href="">
                                             <div className="nav-link-icon">
-                                                <i data-feather="plus-square"></i>
+                                                 <Icon.PlusSquare{...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             Create
                                         </a>
                                         <a className="nav-link" href="">
                                             <div className="nav-link-icon">
-                                                <i data-feather="users"></i>
+                                                 <Icon.Users{...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             All Blogs
                                         </a>
-                                        <a className="nav-link" href=" ['me' => '1'])">
+                                        <a className="nav-link" href="">
                                             <div className="nav-link-icon">
-                                                <i data-feather="feather"></i>
+                                                 <Icon.Feather{...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             My Blogs
                                         </a>
@@ -147,7 +150,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
 
                                 <a className="nav-link collapsed" href=" ">
                                     <div className="nav-link-icon">
-                                        <i data-feather="users"></i>
+                                         <Icon.Users{...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Users
                                 </a>
@@ -155,7 +158,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
 
                                 <a className="nav-link collapsed" href="">
                                     <div className="nav-link-icon">
-                                        <i data-feather="paperclip"></i>
+                                         <Icon.Paperclip{...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Projects
                                 </a>
@@ -163,7 +166,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
 
                                 <a className="nav-link collapsed" target="_blank" href="https://trenchdevs.slack.com">
                                     <div className="nav-link-icon">
-                                        <i data-feather="slack"></i>
+                                         <Icon.Slack{...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Slack
                                 </a>
@@ -172,7 +175,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 <a className="nav-link collapsed"
                                    href=" ">
                                     <div className="nav-link-icon">
-                                        <i data-feather="pen-tool"></i>
+                                         <Icon.PenTool{...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Markdown Notes
                                 </a>
@@ -183,7 +186,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 <a className="nav-link collapsed" target="_blank"
                                    href="https://github.com/trenchdevs/trenchdevs/issues">
                                     <div className="nav-link-icon">
-                                        <i data-feather="alert-circle"></i>
+                                         <Icon.AlertCircle {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Issues
                                 </a>
@@ -191,11 +194,11 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 <a className="nav-link collapsed" data-toggle="collapse"
                                    data-target="#repositories" aria-expanded="false" aria-controls="repositories">
                                     <div className="nav-link-icon">
-                                        <i data-feather="book-open"></i>
+                                         <Icon.BookOpen {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Repositories
                                     <div className="sidenav-collapse-arrow">
-                                        <i data-feather="chevron-down"></i>
+                                        <Icon.ChevronDown {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                 </a>
 
@@ -204,14 +207,14 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                         <a target="_blank" className="nav-link"
                                            href="https://github.com/trenchdevs/trenchdevs">
                                             <div className="nav-link-icon">
-                                                <i data-feather="code"></i>
+                                                 <Icon.Code {...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             trenchdevs
                                         </a>
                                         <a target="_blank" className="nav-link"
                                            href="https://github.com/christopheredrian/trenchdevs-php-client">
                                             <div className="nav-link-icon">
-                                                <i data-feather="code"></i>
+                                                 <Icon.Code {...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             trenchdevs-php-client
                                         </a>
@@ -224,11 +227,11 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 <a className="nav-link collapsed" data-toggle="collapse"
                                    data-target="#api-clients" aria-expanded="false" aria-controls="api-clients">
                                     <div className="nav-link-icon">
-                                        <i data-feather="book-open"></i>
+                                         <Icon.BookOpen {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     API Clients
                                     <div className="sidenav-collapse-arrow">
-                                        <i data-feather="chevron-down"></i>
+                                        <Icon.ChevronDown {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                 </a>
 
@@ -237,7 +240,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                         <a target="_blank" className="nav-link"
                                            href="https://packagist.org/packages/trenchdevs/trenchdevs-php-client">
                                             <div className="nav-link-icon">
-                                                <i data-feather="code"></i>
+                                                 <Icon.Code {...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             Php Client
                                         </a>
@@ -251,7 +254,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 <a className="nav-link collapsed"
                                    href="">
                                     <div className="nav-link-icon">
-                                        <i data-feather="alert-circle"></i>
+                                         <Icon.AlertCircle {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                 </a>
 
@@ -259,11 +262,11 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 <a className="nav-link collapsed" data-toggle="collapse"
                                    data-target="#shop" aria-expanded="false" aria-controls="shop">
                                     <div className="nav-link-icon">
-                                        <i data-feather="shopping-bag"></i>
+                                         <Icon.ShoppingBag {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Shop
                                     <div className="sidenav-collapse-arrow">
-                                        <i data-feather="chevron-down"></i>
+                                        <Icon.ChevronDown {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                 </a>
 
@@ -271,7 +274,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                     <nav className="sidenav-menu-nested nav">
                                         <a className="nav-link" href="show-bulk-upload">
                                             <div className="nav-link-icon">
-                                                <i data-feather="upload"></i>
+                                                 <Icon.Upload {...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             Product Bulk Upload
                                         </a>
@@ -284,7 +287,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
 
                                 <a className="nav-link collapsed" href=" ">
                                     <div className="nav-link-icon">
-                                        <i data-feather="globe"></i>
+                                         <Icon.Globe {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Accounts
                                 </a>
@@ -292,7 +295,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
 
                                 <a className="nav-link collapsed" href="">
                                     <div className="nav-link-icon">
-                                        <i data-feather="mic"></i>
+                                         <Icon.Mic{...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Announcements
                                 </a>
@@ -300,7 +303,7 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
 
                                 <a className="nav-link collapsed" href="">
                                     <div className="nav-link-icon">
-                                        <i data-feather="terminal"></i>
+                                         <Icon.Terminal{...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Commands
                                 </a>
@@ -332,9 +335,11 @@ export default function TrenchDevsAdminLayout({auth, header, children}) {
                                 </div>
                             </div>
 
-                            <p className="alert class', 'alert-info"></p>
+                            <p className="alert alert-info">This is an alert</p>
 
-                            {children}
+                            <div>
+                                {children}
+                            </div>
 
                         </div>
                     </main>
