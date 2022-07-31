@@ -29,6 +29,15 @@ services:
     networks:
       - trenchdevs-docker-network
 
+  mail:
+    container_name: ${COMPOSE_PROJECT_NAME:-project-id}-mail
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - ${MAIL_HOST_SMTP_PORT:-1025}:1025
+      - ${MAIL_HOST_WEB_PORT:-8025}:8025
+    networks:
+      - trenchdevs-docker-network
+
 networks:
   trenchdevs-docker-network:
     external: false
