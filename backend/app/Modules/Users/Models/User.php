@@ -32,6 +32,9 @@ use Throwable;
  * @property ProjectUser $projects
  * @property UserSkill $skills
  * @property $email
+ * @property $name
+ * @property $first_name
+ * @property $last_name
  * @property $id
  * @property $avatar_url
  * @property $username
@@ -89,6 +92,10 @@ class User extends Authenticatable // implements MustVerifyEmail
         'role',
         'is_flagged_for_deactivation',
         'deactivation_notice_sent_at',
+    ];
+
+    protected $appends = [
+        'name', // getNameAttribute
     ];
 
     /**
@@ -413,7 +420,7 @@ class User extends Authenticatable // implements MustVerifyEmail
     {
 
         $title = "Account subject to deactivation";
-        $message = "Your account is subject to deactivation due to your inactivity in Sbadmin. Please login within the next {$noticeDays} days to avoid this.";
+        $message = "Your account is subject to deactivation due to your inactivity in TrenchDevsAdmin. Please login within the next {$noticeDays} days to avoid this.";
 
         $viewData = [
             'name' => $user->name(),

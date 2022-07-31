@@ -37,13 +37,13 @@ class EmailPreferencesController extends Controller
 
         if (BlackListedEmail::isBlackListed($email)) {
             throw ValidationException::withMessages([
-                'email' => "You're already unsubscribed from the Sbadmin notifications"
+                'email' => "You're already unsubscribed from the TrenchDevsAdmin notifications"
             ]);
         }
 
         BlackListedEmail::addToBlackListedEmails($email, 'User unsubscribes from emails');
 
-        return back()->with('message', 'Successfully unsubscribed you from all notification emails on Sbadmin');
+        return back()->with('message', 'Successfully unsubscribed you from all notification emails on TrenchDevsAdmin');
 
     }
 }

@@ -145,7 +145,7 @@ class EmailQueue extends Model
     {
 
         $viewData = [
-            'name' => 'Sbadmin Member',
+            'name' => 'TrenchDevsAdmin Member',
             'email_body' => $message,
         ];
 

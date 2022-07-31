@@ -33,7 +33,7 @@ class CreateSitesTable extends Migration
         if (app()->environment('local')) {
             Site::query()->create([
                 'domain' => 'trenchdevs.localhost',
-                'company_name' => 'Sbadmin',
+                'company_name' => 'TrenchDevsAdmin',
                 'identifier' => 'trenchdevs',
                 'theme' => 'trenchdevs'
             ]);
@@ -50,7 +50,7 @@ class CreateSitesTable extends Migration
 
             Site::query()->create([
                 'domain' => 'trenchdevs.org',
-                'company_name' => 'Sbadmin',
+                'company_name' => 'TrenchDevsAdmin',
                 'identifier' => 'trenchdevs',
                 'theme' => 'trenchdevs',
             ]);

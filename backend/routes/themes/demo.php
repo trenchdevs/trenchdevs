@@ -23,4 +23,10 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('users', function() {
+    return Inertia::render('Themes/TrenchDevsAdmin/Users/UsersIndex', [
+        'data' => \App\Modules\Users\Models\User::query()->paginate(1),
+    ]);
+});
+
 require __DIR__ . '/../auth.php';

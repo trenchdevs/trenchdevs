@@ -271,7 +271,7 @@ class BlogsRepository
 
                 EmailQueue::queue(
                     $moderator->email,
-                    "Sbadmin: Blog Entry \"{$blog->title}\" Moderation",
+                    "TrenchDevsAdmin: Blog Entry \"{$blog->title}\" Moderation",
                     $viewData,
                     'emails.generic'
                 );
