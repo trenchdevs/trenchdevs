@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
@@ -51,6 +52,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+        $now = now();
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
@@ -60,6 +62,18 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
+            'flash' => [
+                'message' => fn () => $request->session()->get('message')
+            ],
+            'server' => [
+                'time' => [
+                    'now' =>  $now,
+                    'day_of_week' => $now->format('l'),
+                    'date_human' => $now->format('F d, Y'),
+                    'time_human' => $now->format('h:i a')
+                ]
+            ],
+            'site' => site(),
         ]);
     }
 }

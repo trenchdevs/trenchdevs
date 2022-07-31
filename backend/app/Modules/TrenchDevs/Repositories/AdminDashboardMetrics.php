@@ -2,7 +2,7 @@
 
 namespace App\Modules\TrenchDevs\Repositories;
 
-use App\Modules\Sites\Models\Account;
+
 use App\Modules\Sites\Models\SiteAccessLog;
 use App\Modules\Users\Models\User;
 use App\Modules\Users\Models\UserLogin;

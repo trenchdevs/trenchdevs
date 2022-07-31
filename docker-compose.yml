@@ -21,7 +21,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: trenchdevs-backend
-    restart: unless-stopped
     working_dir: /var/www
     volumes:
       - ./backend:/var/www/

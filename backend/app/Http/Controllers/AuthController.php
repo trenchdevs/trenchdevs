@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Modules\Sites\Models\Account;
+
 use App\Modules\Sites\Models\ApplicationType;
 use App\Http\Controllers\Auth\ApiController;
 use App\Http\Controllers\Auth\RegisterController;

@@ -2,7 +2,7 @@
 
 namespace App\Modules\Users\Repositories;
 
-use App\Modules\Sites\Models\Account;
+
 use App\Modules\Users\Models\UserCertification;
 use App\Modules\Users\Models\User;
 use App\Modules\Users\Models\UserLogin;

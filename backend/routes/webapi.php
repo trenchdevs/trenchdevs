@@ -12,26 +12,25 @@
 | eg. trenchdevs.org/webapi/*
 |
 */
-use App\Modules\Events\Http\Controllers\EventsController;
-use App\Modules\Users\Http\Controllers\WebApi\UsersController;
-use App\Http\Controllers\WebApiController;
-use Illuminate\Support\Facades\Route;
+//use App\Modules\Events\Http\Controllers\EventsController;
+//use App\Modules\Users\Http\Controllers\WebApi\UsersController;
+//use App\Http\Controllers\WebApiController;
+//use Illuminate\Support\Facades\Route;
 
+//Route::middleware(['auth:web'])->group(function () {
+//    Route::get('init', [WebApiController::class, 'init']);
 
-Route::middleware(['auth:web'])->group(function () {
-    Route::get('init', [WebApiController::class, 'init']);
+//    Route::prefix('users')->group(function(){
+//        Route::post('all', [UsersController::class, 'getUsers']);
+//    });
 
-    Route::prefix('users')->group(function(){
-        Route::post('all', [UsersController::class, 'getUsers']);
-    });
+//    Route::prefix('events')->group(function(){
+//        Route::post('all', [EventsController::class, 'getEvents']);
+//        Route::get('details/{id}', [EventsController::class, 'details']);
+//        Route::post('upsert', [EventsController::class, 'upsert']);
+//    });
 
-    Route::prefix('events')->group(function(){
-        Route::post('all', [EventsController::class, 'getEvents']);
-        Route::get('details/{id}', [EventsController::class, 'details']);
-        Route::post('upsert', [EventsController::class, 'upsert']);
-    });
-
-});
+//});
 
 
 

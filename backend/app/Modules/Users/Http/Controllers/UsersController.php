@@ -2,9 +2,7 @@
 
 namespace App\Modules\Users\Http\Controllers;
 
-use App\Modules\Sites\Models\Account;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\AuthWebController;
 use App\Http\Controllers\Controller;
 use App\Modules\Emails\Models\EmailQueue;
 use App\Modules\Users\Models\UserPortfolioDetail;
@@ -24,28 +22,29 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Inertia\Inertia;
+use JetBrains\PhpStorm\ArrayShape;
 use Throwable;
 
-class UsersController extends AuthWebController
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Application|Factory|Response|View
      */
-    public function index()
+    public function index(): \Inertia\Response
     {
-        /** @var User $user */
-        $user = Auth::user();
-
-        $users = User::query()
-            ->orderBy('first_name')
-            ->simplePaginate(30);
-
-        return view('admin.users.index', ['users' => $users]);
+        return Inertia::render('Themes/TrenchDevsAdmin/Users/UsersIndex', [
+            'data' => User::query()->paginate(10),
+        ]);
     }
 
-    protected function validator($create = true)
+    /**
+     * @param bool $create
+     * @return array
+     */
+    #[ArrayShape(['first_name' => "string[]", 'last_name' => "string[]", 'is_active' => "array", 'role' => "array", 'password' => "string[]", 'email' => "array"])]
+    protected function validator(bool $create = true): array
     {
         /** @var User $user */
         $user = Auth::user();
@@ -58,9 +57,9 @@ class UsersController extends AuthWebController
         ];
 
         if ($create) {
-            $defaultValidator['email'] = ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function(Builder $query){
+            $defaultValidator['email'] = ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function (Builder $query) {
                 $query->where('email', '=', request()->input('email'));
-                $query->where('site_id', '=',site_id());
+                $query->where('site_id', '=', site_id());
             })];
             $defaultValidator['password'] = ['required', 'string', 'min:8'];
         }
@@ -114,6 +113,17 @@ class UsersController extends AuthWebController
     }
 
     /**
+     * @param int|null $id
+     * @return \Inertia\Response
+     */
+    public function upsertForm(int $id = null): \Inertia\Response
+    {
+        return Inertia::render('Themes/TrenchDevsAdmin/Users/UsersUpsert', [
+            'user' => User::query()->find($id),
+        ]);
+    }
+
+    /**
      * @param Request $request
      * @return RedirectResponse|Redirector
      * @throws ValidationException
@@ -121,14 +131,14 @@ class UsersController extends AuthWebController
      */
     public function upsert(Request $request)
     {
+        $this->adminCheckOrAbort();
 
-        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
 
         $data = $request->all();
         $data['site_id'] = site_id();
 
         /** @var User $user */
-        if ($request->id) { // no id - update mode
+        if ($request->id) { // update mode
             $this->validate($request, $this->validator(false));
             $user = User::query()->findOrFail($request->id);
             // password update is disabled via this panel
@@ -140,7 +150,7 @@ class UsersController extends AuthWebController
 
         } else {
 
-            $this->validate($request, $this->validator(true));
+            $this->validate($request, $this->validator());
 
             $user = User::query()->create([
                 'first_name' => $data['first_name'],
@@ -156,9 +166,7 @@ class UsersController extends AuthWebController
             Session::flash('message', "Successfully created new user " . $user->name());
         }
 
-        return redirect(route('users.index'));
-
-
+        return redirect(route('dashboard.users'));
     }
 
     /**

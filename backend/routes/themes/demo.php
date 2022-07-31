@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\TrenchDevs\Http\Controllers\PublicController;
+use App\Modules\Users\Http\Controllers\UsersController;
 use App\Public\Controllers\Blogs\PublicBlogsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,14 +20,15 @@ Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
 /**
  * Admin: rendered via inertia
  */
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('users', function() {
-    return Inertia::render('Themes/TrenchDevsAdmin/Users/UsersIndex', [
-        'data' => \App\Modules\Users\Models\User::query()->paginate(1),
-    ]);
+    Route::get('users', [UsersController::class, 'index'])->name('dashboard.users');
+    Route::get('users/upsert/{id?}', [UsersController::class, 'upsertForm'])->name('dashboard.users.upsertForm');
+    Route::post('users', [UsersController::class, 'upsertPost'])->name('dashboard.users.upsertPost');
 });
+
 
 require __DIR__ . '/../auth.php';

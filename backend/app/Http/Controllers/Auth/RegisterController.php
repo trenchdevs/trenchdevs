@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Modules\Sites\Models\Account;
+
 use App\Http\Controllers\Controller;
 use App\Modules\Emails\Models\EmailQueue;
 use App\Providers\RouteServiceProvider;

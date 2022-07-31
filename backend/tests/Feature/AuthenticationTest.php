@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Modules\Sites\Models\Account;
+
 use App\Modules\Users\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
