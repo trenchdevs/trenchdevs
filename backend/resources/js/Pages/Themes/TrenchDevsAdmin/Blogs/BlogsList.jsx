@@ -15,6 +15,15 @@ export default function BlogsList() {
                 </div>
                 <div className="card-body">
 
+                    <div className="row pb-3">
+                        <div className="col text-right">
+                            <Link href="/dashboard/blogs/upsert" className="btn btn-sm btn-success">
+                                <Icon.PenTool color="white" size={14}/>
+                                <span className="ml-1">Create</span>
+                            </Link>
+                        </div>
+                    </div>
+
                     <CustomTable links={data.links} rows={data.data} columns={[
                         {
                             key: 'primary_image_url', 'label': 'Image', render: row => {

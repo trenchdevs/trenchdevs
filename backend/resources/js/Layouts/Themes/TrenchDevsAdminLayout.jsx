@@ -143,18 +143,18 @@ export default function TrenchDevsAdminLayout(props) {
                                             Blog Page
                                         </a>
 
-                                        <a className="nav-link" href="">
+                                        <Link className="nav-link" href="/dashboard/blogs/upsert">
                                             <div className="nav-link-icon">
                                                 <Icon.PlusSquare{...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             Create
-                                        </a>
-                                        <a className="nav-link" href="">
+                                        </Link>
+                                        <Link className="nav-link" href="/dashboard/blogs">
                                             <div className="nav-link-icon">
                                                 <Icon.Users{...ICON_DEFAULT_PROPS}/>
                                             </div>
                                             All Blogs
-                                        </a>
+                                        </Link>
                                         <a className="nav-link" href="">
                                             <div className="nav-link-icon">
                                                 <Icon.Feather{...ICON_DEFAULT_PROPS}/>

@@ -26,7 +26,7 @@ export default function UsersList(props) {
                 <div className="card-header">
                     Users
                 </div>
-                <div className="card-body table-responsive">
+                <div className="card-body">
 
                     <div className="row pb-3">
                         <div className="col text-right">
