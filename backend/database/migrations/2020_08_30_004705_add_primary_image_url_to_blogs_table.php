@@ -14,7 +14,7 @@ class AddPrimaryImageUrlToBlogsTable extends Migration
     public function up()
     {
         Schema::table('blogs', function (Blueprint $table) {
-            $table->string('primary_image_url')->after('markdown_contents');
+            $table->string('primary_image_url', 4000)->after('markdown_contents');
         });
     }
 

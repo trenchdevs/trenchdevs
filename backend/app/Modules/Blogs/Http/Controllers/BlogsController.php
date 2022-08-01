@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -55,29 +56,16 @@ class BlogsController extends AuthWebController
      */
     public function upsertForm(int $id = null): Response
     {
-        return $this->inertiaRender('Blogs/BlogUpsert', [
-            'blog' => Blog::query()->find($id),
-        ]);
-    }
+        $data = [];
 
-    public function upsert($blogId = null)
-    {
-
-        $blog = new Blog();
-
-        if (!empty($blogId)) {
-            /** @var User $loggedInUser */
-            $loggedInUser = request()->user();
-
-            $blog = Blog::find($blogId);
-            if (!$this->isLoggedInUserAdmin() &&
-                $blog->user_id !== $loggedInUser->id) {
-                abort(403, "You are not allowed to update this resource");
-            }
+        if (is_numeric($id)) {
+            $blog = Blog::query()->find($id);
+            $data = $blog->attributesToArray();
+            $data['tags'] = $blog->tags->pluck('tag_name')->implode(',');
         }
 
-        return view('blogs.upsert', [
-            'blog' => $blog,
+        return $this->inertiaRender('Blogs/BlogUpsert', [
+            'blog' => $data,
         ]);
     }
 
@@ -87,7 +75,7 @@ class BlogsController extends AuthWebController
      * @throws Throwable
      * @throws ValidationException
      */
-    public function store(Request $request)
+    public function upsertBlog(Request $request)
     {
 
         $id = $request->get('id');
@@ -98,7 +86,7 @@ class BlogsController extends AuthWebController
             'title' => ['required', 'max:255', Rule::unique('blogs')->ignore($id)],
             'slug' => ['required', 'max:255', Rule::unique('blogs')->ignore($id)],
             'status' => 'required|in:draft,published',
-            'primary_image_url' => 'required:max:512',
+            'primary_image_url' => 'required:max:512|url',
             'tagline' => 'required|max:255',
             'markdown_contents' => 'required|max:50000', // can be changed later on if needed more
             'publication_date' => 'required|date',
@@ -110,8 +98,8 @@ class BlogsController extends AuthWebController
 
         $blog = $this->blogsRepo->storeBlog($user, $request->all());
 
-        $message = 'Successfully ' . ($editMode ? 'updated' : 'created') . ' the blog entry "' . $blog->title . '".';
-        return redirect(route('blogs.index'))->with('message', $message);
+        Session::flash('message', 'Successfully ' . ($editMode ? 'updated' : 'created') . ' the blog entry "' . $blog->title . '".');
+        return redirect(route('dashboard.blogs'));
 
     }
 

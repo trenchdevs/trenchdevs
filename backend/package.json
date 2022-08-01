@@ -39,6 +39,7 @@
     },
     "dependencies": {
         "react-feather": "^2.0.10",
+        "slugify": "^1.6.5",
         "vue-autosuggest": "^2.2.0",
         "vue-feather-icons": "^5.1.0",
         "vue2-editor": "^2.10.2"

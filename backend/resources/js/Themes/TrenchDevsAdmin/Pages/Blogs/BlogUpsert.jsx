@@ -1,11 +1,29 @@
 import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
 import {Link, useForm, usePage} from "@inertiajs/inertia-react";
 import * as Icon from 'react-feather';
+import slugify from "slugify";
+import {useEffect} from "react";
 
 export default function BlogUpsert() {
 
-    const blog = usePage().props.blog || {};
-    const form = useForm({...blog})
+    const {blog, errors = {}} = usePage().props;
+    const form = useForm({
+        status: 'draft',
+        title: '',
+        ...blog
+    })
+
+    function submitForm(e) {
+        e.preventDefault();
+        form.post('/dashboard/blogs/upsert');
+    }
+
+    useEffect(() => {
+
+        if (form.data.title) {
+            form.setData('slug', slugify(form.data.title).toLowerCase())
+        }
+    }, [form.data.title]);
 
     return (
 
@@ -14,23 +32,25 @@ export default function BlogUpsert() {
                 <div className="card-header">{form.data.id ? 'Update' : 'Create'} Content</div>
                 <div className="card-body">
 
-                    <form>
+                    <form onSubmit={submitForm}>
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
                             <input
-                                id="title"
+                                id="slug"
                                 className="form-control"
                                 type="text"
                                 name="title"
-                                onChange={e => form.setData(e.target.name, e.target.value)}
+                                onChange={e => {
+                                    form.setData(e.target.name, e.target.value);
+                                }}
                                 value={form.data.title}
                             />
+                            {errors.title && <div className="text-danger">{errors.title}</div>}
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="slug">Slug</label>
                             <input
-                                readOnly
                                 id="slug"
                                 className="form-control"
                                 type="text"
@@ -38,6 +58,7 @@ export default function BlogUpsert() {
                                 onChange={e => form.setData(e.target.name, e.target.value)}
                                 value={form.data.slug}
                             />
+                            {errors.slug && <div className="text-danger">{errors.slug}</div>}
                         </div>
 
                         <div className="form-group">
@@ -51,6 +72,7 @@ export default function BlogUpsert() {
                                 onChange={e => form.setData(e.target.name, e.target.value)}
                                 value={form.data.tagline}
                             />
+                            {errors.tagline && <div className="text-danger">{errors.tagline}</div>}
                         </div>
 
                         <div className="form-group">
@@ -64,6 +86,7 @@ export default function BlogUpsert() {
                                 onChange={e => form.setData(e.target.name, e.target.value)}
                                 value={form.data.markdown_contents}
                             />
+                            {errors.markdown_contents && <div className="text-danger">{errors.markdown_contents}</div>}
                         </div>
 
                         <div className="form-group">
@@ -86,6 +109,7 @@ export default function BlogUpsert() {
                                 onChange={e => form.setData(e.target.name, e.target.value)}
                                 value={form.data.primary_image_url}
                             />
+                            {errors.primary_image_url && <div className="text-danger">{errors.primary_image_url}</div>}
 
                         </div>
 
@@ -102,6 +126,7 @@ export default function BlogUpsert() {
                                 onChange={e => form.setData(e.target.name, e.target.value)}
                                 value={form.data.publication_date}
                             />
+                            {errors.publication_date && <div className="text-danger">{errors.publication_date}</div>}
                         </div>
 
                         <div className="form-group">
@@ -116,6 +141,7 @@ export default function BlogUpsert() {
                                 onChange={e => form.setData(e.target.name, e.target.value)}
                                 value={form.data.tags}
                             />
+                            {errors.tags && <div className="text-danger">{errors.tags}</div>}
                         </div>
 
                         <div className="form-group">
@@ -129,6 +155,7 @@ export default function BlogUpsert() {
                                 <option value="draft">Draft</option>
                                 <option value="published">Published</option>
                             </select>
+                            {errors.status && <div className="text-danger">{errors.status}</div>}
                         </div>
 
                         <div className="text-right">
