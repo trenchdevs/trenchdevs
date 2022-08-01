@@ -48,7 +48,8 @@ class CreateSiteConfigsTable extends Migration
                     'domain' => 'cloudcraft.trenchapps.localhost',
                     'allow_wildcard_for_domain' => 0,
                     'company_name' => 'CloudCraft',
-                    'theme' => 'cloudcraft'
+                    'theme' => 'cloudcraft',
+                    'inertia_theme' => 'TrenchDevsAdmin',
                 ]
             );
         }

@@ -36,10 +36,11 @@ class BlogsController extends AuthWebController
     /**
      * @param Request $request
      * @return Response
+     * @throws Exception
      */
     public function displayBlogs(Request $request): Response
     {
-        return Inertia::render('Themes/TrenchDevsAdmin/Blogs/BlogsList', [
+        return $this->inertiaRender('Blogs/BlogsList', [
             'data' => Blog::query()
                 ->when(!empty($request->get('me')), fn(Builder $query) => $query->where('user_id', '=', $request->user()->id ?? null))
                 ->orderBy('id', 'desc')
@@ -50,10 +51,11 @@ class BlogsController extends AuthWebController
     /**
      * @param int|null $id
      * @return Response
+     * @throws Exception
      */
     public function upsertForm(int $id = null): Response
     {
-        return Inertia::render('Themes/TrenchDevsAdmin/Blogs/BlogUpsert', [
+        return $this->inertiaRender('Blogs/BlogUpsert', [
             'blog' => Blog::query()->find($id),
         ]);
     }

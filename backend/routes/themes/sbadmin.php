@@ -15,7 +15,7 @@ Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
 // end - public documents
 
 //Route::get('/', function () {
-//    return Inertia::render('Welcome', [
+//    return $this->inertiaRender('Welcome', [
 //        'canLogin' => Route::has('login'),
 //        'canRegister' => Route::has('register'),
 //        'laravelVersion' => Application::VERSION,
@@ -24,7 +24,7 @@ Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
 //});
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return $this->inertiaRender('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__ . '/../auth.php';

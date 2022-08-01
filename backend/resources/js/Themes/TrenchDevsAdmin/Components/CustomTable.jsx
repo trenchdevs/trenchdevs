@@ -1,4 +1,4 @@
-import Paginator from "@/Components/Themes/TrenchDevsAdmin/Paginator";
+import Paginator from "@/Themes/TrenchDevsAdmin/Components/Paginator";
 import {isFunction} from "lodash";
 
 export default function CustomTable({

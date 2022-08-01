@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Modules\Sites\Models\Site;
 use App\Modules\Users\Models\User;
-use Illuminate\Contracts\Foundation\Application;
+use Exception;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Inertia\Inertia;
+use Inertia\Response;
 
 abstract class Controller extends BaseController
 {
@@ -54,7 +55,7 @@ abstract class Controller extends BaseController
     {
 
         $response = [
-            'status'  => $status,
+            'status' => $status,
             'message' => $message,
         ];
 
@@ -126,6 +127,25 @@ abstract class Controller extends BaseController
         }
 
         return view($view, $data, $mergeData);
+    }
+
+    /**
+     * @param string $jsxPage
+     * @param array $props
+     * @return Response
+     * @throws Exception
+     */
+    public function inertiaRender(string $jsxPage, array $props = []): Response
+    {
+        $inertiaTheme = site()->inertia_theme ?? 'Default';
+        $inertialPath = "Themes/$inertiaTheme/Pages/$jsxPage";
+        $filePath = "resources/js/$inertialPath.jsx";
+
+        if (!file_exists(base_path($filePath))) {
+            throw new Exception("Inertia view does not exists on path $filePath ($inertialPath)");
+        }
+
+        return Inertia::render($inertialPath, $props);
     }
 
 }

@@ -18,6 +18,7 @@ class CreateSitesTable extends Migration
             $table->id();
             $table->string('identifier', 32)->index()->unique()->comment('Unique identifier for code');
             $table->string('theme', 64)->index();
+            $table->string('inertia_theme', 64)->comment('Theme used for Inertia JS')->index();
             $table->string('company_name', 64)->nullable()->index();
             $table->string('domain', 128)->unique()->index();
             $table->boolean('allow_wildcard_for_domain')
@@ -35,7 +36,8 @@ class CreateSitesTable extends Migration
                 'domain' => 'trenchdevs.localhost',
                 'company_name' => 'TrenchDevsAdmin',
                 'identifier' => 'trenchdevs',
-                'theme' => 'trenchdevs'
+                'theme' => 'trenchdevs',
+                'inertia_theme' => 'TrenchDevsAdmin',
             ]);
 
             Site::query()->create([
@@ -43,6 +45,7 @@ class CreateSitesTable extends Migration
                 'company_name' => 'Demo',
                 'identifier' => 'demo',
                 'theme' => 'demo',
+                'inertia_theme' => 'TrenchDevsAdmin',
             ]);
 
 

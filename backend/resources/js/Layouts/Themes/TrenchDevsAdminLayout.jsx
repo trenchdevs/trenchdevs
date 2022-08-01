@@ -34,13 +34,11 @@ export default function TrenchDevsAdminLayout(props) {
                 </button>
                 <ul className="navbar-nav align-items-center ml-auto mt-2">
                     <li className="nav-item dropdown no-caret mr-3 dropdown-user">
-                        <form method="post">
-                            <button type="submit" className="list-unstyled bg-transparent border-0">
+                            <Link href="/logout" method={"post"} className="list-unstyled bg-transparent border-0">
                                 <span className="dropdown-item-icon">
                                     <Icon.LogOut size={ICON_DEFAULT_PROPS.size} color={"white"}/>
                                 </span>
-                            </button>
-                        </form>
+                            </Link>
                     </li>
                 </ul>
             </nav>

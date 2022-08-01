@@ -45,7 +45,13 @@ class TDCache
 
     private static function bust(): bool
     {
-        return app_config('TD_CACHE_BUST') == 1;
+        try {
+            return app_config('TD_CACHE_BUST') == 1;
+        }catch (\Exception) {
+            // ignore
+        }
+
+        return true;
     }
 
 

@@ -25,6 +25,7 @@ use Throwable;
  * @property $created_at
  * @property $updated_at
  * @property $deleted_at
+ * @property $inertia_theme
  */
 class Site extends Model
 {
@@ -39,6 +40,7 @@ class Site extends Model
         'company_name',
         'identifier',
         'theme',
+        'inertia_theme',
     ];
 
     const DB_IDENTIFIER_TRENCHDEVS = 'trenchdevs';

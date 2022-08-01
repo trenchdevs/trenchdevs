@@ -1,5 +1,5 @@
 import {Link, usePage} from "@inertiajs/inertia-react";
-import CustomTable from "@/Components/Themes/TrenchDevsAdmin/CustomTable";
+import CustomTable from "@/Themes/TrenchDevsAdmin/Components/CustomTable";
 import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
 import * as Icon from "react-feather";
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Emails\Models\EmailQueue;
 use App\Modules\Users\Models\UserPortfolioDetail;
 use App\Modules\Users\Models\User;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Query\Builder;
@@ -18,7 +19,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -31,10 +31,11 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @throws Exception
      */
     public function index(): \Inertia\Response
     {
-        return Inertia::render('Themes/TrenchDevsAdmin/Users/UsersList', [
+        return $this->inertiaRender('Users/UsersList', [
             'data' => User::query()->paginate(10),
         ]);
     }
@@ -96,29 +97,13 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Application|Factory|Response|View
-     */
-    public function edit($id)
-    {
-        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
-
-        return view('admin.users.upsert', [
-            'user' => User::query()->findOrFail($id),
-            'action' => route('users.upsert'),
-            'editMode' => true,
-        ]);
-    }
-
-    /**
      * @param int|null $id
      * @return \Inertia\Response
+     * @throws Exception
      */
     public function upsertForm(int $id = null): \Inertia\Response
     {
-        return Inertia::render('Themes/TrenchDevsAdmin/Users/UserUpsert', [
+        return $this->inertiaRender('Users/UserUpsert', [
             'user' => User::query()->find($id),
         ]);
     }
@@ -129,7 +114,7 @@ class UsersController extends Controller
      * @throws ValidationException
      * @throws Throwable
      */
-    public function upsert(Request $request)
+    public function upsert(Request $request): Redirector|RedirectResponse
     {
         $this->adminCheckOrAbort();
 
