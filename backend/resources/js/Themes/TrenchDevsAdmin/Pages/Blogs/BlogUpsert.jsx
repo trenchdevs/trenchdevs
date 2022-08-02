@@ -3,6 +3,7 @@ import {Link, useForm, usePage} from "@inertiajs/inertia-react";
 import * as Icon from 'react-feather';
 import slugify from "slugify";
 import {useEffect} from "react";
+import MarkdownEditor from "@/Themes/TrenchDevsAdmin/Components/MarkdownEditor";
 
 export default function BlogUpsert() {
 
@@ -75,17 +76,9 @@ export default function BlogUpsert() {
                             {errors.tagline && <div className="text-danger">{errors.tagline}</div>}
                         </div>
 
-                        <div className="form-group">
+                        <div>
                             <label htmlFor="markdown_contents">Body</label>
-                            <textarea
-                                name="markdown_contents"
-                                id="markdown_contents"
-                                className="form-control"
-                                cols="30"
-                                rows="5"
-                                onChange={e => form.setData(e.target.name, e.target.value)}
-                                value={form.data.markdown_contents}
-                            />
+                            <MarkdownEditor value={form.data.markdown_contents} onChange={(html, text) => form.setData('markdown_contents', text)}/>
                             {errors.markdown_contents && <div className="text-danger">{errors.markdown_contents}</div>}
                         </div>
 

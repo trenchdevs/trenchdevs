@@ -181,6 +181,15 @@ class UsersController extends Controller
     }
 
     /**
+     * @return \Inertia\Response
+     * @throws Exception
+     */
+    public function showChangePasswordForm(): \Inertia\Response
+    {
+        return $this->inertiaRender('Account/ChangePassword');
+    }
+
+    /**
      * User changes own password
      *
      * @param Request $request
@@ -188,21 +197,18 @@ class UsersController extends Controller
      * @throws Throwable
      * @throws ValidationException
      */
-    public function changePassword(Request $request)
+    public function changePassword(Request $request): RedirectResponse
     {
-
-        $passwordRule = RegisterController::PASSWORD_VALIDATION_RULE;
-        $passwordRule[] = 'confirmed';
-
         $this->validate($request, [
             'old_password' => 'required',
-            'password' => $passwordRule,
+            'password' => RegisterController::PASSWORD_VALIDATION_RULE,
+            'password_confirmation' => 'required',
         ]);
 
         /** @var User $user */
         $user = Auth::user();
 
-        if (!Hash::check($request->old_password, $user->password)) {
+        if (!Hash::check($request->input('old_password'), $user->password)) {
             return back()->withErrors(['Please enter correct current password']);
         }
 
@@ -219,7 +225,6 @@ class UsersController extends Controller
             $user->email,
             'Your password was Changed',
             $viewData,
-            'emails.generic'
         );
 
         return back()->with('message', 'Password reset successful.');

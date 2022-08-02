@@ -35,13 +35,16 @@ export default function BlogsList() {
                         {key: 'title', 'label': 'Title'},
                         {key: 'slug', 'label': 'Slug'},
                         {key: 'status', 'label': 'Status'},
-                        {key: 'publication_date', 'label': 'Publication Status'},
+                        {key: 'publication_date', 'label': 'Publication Date'},
                         {key: 'created_at', 'label': 'Created At'},
                         {
                             key: '', 'label': 'Actions', render: row => (
                                 <>
                                     <Link href={`/dashboard/blogs/upsert/${row.id}`}
                                           className="btn btn-warning"><Icon.Edit size={12}/>
+                                    </Link>
+                                    <Link href={`/dashboard/blogs/preview/${row.id}`}
+                                          className="ml-2 btn btn-info"><Icon.Eye size={12}/>
                                     </Link>
                                 </>
                             )

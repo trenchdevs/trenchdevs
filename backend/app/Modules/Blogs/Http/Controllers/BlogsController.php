@@ -15,6 +15,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
@@ -133,7 +134,7 @@ class BlogsController extends AuthWebController
         }
     }
 
-    public function show(int $id, Request $request)
+    public function preview(int $id): View
     {
 
         /** @var Blog $blog */

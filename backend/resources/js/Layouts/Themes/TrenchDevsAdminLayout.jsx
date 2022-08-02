@@ -48,18 +48,18 @@ export default function TrenchDevsAdminLayout(props) {
                         <div className="sidenav-menu">
                             <div className="nav accordion" id="accordionSidenav">
                                 <div className="sidenav-menu-heading">Core</div>
-                                <Link className="nav-link collapsed" href="/dashboard">
+                                <Link className={`nav-link collapsed ${url.toLowerCase() === '/dashboard' && 'active'}`} href="/dashboard">
                                     <div className="nav-link-icon">
                                         <Icon.Activity {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Dashboard
                                 </Link>
-                                <a className="nav-link collapsed" href="">
+                                <Link href="/dashboard/account/change-password" className={`nav-link collapsed ${url.startsWith('/dashboard/account/')  && 'active'}`}>
                                     <div className="nav-link-icon">
                                         <Icon.Users {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Account
-                                </a>
+                                </Link>
 
 
                                 <a className="nav-link collapsed" data-toggle="collapse"
@@ -93,7 +93,7 @@ export default function TrenchDevsAdminLayout(props) {
                                 <a className="nav-link collapsed" data-toggle="collapse"
                                    data-target="#photos-module" aria-expanded="false" aria-controls="photos-module">
                                     <div className="nav-link-icon">
-                                        <Icon.Briefcase {...ICON_DEFAULT_PROPS}/>
+                                        <Icon.UploadCloud {...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Photos
                                     <div className="sidenav-collapse-arrow">
@@ -119,7 +119,7 @@ export default function TrenchDevsAdminLayout(props) {
                                 </div>
 
 
-                                <a className="nav-link collapsed" data-toggle="collapse"
+                                <a className={`nav-link collapsed ${url.startsWith('/dashboard/blogs')  && 'active'}`} data-toggle="collapse"
                                    data-target="#blogs" aria-expanded="false" aria-controls="blogs">
                                     <div className="nav-link-icon">
                                         <Icon.Edit3 {...ICON_DEFAULT_PROPS}/>
@@ -130,10 +130,8 @@ export default function TrenchDevsAdminLayout(props) {
                                     </div>
                                 </a>
 
-                                <div className="collapse" id="blogs" data-parent="#accordionSidenav">
+                                <div className={`collapse ${url.startsWith('/dashboard/blogs') && 'show'}`} id="blogs" data-parent="#accordionSidenav">
                                     <nav className="sidenav-menu-nested nav">
-
-
                                         <a className="nav-link" href="">
                                             <div className="nav-link-icon">
                                                 <Icon.BookOpen {...ICON_DEFAULT_PROPS}/>

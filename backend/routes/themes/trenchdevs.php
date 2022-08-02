@@ -24,6 +24,9 @@ Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
 Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', fn() => Inertia::render('Themes/TrenchDevsAdmin/Pages/Dashboard'))->middleware(['auth', 'verified'])->name('dashboard');
 
+    Route::get('account/change-password', [UsersController::class, 'showChangePasswordForm'])->name('dashboard.users.showChangePasswordForm');
+    Route::post('account/change-password', [UsersController::class, 'changePassword'])->name('dashboard.users.changePassword');
+
     Route::get('users', [UsersController::class, 'index'])->name('dashboard.users');
     Route::get('users/upsert/{id?}', [UsersController::class, 'upsertForm'])->name('dashboard.users.upsertForm');
     Route::post('users', [UsersController::class, 'upsertPost'])->name('dashboard.users.upsertPost');
@@ -32,6 +35,7 @@ Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function
     Route::get('blogs', [BlogsController::class, 'displayBlogs'])->name('dashboard.blogs');
     Route::get('blogs/upsert/{id?}', [BlogsController::class, 'upsertForm'])->name('dashboard.blogs.upsertForm');
     Route::post('blogs/upsert', [BlogsController::class, 'upsertBlog']);
+    Route::get('blogs/preview/{id}', [BlogsController::class, 'preview']);
 });
 
 

@@ -32,9 +32,8 @@ class PublicBlogsController extends Controller
         return view('blogs.public.index', ['blogs' => $blogs]);
     }
 
-    public function show($slugOrId): Factory|\Illuminate\Contracts\View\View|Application
+    public function show($slugOrId): View
     {
-        // todo: implement id in future
         $blog = Blog::findPublishedBySlug($slugOrId);
 
         if (empty($blog)) {
