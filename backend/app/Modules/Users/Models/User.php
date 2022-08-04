@@ -31,6 +31,7 @@ use Throwable;
  * @property UserExperience[] $experiences
  * @property ProjectUser $projects
  * @property UserSkill $skills
+ * @property UserPortfolioDetail $portfolioDetails
  * @property $email
  * @property $name
  * @property $first_name
@@ -118,8 +119,6 @@ class User extends Authenticatable // implements MustVerifyEmail
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-
 
 
     public function canManage(User $user)
@@ -253,7 +252,7 @@ class User extends Authenticatable // implements MustVerifyEmail
         return $this->hasOne(UserSkill::class);
     }
 
-    public function portfolioDetails()
+    public function portfolioDetails(): HasOne
     {
         return $this->hasOne(UserPortfolioDetail::class);
     }
@@ -383,8 +382,8 @@ class User extends Authenticatable // implements MustVerifyEmail
      * @param int $inactiveMonths
      * @param string $userRole
      */
-    public static function sendDeactivationNotice(int $inactiveMonths = 1,
-                                                  int $noticeDays = 3,
+    public static function sendDeactivationNotice(int    $inactiveMonths = 1,
+                                                  int    $noticeDays = 3,
                                                   string $userRole = self::ROLE_CONTRIBUTOR
     )
     {
@@ -505,6 +504,11 @@ class User extends Authenticatable // implements MustVerifyEmail
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class);
+    }
+
+    public function getJsonAttributeValue(string $key): array
+    {
+        return UserJsonAttribute::getValueFromKey($this->id, $key);
     }
 
 

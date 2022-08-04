@@ -6,7 +6,7 @@ export default function ApplicationLogo({ className }) {
     const {site} = usePage().props;
 
     if (site.logo) {
-        return <img src={site.logo} alt={`${site.company_name} logo.`}/>
+        return <img className={className} src={site.logo} alt={`${site.company_name} logo.`}/>
     }
 
     return  <></>

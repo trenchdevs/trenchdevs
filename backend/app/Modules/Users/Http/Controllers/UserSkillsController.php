@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Users\Models\UserSkill;
 use App\Modules\Users\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class UserSkillsController extends Controller
 {
@@ -19,6 +20,9 @@ class UserSkillsController extends Controller
         ]);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function save(Request $request)
     {
 

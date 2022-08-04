@@ -2,6 +2,7 @@
 
 use App\Modules\Blogs\Http\Controllers\BlogsController;
 use App\Modules\TrenchDevs\Http\Controllers\PublicController;
+use App\Modules\Users\Http\Controllers\UserPortfolioController;
 use App\Modules\Users\Http\Controllers\UsersController;
 use App\Public\Controllers\Blogs\PublicBlogsController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,9 @@ Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function
 
     Route::get('account/change-password', [UsersController::class, 'showChangePasswordForm'])->name('dashboard.users.showChangePasswordForm');
     Route::post('account/change-password', [UsersController::class, 'changePassword'])->name('dashboard.users.changePassword');
+
+    Route::get('portfolio/{view}', [UserPortfolioController::class, 'show'])->name('dashboard.portfolio.show');
+    Route::post('portfolio/{view}', [UserPortfolioController::class, 'upsert'])->name('dashboard.portfolio.upsert');
 
     Route::get('users', [UsersController::class, 'index'])->name('dashboard.users');
     Route::get('users/upsert/{id?}', [UsersController::class, 'upsertForm'])->name('dashboard.users.upsertForm');

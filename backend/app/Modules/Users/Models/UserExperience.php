@@ -5,6 +5,15 @@ namespace App\Modules\Users\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property $id
+ * @property $user_id
+ * @property $title
+ * @property $company
+ * @property $description
+ * @property $start_date
+ * @property $end_date
+ */
 class UserExperience extends Model
 {
 

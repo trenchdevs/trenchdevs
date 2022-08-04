@@ -1,4 +1,4 @@
-import {get, isEmpty, isObject} from "lodash";
+import {get, isArray, set, isObject} from "lodash";
 
 /**
  * @param name
@@ -9,13 +9,43 @@ import {get, isEmpty, isObject} from "lodash";
  */
 export default function FormInput({name, form, ...props}) {
 
+    function onChange(e) {
+        let formData;
+
+        if (isArray(form.data)) {
+            formData = [...form.data];
+        } else {
+            formData = {...form.data};
+        }
+
+        form.setData(set(formData, name, e.target.value))
+    }
+
+    const sharedProps = {
+        name,
+        onChange,
+        value: get(form.data, name, '') || '',
+        ...props
+    }
+
+    function renderFormElement(){
+        const inputType = sharedProps.type || 'input';
+        switch (inputType) {
+            case 'textarea':
+                return <textarea {...sharedProps}/>
+            case "input":
+            default:
+                return <input {...sharedProps} />
+        }
+    }
+
     return (
         <>
-            <input name={name} {...props} value={form.data[name] || ''} onChange={e => form.setData(name, e.target.value)} />
+            {renderFormElement()}
             {
                 isObject(form.errors) &&
-                form.errors[name] &&
-                <div className="text-danger">{form.errors[name]}</div>
+                get(form.errors, name, false) &&
+                <div className="text-danger">{get(form.errors, name, '')}</div>
             }
         </>
     );
