@@ -22,10 +22,10 @@ export default function FormInput({name, form, ...props}) {
     }
 
     const sharedProps = {
+        ...props,
         name,
         onChange,
         value: get(form.data, name, '') || '',
-        ...props
     }
 
     function renderFormElement(){

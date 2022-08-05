@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property  array $validation_messages
  * @property  array $validation_custom_attributes
  * @property  array $sample_value
+ * @property  array $dynamic_form_elements
  */
 class UserJsonAttributeKey extends Model
 {
@@ -25,6 +26,7 @@ class UserJsonAttributeKey extends Model
         'validation_rules',
         'validation_messages',
         'validation_custom_attributes',
+        'dynamic_form_elements',
         'sample_value'
     ];
 
@@ -33,6 +35,7 @@ class UserJsonAttributeKey extends Model
         'validation_messages' => 'array',
         'validation_custom_attributes' => 'array',
         'sample_value' => 'array',
+        'dynamic_form_elements' => 'array',
     ];
 
 }

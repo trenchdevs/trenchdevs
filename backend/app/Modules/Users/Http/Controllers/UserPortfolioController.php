@@ -22,8 +22,6 @@ use Inertia\Response;
 class UserPortfolioController extends Controller
 {
 
-
-
     /**
      * @param string $view
      * @return Response
@@ -33,8 +31,11 @@ class UserPortfolioController extends Controller
     {
         $view = strtolower($view);
 
+        $service = UserJsonAttributeService::newInstance(sprintf('system::portfolio::%s', $view));
+
         return $this->inertiaRender(sprintf('Portfolio/%s', ucfirst($view)), [
-            $view =>  UserJsonAttributeService::newInstance(sprintf('system::portfolio::%s', $view))->getValue(Auth::id()),
+            $view =>  $service->getValue(Auth::id()),
+            'form_elements' => $service->getJsonAttributeKey()->dynamic_form_elements ?? [],
         ]);
     }
 

@@ -67,4 +67,11 @@ class UserJsonAttributeService
     {
         return UserJsonAttribute::getValueFromKey($userId, $this->userJsonAttributeKey->key);
     }
+
+    /**
+     * @return UserJsonAttributeKey
+     */
+    public function getJsonAttributeKey(): UserJsonAttributeKey {
+        return $this->userJsonAttributeKey;
+    }
 }

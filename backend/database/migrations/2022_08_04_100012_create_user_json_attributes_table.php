@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->json('validation_rules')->comment('Ref: Validator::make arguments')->default('{}');
             $table->json('validation_messages')->comment('Ref: Validator::make arguments')->default('{}');
             $table->json('validation_custom_attributes')->comment('Ref: Validator::make arguments')->default('{}');
+            $table->json('dynamic_form_elements')->comment('Dynamic form elements for the front-end')->default('{}');
             $table->json('sample_value');
             $table->primary('key');
             $table->index(['key']);
@@ -54,6 +55,13 @@ return new class extends Migration {
         UserJsonAttributeKey::query()->create([
             'key' => 'system::portfolio::experiences',
             'description' => 'Data for user experiences',
+            'dynamic_form_elements' => [
+                'Title' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.title'],
+                'Company' => ['type' => 'input', 'className' => 'form-control','wrapperClassName' => 'col-md-6', 'name' => '*.company'],
+                'Description' => ['type' => 'textarea', 'className' => 'form-control', 'wrapperClassName' => 'col-md-12','name' => '*.description'],
+                'Start Date' => ['type' => 'date', 'className' => 'form-control','wrapperClassName' => 'col-md-6','name' => '*.start_date'],
+                'End Date' => ['type' => 'date', 'className' => 'form-control' , 'wrapperClassName' => 'col-md-6', 'name' => '*.end_date'],
+            ],
             'validation_rules' => [
                 '*' => 'required|array|present',
                 '*.title' => 'required|string|max:128',
