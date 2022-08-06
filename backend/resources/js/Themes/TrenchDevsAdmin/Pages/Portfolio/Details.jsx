@@ -44,11 +44,11 @@ export default function Details(props) {
                                     <div className="relative mb-3 cursor-pointer mx-auto" style={{width: "250px !important"}}>
                                         <img
                                             style={{height: "250px", width: "250px"}}
-                                            className="img-fluid img-thumbnail rounded-circle d-block"
+                                            className="img-fluid img-thumbnail rounded-circle d-block mx-auto"
                                             src={auth.user.avatar_url || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'}
                                             alt="User Avatar URL"
                                         />
-                                        <Icon.UploadCloud style={{position: 'absolute', bottom: 0, right: "40%"}}/>
+                                        <Icon.UploadCloud style={{position: 'absolute', bottom: 0, right: "34%"}}/>
                                     </div>
                                 </BasicFileUploader>
                             </div>
