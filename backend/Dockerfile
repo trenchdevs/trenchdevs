@@ -67,7 +67,15 @@ RUN cp docker/nginx.conf /etc/nginx/sites-enabled/default
 RUN mkdir /var/log/php
 RUN touch /var/log/php/errors.log && chmod ug+w /var/log/php/errors.log
 
-RUN composer install --optimize-autoloader --no-dev
+RUN mkdir -p /var/www/storage/framework/sessions  \
+    /var/www/storage/framework/views  \
+    /var/www/storage/framework/cache \
+    /var/www/storage/framework/logs
+
+RUN chown -R www:www-data /var/www/storage
+RUN chmod -R ug+w /var/www/storage
+
+RUN composer install
 RUN chmod +x /var/www/docker/run.sh
 
 EXPOSE 80

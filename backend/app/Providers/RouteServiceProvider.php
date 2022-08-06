@@ -61,7 +61,7 @@ class RouteServiceProvider extends ServiceProvider
                 });
 
                 // td -- caching -- start
-                Log::info('caching');
+                // Log::info('caching');
 
                 /** @var RouteCollection $routes */
                 $routes = Route::getRoutes();

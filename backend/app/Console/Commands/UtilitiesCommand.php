@@ -3,9 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Modules\Projects\Models\Project;
+use App\Modules\Sites\Models\SiteAccessLog;
 use App\Modules\Users\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class UtilitiesCommand extends Command
@@ -15,7 +17,7 @@ class UtilitiesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'utilities:execute {fn}';
+    protected $signature = 'util {fn}';
 
     /**
      * The console command description.
@@ -49,8 +51,20 @@ class UtilitiesCommand extends Command
                 break;
             case 'test:dispatch':
                 dispatch(function(){
-                   echo "hello world from dispatch" . PHP_EOL;
+                    Log::info('Log from dispatch');
+                    SiteAccessLog::query()->create([
+                        'user_id' => null,
+                        'url' => 'util:test',
+                        'ip' => '1.1.1.1',
+                        'user_agent' => '',
+                        'referer' => '',
+                        'misc_json' => json_encode([]),
+                        'action' => 'allowed',
+                    ]);
+                    echo "hello world from dispatch" . PHP_EOL;
                 });
+                Log::info('Log: Dispatch Sent');
+                echo "Dispatch sent" . PHP_EOL;
                 break;
             default:
                 $this->alert("Function not found \"$fn\"");
