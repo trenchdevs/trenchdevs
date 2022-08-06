@@ -17,9 +17,6 @@ services:
       - trenchdevs-docker-network
 
   backend:
-#    user: ${USER_UID:-1000}:${USER_GID:-1000}
-    depends_on:
-      - db
     build:
       args:
         USER_GID: ${USER_GID:-1000}
@@ -36,7 +33,7 @@ services:
       - trenchdevs-docker-network
 
   mail:
-    container_name: ${COMPOSE_PROJECT_NAME:-trenchdevs}-mail
+    container_name: ${COMPOSE_PROJECT_NAME:-project-id}-mail
     image: mailhog/mailhog:v1.0.1
     ports:
       - ${MAIL_HOST_SMTP_PORT:-1025}:1025
