@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Notes\Http\Controllers;
+namespace App\Modules\Notes\Http\Controllers;
 
 use App\Http\Controllers\Auth\ApiController;
 use App\Modules\Notes\Repositories\NotesRepository;
