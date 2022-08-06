@@ -10,9 +10,9 @@
     "be:up": "docker-compose up -d",
     "be:up:lite": "docker-compose up app -d",
     "be:down": "docker-compose down",
-    "be:connect": "docker exec -it --user www:www trenchdevs-backend bash",
-    "be:connect:root": "docker exec -it trenchdevs-backend bash",
-    "be:fix:permissions": "docker exec -i trenchdevs-backend bash -c 'chown -R www:www-data /var/www/storage /var/www/resources && chmod ug+w -R /var/www/storage /var/www/resources'"
+    "be:ssh": "docker exec -it --user www:www-data trenchdevs-backend bash",
+    "be:ssh:root": "docker exec -it trenchdevs-backend bash",
+    "permissions:fix": "docker exec -i trenchdevs-backend bash -c 'chown -R www:www-data /var/www/storage /var/www/resources && chmod ug+w -R /var/www/storage /var/www/resources'"
   },
   "repository": {
     "type": "git",

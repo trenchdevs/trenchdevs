@@ -1,5 +1,8 @@
 FROM php:8.1.8-fpm
 
+ARG USER_GID
+ARG USER_UID
+
 # Set working directory
 WORKDIR /var/www
 
@@ -45,8 +48,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
+RUN groupadd -g ${USER_GID} www
+RUN useradd -l -u ${USER_UID} -g www www
+
 
 # Copy code to /var/www
 COPY --chown=www:www-data . /var/www
@@ -61,7 +65,7 @@ RUN cp docker/nginx.conf /etc/nginx/sites-enabled/default
 
 # PHP Error Log Files
 RUN mkdir /var/log/php
-RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
+RUN touch /var/log/php/errors.log && chmod ug+w /var/log/php/errors.log
 
 RUN composer install --optimize-autoloader --no-dev
 RUN chmod +x /var/www/docker/run.sh
