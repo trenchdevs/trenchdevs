@@ -90,6 +90,7 @@ class User extends Authenticatable // implements MustVerifyEmail
         'is_active',
         'account_id',
         'site_id',
+        'avatar_url',
         'role',
         'is_flagged_for_deactivation',
         'deactivation_notice_sent_at',

@@ -47,6 +47,11 @@ class UtilitiesCommand extends Command
             case 'initialize_project_data':
                 $this->initializeProjectData();
                 break;
+            case 'test:dispatch':
+                dispatch(function(){
+                   echo "hello world from dispatch" . PHP_EOL;
+                });
+                break;
             default:
                 $this->alert("Function not found \"$fn\"");
         }

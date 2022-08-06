@@ -10,17 +10,20 @@ use Illuminate\Support\Facades\Storage;
 
 class AmazonS3Service
 {
+    public static function newInstance(): AmazonS3Service
+    {
+        return new self;
+    }
 
     /**
-     * @param string $identifier <domain::identifier> e.g. user::profile_avatar
+     * @param string $identifier <domain/table::identifier> e.g. user::profile_avatar
      * @param UploadedFile $file
      * @param string $s3filePath
-     * @param string $fileName
      * @param array $meta
      * @return AwsS3Upload|null
      * @throws ErrorException
      */
-    public function upload(string $identifier, UploadedFile $file, string $s3filePath, string $fileName, array $meta = []): ?AwsS3Upload
+    public function upload(string $identifier, UploadedFile $file, string $s3filePath, array $meta = []): ?AwsS3Upload
     {
         $appEnv = app()->environment();
 
@@ -29,7 +32,7 @@ class AmazonS3Service
         }
 
         $originalName = $file->getClientOriginalName();
-        $hash         = md5(time() . $originalName . $fileName);
+        $hash         = md5(time() . $originalName . rand(0, PHP_INT_MAX));
 
         $filePath = "{$appEnv}/$s3filePath/$hash";
         $filePath = $this->normalizeUrl($filePath);

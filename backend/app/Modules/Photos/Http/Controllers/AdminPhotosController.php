@@ -44,7 +44,7 @@ class AdminPhotosController extends Controller
 
         /** @var UploadedFile $file */
         foreach ($request->file('images') as $file) {
-            $s3UploadedFile = $uploader->upload('admin::photos::index', $file, 'admin/photos', $file->getClientOriginalName());
+            $s3UploadedFile = $uploader->upload('admin::photos::index', $file, 'admin/photos');
             Photo::query()->create([
                 'site_id'   => site_id(),
                 'user_id'   => auth()->id(),

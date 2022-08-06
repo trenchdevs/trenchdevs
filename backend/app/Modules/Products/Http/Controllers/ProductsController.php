@@ -156,7 +156,7 @@ class ProductsController extends ApiController
             $image = $request->file('image');
 
             if ($image) {
-                $requestData['image_url'] = $this->s3->upload('products::image', $request->image, 'shop/product-images', $image->getClientOriginalName())->s3_url ?? null;
+                // $requestData['image_url'] = $this->s3->upload('products::image', $request->image, 'shop/product-images', $image->getClientOriginalName())->s3_url ?? null;
             }
 
             $requestData['owner_user_id'] = auth()->user()->id;

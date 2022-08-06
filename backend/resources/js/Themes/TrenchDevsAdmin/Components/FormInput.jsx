@@ -13,12 +13,17 @@ export default function FormInput({name, form, ...props}) {
         let formData;
 
         if (isArray(form.data)) {
+            // e.g. Use in DynamicListForm
             formData = [...form.data];
+            form.setData(set(formData, name, e.target.value))
         } else {
-            formData = {...form.data};
+            // e.g. Use in DynamicForm
+            form.setData({
+                ...form.data,
+                [name]: e.target.value,
+            })
         }
 
-        form.setData(set(formData, name, e.target.value))
     }
 
     const sharedProps = {
@@ -28,11 +33,22 @@ export default function FormInput({name, form, ...props}) {
         value: get(form.data, name, '') || '',
     }
 
-    function renderFormElement(){
+    function renderFormElement() {
         const inputType = sharedProps.type || 'input';
         switch (inputType) {
             case 'textarea':
                 return <textarea {...sharedProps}/>
+            case 'select':
+                const dropdownOptions = props.dropdown_options || [];
+                return (
+                    <select {...sharedProps}>
+                        {
+                            dropdownOptions.map((option, i) => (
+                                <option value={option.value || ''}>{option.label || ''}</option>
+                            ))
+                        }
+                    </select>
+                )
             case "input":
             default:
                 return <input {...sharedProps} />

@@ -29,6 +29,7 @@ Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function
     Route::post('account/change-password', [UsersController::class, 'changePassword'])->name('dashboard.users.changePassword');
 
     Route::get('portfolio/{view}', [UserPortfolioController::class, 'show'])->name('dashboard.portfolio.show');
+    Route::post('portfolio/avatar', [UserPortfolioController::class, 'uploadAvatar'])->name('dashboard.portfolio.uploadAvatar');
     Route::post('portfolio/{view}', [UserPortfolioController::class, 'upsert'])->name('dashboard.portfolio.upsert');
 
     Route::get('users', [UsersController::class, 'index'])->name('dashboard.users');

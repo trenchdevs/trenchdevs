@@ -5,6 +5,13 @@ namespace App\Modules\Aws\Models;
 use App\Modules\Aws\Services\AmazonS3Service;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property $s3_url
+ * @property $s3_path
+ * @property $identifier
+ * @property $status
+ * @property $meta
+ */
 class AwsS3Upload extends Model
 {
     protected $table = 'aws_s3_uploads';

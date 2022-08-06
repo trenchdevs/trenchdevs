@@ -52,38 +52,41 @@ return new class extends Migration {
         /**
          * Create System Keys
          */
-        UserJsonAttributeKey::query()->create([
-            'key' => 'system::portfolio::experiences',
-            'description' => 'Data for user experiences',
-            'dynamic_form_elements' => [
-                'Title' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.title'],
-                'Company' => ['type' => 'input', 'className' => 'form-control','wrapperClassName' => 'col-md-6', 'name' => '*.company'],
-                'Description' => ['type' => 'textarea', 'className' => 'form-control', 'wrapperClassName' => 'col-md-12','name' => '*.description'],
-                'Start Date' => ['type' => 'date', 'className' => 'form-control','wrapperClassName' => 'col-md-6','name' => '*.start_date'],
-                'End Date' => ['type' => 'date', 'className' => 'form-control' , 'wrapperClassName' => 'col-md-6', 'name' => '*.end_date'],
-            ],
-            'validation_rules' => [
-                '*' => 'required|array|present',
-                '*.title' => 'required|string|max:128',
-                '*.company' => 'required|string|max:128',
-                '*.description' => 'required|string|max:6144',
-                '*.start_date' => 'required|date',
-                '*.end_date' => 'nullable|date'
-            ],
-            'validation_messages' => [],
-            'validation_custom_attributes' => [
-                '*' => 'Experiences',
-                '*.title' => 'Title',
-                '*.company' => 'Company',
-                '*.description' => 'Description',
-                '*.start_date' => 'Start Date',
-                '*.end_date' => 'End Date'
-            ],
-            'sample_value' => [
-                ['title' => 'Title 1', 'company' => 'Company 1', 'start_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')],
-                ['title' => 'Title 2', 'company' => 'Company 2', 'start_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')],
+        UserJsonAttributeKey::query()->updateOrCreate(
+            ['key' => 'system::portfolio::experiences'],
+            [
+                'key' => 'system::portfolio::experiences',
+                'description' => 'Data for user experiences',
+                'dynamic_form_elements' => [
+                    'Title' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.title'],
+                    'Company' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.company'],
+                    'Description' => ['type' => 'textarea', 'className' => 'form-control', 'wrapperClassName' => 'col-md-12', 'name' => '*.description'],
+                    'Start Date' => ['type' => 'date', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.start_date'],
+                    'End Date' => ['type' => 'date', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.end_date'],
+                ],
+                'validation_rules' => [
+                    '*' => 'required|array|present',
+                    '*.title' => 'required|string|max:128',
+                    '*.company' => 'required|string|max:128',
+                    '*.description' => 'required|string|max:6144',
+                    '*.start_date' => 'required|date',
+                    '*.end_date' => 'nullable|date'
+                ],
+                'validation_messages' => [],
+                'validation_custom_attributes' => [
+                    '*' => 'Experiences',
+                    '*.title' => 'Title',
+                    '*.company' => 'Company',
+                    '*.description' => 'Description',
+                    '*.start_date' => 'Start Date',
+                    '*.end_date' => 'End Date'
+                ],
+                'sample_value' => [
+                    ['title' => 'Title 1', 'company' => 'Company 1', 'start_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')],
+                    ['title' => 'Title 2', 'company' => 'Company 2', 'start_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')],
+                ]
             ]
-        ]);
+        );
     }
 
     /**
