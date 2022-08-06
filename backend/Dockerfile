@@ -30,6 +30,10 @@ RUN apt-get update && apt-get install -y \
     nginx \
     supervisor
 
+
+#Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
 #Install Extensions
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pdo pdo_pgsql pgsql zip exif pcntl
@@ -45,7 +49,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Add user for laravel application
 RUN groupadd -g ${USER_GID} www
-RUN useradd -u ${USER_UID} -ms /bin/bash -g www www
+RUN useradd -l -u ${USER_UID} -g www www
+
 
 # Copy code to /var/www
 COPY --chown=www:www-data . /var/www
@@ -60,12 +65,17 @@ RUN cp docker/nginx.conf /etc/nginx/sites-enabled/default
 
 # PHP Error Log Files
 RUN mkdir /var/log/php
-RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
+RUN touch /var/log/php/errors.log && chmod ug+w /var/log/php/errors.log
 
-RUN chmod -R 775 /var/www/storage
+RUN mkdir -p /var/www/storage/framework/sessions  \
+    /var/www/storage/framework/views  \
+    /var/www/storage/framework/cache \
+    /var/www/storage/framework/logs
 
-# Deployment steps
-RUN composer install --optimize-autoloader --no-dev
+RUN chown -R www:www-data /var/www/storage
+RUN chmod -R ug+w /var/www/storage
+
+RUN composer install
 RUN chmod +x /var/www/docker/run.sh
 
 EXPOSE 80
