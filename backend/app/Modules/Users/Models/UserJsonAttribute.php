@@ -4,11 +4,14 @@ namespace App\Modules\Users\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserJsonAttribute extends Model {
-
+/**
+ * @property int $user_id
+ * @property string $key
+ * @property array $value
+ */
+class UserJsonAttribute extends Model
+{
     protected $table = 'user_json_attributes';
-    protected $primaryKey = 'user_id';
-    public $incrementing = false;
 
     protected $fillable = [
         'user_id',
@@ -27,13 +30,14 @@ class UserJsonAttribute extends Model {
      * @param array $default
      * @return array
      */
-    public static function getValueFromKey(int $id, string $key, $default = []): array {
+    public static function getValueFromKey(int $id, string $key, $default = []): array
+    {
         return UserJsonAttribute::query()
-            ->join('user_json_attribute_keys', 'user_json_attribute_keys.key', '=', 'user_json_attributes.key')
-            ->where('user_json_attributes.user_id', '=', $id)
-            ->where('user_json_attributes.key', '=', $key)
-            ->first()
-            ->value ?? $default;
+                ->join('user_json_attribute_keys', 'user_json_attribute_keys.key', '=', 'user_json_attributes.key')
+                ->where('user_json_attributes.user_id', '=', $id)
+                ->where('user_json_attributes.key', '=', $key)
+                ->first()
+                ->value ?? $default;
     }
 
 }

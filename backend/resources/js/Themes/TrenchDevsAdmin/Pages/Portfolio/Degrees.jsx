@@ -1,7 +1,20 @@
 import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
 import PortfolioStepper from "@/Themes/TrenchDevsAdmin/Components/Portfolio/PortfolioStepper";
+import {useForm, usePage} from "@inertiajs/inertia-react";
+import DynamicListForm from "@/Themes/TrenchDevsAdmin/Components/Forms/DynamicListForm";
 
-export default function Details(props) {
+export default function Degrees(props) {
+
+    const page = usePage();
+    const form = useForm([
+        ...page.props.degrees || []
+    ]);
+
+    function submitForm() {
+        form.post('/dashboard/portfolio/degrees', {
+            preserveScroll: (page) => Object.keys(page.props.errors).length,
+        });
+    }
 
     return (
         <TrenchDevsAdminLayout>
@@ -14,7 +27,12 @@ export default function Details(props) {
                             Degrees
                         </div>
                         <div className="card-body">
-                            HELLO
+                            <DynamicListForm
+                                inertiaForm={form}
+                                entryVerbiage={"Degree"}
+                                formElements={page.props.dynamic_form_elements}
+                                onSubmit={submitForm}
+                            />
                         </div>
                     </div>
                 </div>

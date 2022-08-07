@@ -16,13 +16,13 @@ if (!function_exists('get_base_url')) {
      */
     function get_base_url(bool $removePort = false)
     {
-        $fullUrl    = url('/');
+        $fullUrl = url('/');
         $fullDomain = explode('//', $fullUrl)[1]; // c.trenchdevs.org
 
         if (!empty($fullDomain)) {
             $domainParts = explode('.', $fullDomain);
-            $tld         = array_pop($domainParts);
-            $domain      = array_pop($domainParts);
+            $tld = array_pop($domainParts);
+            $domain = array_pop($domainParts);
 
             if ($removePort) {
                 $tld = explode(":", $tld)[0] ?? '';
@@ -203,20 +203,20 @@ if (!function_exists('request_meta')) {
     {
         $request = request();
 
-        $user        = $request->user('web');
-        $ip          = $request->ip();
-        $userAgent   = $request->header('User-Agent');
-        $method      = $request->method();
+        $user = $request->user('web');
+        $ip = $request->ip();
+        $userAgent = $request->header('User-Agent');
+        $method = $request->method();
         $requestData = $request->all();
-        $fullUrl     = $request->fullUrl();
+        $fullUrl = $request->fullUrl();
 
         $meta = [
-            'user'         => $user,
-            'ip'           => $ip,
-            'user_agent'   => $userAgent,
-            'method'       => $method,
+            'user' => $user,
+            'ip' => $ip,
+            'user_agent' => $userAgent,
+            'method' => $method,
             'request_data' => $requestData,
-            'full_url'     => $fullUrl,
+            'full_url' => $fullUrl,
         ];
 
         if ($encode) {
@@ -268,7 +268,6 @@ if (!function_exists('site_identifier')) {
 }
 
 
-
 if (!function_exists('site_is')) {
 
     function site_is(string $siteIdentifier): string
@@ -281,10 +280,9 @@ if (!function_exists('theme_is')) {
 
     function theme_is(...$siteTheme): string
     {
-        return  in_array(site()->theme, $siteTheme);
+        return in_array(site()->theme, $siteTheme);
     }
 }
-
 
 
 /**
@@ -396,4 +394,25 @@ function app_config(string $key, $default = null): mixed
     }
 
     return $configurations->get($key, $default)->value ?? $default;
+}
+
+function echoln(string $var)
+{
+    echo $var . PHP_EOL;
+}
+
+function echoln_console(string $var): void
+{
+
+    if (app()->runningInConsole()) {
+        echoln($var);
+    }
+}
+
+function dump_queries(callable $fn){
+    DB::enableQueryLog();
+    $fn();
+    dump(DB::getQueryLog());
+    DB::disableQueryLog();
+    die;
 }

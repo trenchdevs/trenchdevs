@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Modules\Aws\Console\Commands\S3ImageRemoverCommand;
+use App\Modules\Forms\Console\Commands\CreateDynamicFormsCommand;
 use App\Modules\Sso\Console\Commands\SamlIdpCreateServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         S3ImageRemoverCommand::class,
         SamlIdpCreateServiceProvider::class,
+        CreateDynamicFormsCommand::class, // php artisan dynamic-forms:create
     ];
 
     /**

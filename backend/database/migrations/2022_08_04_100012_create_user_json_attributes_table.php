@@ -14,7 +14,7 @@ return new class extends Migration {
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
 
         DB::transaction(function(){
@@ -46,6 +46,7 @@ return new class extends Migration {
             });
 
             Schema::create('user_json_attributes', function (Blueprint $table) {
+                $table->id();
                 $table->unsignedBigInteger('user_id');
                 $table->string('key', 256);
                 $table->jsonb('value');
@@ -66,40 +67,7 @@ return new class extends Migration {
                 $table->comment('Any non-relational values for a user');
             });
 
-            DynamicForms::newInstance()->create2208Forms();
-
-            /**
-             * Create System Keys
-             */
-            UserJsonAttributeKey::query()->updateOrCreate(
-                ['key' => 'system::portfolio::experiences'],
-                [
-                    'description' => 'Data for user experiences',
-                    'form_identifier' => 'system::portfolio::experiences::2208',
-                    'sample_value' => [
-                        ['title' => 'Title 1', 'company' => 'Company 1', 'start_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')],
-                        ['title' => 'Title 2', 'company' => 'Company 2', 'start_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')],
-                    ]
-                ]
-            );
-
-            UserJsonAttributeKey::query()->updateOrCreate(
-                ['key' => 'system::portfolio::details'],
-                [
-                    'description' => 'Data for user details',
-                    'form_identifier' => 'system::portfolio::details::2208',
-                    'sample_value' => [
-                        'username' => 'John',
-                        'template' => 'console',
-                        'primary_phone_number' => '123-123-1234',
-                        'github_url' => 'https://github.com/trenchdevs/trenchdevs',
-                        'linkedin_url' => 'https://linkedin.com/trenchdevs',
-                        'resume_url' => 'https://trenchdevs.org/',
-                        'tagline' => 'About me',
-                        'personal_interests' => 'About my interests',
-                    ],
-                ]
-            );
+            DynamicForms::newInstance()->createForms();
         });
     }
 
@@ -108,7 +76,7 @@ return new class extends Migration {
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('user_json_attributes');
         Schema::dropIfExists('user_json_attribute_keys');
