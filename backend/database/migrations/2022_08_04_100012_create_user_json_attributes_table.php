@@ -1,8 +1,11 @@
 <?php
 
+use App\Modules\Forms\Models\DynamicForm;
+use App\Modules\Forms\Services\DynamicForms;
 use App\Modules\Users\Models\UserJsonAttributeKey;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
@@ -14,79 +17,90 @@ return new class extends Migration {
     public function up()
     {
 
-        Schema::create('user_json_attribute_keys', function (Blueprint $table) {
-            $table->string('key', 256);
-            $table->string('description', 256);
-            $table->json('validation_rules')->comment('Ref: Validator::make arguments')->default('{}');
-            $table->json('validation_messages')->comment('Ref: Validator::make arguments')->default('{}');
-            $table->json('validation_custom_attributes')->comment('Ref: Validator::make arguments')->default('{}');
-            $table->json('dynamic_form_elements')->comment('Dynamic form elements for the front-end')->default('{}');
-            $table->json('sample_value');
-            $table->primary('key');
-            $table->index(['key']);
+        DB::transaction(function(){
 
-            $table->comment('possible values for user_json_attributes table');
-        });
+            Schema::create('dynamic_forms', function (Blueprint $table) {
+                $table->string('form_identifier', 128);
+                $table->string('description', 128);
+                $table->json('validation_rules')->comment('Ref: Validator::make arguments')->default('{}');
+                $table->json('validation_messages')->comment('Ref: Validator::make arguments')->default('{}');
+                $table->json('validation_custom_attributes')->comment('Ref: Validator::make arguments')->default('{}');
+                $table->json('dynamic_form_elements')->comment('Dynamic form elements for the front-end')->default('{}');
+                $table->timestamps();
 
-        Schema::create('user_json_attributes', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
-            $table->string('key', 256);
-            $table->jsonb('value');
-            $table->timestamps();
+                $table->primary('form_identifier', 256);
+                $table->index(['form_identifier']);
+                $table->comment('Dynamic forms - first used by user_json_attribute_keys table');
+            });
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('key')->references('key')->on('user_json_attribute_keys');
+            Schema::create('user_json_attribute_keys', function (Blueprint $table) {
+                $table->string('key', 256);
+                $table->string('description', 256);
+                $table->string('form_identifier', 128)->index()->nullable();
+                $table->json('sample_value')->nullable();
+                $table->primary('key');
+                $table->index(['key']);
 
-            $table->index(['user_id', 'key']);
-            $table->index('user_id');
-            $table->index(['key']);
+                $table->foreign('form_identifier')->on('dynamic_forms')->references('form_identifier');
+                $table->comment('possible values for user_json_attributes table');
+            });
 
-            $table->unique(['user_id', 'key']);
+            Schema::create('user_json_attributes', function (Blueprint $table) {
+                $table->unsignedBigInteger('user_id');
+                $table->string('key', 256);
+                $table->jsonb('value');
+                $table->timestamps();
 
-            $table->index('created_at');
-            $table->index('updated_at');
+                $table->foreign('user_id')->references('id')->on('users');
+                $table->foreign('key')->references('key')->on('user_json_attribute_keys');
 
-            $table->comment('Any non-relational values for a user');
-        });
+                $table->index(['user_id', 'key']);
+                $table->index('user_id');
+                $table->index(['key']);
 
-        /**
-         * Create System Keys
-         */
-        UserJsonAttributeKey::query()->updateOrCreate(
-            ['key' => 'system::portfolio::experiences'],
-            [
-                'key' => 'system::portfolio::experiences',
-                'description' => 'Data for user experiences',
-                'dynamic_form_elements' => [
-                    'Title' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.title'],
-                    'Company' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.company'],
-                    'Description' => ['type' => 'textarea', 'className' => 'form-control', 'wrapperClassName' => 'col-md-12', 'name' => '*.description'],
-                    'Start Date' => ['type' => 'date', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.start_date'],
-                    'End Date' => ['type' => 'date', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.end_date'],
-                ],
-                'validation_rules' => [
-                    '*' => 'required|array|present',
-                    '*.title' => 'required|string|max:128',
-                    '*.company' => 'required|string|max:128',
-                    '*.description' => 'required|string|max:6144',
-                    '*.start_date' => 'required|date',
-                    '*.end_date' => 'nullable|date'
-                ],
-                'validation_messages' => [],
-                'validation_custom_attributes' => [
-                    '*' => 'Experiences',
-                    '*.title' => 'Title',
-                    '*.company' => 'Company',
-                    '*.description' => 'Description',
-                    '*.start_date' => 'Start Date',
-                    '*.end_date' => 'End Date'
-                ],
-                'sample_value' => [
-                    ['title' => 'Title 1', 'company' => 'Company 1', 'start_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')],
-                    ['title' => 'Title 2', 'company' => 'Company 2', 'start_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')],
+                $table->unique(['user_id', 'key']);
+
+                $table->index('created_at');
+                $table->index('updated_at');
+
+                $table->comment('Any non-relational values for a user');
+            });
+
+            DynamicForms::newInstance()->create2208Forms();
+
+            /**
+             * Create System Keys
+             */
+            UserJsonAttributeKey::query()->updateOrCreate(
+                ['key' => 'system::portfolio::experiences'],
+                [
+                    'description' => 'Data for user experiences',
+                    'form_identifier' => 'system::portfolio::experiences::2208',
+                    'sample_value' => [
+                        ['title' => 'Title 1', 'company' => 'Company 1', 'start_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')],
+                        ['title' => 'Title 2', 'company' => 'Company 2', 'start_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')],
+                    ]
                 ]
-            ]
-        );
+            );
+
+            UserJsonAttributeKey::query()->updateOrCreate(
+                ['key' => 'system::portfolio::details'],
+                [
+                    'description' => 'Data for user details',
+                    'form_identifier' => 'system::portfolio::details::2208',
+                    'sample_value' => [
+                        'username' => 'John',
+                        'template' => 'console',
+                        'primary_phone_number' => '123-123-1234',
+                        'github_url' => 'https://github.com/trenchdevs/trenchdevs',
+                        'linkedin_url' => 'https://linkedin.com/trenchdevs',
+                        'resume_url' => 'https://trenchdevs.org/',
+                        'tagline' => 'About me',
+                        'personal_interests' => 'About my interests',
+                    ],
+                ]
+            );
+        });
     }
 
     /**
@@ -98,5 +112,6 @@ return new class extends Migration {
     {
         Schema::dropIfExists('user_json_attributes');
         Schema::dropIfExists('user_json_attribute_keys');
+        Schema::dropIfExists('dynamic_forms');
     }
 };

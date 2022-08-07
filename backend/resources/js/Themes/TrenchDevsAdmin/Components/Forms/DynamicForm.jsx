@@ -46,7 +46,7 @@ export default function DynamicForm({
             <div className="row">
                 <div className="col">
                     <div className="mt-3">
-                        <button className="btn btn-success" onClick={onSubmit}>
+                        <button className="btn btn-success float-right" onClick={onSubmit}>
                             <Icon.Save/>
                             <span className="pl-1">Save</span>
                         </button>

@@ -34,12 +34,11 @@ export default function Details(props) {
         <TrenchDevsAdminLayout>
             <PortfolioStepper activeStep={1}/>
 
-            <pre><code>{JSON.stringify(avatarForm.errors, null, 2)}</code></pre>
             <div className="row">
                 <div className="col">
                     <Card header="Basic Details">
                         <div className="row">
-                            <div className="col-md-3 offset-4">
+                            <div className="col-md-3">
                                 <BasicFileUploader onUpload={onAvatarUploaded}>
                                     <div className="relative mb-3 cursor-pointer mx-auto" style={{width: "250px !important"}}>
                                         <img
@@ -52,13 +51,15 @@ export default function Details(props) {
                                     </div>
                                 </BasicFileUploader>
                             </div>
+                            <div className="col-md-9">
+                                <DynamicForm
+                                    inertiaForm={form}
+                                    entryVerbiage={"Experience"}
+                                    formElements={page.props.dynamic_form_elements}
+                                    onSubmit={submitForm}
+                                />
+                            </div>
                         </div>
-                        <DynamicForm
-                            inertiaForm={form}
-                            entryVerbiage={"Experience"}
-                            formElements={page.props.dynamic_form_elements}
-                            onSubmit={submitForm}
-                        />
                     </Card>
                 </div>
             </div>

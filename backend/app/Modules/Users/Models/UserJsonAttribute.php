@@ -21,19 +21,19 @@ class UserJsonAttribute extends Model {
     ];
 
 
-
     /**
      * @param int $id
      * @param string $key
+     * @param array $default
      * @return array
      */
-    public static function getValueFromKey(int $id, string $key): array {
+    public static function getValueFromKey(int $id, string $key, $default = []): array {
         return UserJsonAttribute::query()
             ->join('user_json_attribute_keys', 'user_json_attribute_keys.key', '=', 'user_json_attributes.key')
             ->where('user_json_attributes.user_id', '=', $id)
             ->where('user_json_attributes.key', '=', $key)
             ->first()
-            ->value ?? [];
+            ->value ?? $default;
     }
 
 }

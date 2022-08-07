@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Aws\Services\AmazonS3Service;
 use App\Modules\Users\Models\User;
 use App\Modules\Users\Models\UserJsonAttribute;
+use App\Modules\Users\Models\UserJsonAttributeKey;
 use App\Modules\Users\Repositories\UserCertificationsRepository;
 use App\Modules\Users\Repositories\UserDegreesRepository;
 use App\Modules\Users\Repositories\UserExperiencesRepository;
@@ -34,58 +35,11 @@ class UserPortfolioController extends Controller
     {
         $view = strtolower($view);
 
-        if ($view === 'details') {
-            return $this->inertiaRender(sprintf('Portfolio/%s', ucfirst($view)), [
-                $view => [],
-                'dynamic_form_elements' => [
-                    'Username' => [
-                        'type' => 'input',
-                        'className' => 'form-control',
-                        'wrapperClassName' => 'col-md-6',
-                        'name' => 'username',
-                        'verbiage' => 'This will be your trenchdevs handle (eg. trenchdevs.org/myusername)'
-                    ],
-                    'Template / Custom View' => [
-                        'type' => 'select',
-                        'dropdown_options' => [
-                            ['value' => 'portfolio.show', 'label' => 'Default'],
-                            ['value' => 'portfolio.custom.basic', 'label' => 'Basic (StartBootstrap Template)'],
-                            ['value' => 'portfolio.custom.console', 'label' => 'Console (Text Theme)'],
-                        ],
-                        'className' => 'form-control',
-                        'wrapperClassName' => 'col-md-6',
-                        'name' => 'template'
-                    ],
-
-                    'Primary Phone Number' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => 'primary_phone_number'],
-                    'GitHub URL' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => 'github_url'],
-                    'LinkedIn URL' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => 'linkedin_url'],
-                    'Resume URL' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => 'resume_url'],
-
-                    'Tagline' => [
-                        'type' => 'textarea',
-                        'className' => 'form-control',
-                        'wrapperClassName' => 'col-md-12',
-                        'name' => 'tagline',
-                        'verbiage' => 'Shown below your name on your portfolio',
-                    ],
-
-                    'Personal Interests' => [
-                        'type' => 'textarea',
-                        'className' => 'form-control',
-                        'wrapperClassName' => 'col-md-12',
-                        'name' => 'personal_interests',
-                        'verbiage' => 'Shown as a section on portfolio'
-                    ],
-                ],
-            ]);
-        }
-
         $service = UserJsonAttributeService::newInstance(sprintf('system::portfolio::%s', $view));
 
         return $this->inertiaRender(sprintf('Portfolio/%s', ucfirst($view)), [
-            $view => $service->getValue(Auth::id()),
-            'dynamic_form_elements' => $service->getJsonAttributeKey()->dynamic_form_elements ?? [],
+            $view => $service->getValue(Auth::id(), []),
+            'dynamic_form_elements' => $service->getDynamicFormElements(),
         ]);
     }
 
@@ -122,7 +76,7 @@ class UserPortfolioController extends Controller
     {
         try {
             $this->validate($request, ['avatar' => 'required|image|max:' . 1024 * 5 /* 5 MB */]);
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             Session::flash('error_message', $exception->getMessage());
             throw  $exception;
         }

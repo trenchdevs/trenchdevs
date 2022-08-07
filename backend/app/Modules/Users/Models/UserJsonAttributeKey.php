@@ -2,16 +2,18 @@
 
 namespace App\Modules\Users\Models;
 
+use App\Modules\Forms\Models\DynamicForm;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
+ * @property  DynamicForm $form
  * @property  string $key
  * @property  string $description
- * @property  array $validation_rules
- * @property  array $validation_messages
- * @property  array $validation_custom_attributes
+ * @property  string $form_identifier
  * @property  array $sample_value
- * @property  array $dynamic_form_elements
  */
 class UserJsonAttributeKey extends Model
 {
@@ -23,10 +25,7 @@ class UserJsonAttributeKey extends Model
     protected $fillable = [
         'key',
         'description',
-        'validation_rules',
-        'validation_messages',
-        'validation_custom_attributes',
-        'dynamic_form_elements',
+        'form_identifier',
         'sample_value'
     ];
 
@@ -37,5 +36,25 @@ class UserJsonAttributeKey extends Model
         'sample_value' => 'array',
         'dynamic_form_elements' => 'array',
     ];
+
+    public function values(): HasMany
+    {
+        return $this->hasMany(UserJsonAttribute::class, 'key', 'key');
+    }
+
+    public function form(): BelongsTo
+    {
+        return $this->belongsTo(DynamicForm::class, 'form_identifier', 'form_identifier');
+    }
+
+    /**
+     * @param int $userId
+     * @param null $default
+     * @return mixed
+     */
+    public function getValueForUser(int $userId, $default = null): mixed
+    {
+        return UserJsonAttribute::getValueFromKey($userId, $this->key) ?? $default;
+    }
 
 }

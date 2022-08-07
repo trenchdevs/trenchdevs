@@ -34,15 +34,15 @@ class UserJsonAttributeService
      */
     public function validate(array $data): static
     {
-        $rules = $this->userJsonAttributeKey->validation_rules ?? [];
+        $rules = $this->userJsonAttributeKey->form->validation_rules ?? [];
 
         if (!empty($rules)) {
 
             Validator::make(
                 $data,
                 $rules,
-                $this->userJsonAttributeKey->validation_messages ?? [],
-                $this->userJsonAttributeKey->validation_custom_attributes ?? []
+                $this->userJsonAttributeKey->form->validation_messages ?? [],
+                $this->userJsonAttributeKey->form->validation_custom_attributes ?? []
             )->validate();
         }
 
@@ -63,9 +63,14 @@ class UserJsonAttributeService
         );
     }
 
-    public function getValue(int $userId): array
+    public function getValue(int $userId, $default = []): array
     {
-        return UserJsonAttribute::getValueFromKey($userId, $this->userJsonAttributeKey->key);
+        return UserJsonAttribute::getValueFromKey($userId, $this->userJsonAttributeKey->key, $default);
+    }
+
+    public function getDynamicFormElements(): array
+    {
+        return $this->userJsonAttributeKey->form->dynamic_form_elements ?? [];
     }
 
     /**
