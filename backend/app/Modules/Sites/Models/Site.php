@@ -88,6 +88,7 @@ class Site extends Model
             if (isset(self::$singleton) && !empty(self::$singleton)) {
                 return self::$singleton;
             }
+
             return SiteFactory::getInstanceOrNull();
 
         } catch (Throwable $throwable) {

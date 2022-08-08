@@ -4,6 +4,7 @@ namespace App\Modules\Sites\Models\Sites;
 
 
 use App\Modules\Sites\Models\Site;
+use App\Services\TDCache;
 use Illuminate\Database\Eloquent\Builder;
 
 class SiteFactory
@@ -15,16 +16,20 @@ class SiteFactory
         'https://marketale.trenchapps.com',
     ];
 
+    private static $siteCache;
+
     /**
      * @return AbstractSite|Site|RentalSite|null
      */
     public static function getInstanceOrNull(): null|AbstractSite|Site|RentalSite
     {
-        if (in_array(request()->header('origin'), self::VALID_ECOMMERCE_DOMAINS)) {
-            return new Marketale();
-        }
 
         $domain         = get_domain();
+
+        if (isset(self::$siteCache[$domain])) {
+            return self::$siteCache[$domain];
+        }
+
         $strippedDomain = $domain;
 
         if (count($domainParts = explode('.', $domain)) > 2) {
@@ -39,7 +44,6 @@ class SiteFactory
                         ->where('domain', '=', "$strippedDomain");
                 });
         });
-        // td_echo_builder_query($query);
 
         /** @var Site $site */
         $site = $query->first();
@@ -48,9 +52,7 @@ class SiteFactory
             return null;
         }
 
-        if ($site->theme === 'rental') {
-            $site = RentalSite::query()->findOrFail($site->id);
-        }
+        self::$siteCache[$domain] = $site;
 
         return $site;
     }
