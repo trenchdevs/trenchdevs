@@ -1,6 +1,6 @@
 import {isArray} from "lodash";
 import * as Icon from "react-feather";
-import FormInput from "@/Themes/TrenchDevsAdmin/Components/FormInput";
+import FormInput from "@/Themes/TrenchDevsAdmin/Components/Forms/FormInput";
 
 /**
  * @param {InertiaFormProps<TForm>} inertiaForm

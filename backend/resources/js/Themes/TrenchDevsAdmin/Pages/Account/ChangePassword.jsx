@@ -1,4 +1,4 @@
-import FormInput from "@/Themes/TrenchDevsAdmin/Components/FormInput";
+import FormInput from "@/Themes/TrenchDevsAdmin/Components/Forms/FormInput";
 import {useForm} from "@inertiajs/inertia-react";
 import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
 import * as Icon from 'react-feather';

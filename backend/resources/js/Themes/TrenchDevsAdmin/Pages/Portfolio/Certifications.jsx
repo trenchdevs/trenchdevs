@@ -7,7 +7,7 @@ export default function Certifications(props) {
 
     const page = usePage();
     const form = useForm([
-        ...page.props.degrees || []
+        ...page.props.certifications || []
     ]);
 
     function submitForm() {

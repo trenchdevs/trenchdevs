@@ -1,4 +1,5 @@
-import {get, isArray, set, isObject} from "lodash";
+import {get, isArray, set, isObject, isString} from "lodash";
+import RichTextEditor from "@/Themes/TrenchDevsAdmin/Components/Forms/HtmlEditor";
 
 /**
  * @param name
@@ -10,17 +11,29 @@ import {get, isArray, set, isObject} from "lodash";
 export default function FormInput({name, form, ...props}) {
 
     function onChange(e) {
+
         let formData;
+        let value;
+
+        if (isString(e)) {
+            value = e;
+        } else if (isObject(e)) {
+            value = get(e, 'target.value', '')
+        } else {
+            value = '';
+            console.error('td: element value not supported');
+        }
+
 
         if (isArray(form.data)) {
             // e.g. Use in DynamicListForm
             formData = [...form.data];
-            form.setData(set(formData, name, e.target.value))
+            form.setData(set(formData, name, value))
         } else {
             // e.g. Use in DynamicForm
             form.setData({
                 ...form.data,
-                [name]: e.target.value,
+                [name]: value,
             })
         }
 
@@ -49,6 +62,8 @@ export default function FormInput({name, form, ...props}) {
                         }
                     </select>
                 )
+            case 'rich-text-editor':
+                return <RichTextEditor {...sharedProps} />
             case "input":
             default:
                 return <input {...sharedProps} />

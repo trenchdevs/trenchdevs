@@ -132,7 +132,7 @@ class DynamicForms
                 'dynamic_form_elements' => [
                     'Title' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.title'],
                     'Company' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.company'],
-                    'Description' => ['type' => 'textarea', 'className' => 'form-control', 'wrapperClassName' => 'col-md-12', 'name' => '*.description'],
+                    'Description' => ['type' => 'rich-text-editor', 'className' => 'form-control', 'wrapperClassName' => 'col-md-12', 'name' => '*.description'],
                     'Start Date' => ['type' => 'date', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.start_date'],
                     'End Date' => ['type' => 'date', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.end_date'],
                 ],
@@ -185,7 +185,7 @@ class DynamicForms
                     'Degree' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.degree'],
                     'Start Date' => ['type' => 'date', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.start_date'],
                     'End Date' => ['type' => 'date', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.end_date'],
-                    'Description' => ['type' => 'textarea', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.description'],
+                    'Description' => ['type' => 'rich-text-editor', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => '*.description'],
                 ],
                 'validation_rules' => [
                     '*' => 'required|array|present',
@@ -230,21 +230,21 @@ class DynamicForms
                 'dynamic_form_elements' => [
                     'Tourist' => [
                         'name' => 'tourist',
-                        'type' => 'textarea',
+                        'type' => 'rich-text-editor',
                         'className' => 'form-control',
                         'wrapperClassName' => 'col-md-12',
                         'verbiage' => 'Skills that you are a beginner at',
                     ],
                     'Conversationally Fluent' => [
                         'name' => 'conversationally_fluent',
-                        'type' => 'textarea',
+                        'type' => 'rich-text-editor',
                         'className' => 'form-control',
                         'wrapperClassName' => 'col-md-12',
                         'verbiage' => 'Skills that you are comfortable talking about with other developers',
                     ],
                     'Fluent' => [
                         'name' => 'fluent',
-                        'type' => 'textarea',
+                        'type' => 'rich-text-editor',
                         'className' => 'form-control',
                         'wrapperClassName' => 'col-md-12',
                         'verbiage' => 'Skills that you are an expert at',

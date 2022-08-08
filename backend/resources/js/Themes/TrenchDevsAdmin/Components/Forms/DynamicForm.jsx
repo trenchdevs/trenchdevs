@@ -1,5 +1,5 @@
 import {isEmpty} from "lodash";
-import FormInput from "@/Themes/TrenchDevsAdmin/Components/FormInput";
+import FormInput from "@/Themes/TrenchDevsAdmin/Components/Forms/FormInput";
 import * as Icon from "react-feather";
 import React from "react";
 
