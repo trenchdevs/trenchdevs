@@ -3,7 +3,7 @@ import {Link, useForm, usePage} from "@inertiajs/inertia-react";
 import * as Icon from 'react-feather';
 import slugify from "slugify";
 import {useEffect} from "react";
-import MarkdownEditor from "@/Themes/TrenchDevsAdmin/Components/MarkdownEditor";
+import MarkdownEditor from "@/Themes/TrenchDevsAdmin/Components/Forms/MarkdownEditor";
 
 export default function BlogUpsert() {
 

@@ -1,9 +1,8 @@
 import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
 import {Link, usePage} from "@inertiajs/inertia-react";
 import * as Icon from "react-feather";
-import Paginator from "@/Themes/TrenchDevsAdmin/Components/Paginator";
 import {Inertia} from "@inertiajs/inertia";
-import CustomTable from "@/Themes/TrenchDevsAdmin/Components/CustomTable";
+import InertiaTable from "@/Themes/TrenchDevsAdmin/Components/Tables/InertiaTable";
 
 export default function UsersList(props) {
 
@@ -37,7 +36,7 @@ export default function UsersList(props) {
                         </div>
                     </div>
 
-                    <CustomTable
+                    <InertiaTable
                         links={links}
                         rows={data}
                         columns={[

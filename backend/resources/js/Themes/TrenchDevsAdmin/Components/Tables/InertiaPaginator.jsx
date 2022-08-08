@@ -1,7 +1,7 @@
 import {isArray, isEmpty} from "lodash";
 import {Link} from "@inertiajs/inertia-react";
 
-export default function Paginator({links}) {
+export default function InertiaPaginator({links}) {
 
     if (isEmpty(links) || !isArray(links)) {
         return <></>

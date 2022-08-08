@@ -1,7 +1,7 @@
-import Paginator from "@/Themes/TrenchDevsAdmin/Components/Paginator";
 import {isFunction} from "lodash";
+import InertiaPaginator from "./InertiaPaginator";
 
-export default function CustomTable({
+export default function InertiaTable({
                                         columns = [],
                                         rows = [],
                                         links = [],
@@ -41,7 +41,7 @@ export default function CustomTable({
                     </tbody>
                 </table>
 
-                <Paginator links={links}/>
+                <InertiaPaginator links={links}/>
             </div>
         </div>
     )

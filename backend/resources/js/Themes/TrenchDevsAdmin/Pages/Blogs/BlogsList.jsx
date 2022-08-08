@@ -1,5 +1,5 @@
 import {Link, usePage} from "@inertiajs/inertia-react";
-import CustomTable from "@/Themes/TrenchDevsAdmin/Components/CustomTable";
+import InertiaTable from "@/Themes/TrenchDevsAdmin/Components/Tables/InertiaTable";
 import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
 import * as Icon from "react-feather";
 
@@ -24,7 +24,7 @@ export default function BlogsList() {
                         </div>
                     </div>
 
-                    <CustomTable links={data.links} rows={data.data} columns={[
+                    <InertiaTable links={data.links} rows={data.data} columns={[
                         {
                             key: 'primary_image_url', 'label': 'Image', render: row => {
                                 return <img className="img-thumbnail img-fluid" style={{maxHeight: '50px'}}

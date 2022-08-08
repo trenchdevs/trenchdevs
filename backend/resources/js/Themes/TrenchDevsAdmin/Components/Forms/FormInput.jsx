@@ -1,5 +1,5 @@
 import {get, isArray, set, isObject, isString} from "lodash";
-import RichTextEditor from "@/Themes/TrenchDevsAdmin/Components/Forms/HtmlEditor";
+import RichTextEditor from "@/Themes/TrenchDevsAdmin/Components/Forms/RichTextEditor";
 
 /**
  * @param name

@@ -7,7 +7,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
  * @returns {JSX.Element}
  * @constructor
  */
-export default function HtmlEditor({
+export default function RichTextEditor({
                                        value = '',
                                        onChange
                                    }) {
