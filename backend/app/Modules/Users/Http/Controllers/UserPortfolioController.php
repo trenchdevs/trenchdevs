@@ -4,6 +4,7 @@ namespace App\Modules\Users\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Aws\Services\AmazonS3Service;
+use App\Modules\Users\Events\UserPortfolioDetailsUpdated;
 use App\Modules\Users\Models\User;
 use App\Modules\Users\Models\UserJsonAttribute;
 use App\Modules\Users\Models\UserJsonAttributeKey;

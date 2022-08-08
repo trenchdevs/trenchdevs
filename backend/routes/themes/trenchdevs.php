@@ -8,16 +8,6 @@ use App\Public\Controllers\Blogs\PublicBlogsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-/**
- * Public: rendered via blade
- */
-Route::get('blogs', [PublicBlogsController::class, 'index'])->name('public.blogs');
-Route::get('/', [PublicController::class, 'index'])->name('public.home');
-
-// start - public documents
-Route::view('documents/privacy', 'documents.privacy')->name('documents.privacy');
-Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
-// end - public documents
 
 /**
  * Admin: rendered via inertia
@@ -45,3 +35,17 @@ Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function
 
 
 require __DIR__ . '/../auth.php';
+
+
+/**
+ * Public Rendered Pages (Blade)
+ */
+Route::get('blogs', [PublicBlogsController::class, 'index'])->name('public.blogs');
+
+// start - public documents
+Route::view('documents/privacy', 'documents.privacy')->name('documents.privacy');
+Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
+// end - public documents
+
+Route::get('/', [PublicController::class, 'index'])->name('public.home');
+Route::get('{slug}', [PublicController::class, 'show'])->name('public.show');

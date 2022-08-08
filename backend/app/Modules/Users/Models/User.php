@@ -4,14 +4,7 @@ namespace App\Modules\Users\Models;
 
 use App\Modules\Emails\Models\EmailQueue;
 use App\Modules\Sites\Models\Site;
-use App\Modules\Users\Models\ProjectUser;
-use App\Modules\Users\Models\UserCertification;
-use App\Modules\Users\Models\UserDegree;
-use App\Modules\Users\Models\UserExperience;
-use App\Modules\Users\Models\UserPortfolioDetail;
 use App\Modules\Projects\Models\Project;
-use App\Modules\Users\Models\UserSkill;
-use App\Modules\Users\Models\UserLogin;
 use App\Support\Traits\SiteScoped;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,12 +19,12 @@ use Throwable;
 
 /**
  * Class User
- * @property UserCertification[] $certifications
- * @property UserDegree[] $degrees
- * @property UserExperience[] $experiences
+ * @property array[] $certifications
+ * @property array[] $degrees
+ * @property array[] $experiences
  * @property ProjectUser $projects
- * @property UserSkill $skills
- * @property UserPortfolioDetail $portfolioDetails
+ * @property array $skills
+ * @property array $portfolioDetails
  * @property $email
  * @property $name
  * @property $first_name
@@ -74,8 +67,6 @@ class User extends Authenticatable // implements MustVerifyEmail
         self::ROLE_ADMIN,
         self::ROLE_BUSINESS_OWNER,
     ];
-
-    private $portfolioUrl;
 
     /**
      * The attributes that are mass assignable.
@@ -195,11 +186,11 @@ class User extends Authenticatable // implements MustVerifyEmail
     }
 
     /**
-     * @return UserPortfolioDetail
+     * @return array
      */
-    public function getPortfolioDetails(): UserPortfolioDetail
+    public function getPortfolioDetails(): array
     {
-        return UserPortfolioDetail::findOrEmptyByUser($this->id);
+        return $this->portfolioDetails;
     }
 
 
@@ -248,11 +239,6 @@ class User extends Authenticatable // implements MustVerifyEmail
         return $this->hasMany(Project::class);
     }
 
-    public function skills()
-    {
-        return $this->hasOne(UserSkill::class);
-    }
-
     public function portfolioDetails(): HasOne
     {
         return $this->hasOne(UserPortfolioDetail::class);
@@ -269,11 +255,6 @@ class User extends Authenticatable // implements MustVerifyEmail
 
         if (!empty($this->username)) {
             $portfolioUrl = get_portfolio_url($this->username);
-        }
-
-        // cache on instance
-        if (!isset($this->portfolioUrl)) {
-            $this->portfolioUrl = $portfolioUrl;
         }
 
         return $this->portfolioUrl;
@@ -494,6 +475,35 @@ class User extends Authenticatable // implements MustVerifyEmail
         return $this->first_name . " " . $this->last_name;
     }
 
+    /**
+     * Portfolio
+     */
+
+    public function getSkillsAttribute(): array
+    {
+        return $this->getJsonAttributeValue('system::portfolio::skills');
+    }
+
+    public function getExperiencesAttribute(): array
+    {
+        return $this->getJsonAttributeValue('system::portfolio::experiences');
+    }
+
+    public function getCertificationsAttribute(): array
+    {
+        return $this->getJsonAttributeValue('system::portfolio::certifications');
+    }
+
+    public function getDegreesAttribute(): array
+    {
+        return $this->getJsonAttributeValue('system::portfolio::degrees');
+    }
+
+    public function getPortfolioDetailsAttribute(): array
+    {
+        return $this->getJsonAttributeValue('system::portfolio::details');
+    }
+
 
     ###########################################################################
     #                           Relationships
@@ -509,7 +519,7 @@ class User extends Authenticatable // implements MustVerifyEmail
 
     public function getJsonAttributeValue(string $key): array
     {
-        return UserJsonAttribute::getValueFromKey($this->id, $key);
+        return UserJsonAttribute::getValueFromKey($this->id, $key, []);
     }
 
 

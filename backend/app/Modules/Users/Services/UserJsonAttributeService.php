@@ -2,6 +2,7 @@
 
 namespace App\Modules\Users\Services;
 
+use App\Modules\Users\Events\UserPortfolioDetailsUpdated;
 use App\Modules\Users\Models\UserJsonAttribute;
 use App\Modules\Users\Models\UserJsonAttributeKey;
 use Illuminate\Database\Eloquent\Model;
@@ -52,14 +53,21 @@ class UserJsonAttributeService
     /**
      * @param int $userId
      * @param array $value
-     * @return Model
+     * @return UserJsonAttribute
      */
-    public function upsert(int $userId, array $value): Model
+    public function upsert(int $userId, array $value): UserJsonAttribute
     {
-        return UserJsonAttribute::query()->updateOrCreate(
+        /** @var UserJsonAttribute $jsonAttribute */
+        $jsonAttribute = UserJsonAttribute::query()->updateOrCreate(
             ['user_id' => $userId, 'key' => $this->userJsonAttributeKey->key], // system::portfolio::experiences
             ['value' => $value]
         );
+
+        if ($jsonAttribute->key === 'system::portfolio::details') {
+            event(new UserPortfolioDetailsUpdated($jsonAttribute));
+        }
+
+        return $jsonAttribute;
     }
 
     public function getValue(int $userId, $default = []): array
@@ -75,7 +83,8 @@ class UserJsonAttributeService
     /**
      * @return UserJsonAttributeKey
      */
-    public function getJsonAttributeKey(): UserJsonAttributeKey {
+    public function getJsonAttributeKey(): UserJsonAttributeKey
+    {
         return $this->userJsonAttributeKey;
     }
 }

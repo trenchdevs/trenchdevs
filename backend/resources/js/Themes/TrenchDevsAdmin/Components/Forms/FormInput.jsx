@@ -56,8 +56,8 @@ export default function FormInput({name, form, ...props}) {
                 return (
                     <select {...sharedProps}>
                         {
-                            dropdownOptions.map((option, i) => (
-                                <option value={option.value || ''}>{option.label || ''}</option>
+                            dropdownOptions.map((option,index, i) => (
+                                <option key={`${name}-${index}`} value={option.value || ''}>{option.label || ''}</option>
                             ))
                         }
                     </select>

@@ -3,8 +3,10 @@
 namespace App\Modules\Users\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
+ * @property User $user
  * @property int $user_id
  * @property string $key
  * @property array $value
@@ -23,6 +25,11 @@ class UserJsonAttribute extends Model
         'value' => 'array'
     ];
 
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
     /**
      * @param int $id

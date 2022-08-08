@@ -1,6 +1,5 @@
 @php
     /** @var \App\Modules\Users\Models\User $user */
-    /** @var \App\Modules\Users\Models\UserPortfolioDetail $portfolio_details */
 @endphp
         <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +53,7 @@
             color: #d1deec !important;
             @if(!empty($portfolio_details))
                   background-size: cover;
-            background-image: url({{$portfolio_details->background_cover_url}});
+            background-image: url({{$portfolio_details['background_cover_url'] ?? ''}});
         @endif
 
 
@@ -105,15 +104,15 @@
                 <span class="text-primary">{{ $user->last_name }}</span>
             </h1>
             <div class="subheading mb-5">
-                {{$portfolio_details->primary_phone ?? ''}} ·
+                {{$portfolio_details['primary_phone'] ?? '' ?? ''}} ·
                 <a href="mailto:{{$user->email}}" id="email" target="_blank">{{$user->email}}</a>
             </div>
-            <p class="lead mb-5">{{$portfolio_details->tagline}}</p>
+            <p class="lead mb-5">{{$portfolio_details['tagline'] ?? ''}}</p>
             <div class="social-icons">
-                <a class="social-icon" href="//{{$portfolio_details->linkedin_url}}" target="_blank">
+                <a class="social-icon" href="//{{$portfolio_details['linkedin_url'] ?? ''}}" target="_blank">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a class="social-icon" href="//{{$portfolio_details->github_url}}" target="_blank">
+                <a class="social-icon" href="//{{$portfolio_details['github_url'] ?? ''}}" target="_blank">
                     <i class="fab fa-github"></i>
                 </a>
             </div>
@@ -127,14 +126,14 @@
             @foreach($user->experiences as $experience)
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <h3 class="mb-0">{{$experience->title}}</h3>
-                        <div class="subheading mb-3">{{$experience->company}}</div>
-                        <p>{!! $experience->description !!}</p>
+                        <h3 class="mb-0">{{$experience['title'] ?? ''}}</h3>
+                        <div class="subheading mb-3">{{$experience['company'] ?? ''}}</div>
+                        <p>{!! $experience['description'] ?? '' !!}</p>
                     </div>
 
                     <div class="flex-shrink-0">
-                    <span class="text-primary">{{ date('F Y', strtotime($experience->start_date)) }} -
-                    {{ $experience->end_date ? date('F Y', strtotime($experience->end_date)) : 'PRESENT' }}
+                    <span class="text-primary">{{ date('F Y', strtotime($experience['start_date'] ?? '')) }} -
+                    {{ $experience['end_date'] ?? '' ? date('F Y', strtotime($experience['end_date'] ?? '')) : 'PRESENT' }}
                     </span>
                     </div>
                 </div>
@@ -149,13 +148,13 @@
             @foreach($user->degrees as $degree)
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <h3 class="mb-0">{{$degree->educational_institution}}</h3>
-                        <div class="subheading mb-3">{{$degree->degree}}</div>
+                        <h3 class="mb-0">{{$degree['educational_institution'] ?? ''}}</h3>
+                        <div class="subheading mb-3">{{$degree['degree'] ?? ''}}</div>
                     </div>
                     <div class="flex-shrink-0">
                     <span class="text-primary">
-                        {{ date('F Y', strtotime($degree->start_date)) }} -
-                    {{ $degree->end_date ? date('F Y', strtotime($degree->end_date)) : 'PRESENT' }}
+                        {{ date('F Y', strtotime($degree['start_date'] ?? '')) }} -
+                    {{ ($degree['end_date'] ?? '') ? date('F Y', strtotime($degree['end_date'] ?? '')) : 'PRESENT' }}
                     </span>
                     </div>
                 </div>
@@ -177,15 +176,15 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="subheading mb-4">Fluent</div>
-                    {!! $user->skills->fluent ?? '' !!}
+                    {!! $user->skills['fluent'] ?? '' !!}
                 </div>
                 <div class="col-md-4">
                     <div class="subheading mb-4">Conversationally Fluent</div>
-                    {!! $user->skills->conversationally_fluent ?? '' !!}
+                    {!! $user->skills['conversationally_fluent'] ?? '' !!}
                 </div>
                 <div class="col-md-4">
                     <div class="subheading mb-4">Tourist</div>
-                    {!! $user->skills->tourist ?? '' !!}
+                    {!! $user->skills['tourist'] ?? '' !!}
                 </div>
             </div>
         </div>
@@ -195,7 +194,7 @@
     <section class="resume-section" id="interests">
         <div class="resume-section-content">
             <h2 class="mb-5">Interests</h2>
-            {{ $portfolio_details->interests }}
+            {{ $portfolio_details['personal_interests'] ?? '' }}
         </div>
     </section>
     <hr class="m-0"/>
@@ -206,9 +205,9 @@
             <ul class="fa-ul mb-0">
                 @foreach($user->certifications as $certification)
                     <li>
-                        <a href="{{ $certification->certification_url }}">
+                        <a href="{{ $certification['certification_url'] ?? '' }}">
                             <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            <strong>{{$certification->title}}</strong> - {{$certification->issuer}}
+                            <strong>{{$certification['title'] ?? ''}}</strong> - {{$certification['issuer'] ?? ''}}
                         </a>
                     </li>
                 @endforeach

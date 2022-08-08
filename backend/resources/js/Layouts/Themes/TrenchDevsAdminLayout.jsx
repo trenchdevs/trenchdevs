@@ -276,18 +276,6 @@ export default function TrenchDevsAdminLayout(props) {
                                     </nav>
                                 </div>
 
-
-                                <div className="sidenav-menu-heading">SSO</div>
-
-
-                                <a className="nav-link collapsed"
-                                   href="">
-                                    <div className="nav-link-icon">
-                                        <Icon.AlertCircle {...ICON_DEFAULT_PROPS}/>
-                                    </div>
-                                </a>
-
-
                                 <a className="nav-link collapsed" data-toggle="collapse"
                                    data-target="#shop" aria-expanded="false" aria-controls="shop">
                                     <div className="nav-link-icon">
@@ -309,6 +297,17 @@ export default function TrenchDevsAdminLayout(props) {
                                         </a>
                                     </nav>
                                 </div>
+
+
+                                {/*@if(!empty(config('samlidp.sp.login_url')))*/}
+                                {/*<a class="nav-link collapsed"*/}
+                                {/*   href="{{config('samlidp.sp.login_url')}}">*/}
+                                {/*    <div class="nav-link-icon">*/}
+                                {/*        <i data-feather="alert-circle"></i>*/}
+                                {/*    </div>*/}
+                                {/*    {{config('samlidp.sp.login_label', 'SSO')}}*/}
+                                {/*</a>*/}
+                                {/*@endif*/}
 
 
                                 <div className="sidenav-menu-heading">Utilities</div>
@@ -383,7 +382,7 @@ export default function TrenchDevsAdminLayout(props) {
 
                         </div>
                     </main>
-                    <footer className="footer mt-auto footer-light">
+                    <footer className="footer mt-auto footer-light my-3">
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-md-6 small">Copyright &copy; TrenchDevs</div>

@@ -1,8 +1,7 @@
 @php
     /** @var \App\Modules\Users\Models\User $user */
-    /** @var \App\Modules\Users\Models\UserPortfolioDetail $portfolio_details */
 @endphp
-        <!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -74,19 +73,19 @@
                 <span>{{ $user->last_name }}</span>
             </h1>
             <div class="subheading mb-3 text-center">
-                {{$portfolio_details->primary_phone ?? ''}} ·
+                {{$portfolio_details['primary_phone_number'] ?? ''}} ·
                 <a href="mailto:{{$user->email}}" id="email" target="_blank">{{$user->email}}</a> ·
             </div>
 
             <p class="lead mb-3">
-                {{$portfolio_details->tagline}}
+                {{$portfolio_details['tagline']}}
             </p>
 
             <p class="d-flex align-items-start justify-content-end">
-                <a href="//{{$portfolio_details->linkedin_url}}" target="_blank">
+                <a href="//{{$portfolio_details['linkedin_url']}}" target="_blank">
                     <i data-feather="linkedin"></i>
                 </a> ·
-                <a href="//{{$portfolio_details->github_url}}" target="_blank">
+                <a href="//{{$portfolio_details['github_url']}}" target="_blank">
                     <i data-feather="github"></i>
                 </a>
             </p>
@@ -124,14 +123,15 @@
             @foreach($user->experiences as $experience)
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <h3 class="mb-0">{{$experience->title}}</h3>
-                        <div class="subheading mb-3">{{$experience->company}}</div>
-                        <p>{!! $experience->description !!}</p>
+                        <h3 class="mb-0">{{$experience['title'] ?? ''}}</h3>
+                        <div class="subheading mb-3">{{$experience['company'] ?? ''}}</div>
+                        <p>{!! $experience['description'] ?? '' !!}</p>
                     </div>
 
                     <div class="flex-shrink-0">
-                    <span class="text-primary">{{ date('F Y', strtotime($experience->start_date)) }} -
-                    {{ $experience->end_date ? date('F Y', strtotime($experience->end_date)) : 'PRESENT' }}
+                    <span class="text-primary">
+                        {{ date('F Y', strtotime($experience['start_date'] ?? '')) }} -
+                        {{ ($experience['end_date'] ?? false) ? date('F Y', strtotime($experience['end_date'] ?? '')) : 'PRESENT' }}
                     </span>
                     </div>
                 </div>
@@ -175,9 +175,9 @@
             <ul class="list-unstyled mb-0">
                 @foreach($user->certifications as $certification)
                     <li>
-                        <a class="page-link" href="{{ $certification->certification_url }}" target="_blank">
+                        <a class="page-link" href="{{ $certification['certification_url'] ?? '' }}" target="_blank">
                             <span class="fa-li"><i data-feather="award"></i></span>
-                            <strong>{{$certification->title}}</strong> - {{$certification->issuer}}
+                            <strong>{{$certification['title'] ?? ''}}</strong> - {{$certification['issuer'] ?? ''}}
                         </a>
                     </li>
                 @endforeach
@@ -192,13 +192,13 @@
             @foreach($user->degrees as $degree)
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
-                        <h3 class="mb-0">{{$degree->educational_institution}}</h3>
-                        <div class="subheading mb-3">{{$degree->degree}}</div>
+                        <h3 class="mb-0">{{$degree['educational_institution'] ?? ''}}</h3>
+                        <div class="subheading mb-3">{{$degree['degree'] ?? ''}}</div>
                     </div>
                     <div class="flex-shrink-0">
                     <span class="text-primary">
-                        {{ date('F Y', strtotime($degree->start_date)) }} -
-                    {{ $degree->end_date ? date('F Y', strtotime($degree->end_date)) : 'PRESENT' }}
+                        {{ date('F Y', strtotime($degree['start_date'] ?? '')) }} -
+                    {{ ($degree['end_date'] ?? false) ? date('F Y', strtotime($degree['end_date'] ?? '')) : 'PRESENT' }}
                     </span>
                     </div>
                 </div>

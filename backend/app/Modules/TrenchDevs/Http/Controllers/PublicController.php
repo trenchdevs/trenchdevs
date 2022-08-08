@@ -53,23 +53,21 @@ class PublicController extends Controller
             $this->handleCustomPortfolio($customSite);
         }
 
-        /**
-         * at this point user has no custom site, use default
-         */
-        $user = User::findByUserName($slug);
-
-        if ($user) {
+        // at this point user has no custom site, use default
+        if (!empty($user = User::findByUserName($slug))) {
             $portfolioDetails = $user->getPortfolioDetails();
 
-            return $expectsJson ?
-                [
+            if ($expectsJson) {
+                return [
                     'portfolio_details' => $user->getPortfolioDetails(),
                     'degrees' => $user->degrees,
                     'experiences' => $user->experiences,
                     'certifications' => $user->certifications,
-                ]
-                :
-                view($portfolioDetails->portfolio_view ?: 'portfolio.show', [
+                ];
+            }
+
+            return
+                view($portfolioDetails['template'] ?? 'portfolio.show', [
                     'user' => $user,
                     'portfolio_details' => $user->getPortfolioDetails(),
                 ]);
