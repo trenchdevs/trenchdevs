@@ -12,10 +12,11 @@ trait ValidatesUserTrait
 {
     /**
      * @param bool $create
+     * @param bool $rolesCheck
      * @return array
      */
     #[ArrayShape(['first_name' => "string[]", 'last_name' => "string[]", 'is_active' => "array", 'role' => "array", 'password' => "string[]", 'email' => "array"])]
-    protected function validator(bool $create = true): array
+    protected function validator(bool $create, bool $rolesCheck = true): array
     {
         /** @var User $user */
         $user = Auth::user();
@@ -24,8 +25,11 @@ trait ValidatesUserTrait
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'is_active' => ['required', Rule::in('1', '0')],
-            'role' => ['required', Rule::in($user->getAllowedRolesToManage())],
         ];
+
+        if ($rolesCheck) {
+            $defaultValidator['role'] = ['required', Rule::in($user->getAllowedRolesToManage())];
+        }
 
         if ($create) {
             $defaultValidator['email'] = ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function (Builder $query) {

@@ -112,7 +112,7 @@ class UsersController extends Controller
 
         } else {
 
-            $this->validate($request, $this->validator());
+            $this->validate($request, $this->validator(true));
 
             $user = User::query()->create([
                 'first_name' => $data['first_name'],

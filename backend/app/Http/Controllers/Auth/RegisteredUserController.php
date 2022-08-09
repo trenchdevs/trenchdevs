@@ -40,13 +40,14 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate($this->validator(true));
+        $request->validate($this->validator(true, false));
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'site_id' => site_id(),
             'password' => Hash::make($request->password),
+            'role' => User::ROLE_CUSTOMER,
         ]);
 
         event(new Registered($user));
