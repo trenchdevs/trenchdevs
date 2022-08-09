@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Modules\Users\Models\User;
 use App\Modules\Users\Services\ValidatesUserTrait;
 use App\Providers\RouteServiceProvider;
+use Exception;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Inertia\Inertia;
+use Illuminate\Validation\ValidationException;
+use Inertia\Response;
 
 class RegisteredUserController extends Controller
 {
@@ -20,9 +22,10 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      *
-     * @return \Inertia\Response
+     * @return Response
+     * @throws Exception
      */
-    public function create()
+    public function create(): Response
     {
         return $this->inertiaRender('Auth/Register');
     }
@@ -30,12 +33,12 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return RedirectResponse
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate($this->validator(true));
 
