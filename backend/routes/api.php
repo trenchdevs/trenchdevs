@@ -1,7 +1,6 @@
 <?php
 
 use App\Modules\Activities\Http\Controllers\ActivitiesController;
-use App\Domains\Notes\Http\Controllers\ApiNotes;
 use App\Modules\Stories\Http\Controllers\ProductReactionsController;
 use App\Modules\Stories\Http\Controllers\ProductStoriesController;
 use App\Modules\Stories\Http\Controllers\Stories;
@@ -38,8 +37,8 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // ---------- Start Notes ---------- //
-    Route::post('notes', [ApiNotes::class, 'index']);
-    Route::post('notes/upsert', [ApiNotes::class, 'upsert']);
+    //Route::post('notes', [ApiNotes::class, 'index']);
+    // Route::post('notes/upsert', [ApiNotes::class, 'upsert']);
 
     // ---------- End Notes ---------- //
 

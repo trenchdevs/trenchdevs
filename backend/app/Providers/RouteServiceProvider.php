@@ -49,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
 
             $cacheKey = $this->getCacheKey();
 
-            if (!empty($rawRoutes = TDCache::get($cacheKey))) {
+            if (!$this->app->runningInConsole() && !empty($rawRoutes = TDCache::get($cacheKey))) {
                 Log::info('reading from cache');
                 eval($rawRoutes);
             } else {
@@ -61,7 +61,6 @@ class RouteServiceProvider extends ServiceProvider
                 });
 
                 // td -- caching -- start
-                Log::info('caching');
 
                 /** @var RouteCollection $routes */
                 $routes = Route::getRoutes();
@@ -76,7 +75,10 @@ class RouteServiceProvider extends ServiceProvider
                     $raw = str_replace('{{routes}}', var_export($routes->compile(), true), $stub);
                     $raw = str_replace('<?php', '', $raw);
                     eval($raw);
-                    Cache::put($cacheKey, $raw, 60 * 5);
+
+                    if (!$this->app->runningInConsole()) {
+                        Cache::put($cacheKey, $raw, 60 * 5);
+                    }
                 }
                 // td -- caching -- end
             }
