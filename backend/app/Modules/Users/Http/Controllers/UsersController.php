@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Emails\Models\EmailQueue;
 use App\Modules\Users\Models\UserPortfolioDetail;
 use App\Modules\Users\Models\User;
+use App\Modules\Users\Services\ValidatesUserTrait;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -28,6 +29,9 @@ use Throwable;
 
 class UsersController extends Controller
 {
+
+    use ValidatesUserTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -40,33 +44,6 @@ class UsersController extends Controller
         ]);
     }
 
-    /**
-     * @param bool $create
-     * @return array
-     */
-    #[ArrayShape(['first_name' => "string[]", 'last_name' => "string[]", 'is_active' => "array", 'role' => "array", 'password' => "string[]", 'email' => "array"])]
-    protected function validator(bool $create = true): array
-    {
-        /** @var User $user */
-        $user = Auth::user();
-
-        $defaultValidator = [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'is_active' => ['required', Rule::in('1', '0')],
-            'role' => ['required', Rule::in($user->getAllowedRolesToManage())],
-        ];
-
-        if ($create) {
-            $defaultValidator['email'] = ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function (Builder $query) {
-                $query->where('email', '=', request()->input('email'));
-                $query->where('site_id', '=', site_id());
-            })];
-            $defaultValidator['password'] = ['required', 'string', 'min:8'];
-        }
-
-        return $defaultValidator;
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -135,7 +112,7 @@ class UsersController extends Controller
 
         } else {
 
-            $this->validate($request, $this->validator());
+            $this->validate($request, $this->validator(true));
 
             $user = User::query()->create([
                 'first_name' => $data['first_name'],
