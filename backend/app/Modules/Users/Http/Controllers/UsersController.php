@@ -33,7 +33,7 @@ class UsersController extends Controller
      *
      * @throws Exception
      */
-    public function index(): \Inertia\Response
+    public function displayUsers(): \Inertia\Response
     {
         return $this->inertiaRender('Users/UsersList', [
             'data' => User::query()->paginate(10),

@@ -7,6 +7,7 @@ use App\Support\Traits\SiteScoped;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 class Photo extends Model
 {
     use SiteScoped;
+    use SoftDeletes;
 
     protected $table = 'photos';
 

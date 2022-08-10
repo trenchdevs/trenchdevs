@@ -2,9 +2,11 @@
 
 
 use App\Modules\Sites\Models\Site;
+use App\Modules\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use JetBrains\PhpStorm\NoReturn;
@@ -257,6 +259,22 @@ if (!function_exists('site_id')) {
     {
         return site()->id;
     }
+}
+
+/**
+ * @return User|null
+ */
+function user(): ?User{
+    /** @var User $user */
+    $user = auth()->user();
+    return $user;
+}
+
+/**
+ * @return int|null
+ */
+function user_id(): ?int{
+    return user()->id;
 }
 
 if (!function_exists('site_identifier')) {

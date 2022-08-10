@@ -15,10 +15,14 @@ class S3ImageRemoverService
         $this->s3 = $s3;
     }
 
-    public function deleteImagesMarkedForDeletion()
+    /**
+     * @param int $chunkSize
+     * @return void
+     */
+    public function deleteImagesMarkedForDeletion(int $chunkSize = 100): void
     {
         AwsS3Upload::query()->where('status', 'marked_for_deletion')
-            ->chunkById(100, function (Collection $uploadedFiles) {
+            ->chunkById($chunkSize, function (Collection $uploadedFiles) {
                 foreach ($uploadedFiles as $uploadedFile) {
                     if ($this->s3->deleteFileFromS3($uploadedFile->s3_path)) {
                         $uploadedFile->update(['status' => 'deleted']);

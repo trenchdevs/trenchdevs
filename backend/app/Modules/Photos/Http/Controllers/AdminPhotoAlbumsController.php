@@ -10,6 +10,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @deprecated
+ */
 class AdminPhotoAlbumsController extends Controller
 {
 

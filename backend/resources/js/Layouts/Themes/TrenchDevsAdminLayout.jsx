@@ -116,18 +116,18 @@ export default function TrenchDevsAdminLayout(props) {
 
                                 <div className="collapse" id="photos-module" data-parent="#accordionSidenav">
                                     <nav className="sidenav-menu-nested nav">
-                                        <a className="nav-link" href="index">
+                                        <Link href="/dashboard/photos" className="nav-link">
                                             <div className="nav-link-icon">
                                                 <Icon.Edit {...ICON_DEFAULT_PROPS}/>
                                             </div>
-                                            All Photos
-                                        </a>
-                                        <a className="nav-link" href="">
-                                            <div className="nav-link-icon">
-                                                <Icon.Eye {...ICON_DEFAULT_PROPS}/>
-                                            </div>
-                                            Photo Albums
-                                        </a>
+                                            All
+                                        </Link>
+                                        {/*<a className="nav-link" href="">*/}
+                                        {/*    <div className="nav-link-icon">*/}
+                                        {/*        <Icon.Eye {...ICON_DEFAULT_PROPS}/>*/}
+                                        {/*    </div>*/}
+                                        {/*    Photo Albums*/}
+                                        {/*</a>*/}
                                     </nav>
                                 </div>
 

@@ -14,6 +14,9 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @deprecated
+ */
 class AdminPhotosController extends Controller
 {
 

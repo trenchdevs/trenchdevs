@@ -19,9 +19,8 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('site_id')->default(1)->index();
-            $table->string('email');
-            $table->string('external_id')->nullable();
-            $table->enum('role', ['superadmin','admin','business_owner','customer','contributor']);
+            $table->string('email')->default('')->index();
+            $table->enum('role', ['superadmin','admin','business_owner','customer','contributor'])->index();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -30,6 +29,10 @@ class CreateUsersTable extends Migration
             $table->timestamps();
 
             $table->foreign('site_id')->references('id')->on('sites');
+            $table->unique(['site_id', 'email']);
+            $table->index(['site_id', 'email']);
+            $table->index('updated_at');
+            $table->index('created_at');
         });
 
         if (app()->environment('local')) {
