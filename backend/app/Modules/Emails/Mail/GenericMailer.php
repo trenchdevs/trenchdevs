@@ -2,7 +2,7 @@
 
 namespace App\Modules\Emails\Mail;
 
-use App\Modules\Emails\Models\EmailQueue;
+use App\Modules\Emails\Models\EmailLog;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\Factory as Queue;
 use Illuminate\Mail\Mailable;

@@ -2,7 +2,7 @@
 
 namespace App\Modules\Users\Models;
 
-use App\Modules\Emails\Models\EmailQueue;
+use App\Modules\Emails\Models\EmailLog;
 use App\Modules\Sites\Models\Site;
 use App\Modules\Projects\Models\Project;
 use App\Support\Traits\SiteScoped;
@@ -176,16 +176,6 @@ class User extends Authenticatable // implements MustVerifyEmail
     }
 
     /**
-     * @return User[]
-     */
-    public static function getTrenchDevsUsers()
-    {
-
-        return self::where('account_id', 1)
-            ->get();
-    }
-
-    /**
      * @return array
      */
     public function getPortfolioDetails(): array
@@ -257,7 +247,7 @@ class User extends Authenticatable // implements MustVerifyEmail
             $portfolioUrl = get_portfolio_url($this->username);
         }
 
-        return $this->portfolioUrl;
+        return $portfolioUrl;
     }
 
     /**
@@ -408,7 +398,7 @@ class User extends Authenticatable // implements MustVerifyEmail
             'email_body' => $message,
         ];
 
-        EmailQueue::queue(
+        EmailLog::queue(
             trim($user->email),
             $title,
             $viewData,

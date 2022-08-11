@@ -5,113 +5,103 @@ namespace App\Modules\Announcements\Http\Controllers;
 use App\Http\Controllers\AuthWebController;
 use App\Http\Controllers\Controller;
 use App\Modules\Announcements\Models\Announcement;
-use App\Modules\Emails\Models\EmailQueue;
+use App\Modules\Emails\Models\EmailLog;
 use App\Modules\Users\Models\User;
+use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
+use Inertia\Response;
+use InvalidArgumentException;
 use Throwable;
 
 class AnnouncementsController extends AuthWebController
 {
-    public function list(): View
+    /**
+     * @throws Exception
+     */
+    public function displayAnnouncements(): Response
     {
-        $announcements = Announcement::query()
-            ->orderBy('id', 'desc')
-            ->simplePaginate();
-
-        return view('announcements.list', [
-            'announcements' => $announcements,
+        return $this->inertiaRender('Announcements/AnnouncementsList', [
+            'data' => Announcement::query()
+                ->orderBy('id', 'desc')
+                ->paginate(),
         ]);
     }
 
-    public function create()
+    /**
+     * @throws Exception
+     */
+    public function displayCreateForm(): Response
     {
-        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
-
-        return view('announcements.create');
+        return $this->inertiaRender('Announcements/CreateAnnouncement');
     }
 
     /**
      * @param Request $request
-     * @return JsonResponse
-     * @throws ValidationException
+     * @return RedirectResponse
      * @throws Throwable
+     * @throws ValidationException
      */
-    public function announce(Request $request)
+    public function createAnnouncement(Request $request): RedirectResponse
     {
-
-        $this->adminCheckOrAbort('Feature not enabled for account. Please contact admin if you require elevated access');
+        $this->adminCheckOrAbort();
 
         $this->validate($request, [
-            'title'   => 'required',
-            'message' => 'required'
+            'title' => 'required',
+            'message' => 'required',
+            'emails' => 'required',
         ]);
 
-        /** @var User $user */
-        $user = Auth::user();
+        try {
+            DB::beginTransaction();
+            $message = $request->input('message');
+            $title = $request->input('title');
 
-        $message = $request->message;
-        $title   = $request->title;
+            $announcement = new Announcement();
+            $announcement->fill(array_merge($request->all(), [
+                'user_id' => user_id(),
+                'site_id' => site_id(),
+                'status' => 'processed', // feature needs manual intervention for now
+            ]));
 
-        $announcement          = new Announcement();
-        $announcement->user_id = $user->id;
-        $announcement->site_id = site_id();
-        $announcement->title   = $title;
-        $announcement->status  = 'processed'; // change later on cron
-        $announcement->message = $message;
-        $announcement->saveOrFail();
+            $announcement->saveOrFail();
 
-        // todo: chris - refactor
-        if (!empty($request->emails)) {
-
-            $emails = explode(',', $request->emails);
-
-            if (empty($emails)) {
-                abort(404, 'No emails found');
+            if (empty($emailsCsv = $request->input('emails')) || empty($emailsCsv = explode(',', $emailsCsv))) {
+                throw new InvalidArgumentException("Emails Required");
             }
 
-            foreach ($emails as $email) {
+            $users = User::query()->whereIn('email', $emailsCsv);
 
-                $viewData = [
-                    'name'       => null,
-                    'email_body' => $message,
-                ];
-
-                EmailQueue::queue(
-                    trim($email),
-                    $title,
-                    $viewData,
-                    'emails.generic'
-                );
+            if ($users->count() <= 0) {
+                throw new InvalidArgumentException("Users specified not found.");
             }
 
+            $users->chunkById(10, function (Collection $users) use ($message, $title) {
+                /** @var User $user */
+                foreach ($users as $user) {
+                    EmailLog::queue(
+                        trim($user->email),
+                        $title,
+                        ['name' => $user->name, 'email_body' => $message],
+                    );
+                }
+            });
 
-        } else {
+            DB::commit();
+            Session::flash('message', "Successfully created announcement");
 
-            $users = User::getTrenchDevsUsers();
-
-            foreach ($users as $user) {
-
-                $viewData = [
-                    'name'       => $user->name(),
-                    'email_body' => $message,
-                ];
-
-                EmailQueue::queue(
-                    trim($user->email),
-                    $title,
-                    $viewData,
-                    'emails.generic'
-                );
-            }
+        } catch (Exception $exception) {
+            DB::rollBack();
+            abort('400', $exception->getMessage());
         }
 
-        Session::flash('message', "Successfully created announcement");
-
-        return $this->jsonResponse('success', 'Success!');
+        return redirect(route('dashboard.announcements'));
     }
 }

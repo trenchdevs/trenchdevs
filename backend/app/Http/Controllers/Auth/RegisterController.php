@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 
 use App\Http\Controllers\Controller;
-use App\Modules\Emails\Models\EmailQueue;
+use App\Modules\Emails\Models\EmailLog;
 use App\Providers\RouteServiceProvider;
 use App\Modules\Users\Models\User;
 use ErrorException;
@@ -149,7 +149,7 @@ class RegisterController extends Controller
             $email = $user->email ?? '';
             $id = $user->id ?? '';
 
-            $notifier = EmailQueue::createGenericMail(
+            $notifier = EmailLog::createGenericMail(
                 'support@trenchdevs.org',
                 'New user registered',
                 "A new user registered on the system. (email is: {$email}, id = {$id})"

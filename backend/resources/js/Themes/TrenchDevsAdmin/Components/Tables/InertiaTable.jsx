@@ -2,14 +2,18 @@ import {isFunction} from "lodash";
 import InertiaPaginator from "./InertiaPaginator";
 
 export default function InertiaTable({
-                                        columns = [],
-                                        rows = [],
-                                        links = [],
-                                    }) {
+                                         columns = [],
+                                         rows = [],
+                                         links = [],
+                                         ...props
+                                     }) {
     return (
         <div className="row">
             <div className="col">
-                <table className="table table-striped">
+                <table
+                    className="table table-striped table-responsive overflow-x-auto"
+                    // style={{display: "block"}}
+                >
 
                     <thead>
                     <tr>
@@ -33,7 +37,14 @@ export default function InertiaTable({
                                         toRender = row[column.key] || '';
                                     }
 
-                                    return <td key={colKey}>{toRender}</td>
+                                    return (
+                                        <td
+                                            style={column.style || {}}
+                                            key={colKey}
+                                        >
+                                            {toRender}
+                                        </td>
+                                    )
                                 })}
                             </tr>
                         );

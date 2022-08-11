@@ -12,7 +12,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - "22070:5432"
+      - ${FORWARD_DB_PORT:-22070}:5432
     networks:
       - trenchdevs-docker-network
 
@@ -28,7 +28,7 @@ services:
     volumes:
       - ./backend:/var/www/
     ports:
-      - ${FORWARD_APP_PORT:-80}:80
+      - ${FORWARD_APP_PORT:-22071}:80
     networks:
       - trenchdevs-docker-network
 
@@ -36,8 +36,8 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME:-project-id}-mail
     image: mailhog/mailhog:v1.0.1
     ports:
-      - ${MAIL_HOST_SMTP_PORT:-1025}:1025
-      - ${MAIL_HOST_WEB_PORT:-8025}:8025
+      - ${MAIL_HOST_SMTP_PORT:-1026}:1025
+      - ${MAIL_HOST_WEB_PORT:-8026}:8025
     networks:
       - trenchdevs-docker-network
 

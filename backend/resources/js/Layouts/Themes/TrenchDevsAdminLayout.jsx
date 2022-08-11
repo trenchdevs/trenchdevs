@@ -321,12 +321,12 @@ export default function TrenchDevsAdminLayout(props) {
                                 </a>
 
 
-                                <a className="nav-link collapsed" href="">
+                                <Link href="/dashboard/announcements" className="nav-link collapsed">
                                     <div className="nav-link-icon">
                                         <Icon.Mic{...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Announcements
-                                </a>
+                                </Link>
 
 
                                 <a className="nav-link collapsed" href="">

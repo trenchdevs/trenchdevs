@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Modules\Emails\Models\EmailQueue;
+use App\Modules\Emails\Models\EmailLog;
 use ErrorException;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
@@ -92,7 +92,7 @@ class Handler extends ExceptionHandler
 
             $title = "TrenchDevsAdmin: Error Reporting";
 
-            $emailer = EmailQueue::queue(
+            $emailer = EmailLog::queue(
                 trim('support@trenchdevs.org'),
                 $title,
                 $viewData = [

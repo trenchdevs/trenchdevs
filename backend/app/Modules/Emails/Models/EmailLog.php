@@ -18,9 +18,9 @@ use Throwable;
  * @property $sent_at
  * @package App\Models
  */
-class EmailQueue extends Model
+class EmailLog extends Model
 {
-    protected $table = 'email_queues';
+    protected $table = 'email_logs';
 
     const DB_STATUS_PROCESSED = 'processed';
     const DB_STATUS_PENDING = 'pending';
@@ -38,28 +38,29 @@ class EmailQueue extends Model
      * @param string $subject
      * @param array $viewData
      * @param string $view
-     * @return EmailQueue
+     * @return EmailLog
      * @throws Throwable
      */
     public static function queue(string $emailTo,
                                  string $subject,
-                                 array $viewData,
+                                 array  $viewData,
                                  string $view = 'emails.generic'
     ): self
     {
-        $queue = new self;
-        $queue->status = self::DB_STATUS_PENDING;
-        $queue->email_to = trim($emailTo);
-        $queue->view = $view;
-        $queue->view_data = json_encode($viewData);
-        $queue->subject = $subject;
+        $emailLog = new self;
+        $emailLog->status = self::DB_STATUS_PENDING;
+        $emailLog->email_to = trim($emailTo);
+        $emailLog->view = $view;
+        $emailLog->view_data = json_encode($viewData);
+        $emailLog->subject = $subject;
 
-        $environment = env('APP_ENV');
+        $environment = app()->environment();
+
         // overrides for local
         if ($environment !== 'production') {
-            $queue->subject = "{$subject} - {$environment}";
-            $queue->status = self::DB_STATUS_PAUSED;
-            $queue->email_to = 'support@trenchdevs.org';
+            $emailLog->subject = "{$subject} - {$environment}";
+            $emailLog->status = self::DB_STATUS_PAUSED;
+            $emailLog->email_to = 'support@trenchdevs.org';
         }
 
 
@@ -67,19 +68,19 @@ class EmailQueue extends Model
             /**
              * Don't send to blacklisted emails
              */
-            $queue->status = self::DB_STATUS_PAUSED;
+            $emailLog->status = self::DB_STATUS_PAUSED;
         }
 
-        $queue->saveOrFail();
+        $emailLog->saveOrFail();
 
-        return $queue;
+        return $emailLog;
     }
 
     /**
-     * @param EmailQueue $emailQueue
+     * @param EmailLog $emailQueue
      * @throws Throwable
      */
-    public static function sendEntry(EmailQueue $emailQueue)
+    public static function sendEntry(EmailLog $emailQueue)
     {
 
         if (
@@ -122,15 +123,15 @@ class EmailQueue extends Model
     public static function processPending(int $limit = 100)
     {
 
-        $queues = self::query()->where('status', 'pending')
+        $emailLogs = self::query()->where('status', 'pending')
             ->whereNull('sent_at')
             ->limit($limit)
             ->orderBy('id', 'ASC')
             ->get();
 
-        foreach ($queues as $queue) {
-            /** @var self $queue */
-            self::sendEntry($queue);
+        foreach ($emailLogs as $emailLog) {
+            /** @var self $emailLog */
+            self::sendEntry($emailLog);
         }
     }
 

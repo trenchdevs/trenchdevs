@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Modules\Emails\Models\EmailQueue;
+use App\Modules\Emails\Models\EmailLog;
 use Illuminate\Console\Command;
 use Throwable;
 
@@ -39,6 +39,6 @@ class SendEmails extends Command
      */
     public function handle()
     {
-        EmailQueue::processPending(10);
+        EmailLog::processPending(10);
     }
 }

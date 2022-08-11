@@ -1,6 +1,7 @@
 <?php
 
-
+use App\Modules\Emails\Http\Controllers\EmailPreferencesController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,3 +13,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+/**
+ * Routes here are globally accessible by all sites.
+ */
+
+Route::get('emails/unsubscribe', [EmailPreferencesController::class, 'showUnsubscribeForm'])->name('notifications.emails.showUnsubscribeForm');
+Route::post('emails/unsubscribe', [EmailPreferencesController::class, 'unsubscribe'])->name('notifications.emails.unsubscribe');

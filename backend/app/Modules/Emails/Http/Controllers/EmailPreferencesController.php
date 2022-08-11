@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
+/**
+ * todo: Multi site views not yet supported
+ */
 class EmailPreferencesController extends Controller
 {
 

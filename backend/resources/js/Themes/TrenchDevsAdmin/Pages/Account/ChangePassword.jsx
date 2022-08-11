@@ -1,5 +1,5 @@
 import FormInput from "@/Themes/TrenchDevsAdmin/Components/Forms/FormInput";
-import {useForm} from "@inertiajs/inertia-react";
+import {Link, useForm} from "@inertiajs/inertia-react";
 import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
 import * as Icon from 'react-feather';
 
@@ -26,11 +26,11 @@ export default function ChangePassword(props) {
                 <div className="col">
                     <nav className="nav nav-borders">
 
-                        <a className="p-0 nav-link active" href="">
+                        <Link className="p-0 nav-link active" href="/dashboard/account/change-password">
                             <div className="badge badge-blue-soft p-3">
                                 <span className="font-weight-bolder"><Icon.Lock className="d-inline mr-2" size={12}/>Security</span>
                             </div>
-                        </a>
+                        </Link>
                     </nav>
                 </div>
             </div>

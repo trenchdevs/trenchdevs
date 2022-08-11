@@ -27,15 +27,16 @@ class PhotosController extends Controller
     {
         return $this->inertiaRender('Photos/PhotosList', [
             'data' => Photo::query()->join('aws_s3_uploads AS s3', 's3.id', '=', 'photos.s3_id')
-                ->selectRaw('
+                ->selectRaw("
                     photos.id,
                     photos.site_id,
                     photos.user_id,
+                    s3.meta->>'original_name' AS original_name,
                     s3.s3_url,
                     s3.identifier,
                     s3.s3_path,
                     photos.created_at
-                ')
+                ")
                 ->where('user_id', '=', Auth::id())
                 ->orderBy('photos.id', 'desc')
                 ->paginate(20)

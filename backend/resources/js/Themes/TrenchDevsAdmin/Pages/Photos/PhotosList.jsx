@@ -4,6 +4,8 @@ import * as Icon from 'react-feather';
 import InertiaTable from "@/Themes/TrenchDevsAdmin/Components/Tables/InertiaTable";
 import {useForm, usePage} from "@inertiajs/inertia-react";
 import Card from "@/Themes/TrenchDevsAdmin/Components/Card";
+import {Inertia} from "@inertiajs/inertia";
+import {useEffect} from "react";
 
 export default function PhotosList() {
 
@@ -12,15 +14,24 @@ export default function PhotosList() {
 
     const onUpload = async (acceptedFiles) => {
         await photosForm.setData('image', acceptedFiles[0] || '');
-        console.log(photosForm.data)
-        photosForm.post('/dashboard/photos/upload', {
-            preserveScroll: (page) => Object.keys(page.props.errors).length,
-        });
     };
+
+    useEffect(() => {
+
+        if (photosForm.data.image) {
+            photosForm.post('/dashboard/photos/upload', {
+                preserveScroll: (page) => Object.keys(page.props.errors).length,
+            });
+            photosForm.reset();
+        }
+
+        console.log(photosForm.data)
+
+    },[photosForm.data])
 
     const onDelete = async (id) => {
         if (confirm('Are you sure you want to delete this photo?')) {
-            photosForm.post(`/dashboard/photos/delete/${id}`, {
+            Inertia.post(`/dashboard/photos/delete/${id}`, {
                 preserveScroll: (page) => Object.keys(page.props.errors).length,
             })
         }
@@ -33,7 +44,7 @@ export default function PhotosList() {
                 <div className="row mb-5">
                     <div className="col">
                         <BasicFileUploader onUpload={onUpload}/>
-                        {photosForm.hasErrors ? <div className="text-danger">{photosForm.errors.image}</div> : ''}
+                        {photosForm.hasErrors ? <div className="text-danger text-center">{photosForm.errors.image}</div> : ''}
                     </div>
                 </div>
 
@@ -43,21 +54,25 @@ export default function PhotosList() {
                             {
                                 key: '',
                                 'label': 'Image',
-                                render: row => <img className="img-fluid" style={{maxHeight: "50px"}} src={row.s3_url}
-                                                    alt={row.identifier}/>
+                                render: row => <img className="img-fluid"
+                                                    style={{maxHeight: "50px"}}
+                                                    src={row.s3_url}
+                                                    alt={row.identifier}
+                                />
                             },
+                            {key: 'original_name', 'label': 'Original Name'},
                             {key: 'identifier', 'label': 'Identifier'},
                             {key: 's3_url', 'label': 'S3 URL'},
                             {
-                                key: '', 'label': 'Actions', render: row => (
+                                key: '', style: {width: "10%"},'label': 'Actions', render: row => (
                                     <>
-                                        <button className="mr-2 btn btn-sm btn-info" onClick={() =>
+                                        <button className="mr-1 btn btn-xs btn-info" onClick={() =>
                                             navigator.clipboard.writeText(row.s3_url || '')
                                         }>
-                                            <Icon.Copy/>
+                                            <Icon.Copy size={14}/>
                                         </button>
-                                        <button className="btn btn-sm btn-danger" onClick={() => onDelete(row.id)}>
-                                            <Icon.Trash/>
+                                        <button className="btn btn-xs btn-danger" onClick={() => onDelete(row.id)}>
+                                            <Icon.Trash size={14}/>
                                         </button>
                                     </>
                                 )

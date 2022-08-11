@@ -3,7 +3,7 @@
 namespace App\Modules\Blogs\Repositories;
 
 use App\Modules\Blogs\Models\Blog;
-use App\Modules\Emails\Models\EmailQueue;
+use App\Modules\Emails\Models\EmailLog;
 use App\Modules\Sites\Models\Tag;
 use App\Modules\Users\Models\User;
 use Exception;
@@ -269,7 +269,7 @@ class BlogsRepository
                     'email_body' => $message,
                 ];
 
-                EmailQueue::queue(
+                EmailLog::queue(
                     $moderator->email,
                     "TrenchDevsAdmin: Blog Entry \"{$blog->title}\" Moderation",
                     $viewData,

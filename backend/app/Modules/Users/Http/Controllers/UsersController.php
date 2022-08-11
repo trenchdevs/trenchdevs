@@ -4,7 +4,7 @@ namespace App\Modules\Users\Http\Controllers;
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Controller;
-use App\Modules\Emails\Models\EmailQueue;
+use App\Modules\Emails\Models\EmailLog;
 use App\Modules\Users\Models\UserPortfolioDetail;
 use App\Modules\Users\Models\User;
 use App\Modules\Users\Services\ValidatesUserTrait;
@@ -198,7 +198,7 @@ class UsersController extends Controller
                 . 'If you have not make this update. Please contact support at support@trenchdevs.org',
         ];
 
-        EmailQueue::queue(
+        EmailLog::queue(
             $user->email,
             'Your password was Changed',
             $viewData,

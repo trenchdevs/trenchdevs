@@ -7,19 +7,20 @@ export default function BasicFileUploader({
                                               accept = "'image/*'",
                                               children = null,
                                               sectionClassName = '',
+                                              verbiage = "Drag 'n' drop your file here, or click to select file"
                                           }) {
 
     if (!children) {
         children = (
             <p className="border border-dark border-dashed mt-4 p-5 rounded text-center cursor-pointer">
-                Drag 'n' drop some files here, or click to select files
+                Drag 'n' drop some file here, or click to select files
             </p>
         );
     }
 
     return (
         <>
-            <Dropzone onDrop={onUpload} maxFiles={maxFiles} >
+            <Dropzone onDrop={onUpload} maxFiles={maxFiles}>
                 {({getRootProps, getInputProps}) => (
                     <section className={sectionClassName}>
                         <div {...getRootProps()}>

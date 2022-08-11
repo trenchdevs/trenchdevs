@@ -10,4 +10,13 @@ class Announcement extends Model
     use SiteScoped;
 
     protected $table = 'announcements';
+
+    protected $fillable = [
+        'site_id',
+        'user_id',
+        'title',
+        'message',
+        'status',
+    ];
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Announcements\Http\Controllers\AnnouncementsController;
 use App\Modules\Blogs\Http\Controllers\BlogsController;
 use App\Modules\Photos\Http\Controllers\PhotosController;
 use App\Modules\TrenchDevs\Http\Controllers\PublicController;
@@ -36,6 +37,10 @@ Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function
     Route::get('photos', [PhotosController::class, 'displayPhotos'])->name('dashboard.photos');
     Route::post('photos/upload', [PhotosController::class, 'upload'])->name('dashboard.photos.upload');
     Route::post('photos/delete/{id}', [PhotosController::class, 'delete'])->name('dashboard.photos.delete');
+
+    Route::get('announcements', [AnnouncementsController::class, 'displayAnnouncements'])->name('dashboard.announcements');
+    Route::get('announcements/create', [AnnouncementsController::class, 'displayCreateForm'])->name('dashboard.announcements.displayCreateForm');
+    Route::post('announcements/create', [AnnouncementsController::class, 'createAnnouncement'])->name('dashboard.announcements.createAnnouncement');
 });
 
 

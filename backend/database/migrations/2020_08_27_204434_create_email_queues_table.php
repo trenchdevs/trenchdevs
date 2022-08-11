@@ -13,7 +13,7 @@ class CreateEmailQueuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('email_queues', function (Blueprint $table) {
+        Schema::create('email_logs', function (Blueprint $table) {
             $table->id();
             $table->string('view', 128);
             $table->enum('status', ['pending', 'processed', 'paused']);
@@ -32,6 +32,6 @@ class CreateEmailQueuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('email_queues');
+        Schema::dropIfExists('email_logs');
     }
 }
