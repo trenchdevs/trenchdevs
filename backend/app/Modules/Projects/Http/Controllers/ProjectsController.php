@@ -3,23 +3,22 @@
 namespace App\Modules\Projects\Http\Controllers;
 
 use App\Http\Controllers\AuthWebController;
+use App\Http\Controllers\Controller;
 use App\Modules\Projects\Models\Project;
+use Exception;
+use Inertia\Response;
 
-class ProjectsController extends AuthWebController
+class ProjectsController extends Controller
 {
-    public function middlewareOnConstructorCalled(): void
+    /**
+     * @throws Exception
+     */
+    public function displayProjects(): Response
     {
-        parent::middlewareOnConstructorCalled();
-    }
-
-    public function index()
-    {
-        $projects = Project::query()
-            ->where('is_personal', 0)
-            ->simplePaginate();
-
-        return view('projects.list', [
-            'projects' => $projects,
+        return $this->inertiaRender('Projects/ProjectsList', [
+            'data' =>  Project::query()
+                ->where('is_personal', 0)
+                ->simplePaginate(),
         ]);
     }
 }

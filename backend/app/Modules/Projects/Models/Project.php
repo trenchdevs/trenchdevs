@@ -6,6 +6,7 @@ use App\Modules\Users\Models\ProjectUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Project
@@ -32,14 +33,16 @@ class Project extends Model
         'image_url',
     ];
 
-    public function projectUsers(){
+    public function projectUsers(): HasMany
+    {
         return $this->hasMany(ProjectUser::class);
     }
 
     /**
      * @return Builder[]|Collection
      */
-    public static function getGlobalProjects(){
+    public static function getGlobalProjects(): Collection|array
+    {
         return self::query()->where('is_personal', 0)
             ->orderBy('id', 'desc')
             ->get();

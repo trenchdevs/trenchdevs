@@ -185,12 +185,13 @@ export default function TrenchDevsAdminLayout(props) {
                                 </Link>
 
 
-                                <a className="nav-link collapsed" href="">
+                                <Link href={"/dashboard/projects"}
+                                      className={`nav-link collapsed ${url.startsWith('/dashboard/projects') && 'active'}`}>
                                     <div className="nav-link-icon">
                                         <Icon.Paperclip{...ICON_DEFAULT_PROPS}/>
                                     </div>
                                     Projects
-                                </a>
+                                </Link>
 
 
                                 <a className="nav-link collapsed" target="_blank" href="https://trenchdevs.slack.com">
@@ -201,13 +202,13 @@ export default function TrenchDevsAdminLayout(props) {
                                 </a>
 
 
-                                <a className="nav-link collapsed"
-                                   href=" ">
-                                    <div className="nav-link-icon">
-                                        <Icon.PenTool{...ICON_DEFAULT_PROPS}/>
-                                    </div>
-                                    Markdown Notes
-                                </a>
+                                {/*<a className="nav-link collapsed"*/}
+                                {/*   href=" ">*/}
+                                {/*    <div className="nav-link-icon">*/}
+                                {/*        <Icon.PenTool{...ICON_DEFAULT_PROPS}/>*/}
+                                {/*    </div>*/}
+                                {/*    Markdown Notes*/}
+                                {/*</a>*/}
 
 
                                 <div className="sidenav-menu-heading">Git</div>
@@ -276,16 +277,16 @@ export default function TrenchDevsAdminLayout(props) {
                                     </nav>
                                 </div>
 
-                                <a className="nav-link collapsed" data-toggle="collapse"
-                                   data-target="#shop" aria-expanded="false" aria-controls="shop">
-                                    <div className="nav-link-icon">
-                                        <Icon.ShoppingBag {...ICON_DEFAULT_PROPS}/>
-                                    </div>
-                                    Shop
-                                    <div className="sidenav-collapse-arrow">
-                                        <Icon.ChevronDown {...ICON_DEFAULT_PROPS}/>
-                                    </div>
-                                </a>
+                                {/*<a className="nav-link collapsed" data-toggle="collapse"*/}
+                                {/*   data-target="#shop" aria-expanded="false" aria-controls="shop">*/}
+                                {/*    <div className="nav-link-icon">*/}
+                                {/*        <Icon.ShoppingBag {...ICON_DEFAULT_PROPS}/>*/}
+                                {/*    </div>*/}
+                                {/*    Shop*/}
+                                {/*    <div className="sidenav-collapse-arrow">*/}
+                                {/*        <Icon.ChevronDown {...ICON_DEFAULT_PROPS}/>*/}
+                                {/*    </div>*/}
+                                {/*</a>*/}
 
                                 <div className="collapse" id="shop" data-parent="#accordionSidenav">
                                     <nav className="sidenav-menu-nested nav">
@@ -313,15 +314,18 @@ export default function TrenchDevsAdminLayout(props) {
                                 <div className="sidenav-menu-heading">Utilities</div>
 
 
-                                <a className="nav-link collapsed" href=" ">
-                                    <div className="nav-link-icon">
-                                        <Icon.Globe {...ICON_DEFAULT_PROPS}/>
-                                    </div>
-                                    Accounts
-                                </a>
+                                {/*<a className="nav-link collapsed" href=" ">*/}
+                                {/*    <div className="nav-link-icon">*/}
+                                {/*        <Icon.Globe {...ICON_DEFAULT_PROPS}/>*/}
+                                {/*    </div>*/}
+                                {/*    Accounts*/}
+                                {/*</a>*/}
 
 
-                                <Link href="/dashboard/announcements" className="nav-link collapsed">
+                                <Link
+                                    href={"/dashboard/announcements"}
+                                    className={`nav-link collapsed ${url.startsWith('/dashboard/announcements') && 'active'}`}
+                                >
                                     <div className="nav-link-icon">
                                         <Icon.Mic{...ICON_DEFAULT_PROPS}/>
                                     </div>
@@ -329,12 +333,12 @@ export default function TrenchDevsAdminLayout(props) {
                                 </Link>
 
 
-                                <a className="nav-link collapsed" href="">
-                                    <div className="nav-link-icon">
-                                        <Icon.Terminal{...ICON_DEFAULT_PROPS}/>
-                                    </div>
-                                    Commands
-                                </a>
+                                {/*<a className="nav-link collapsed" href="">*/}
+                                {/*    <div className="nav-link-icon">*/}
+                                {/*        <Icon.Terminal{...ICON_DEFAULT_PROPS}/>*/}
+                                {/*    </div>*/}
+                                {/*    Commands*/}
+                                {/*</a>*/}
 
                             </div>
                         </div>

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Modules\Projects\Models\Project;
+use App\Modules\Sites\Models\Site;
 use App\Modules\Users\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,7 @@ class UtilitiesCommand extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $fn = $this->argument('fn');
         // in the future this can be a Factory instead
@@ -113,6 +114,7 @@ class UtilitiesCommand extends Command
 
             foreach ($projectsArr as $projectData) {
 
+                Site::setSiteInstance(Site::fromIdentifier('trenchdevs'));
                 $projectData['is_personal'] = 0;
                 $projectData['user_id'] = User::query()->find(1)->id;
                 $projectData['url'] = $projectData['repository_url'] ?? '';

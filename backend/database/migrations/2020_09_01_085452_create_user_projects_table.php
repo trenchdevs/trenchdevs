@@ -13,14 +13,15 @@ class CreateUserProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_projects', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->boolean('is_personal');
             $table->string('title');
             $table->string('url')->nullable();
             $table->string('repository_url')->nullable();
             $table->timestamps();
+
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

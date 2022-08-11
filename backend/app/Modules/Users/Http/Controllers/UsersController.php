@@ -91,7 +91,7 @@ class UsersController extends Controller
      * @throws ValidationException
      * @throws Throwable
      */
-    public function upsert(Request $request): Redirector|RedirectResponse
+    public function upsertUser(Request $request): Redirector|RedirectResponse
     {
         $this->adminCheckOrAbort();
 
