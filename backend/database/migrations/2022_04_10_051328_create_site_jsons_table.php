@@ -19,7 +19,10 @@ class CreateSiteJsonsTable extends Migration
             $table->string('key', 128)->index();
             $table->json('value');
             $table->timestamps();
-            $table->index(['site_id', 'key'], 'main_idx');
+
+            $table->unique(['site_id', 'key']);
+            $table->index(['site_id', 'key']);
+
             $table->foreign('site_id')->references('id')->on('sites');
         });
     }

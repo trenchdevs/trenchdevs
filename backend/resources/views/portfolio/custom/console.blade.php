@@ -74,18 +74,18 @@
             </h1>
             <div class="subheading mb-3 text-center">
                 {{$portfolio_details['primary_phone_number'] ?? ''}} ·
-                <a href="mailto:{{$user->email}}" id="email" target="_blank">{{$user->email}}</a> ·
+                <a href="mailto:{{$user->email}}" id="email" target="_blank">{{$user->email ?? ''}}</a> ·
             </div>
 
             <p class="lead mb-3">
-                {{$portfolio_details['tagline']}}
+                {{$portfolio_details['tagline'] ?? ''}}
             </p>
 
             <p class="d-flex align-items-start justify-content-end">
-                <a href="//{{$portfolio_details['linkedin_url']}}" target="_blank">
+                <a href="//{{$portfolio_details['linkedin_url'] ?? '#'}}" target="_blank">
                     <i data-feather="linkedin"></i>
                 </a> ·
-                <a href="//{{$portfolio_details['github_url']}}" target="_blank">
+                <a href="//{{$portfolio_details['github_url'] ?? '#'}}" target="_blank">
                     <i data-feather="github"></i>
                 </a>
             </p>

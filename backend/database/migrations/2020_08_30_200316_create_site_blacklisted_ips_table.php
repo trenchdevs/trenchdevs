@@ -15,6 +15,7 @@ class CreateSiteBlacklistedIpsTable extends Migration
     {
         Schema::create('site_blacklisted_ips', function (Blueprint $table) {
             $table->ipAddress('ip')->unique()->primary();
+            $table->string('comment',255)->nullable();
             $table->timestamps();
         });
     }

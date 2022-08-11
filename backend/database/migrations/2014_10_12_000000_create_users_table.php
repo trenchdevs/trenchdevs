@@ -19,22 +19,45 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('site_id')->default(1)->index();
+            $table->enum('role', ['superadmin', 'admin', 'business_owner', 'customer', 'contributor'])->index();
+            $table->boolean('is_active')->default(false)->index();
             $table->string('email')->default('')->index();
-            $table->enum('role', ['superadmin','admin','business_owner','customer','contributor'])->index();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('external_id')->default('')->index();
+            $table->string('first_name')->nullable()->index();
+            $table->string('last_name')->nullable()->index();
             $table->string('password');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('avatar_url')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('site_id')->references('id')->on('sites');
             $table->unique(['site_id', 'email']);
+            $table->unique(['site_id', 'external_id']);
+
             $table->index(['site_id', 'email']);
+            $table->index(['site_id', 'external_id']);
             $table->index('updated_at');
             $table->index('created_at');
         });
 
+        $this->createUsersOnLocal();
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('users');
+    }
+
+    private function createUsersOnLocal()
+    {
         if (app()->environment('local')) {
             User::query()->create([
                 'site_id' => Site::fromIdentifier(Site::DB_IDENTIFIER_TRENCHDEVS)->id,
@@ -54,16 +77,5 @@ class CreateUsersTable extends Migration
                 'password' => Hash::make('p2ssw0rd'),
             ]);
         }
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('users');
     }
 }

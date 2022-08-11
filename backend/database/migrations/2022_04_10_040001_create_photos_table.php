@@ -22,6 +22,10 @@ class CreatePhotosTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->index(['site_id', 'user_id', 's3_id']);
+            $table->index(['site_id', 's3_id']);
+            $table->index(['user_id', 's3_id']);
+
             $table->foreign('site_id')->references('id')->on('sites');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('s3_id')->references('id')->on('aws_s3_uploads');

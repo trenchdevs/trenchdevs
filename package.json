@@ -7,6 +7,7 @@
     "--init--": "----------------------------------------------------------------------",
     "init:env": "cp -n .env.docker.example .env && cp -n backend/.env.example backend/.env",
     "--Backend--": "----------------------BACK END COMMANDS----------------------------",
+    "be:dev": "docker-compose up -d && npm run --prefix backend",
     "be:up": "docker-compose up -d",
     "be:up:lite": "docker-compose up app -d",
     "be:down": "docker-compose down",

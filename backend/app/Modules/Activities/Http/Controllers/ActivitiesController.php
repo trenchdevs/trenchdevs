@@ -3,7 +3,7 @@
 namespace App\Modules\Activities\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Activities\Models\Activity;
+use App\Modules\Activities\Models\ActivityLog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -15,7 +15,7 @@ class ActivitiesController extends Controller
 
         $data = $request->all();
         $data['site_id'] = $this->site->id;
-        Activity::query()->create($data);
+        ActivityLog::query()->create($data);
         return $this->jsonResponse('success', 'Success');
     }
 

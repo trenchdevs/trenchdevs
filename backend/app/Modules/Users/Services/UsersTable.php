@@ -41,8 +41,8 @@ class UsersTable extends MaterialTableService
                     case 'email':
                         $this->query->where('users.email', 'like', "%$filterValue%");
                         break;
-                    case 'username':
-                        $this->query->where('users.username', 'like', "%$filterValue%");
+                    case 'external_id':
+                        $this->query->where('users.external_id', 'like', "%$filterValue%");
                         break;
                     default:
                         break;

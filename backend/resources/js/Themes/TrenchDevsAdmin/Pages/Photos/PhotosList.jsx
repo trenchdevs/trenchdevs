@@ -25,8 +25,6 @@ export default function PhotosList() {
             photosForm.reset();
         }
 
-        console.log(photosForm.data)
-
     },[photosForm.data])
 
     const onDelete = async (id) => {

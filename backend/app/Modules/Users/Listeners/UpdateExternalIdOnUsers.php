@@ -4,7 +4,7 @@ namespace App\Modules\Users\Listeners;
 
 use App\Modules\Users\Events\UserPortfolioDetailsUpdated;
 
-class UpdateUsernameOnUsers {
+class UpdateExternalIdOnUsers {
 
     public function __construct()
     {
@@ -14,7 +14,7 @@ class UpdateUsernameOnUsers {
     {
 
         $event->userPortfolioDetail->user()->update([
-            'username' => $event->userPortfolioDetail->value['username'] ?? '',
+            'external_id' => $event->userPortfolioDetail->value['external_id'] ?? '',
         ]);
     }
 }

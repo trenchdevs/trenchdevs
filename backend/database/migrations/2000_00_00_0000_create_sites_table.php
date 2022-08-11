@@ -17,8 +17,8 @@ class CreateSitesTable extends Migration
         Schema::create('sites', function (Blueprint $table) {
             $table->id();
             $table->string('identifier', 32)->index()->unique()->comment('Unique identifier for code');
-            $table->string('theme', 64)->index();
-            $table->string('inertia_theme', 64)->comment('Theme used for Inertia JS')->index();
+            $table->string('theme', 64)->index()->comment("Theme used for backend, routing & regular blade files");
+            $table->string('inertia_theme', 64)->default('TrenchDevsAdmin')->comment('Theme used for Inertia JS');
             $table->string('company_name', 64)->nullable()->index();
             $table->string('domain', 128)->unique()->index();
             $table->boolean('allow_wildcard_for_domain')
@@ -30,7 +30,21 @@ class CreateSitesTable extends Migration
             $table->softDeletes();
         });
 
+        $this->createDefaultSites();
+    }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('sites');
+    }
+
+    private function createDefaultSites()
+    {
         if (app()->environment('local')) {
             Site::query()->create([
                 'domain' => 'trenchdevs.localhost',
@@ -47,6 +61,17 @@ class CreateSitesTable extends Migration
                 'theme' => 'demo',
                 'inertia_theme' => 'TrenchDevsAdmin',
             ]);
+
+            Site::query()->updateOrCreate(
+                ['identifier' => Site::DB_IDENTIFIER_CLOUDCRAFT],
+                [
+                    'domain' => 'cloudcraft.trenchapps.localhost',
+                    'allow_wildcard_for_domain' => 0,
+                    'company_name' => 'CloudCraft',
+                    'theme' => 'cloudcraft',
+                    'inertia_theme' => 'TrenchDevsAdmin',
+                ]
+            );
 
 
         } else {
@@ -65,16 +90,5 @@ class CreateSitesTable extends Migration
                 'theme' => 'demo',
             ]);
         }
-
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('sites');
     }
 }

@@ -54,7 +54,7 @@ if (!function_exists('get_portfolio_url')) {
      * @param string $username
      * @return string
      */
-    function get_portfolio_url(string $username)
+    function get_portfolio_url(string $username): string
     {
         return add_scheme_to_url(sprintf('%s/%s', get_base_url(), $username));
     }

@@ -38,7 +38,7 @@ class DynamicForms
                 'description' => 'Data for portfolio details',
                 'dynamic_form_elements' => [
                     'Username' => [
-                        'name' => 'username',
+                        'name' => 'external_id',
                         'type' => 'input', 'className' => 'form-control',
                         'wrapperClassName' => 'col-md-6',
                         'verbiage' => 'This will be your trenchdevs handle (eg. trenchdevs.org/myusername)',
@@ -79,7 +79,7 @@ class DynamicForms
                     ],
                 ],
                 'validation_rules' => [
-                    'username' => 'required|string|max:128',
+                    'external_id' => 'required|string|max:128',
                     'template' => 'required|string|max:128',
                     'primary_phone_number' => 'required|string|max:16',
                     'github_url' => 'required|url',
@@ -90,7 +90,7 @@ class DynamicForms
                 ],
                 'validation_messages' => [],
                 'validation_custom_attributes' => [
-                    'username' => 'Username',
+                    'external_id' => 'Username',
                     'template' => 'Template',
                     'primary_phone_number' => 'Primary Phone Number',
                     'github_url' => 'Github URL',
@@ -108,7 +108,7 @@ class DynamicForms
                 'description' => 'Data for user details',
                 'form_identifier' => 'system::portfolio::details::2208',
                 'sample_value' => [
-                    'username' => 'John',
+                    'external_id' => 'chris',
                     'template' => 'console',
                     'primary_phone_number' => '123-123-1234',
                     'github_url' => 'https://github.com/trenchdevs/trenchdevs',

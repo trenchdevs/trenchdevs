@@ -12,7 +12,7 @@ class CreateActivitiesTable extends Migration
      * @return void
      */
     public function up() {
-        Schema::create('activities', function (Blueprint $table) {
+        Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('site_id');
             $table->unsignedBigInteger('user_id')->nullable();

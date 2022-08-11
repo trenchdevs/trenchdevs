@@ -18,7 +18,7 @@ class CreateAwsS3UploadsTable extends Migration
             $table->string('s3_url')->unique()->index();
             $table->string('s3_path')->unique()->index();
             $table->string('identifier')->index();
-            $table->enum('status', ['uploaded', 'marked_for_deletion', 'deleted'])->index();
+            $table->enum('status', ['uploaded', 'marked_for_deletion', 'deleted', 'errored'])->index();
             $table->json('meta')->nullable();
             $table->timestamps();
         });

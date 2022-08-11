@@ -16,51 +16,31 @@ class CreateSiteConfigsTable extends Migration
      */
     public function up() {
 
-        Schema::create('site_configs', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('site_id');
-            $table->string('key_name', 128);
-            $table->string('key_value', 255);
-            $table->string('comments', 255)->nullable();
-            $table->timestamps();
+        Schema::create('site_config_keys', function (Blueprint $table) {
+            $table->string('key_name', 128)->index();
+            $table->string('module', 64)->default('Core')->index();
+            $table->string('description', 128);
 
-            $table->index(['key_name']);
-            $table->index(['site_id']);
-            $table->index(['key_value']);
-            $table->index(['key_name', 'key_value']);
-            $table->index(['site_id', 'key_name', 'key_value']);
-            $table->unique('site_id', 'key_name');
-
-            $table->foreign(['site_id'])->references('id')->on('sites');
+            $table->primary('key_name');
         });
 
-        // set themes for all sites
-        DB::unprepared("
-           UPDATE sites
-            SET theme = identifier
-            WHERE (theme IS NULL or theme = '')
-        ");
+        Schema::create('site_configs', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('site_id')->index();
+            $table->string('key_name', 128)->index();
+            $table->string('key_value', 255)->index();
+            $table->string('comments', 255)->index()->nullable();
+            $table->timestamps();
 
-        if (!app()->environment('production')) {
-            Site::query()->updateOrCreate(
-                ['identifier' => Site::DB_IDENTIFIER_CLOUDCRAFT],
-                [
-                    'domain' => 'cloudcraft.trenchapps.localhost',
-                    'allow_wildcard_for_domain' => 0,
-                    'company_name' => 'CloudCraft',
-                    'theme' => 'cloudcraft',
-                    'inertia_theme' => 'TrenchDevsAdmin',
-                ]
-            );
-        }
+            $table->unique('site_id', 'key_name');
 
+            $table->index(['site_id', 'key_name', 'key_value']);
+            $table->index(['key_name', 'key_value']);
 
-        if (!empty($cloudCraft = Site::getByIdentifier(Site::DB_IDENTIFIER_CLOUDCRAFT))) {
-            SiteConfig::query()->updateOrCreate(
-                ['key_name' => SiteConfig::KEY_NAME_SYSTEM_LOGIN_REDIRECT_PATH, 'site_id' => $cloudCraft->id],
-                ['key_value' => '/home', 'comments' => 'Redirect path after login']
-            );
-        }
+            $table->foreign(['site_id'])->references('id')->on('sites');
+            $table->foreign(['key_name'])->references('key_name')->on('site_config_keys');
+        });
+
     }
 
     /**
@@ -70,5 +50,6 @@ class CreateSiteConfigsTable extends Migration
      */
     public function down() {
         Schema::dropIfExists('site_configs');
+        Schema::dropIfExists('site_config_keys');
     }
 }

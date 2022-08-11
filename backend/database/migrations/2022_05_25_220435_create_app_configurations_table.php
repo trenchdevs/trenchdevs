@@ -18,12 +18,13 @@ class CreateAppConfigurationsTable extends Migration
             $table->string('key', 64)->index()->unique();
             $table->string('value', 256)->index();
             $table->string('description', 256);
-            $table->unique(['key', 'value']);
+
+            $table->comment('App wide configuration / flags');
         });
 
         DB::table('app_configurations')->updateOrInsert(
-            ['key' => 'TD_CACHE_BUST'],
-            ['value' => '1', 'description' => 'Bust the cache for TDCache?']
+            ['key' => 'CLEAR_CACHE'],
+            ['value' => '1', 'description' => 'Bust the cache for the app? w/c uses the TDCache class']
         );
     }
 

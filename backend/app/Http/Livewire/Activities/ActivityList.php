@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Activities;
 
-use App\Modules\Activities\Models\Activity;
+use App\Modules\Activities\Models\ActivityLog;
 use Livewire\Component;
 
 class ActivityList extends Component
@@ -13,7 +13,7 @@ class ActivityList extends Component
 
     public function __construct($id = null) {
         parent::__construct($id);
-        $this->activities = Activity::query()
+        $this->activities = ActivityLog::query()
             ->orderBy('id', 'desc')
             ->where('created_at', '>=', now()->subDays($this->daysToShow))
             ->where('title', 'like', '%connected%')

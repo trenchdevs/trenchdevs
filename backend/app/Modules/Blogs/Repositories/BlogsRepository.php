@@ -57,9 +57,9 @@ class BlogsRepository
         foreach ($filters as $filterKey => $filterValue) {
 
             switch ($filterKey) {
-                case 'username':
+                case 'external_id':
                     if (!empty($filterValue) && is_string($filterValue)) {
-                        $query = $query->where('u.username', '=', $filterValue);
+                        $query = $query->where('u.external_id', '=', $filterValue);
                     }
                     break;
                 default:

@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Modules\Users\Events\UserPortfolioDetailsUpdated;
-use App\Modules\Users\Listeners\UpdateUsernameOnUsers;
+use App\Modules\Users\Listeners\UpdateExternalIdOnUsers;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         UserPortfolioDetailsUpdated::class => [
-            UpdateUsernameOnUsers::class,
+            UpdateExternalIdOnUsers::class,
         ],
     ];
 

@@ -23,7 +23,7 @@ class PublicBlogsController extends Controller
     {
         $username = $request->get('username');
 
-        $blogs = $blogsRepository->all(['username' => $username]);
+        $blogs = $blogsRepository->all(['external_id' => $username]);
 
         if ($request->expectsJson()) {
             return response()->json($blogs);

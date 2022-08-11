@@ -132,7 +132,7 @@ class PortfolioController extends Controller
 
 
         $this->validate($request, [
-            'username' => 'required|max:25|alpha_num',
+            'external_id' => 'required|max:25|alpha_num',
             'portfolio_view' => [
                 'required',
                 'max:50',
@@ -145,7 +145,7 @@ class PortfolioController extends Controller
         $user = $request->user();
 
         DB::transaction(function () use ($user, $request) {
-            $user->username = $request->get('username');
+            $user->external_id = $request->get('username');
             $user->saveOrFail();
             $portfolioDetails = $user->getPortfolioDetails();
             $portfolioDetails->user_id = $user->id;

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,7 @@ use Throwable;
  * @property $last_name
  * @property $id
  * @property $avatar_url
- * @property $username
+ * @property $external_id
  * @property $role
  * @property $site_id
  * @property Site $site
@@ -42,6 +43,7 @@ class User extends Authenticatable // implements MustVerifyEmail
     use Notifiable;
     use HasApiTokens;
     use SiteScoped;
+    use SoftDeletes;
 
     const ROLE_SUPER_ADMIN = 'superadmin';
     const ROLE_ADMIN = 'admin';
@@ -185,55 +187,21 @@ class User extends Authenticatable // implements MustVerifyEmail
 
 
     /**
-     * @param $username
+     * @param string $externalId
      * @return static|null
      */
-    public static function findByUsername(string $username): ?self
+    public static function findByUsername(string $externalId): ?self
     {
-        return self::where('username', $username)
-            ->first();
-    }
-
-    /**
-     * @param string $username
-     * @return $this
-     */
-    public static function findByUserNameOrFail(string $username): self
-    {
-        $user = self::findByUsername($username);
-
-        if (empty($user)) {
-            throw new \InvalidArgumentException("Username not found");
-        }
-
+        /** @var User $user */
+        $user = self::query()->where('external_id', $externalId)->first();
         return $user;
     }
 
-    public function certifications()
-    {
-        return $this->hasMany(UserCertification::class);
-    }
-
-    public function experiences()
-    {
-        return $this->hasMany(UserExperience::class);
-    }
-
-    public function degrees()
-    {
-        return $this->hasMany(UserDegree::class);
-    }
 
     public function projects()
     {
         return $this->hasMany(Project::class);
     }
-
-    public function portfolioDetails(): HasOne
-    {
-        return $this->hasOne(UserPortfolioDetail::class);
-    }
-
 
     /**
      * @return string
@@ -243,8 +211,8 @@ class User extends Authenticatable // implements MustVerifyEmail
 
         $portfolioUrl = '';
 
-        if (!empty($this->username)) {
-            $portfolioUrl = get_portfolio_url($this->username);
+        if (!empty($this->external_id)) {
+            $portfolioUrl = get_portfolio_url($this->external_id);
         }
 
         return $portfolioUrl;
