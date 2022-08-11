@@ -9,6 +9,8 @@ WORKDIR /var/www
 # Add docker php ext repo
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
+
+
 #Install dependecies
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -28,8 +30,15 @@ RUN apt-get update && apt-get install -y \
     lua-zlib-dev \
     libmemcached-dev \
     nginx \
-    supervisor
+    supervisor \
+    gnupg2 \
+    wget \
+    lsb-release
 
+# Add postgres 14 repo
+RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+RUN apt -y update && apt -y install postgresql
 
 #Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
