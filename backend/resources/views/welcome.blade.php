@@ -37,7 +37,7 @@
                         </a>
                     </li>
 
-                    @if($loggedInUser)
+                    @auth
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                                href="{{route('dashboard')}}">
@@ -50,7 +50,7 @@
                                 SIGN IN / JOIN
                             </a>
                         </li>
-                    @endif
+                    @endauth
 
                 </ul>
             </div>

@@ -7,26 +7,17 @@ use App\Modules\Projects\Models\Project;
 use App\Modules\Users\Http\Controllers\PortfolioController;
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PublicController extends Controller
 {
-    public function index()
+    public function index(): View
     {
-
         $projects = Project::getGlobalProjects();
-        $coreDevs = User::query()
-            ->whereIn('id', [
-                2,
-                3,
-                4,
-                11,
-            ])
-            ->get();
 
         return view('welcome', [
             'projects' => $projects,
-            'coreDevs' => $coreDevs,
+            'coreDevs' => collect(),
         ]);
     }
 

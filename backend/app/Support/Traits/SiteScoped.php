@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait SiteScoped {
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
         self::addGlobalScope(function (Builder $builder) {
