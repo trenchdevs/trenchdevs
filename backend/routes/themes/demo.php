@@ -1,3 +1,3 @@
 <?php
 
-require_once  './trenchdevs.php';
+require_once  base_path("routes/themes/trenchdevs.php");
