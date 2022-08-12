@@ -26,7 +26,7 @@ class PublicBlogsController extends Controller
             });
 
         return $this->siteViewOrDefault('public.blogs.index', [
-            'tag'   => $tagId ? Tag::query()->find($tagId) : Tag::query()->newModelInstance(),
+            'tag'   => Tag::query()->find($tagId),
             'blogs' => $blogs->simplePaginate()
         ]);
     }
