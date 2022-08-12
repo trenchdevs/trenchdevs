@@ -92,7 +92,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapWebApiV1Routes();
+//        $this->mapWebApiV1Routes();
 
         if (!app()->runningInConsole()) {
             // we don't need site specific routes on console
@@ -101,8 +101,9 @@ class RouteServiceProvider extends ServiceProvider
             $this->mapSiteRoutes();
         }
 
-        $this->mapApiRoutes();
+//        $this->mapApiRoutes();
 
+        // shared routes
         $this->mapWebRoutes();
 
         // $this->mapWebApiV1Routes();
@@ -168,7 +169,7 @@ class RouteServiceProvider extends ServiceProvider
                 throw new Exception("$siteRoutesPath not found");
             }
 
-            Route::middleware('web')->namespace($this->namespace)
+            Route::namespace($this->namespace)
                 ->domain($site->domain)
                 ->group(base_path($siteRoutesPath));
 

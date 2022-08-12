@@ -15,7 +15,7 @@ use Inertia\Inertia;
 /**
  * Admin: rendered via inertia
  */
-Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function () {
+Route::middleware(['web', 'auth:web', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', fn() => Inertia::render('Themes/TrenchDevsAdmin/Pages/Dashboard'))->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::get('account/change-password', [UsersController::class, 'showChangePasswordForm'])->name('dashboard.users.showChangePasswordForm');
@@ -47,18 +47,21 @@ Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function
 });
 
 
-require __DIR__ . '/../auth.php';
+Route::middleware('web')->group(function(){
 
+    // auth routes
+    require __DIR__ . '/../auth.php';
 
-/**
- * Public Rendered Pages (Blade)
- */
-Route::get('blogs', [PublicBlogsController::class, 'index'])->name('public.blogs');
+    /**
+     * Public Rendered Pages (Blade)
+     */
+    Route::get('blogs', [PublicBlogsController::class, 'index'])->name('public.blogs');
 
-// start - public documents
-Route::view('documents/privacy', 'documents.privacy')->name('documents.privacy');
-Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
-// end - public documents
+    // start - public documents
+    Route::view('documents/privacy', 'documents.privacy')->name('documents.privacy');
+    Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
+    // end - public documents
 
-Route::get('/', [PublicController::class, 'index'])->name('public.home');
-Route::get('{slug}', [PublicController::class, 'show'])->name('public.show');
+    Route::get('/', [PublicController::class, 'index'])->name('public.home');
+    Route::get('{slug}', [PublicController::class, 'show'])->name('public.show');
+});

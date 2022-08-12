@@ -103,7 +103,7 @@ class Blog extends Model
             ->where('slug', $slug)
             ->where('status', self::DB_STATUS_PUBLISHED)
             ->where('moderation_status', self::DB_MODERATION_STATUS_APPROVED)
-            ->where('publication_date', '<=', mysql_now())
+            ->where('publication_date', '<=', date_now())
             ->whereNotNull('publication_date')
             ->first();
     }

@@ -22,7 +22,6 @@
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^3.0",
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "^2.5",
         "spatie/laravel-markdown": "^2.2",

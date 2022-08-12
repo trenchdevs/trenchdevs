@@ -55,7 +55,7 @@ class QueueNewsSiteUrlCommand extends Command
 
             $newsRepository->queue($message, [
                 'url' => $url,
-                'now' => mysql_now(),
+                'now' => date_now(),
                 'source' => 'trenchdevs::command:news:queue'
             ]);
 

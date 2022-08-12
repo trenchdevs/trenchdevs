@@ -49,7 +49,7 @@ class BlogsRepository
             ->where('blogs.status', '=', Blog::DB_STATUS_PUBLISHED)
             ->where('blogs.site_id', '=', site()->id)
             ->where('blogs.moderation_status', '=', Blog::DB_MODERATION_STATUS_APPROVED)
-            ->where('blogs.publication_date', '<=', mysql_now())
+            ->where('blogs.publication_date', '<=', date_now())
             ->whereNotNull('blogs.publication_date')
             ->orderBy('blogs.created_at', 'DESC')
             ->orderBy('blogs.id', 'DESC');
@@ -180,7 +180,7 @@ class BlogsRepository
                 if ($loggedInUser->isBlogModerator()) {
                     $data['moderation_status'] = Blog::DB_MODERATION_STATUS_APPROVED;
                     $data['moderation_notes'] = "Blog is pre-approved by the system";
-                    $data['moderated_at'] = mysql_now();
+                    $data['moderated_at'] = date_now();
                     $data['moderated_by'] = $loggedInUser->id;
                 }
 

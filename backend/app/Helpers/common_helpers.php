@@ -104,11 +104,11 @@ if (!function_exists('print_json')) {
     }
 }
 
-if (!function_exists('mysql_now')) {
+if (!function_exists('date_now')) {
     /**
      * @return string
      */
-    function mysql_now(): string
+    function date_now(): string
     {
         return date('Y-m-d H:i:s');
     }

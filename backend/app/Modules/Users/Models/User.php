@@ -338,7 +338,7 @@ class User extends Authenticatable // implements MustVerifyEmail
             if ($user->isIdle($inactiveMonths)) {
 
                 $user->is_flagged_for_deactivation = 1;
-                $user->deactivation_notice_sent_at = mysql_now();
+                $user->deactivation_notice_sent_at = date_now();
                 $user->save();
 
                 self::sendDeactivationEmail($user, $noticeDays);

@@ -25,7 +25,7 @@ class CreateBlogsTable extends Migration
             $table->string('primary_image_url', 4000);
             $table->dateTime('publication_date')->nullable()->index();
 
-            $table->enum('moderation_status', ['pending', 'approved', 'rejected'])->default('approved')->index();
+            $table->enum('moderation_status', ['pending', 'approved', 'rejected'])->default('pending')->comment('admin blogs: are pre-approved by default')->index();
             $table->unsignedBigInteger('moderated_by')->nullable();
             $table->dateTime('moderated_at')->nullable();
             $table->text('moderation_notes')->nullable();
