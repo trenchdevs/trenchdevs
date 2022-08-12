@@ -174,7 +174,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path($siteRoutesPath));
 
         } catch (Exception $exception) {
-            if (app()->environment('local')) {
+            if (app()->environment('local', 'testing')) {
                 dd($exception->getMessage());
             }
         }
@@ -187,7 +187,7 @@ class RouteServiceProvider extends ServiceProvider
             /** @var User $user */
             $user = User::query()->withoutGlobalScopes()->findOrFail(21);
             auth('web')->login($user);
-            Site::setSiteInstance($user->site);
+            Site::setInstance($user->site);
         }
     }
 

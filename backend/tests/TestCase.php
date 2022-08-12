@@ -2,12 +2,21 @@
 
 namespace Tests;
 
-use App\Modules\Users\Models\User;
+use App\Modules\Sites\Models\Site;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Tests\Utilities\DataCreator;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
+
+    /**
+     * @param Site $site
+     * @return DataCreator
+     */
+    protected function newDummyDataCreatorInstance(Site $site): DataCreator
+    {
+        return new DataCreator($site);
+    }
 }

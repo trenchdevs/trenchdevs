@@ -69,7 +69,7 @@ class SiteAccessMiddleware
             'user_id'    => $user->id ?? null,
             'url'        => substr($fullUrl, 0, 500),
             'ip'         => $ip,
-            'user_agent' => $userAgent,
+            'user_agent' => $userAgent ?? '',
             'referer'    => substr($request->header('referer'), 0, 250),
         ];
 

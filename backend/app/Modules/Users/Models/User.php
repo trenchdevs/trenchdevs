@@ -9,6 +9,7 @@ use App\Support\Traits\SiteScoped;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -44,6 +45,7 @@ class User extends Authenticatable // implements MustVerifyEmail
     use HasApiTokens;
     use SiteScoped;
     use SoftDeletes;
+    use HasFactory;
 
     const ROLE_SUPER_ADMIN = 'superadmin';
     const ROLE_ADMIN = 'admin';
@@ -51,23 +53,9 @@ class User extends Authenticatable // implements MustVerifyEmail
     const ROLE_CUSTOMER = 'customer';
     const ROLE_CONTRIBUTOR = 'contributor';
 
-    const VALID_ROLES = [
-        self::ROLE_SUPER_ADMIN,
-        self::ROLE_ADMIN,
-        self::ROLE_BUSINESS_OWNER,
-        self::ROLE_CUSTOMER,
-        self::ROLE_CONTRIBUTOR,
-    ];
-
     const ADMIN_ROLES = [
         self::ROLE_SUPER_ADMIN,
         self::ROLE_ADMIN,
-    ];
-
-    const SHOP_ADMIN_ROLES = [
-        self::ROLE_SUPER_ADMIN,
-        self::ROLE_ADMIN,
-        self::ROLE_BUSINESS_OWNER,
     ];
 
     /**
@@ -81,12 +69,9 @@ class User extends Authenticatable // implements MustVerifyEmail
         'email',
         'password',
         'is_active',
-        'account_id',
         'site_id',
         'avatar_url',
         'role',
-        'is_flagged_for_deactivation',
-        'deactivation_notice_sent_at',
     ];
 
     protected $appends = [
@@ -243,11 +228,6 @@ class User extends Authenticatable // implements MustVerifyEmail
     public function isAdmin(): bool
     {
         return in_array($this->role, self::ADMIN_ROLES);
-    }
-
-    public function canManageShop(): bool
-    {
-        return in_array($this->role, self::SHOP_ADMIN_ROLES);
     }
 
     /**

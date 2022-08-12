@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Sites\Enums\SiteIdentifier;
 use App\Modules\Sites\Models\Site;
 use App\Modules\Users\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -60,7 +61,7 @@ class CreateUsersTable extends Migration
     {
         if (app()->environment('local')) {
             User::query()->create([
-                'site_id' => Site::fromIdentifier(Site::DB_IDENTIFIER_TRENCHDEVS)->id,
+                'site_id' => Site::fromIdentifier(SiteIdentifier::TRENCHDEVS)->id,
                 'role' => 'superadmin',
                 'first_name' => 'Admin',
                 'last_name' => 'Trenchdevs',
@@ -69,7 +70,7 @@ class CreateUsersTable extends Migration
             ]);
 
             User::query()->create([
-                'site_id' => Site::fromIdentifier(Site::DB_IDENTIFIER_DEMO)->id,
+                'site_id' => Site::fromIdentifier(SiteIdentifier::DEMO)->id,
                 'role' => 'superadmin',
                 'first_name' => 'Admin',
                 'last_name' => 'Trenchdevs',

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Sites\Models;
 
+use App\Modules\Sites\Enums\SiteIdentifier;
 use App\Modules\Sites\Models\Sites\SiteConfig;
 use App\Modules\Sites\Models\Sites\SiteFactory;
 use App\Providers\RouteServiceProvider;
@@ -34,6 +35,9 @@ class Site extends Model
 
     protected $table = 'sites';
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'domain',
         'allow_wildcard_for_domain',
@@ -43,32 +47,18 @@ class Site extends Model
         'inertia_theme',
     ];
 
-    const DB_IDENTIFIER_TRENCHDEVS = 'trenchdevs';
-    const DB_IDENTIFIER_DEMO = 'demo';
-    const DB_IDENTIFIER_CLOUDCRAFT = 'cloudcraft';
-
-
     /**
-     * @param string $identifier
+     * @param SiteIdentifier $identifier
      * @return Site|null
      */
-    public static function fromIdentifier(string $identifier): ?static
+    public static function fromIdentifier(SiteIdentifier $identifier): ?static
     {
         /** @var Site $site */
-        $site = self::query()->where('identifier', '=', $identifier)->first();
+        $site = self::query()->where('identifier', '=', $identifier->value)->first();
         return $site;
     }
 
-    /**
-     * Alias to getInstance
-     * @return static|null
-     */
-    public static function S()
-    {
-        return self::getInstance();
-    }
-
-    public static function setSiteInstance(Site $site)
+    public static function setInstance(Site $site)
     {
         self::$singleton = $site;
     }
@@ -93,7 +83,7 @@ class Site extends Model
 
         } catch (Throwable $throwable) {
             // ignore on production - 404
-            if (app()->environment('local') && !app()->runningInConsole()) {
+            if (app()->environment('local', 'testing') && !app()->runningInConsole()) {
                 dd($throwable->getMessage());
             }
         }
@@ -205,6 +195,16 @@ class Site extends Model
         }
 
         return $whitelistedIps;
+    }
+
+    public function http(string $path): string
+    {
+        return "http://$this->domain$path";
+    }
+
+    public function https(string $path): string
+    {
+        return "https://$this->domain$path";
     }
 
 }

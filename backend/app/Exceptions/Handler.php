@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
     public function report(Throwable $exception)
     {
 
-        if (env('APP_ENV') !== 'local') {
+        if (app()->environment('staging', 'production')) {
             if ($exception instanceof ErrorException) {
                 // $this->sendEmailToSupport($exception);
                 Log::error($exception->getMessage());

@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Sites\Enums\SiteIdentifier;
 use App\Modules\Sites\Models\Site;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -45,11 +46,11 @@ class CreateSitesTable extends Migration
 
     private function createDefaultSites()
     {
-        if (app()->environment('local')) {
+        if (app()->environment('local', 'testing')) {
             Site::query()->create([
                 'domain' => 'trenchdevs.localhost',
                 'company_name' => 'TrenchDevsAdmin',
-                'identifier' => 'trenchdevs',
+                'identifier' => SiteIdentifier::TRENCHDEVS,
                 'theme' => 'trenchdevs',
                 'inertia_theme' => 'TrenchDevsAdmin',
             ]);
@@ -57,13 +58,13 @@ class CreateSitesTable extends Migration
             Site::query()->create([
                 'domain' => 'demo.localhost',
                 'company_name' => 'Demo',
-                'identifier' => 'demo',
+                'identifier' => SiteIdentifier::DEMO,
                 'theme' => 'demo',
                 'inertia_theme' => 'TrenchDevsAdmin',
             ]);
 
             Site::query()->updateOrCreate(
-                ['identifier' => Site::DB_IDENTIFIER_CLOUDCRAFT],
+                ['identifier' => SiteIdentifier::CLOUDCRAFT],
                 [
                     'domain' => 'cloudcraft.trenchapps.localhost',
                     'allow_wildcard_for_domain' => 0,
