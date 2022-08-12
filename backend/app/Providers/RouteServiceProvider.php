@@ -92,21 +92,22 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-//        $this->mapWebApiV1Routes();
 
-        if (!app()->runningInConsole()) {
+        // Site Routes V1
+        /*if (!app()->runningInConsole()) {
             // we don't need site specific routes on console
             // e.g. when doing php artisan route:list
             // site instance is not available
             $this->mapSiteRoutes();
-        }
+        }*/
 
-//        $this->mapApiRoutes();
+        // Site Routes V2
+        $this->mapSiteRoutesV2();
+
+        $this->mapApiRoutes();
 
         // shared routes
         $this->mapWebRoutes();
-
-        // $this->mapWebApiV1Routes();
 
     }
 
@@ -140,21 +141,6 @@ class RouteServiceProvider extends ServiceProvider
     }
 
 
-    protected function mapWebApiV1Routes()
-    {
-
-        $this->__inject_local_credentials();
-
-        if (!empty($site = Site::getInstance()) && $site->theme == 'sjp') {
-
-            Route::middleware(['web', 'webapi'])
-                ->namespace($this->namespace)
-                ->prefix('webapi')
-                ->group(base_path('routes/webapi.php'));
-        }
-
-    }
-
     private function mapSiteRoutes()
     {
         try {
@@ -180,14 +166,28 @@ class RouteServiceProvider extends ServiceProvider
         }
     }
 
-    private function __inject_local_credentials()
+    private function mapSiteRoutesV2()
     {
-        // Ensure we only do this on the react app
-        if (app()->environment('local') && request()->server('HTTP_ORIGIN') === 'http://localhost:3000') {
-            /** @var User $user */
-            $user = User::query()->withoutGlobalScopes()->findOrFail(21);
-            auth('web')->login($user);
-            Site::setInstance($user->site);
+        try {
+
+            /** @var Site[] $sites */
+            $sites = Site::all();
+
+            foreach ($sites as $site) {
+
+                $siteRoutesPath = "routes/themes/$site->theme.php";
+
+                if (file_exists(base_path($siteRoutesPath))) {
+                    Route::namespace($this->namespace)
+                        ->domain($site->domain)
+                        ->group(base_path($siteRoutesPath));
+                }
+            }
+
+        } catch (Exception $exception) {
+            if (app()->environment('local', 'testing')) {
+                throw $exception;
+            }
         }
     }
 

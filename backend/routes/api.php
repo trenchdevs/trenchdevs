@@ -44,33 +44,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 });
 
-
-Route::group(['prefix' => 'shop/products', 'middleware' => 'auth:sanctum'], function () {
-    Route::post('upsert', [ProductsController::class, 'upsert']);
-    Route::get('{productId}', [ProductsController::class, 'one']);
-    Route::get('/', [ProductsController::class, 'all']);
-});
-
-Route::group(['prefix' => 'stories', 'middleware' => 'auth:sanctum'], function () {
-    Route::post('upsert', [Stories::class, 'upsert']);
-    Route::get('metrics', [Stories::class, 'metrics']);
-    Route::get('{storyId}', [Stories::class, 'one']);
-    Route::get('/', [Stories::class, 'all']);
-
-    Route::post('add-products', [ProductStoriesController::class, 'addProductsToStories']);
-});
-
-Route::group(['prefix' => 'product-reactions'], function () {
-    Route::post('react', [ProductReactionsController::class, 'react']);
-});
-
-Route::group(['prefix' => 'story-responses'], function () {
-    Route::get('/', [StoryResponsesController::class, 'all']);
-    Route::post('add', [StoryResponsesController::class, 'store']);
-});
-
-Route::get('stories/s/{slug}', [Stories::class, 'slug']);
-
 // ---------- End Authentication Endpoints ---------- //
 
 Route::post('activities', [ActivitiesController::class, 'store'])->middleware(['ip-restricted']);
