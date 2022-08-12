@@ -38,7 +38,7 @@ class BlackListedEmail extends Model
      * @return bool
      * @throws Throwable
      */
-    public static function addToBlackListedEmails(string $email, string $reason)
+    public static function addToBlackListedEmails(string $email, string $reason): bool
     {
        if (!self::isBlackListed($email)) {
            $blacklisted = new self;

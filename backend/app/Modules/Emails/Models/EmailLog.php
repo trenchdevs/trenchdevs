@@ -2,7 +2,6 @@
 
 namespace App\Modules\Emails\Models;
 
-use App\Modules\Emails\Models\BlackListedEmail;
 use App\Modules\Emails\Mail\GenericMailer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
@@ -113,7 +112,7 @@ class EmailLog extends Model
      */
     public function send()
     {
-        return self::sendEntry($this);
+        self::sendEntry($this);
     }
 
     /**

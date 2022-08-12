@@ -73,8 +73,17 @@ class CreateUsersTable extends Migration
                 'site_id' => Site::fromIdentifier(SiteIdentifier::DEMO)->id,
                 'role' => 'superadmin',
                 'first_name' => 'Admin',
-                'last_name' => 'Trenchdevs',
+                'last_name' => 'TrenchDevs',
                 'email' => 'demo-admin@localhost',
+                'password' => Hash::make('p2ssw0rd'),
+            ]);
+
+            User::query()->create([
+                'site_id' => Site::fromIdentifier(SiteIdentifier::CLOUDCRAFT)->id,
+                'role' => 'superadmin',
+                'first_name' => 'Admin',
+                'last_name' => 'CloudCraft',
+                'email' => 'cloudcraft-admin@localhost',
                 'password' => Hash::make('p2ssw0rd'),
             ]);
         }

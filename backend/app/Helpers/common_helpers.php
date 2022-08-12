@@ -42,7 +42,7 @@ if (!function_exists('get_site_url')) {
     /**
      * @return mixed|string
      */
-    function get_site_url()
+    function get_site_url(): mixed
     {
         return add_scheme_to_url(get_base_url());
     }

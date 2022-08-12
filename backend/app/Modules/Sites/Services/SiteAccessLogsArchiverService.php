@@ -5,12 +5,16 @@ namespace App\Modules\Sites\Services;
 use App\Modules\Sites\Models\SiteAccessLog;
 use ErrorException;
 use Exception;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
 
 class SiteAccessLogsArchiverService
 {
 
-    private $client;
+    /**
+     * @var Filesystem
+     */
+    private Filesystem $client;
 
     const  STORAGE_NAME = 's3-archives'; // config/filesystems
 
@@ -25,7 +29,7 @@ class SiteAccessLogsArchiverService
      * @throws ErrorException
      * @throws Exception
      */
-    public function process(int $chunkSize = 1000)
+    public function process(int $chunkSize = 1000): void
     {
 
         if ($chunkSize > 1000) { // hard limit to 1k

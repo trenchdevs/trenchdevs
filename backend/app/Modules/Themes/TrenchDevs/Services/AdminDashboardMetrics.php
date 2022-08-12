@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Modules\TrenchDevs\Repositories;
+namespace App\Modules\Themes\TrenchDevs\Services;
 
 
 use App\Modules\Sites\Models\SiteAccessLog;
 use App\Modules\Users\Models\User;
 use App\Modules\Users\Models\UserLogin;
 use Illuminate\Support\Facades\Auth;
+use function App\Modules\Themes\TrenchDevs\Repositories\get_site_url;
 
 class AdminDashboardMetrics
 {

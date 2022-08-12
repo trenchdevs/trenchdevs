@@ -92,8 +92,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-//        $this->mapWebApiV1Routes();
-
         if (!app()->runningInConsole()) {
             // we don't need site specific routes on console
             // e.g. when doing php artisan route:list
@@ -101,13 +99,11 @@ class RouteServiceProvider extends ServiceProvider
             $this->mapSiteRoutes();
         }
 
-//        $this->mapApiRoutes();
+        // shared api routes
+        $this->mapApiRoutes();
 
-        // shared routes
+        // shared web routes
         $this->mapWebRoutes();
-
-        // $this->mapWebApiV1Routes();
-
     }
 
     /**

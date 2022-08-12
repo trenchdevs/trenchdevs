@@ -9,7 +9,8 @@ class SiteJson extends Model
 {
     use SiteScoped;
 
-    const KEY_SAMLIDP = 'samlidp';
+    const KEY_SAML_IDP = 'samlidp';
+
     protected $table = 'site_jsons';
 
     protected $fillable = [

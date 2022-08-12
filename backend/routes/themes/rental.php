@@ -1,10 +1,9 @@
 <?php
 
 use App\Modules\Announcements\Http\Controllers\AnnouncementsController;
-use App\Modules\Blogs\Http\Controllers\BlogsController;
 use App\Modules\Photos\Http\Controllers\AdminPhotoAlbumsController;
 use App\Modules\Photos\Http\Controllers\AdminPhotosController;
-use App\Modules\TrenchDevs\Http\Controllers\HomeController;
+use App\Modules\Themes\TrenchDevs\Http\Controllers\HomeController;
 use App\Modules\Users\Http\Controllers\PortfolioController;
 use App\Modules\Users\Http\Controllers\UsersController;
 use App\Public\Controllers\Blogs\PublicBlogsController;

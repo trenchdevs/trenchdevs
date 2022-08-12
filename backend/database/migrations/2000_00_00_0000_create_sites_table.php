@@ -66,10 +66,10 @@ class CreateSitesTable extends Migration
             Site::query()->updateOrCreate(
                 ['identifier' => SiteIdentifier::CLOUDCRAFT],
                 [
-                    'domain' => 'cloudcraft.trenchapps.localhost',
+                    'domain' => 'cloudcraft.localhost',
                     'allow_wildcard_for_domain' => 0,
                     'company_name' => 'CloudCraft',
-                    'theme' => 'cloudcraft',
+                    'theme' => 'trenchdevs',
                     'inertia_theme' => 'TrenchDevsAdmin',
                 ]
             );

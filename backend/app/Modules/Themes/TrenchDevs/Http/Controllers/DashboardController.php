@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Modules\TrenchDevs\Http\Controllers;
+namespace App\Modules\Themes\TrenchDevs\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Modules\Blogs\Models\Blog;
 use App\Modules\Projects\Models\Project;
 use App\Modules\Users\Http\Controllers\PortfolioController;
-use App\Http\Controllers\Controller;
 use App\Modules\Users\Models\User;
 use Illuminate\View\View;
 
-class PublicController extends Controller
+class DashboardController extends Controller
 {
     public function index(): View
     {

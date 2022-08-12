@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Sites\Models\Sites;
+namespace App\Modules\Sites\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

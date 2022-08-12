@@ -2,7 +2,7 @@
 
 namespace App\Modules\Sso\Http\Controllers;
 
-use App\Modules\Sites\Models\Sites\SiteConfig;
+use App\Modules\Sites\Models\SiteConfig;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;

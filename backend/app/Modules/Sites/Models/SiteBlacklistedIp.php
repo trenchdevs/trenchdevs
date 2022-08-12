@@ -12,10 +12,8 @@ class SiteBlacklistedIp extends Model
      * @param string $ip
      * @return bool
      */
-    public static function isBlackListed(string $ip)
+    public static function isBlackListed(string $ip): bool
     {
-        return self::query()
-                ->where('ip', $ip)
-                ->count() > 0;
+        return self::query()->where('ip', $ip)->count() > 0;
     }
 }

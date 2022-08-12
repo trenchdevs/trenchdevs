@@ -3,11 +3,9 @@
 namespace App\Modules\Sites\Models;
 
 use App\Modules\Sites\Enums\SiteIdentifier;
-use App\Modules\Sites\Models\Sites\SiteConfig;
 use App\Modules\Sites\Models\Sites\SiteFactory;
 use App\Providers\RouteServiceProvider;
 use ArrayAccess;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

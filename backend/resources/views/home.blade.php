@@ -9,7 +9,7 @@
 @section('content')
 
     @php
-        /** @var \App\Modules\TrenchDevs\Repositories\AdminDashboardMetrics $dashboard_metrics */
+        /** @var \App\Modules\Themes\TrenchDevs\Services\AdminDashboardMetrics $dashboard_metrics */
     @endphp
 
 
@@ -56,7 +56,7 @@
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
                 <div
-                        class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-purple h-100">
+                    class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-purple h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
@@ -65,7 +65,7 @@
                                     {{$dashboard_metrics->getUserLoginsPastMonth()}}
                                 </div>
                                 <div
-                                        class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                                    class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
                                     <i class="mr-1" data-feather="calendar"></i>Past month
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                     {{$dashboard_metrics->getPageVisitors() }} visits
                                 </div>
                                 <div
-                                        class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                                    class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
                                     <i class="mr-1" data-feather="calendar"></i>Past Month
                                 </div>
                             </div>
@@ -95,14 +95,14 @@
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
                 <div
-                        class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-yellow h-100">
+                    class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-yellow h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
                                 <div class="small font-weight-bold text-yellow mb-1">My Portfolio Visits</div>
                                 <div class="h5">{{$dashboard_metrics->getMyPortfolioVisits()}} visits</div>
                                 <div
-                                        class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                                    class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
                                     <i class="mr-1" data-feather="calendar"></i> Overall
                                 </div>
                             </div>

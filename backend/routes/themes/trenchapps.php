@@ -1,10 +1,3 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-Route::get('/', function(){
-   return response()->json([
-       '@trenchapps' => true,
-       'success' => true,
-   ]);
-});
+require_once  base_path("routes/themes/trenchdevs.php");

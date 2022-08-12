@@ -16,14 +16,13 @@ class SiteFactory
         'https://marketale.trenchapps.com',
     ];
 
-    private static $siteCache;
+    private static array $siteCache;
 
     /**
-     * @return AbstractSite|Site|RentalSite|null
+     * @return AbstractSite|Site|null
      */
-    public static function getInstanceOrNull(): null|AbstractSite|Site|RentalSite
+    public static function getInstanceOrNull(): null|AbstractSite|Site
     {
-
         $domain         = get_domain();
 
         if (isset(self::$siteCache[$domain])) {

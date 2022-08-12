@@ -1,13 +1,10 @@
 <?php
 
+use App\Modules\Activities\Http\Controllers\ActivitiesController;
 use Illuminate\Support\Facades\Route;
 
-// Authentication
-Auth::routes();
+require_once  base_path("routes/themes/trenchdevs.php");
 
-Route::middleware(['auth:web'])->group(function () {
-    Route::view('home', 'themes.cloudcraft.home')->name('cloudcraft.home');
-    Route::view('members', 'themes.cloudcraft.members')->name('cloudcraft.members');
-    Route::view('activities', 'themes.cloudcraft.activity-list')->name('cloudcraft.activity-list');
+Route::prefix('api')->middleware('api')->group(function(){
+    Route::post('activities', [ActivitiesController::class, 'store'])->middleware(['ip-restricted']);
 });
-Route::redirect('/', 'login');

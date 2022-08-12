@@ -3,8 +3,8 @@
 namespace App\Modules\Sso\Console\Commands;
 
 use App\Modules\Sites\Models\Site;
+use App\Modules\Sites\Models\SiteConfig;
 use App\Modules\Sites\Models\SiteJson;
-use App\Modules\Sites\Models\Sites\SiteConfig;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -50,7 +50,7 @@ class SamlIdpCreateServiceProvider extends Command
         $samlIdpJson = json_encode($samlidp, JSON_PRETTY_PRINT);
 
         DB::table('site_jsons')->updateOrInsert(
-            ['key' => SiteJson::KEY_SAMLIDP, 'site_id' => $siteId],
+            ['key' => SiteJson::KEY_SAML_IDP, 'site_id' => $siteId],
             ['value' => $samlIdpJson],
         );
 
