@@ -36,8 +36,8 @@ class UserPortfolioDetail extends Model
     const VALID_VIEWS = [
         // view => label
         'portfolio.show' => 'Default',
-        'portfolio.custom.basic' => 'Basic (StartBootstrap Template)',
-        'portfolio.custom.console' => 'Console (Text Theme)',
+        'themes.trenchdevs.pages.portfolio.basic' => 'Basic (StartBootstrap Template)',
+        'themes.trenchdevs.pages.portfolio.console' => 'Console (Text Theme)',
     ];
 
     public static function findOrEmptyByUser(int $userId): self

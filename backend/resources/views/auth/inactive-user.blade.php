@@ -1,4 +1,4 @@
-@extends('layouts.sbadmin-base')
+@extends('themes.trenchdevs.layouts.sbadmin-base')
 
 @section('body')
     <div class="error-page">

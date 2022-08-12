@@ -58,8 +58,8 @@ Route::middleware('web')->group(function(){
     Route::get('blogs', [PublicBlogsController::class, 'index'])->name('public.blogs');
 
     // start - public documents
-    Route::view('documents/privacy', 'documents.privacy')->name('documents.privacy');
-    Route::view('documents/tnc', 'documents.tnc')->name('documents.tnc');
+    Route::view('documents/privacy', 'themes.trenchdevs.pages.documents.privacy')->name('documents.privacy');
+    Route::view('documents/tnc', 'themes.trenchdevs.pages.documents.tnc')->name('documents.tnc');
     // end - public documents
 
     Route::get('/', [PublicController::class, 'index'])->name('public.home');

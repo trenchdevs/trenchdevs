@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('themes.trenchdevs.layouts.home')
 
 @section('content')
 <div class="container" style="height: 65vh;">

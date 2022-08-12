@@ -17,7 +17,7 @@ class EmailPreferencesController extends Controller
 
     public function showUnsubscribeForm()
     {
-        return view('notifications.emails.unsubscribe');
+        return view('themes.trenchdevs.emails.unsubscribe');
     }
 
     /**

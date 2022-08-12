@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('themes.trenchdevs.layouts.home')
 
 @section('content')
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">

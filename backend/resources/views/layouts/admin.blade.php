@@ -1,4 +1,4 @@
-@extends('layouts.sbadmin-base')
+@extends('themes.trenchdevs.layouts.sbadmin-base')
 
 @section('body')
     <nav class="topnav navbar navbar-expand shadow navbar-light bg-white" id="sidenavAccordion">

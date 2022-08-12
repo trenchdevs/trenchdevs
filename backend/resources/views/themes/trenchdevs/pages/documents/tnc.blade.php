@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('themes.trenchdevs.layouts.home')
 
 @section('content')
     <div class="container mt-5 pt-5 pb-5">

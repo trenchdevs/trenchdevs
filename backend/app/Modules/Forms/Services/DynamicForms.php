@@ -48,13 +48,13 @@ class DynamicForms
                         'type' => 'select',
                         'dropdown_options' => [
                             ['value' => '', 'label' => 'Select Template'],
-                            ['value' => 'portfolio.custom.basic', 'label' => 'Basic (StartBootstrap Template)'],
-                            ['value' => 'portfolio.custom.console', 'label' => 'Console (Text Theme)'],
+                            ['value' => 'themes.trenchdevs.pages.portfolio.basic', 'label' => 'Basic (StartBootstrap Template)'],
+                            ['value' => 'themes.trenchdevs.pages.portfolio.console', 'label' => 'Console (Text Theme)'],
                         ],
                         'className' => 'form-control',
                         'wrapperClassName' => 'col-md-6',
                         'name' => 'template',
-                        'value' => 'portfolio.custom.basic',
+                        'value' => 'themes.trenchdevs.pages.portfolio.basic',
                     ],
 
                     'Primary Phone Number' => ['type' => 'input', 'className' => 'form-control', 'wrapperClassName' => 'col-md-6', 'name' => 'primary_phone_number', 'placeholder' => '123-123-..'],
