@@ -10,7 +10,7 @@
     "i2": "mkdir -p docker/volumes/postgres",
     "i3": "docker-compose build && docker-compose up -d",
     "i4": "npm run be:composer:install && npm run be:migrate",
-    "i5": "cd backend && npm install && npm run build && cd ..",
+    "i5": "cd backend && npm install && npm run build && cd .. && npm run permissions:fix",
     "--Backend--": "----------------------BACK END COMMANDS----------------------------",
     "be:dev": "docker-compose up -d && npm run --prefix backend",
     "fe:build": "npm run build --prefix backend",
