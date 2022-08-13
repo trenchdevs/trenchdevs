@@ -33,7 +33,7 @@ services:
       - trenchdevs-docker-network
 
   mail:
-    container_name: ${COMPOSE_PROJECT_NAME:-project-id}-mail
+    container_name: ${COMPOSE_PROJECT_NAME:-trenchdevs}-mail
     image: mailhog/mailhog:v1.0.1
     ports:
       - ${MAIL_HOST_SMTP_PORT:-1026}:1025
