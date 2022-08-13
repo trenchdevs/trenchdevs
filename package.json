@@ -5,13 +5,20 @@
   "main": "index.js",
   "scripts": {
     "--init--": "----------------------------------------------------------------------",
-    "init:env": "cp -n .env.docker.example .env && cp -n backend/.env.example backend/.env",
+    "be:init": "npm run i1 && npm run i2 && npm run i3 && npm run i4 && npm run i5",
+    "i1": "cp -n .env.docker.example .env && cp -n backend/.env.example backend/.env",
+    "i2": "mkdir -p docker/volumes/postgres",
+    "i3": "docker-compose build && docker-compose up -d",
+    "i4": "npm run be:composer:install && npm run be:migrate",
+    "i5": "cd backend && npm install && npm run build && cd ..",
     "--Backend--": "----------------------BACK END COMMANDS----------------------------",
     "be:dev": "docker-compose up -d && npm run --prefix backend",
     "fe:build": "npm run build --prefix backend",
     "be:up": "docker-compose up -d",
     "be:up:lite": "docker-compose up app -d",
     "be:down": "docker-compose down",
+    "be:composer:install": "docker exec -it --user www:www-data trenchdevs-backend composer install",
+    "be:migrate": "docker exec -it --user www:www-data trenchdevs-backend php artisan migrate",
     "be:ssh": "docker exec -it --user www:www-data trenchdevs-backend bash",
     "be:ssh:root": "docker exec -it trenchdevs-backend bash",
     "permissions:fix": "docker exec -i trenchdevs-backend bash -c 'chown -R www:www-data /var/www/storage /var/www/resources && chmod ug+w -R /var/www/storage /var/www/resources'"
@@ -26,5 +33,8 @@
   "bugs": {
     "url": "https://github.com/trenchdevs/trenchdevs/issues"
   },
-  "homepage": "https://github.com/trenchdevs/trenchdevs#readme"
+  "homepage": "https://github.com/trenchdevs/trenchdevs#readme",
+  "dependencies": {
+    "backend": "^0.0.0"
+  }
 }

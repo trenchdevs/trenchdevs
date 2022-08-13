@@ -24,9 +24,3 @@ docker/volumes/postgres
 
 .DS_Store
 public/.DS_Store
-
-# historicaly these folders are on the root of the project
-# bootstrap
-#storage
-
-admin-frontend
