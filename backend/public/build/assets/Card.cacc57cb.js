@@ -1,1 +1,0 @@
-import{a as s,j as a}from"./app.fb91ff64.js";function e({header:r=null,...d}){return s("div",{className:"card",children:[a("div",{className:"card-header",children:r}),a("div",{className:"card-body",children:d.children})]})}export{e as C};
