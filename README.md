@@ -17,10 +17,9 @@ post.
 ### Development Setup
 
 1. Clone the repo: `git clone https://github.com/trenchdevs/trenchdevs.git`
-2. `cd /path/to/trenchdevs` 
+2. `cd /path/to/trenchdevs`
 3. Initialize Everything: `npm run be:init`
-4. Navigate to trenchdevs.localhost and you should see the home page
-
+4. Navigate to `trenchdevs.localhost:22071` and you should see the default trenchdevs site
 
 ## Code of Conduct
 
