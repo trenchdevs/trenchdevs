@@ -100,7 +100,7 @@ class BlogsController extends AuthWebController
         $blog = $this->blogsRepo->storeBlog($user, $request->all());
 
         Session::flash('message', 'Successfully ' . ($editMode ? 'updated' : 'created') . ' the blog entry "' . $blog->title . '".');
-        return redirect(route('dashboard.blogs'));
+        return redirect(site_route('dashboard.blogs'));
 
     }
 

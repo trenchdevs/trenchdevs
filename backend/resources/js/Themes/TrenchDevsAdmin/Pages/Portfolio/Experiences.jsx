@@ -1,4 +1,4 @@
-import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
+import TrenchDevsAdminLayout from "@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout";
 import PortfolioStepper from "@/Themes/TrenchDevsAdmin/Components/Portfolio/PortfolioStepper";
 import {useForm, usePage} from "@inertiajs/inertia-react";
 import DynamicListForm from "@/Themes/TrenchDevsAdmin/Components/Forms/DynamicListForm";

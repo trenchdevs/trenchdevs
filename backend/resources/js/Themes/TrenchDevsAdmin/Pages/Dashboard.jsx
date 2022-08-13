@@ -1,5 +1,5 @@
 import React from 'react';
-import TrenchDevsAdminLayout from '@/Layouts/Themes/TrenchDevsAdminLayout';
+import TrenchDevsAdminLayout from '@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout';
 
 export default function Dashboard(props) {
 

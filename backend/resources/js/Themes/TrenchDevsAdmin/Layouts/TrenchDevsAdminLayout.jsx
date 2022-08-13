@@ -94,7 +94,7 @@ export default function TrenchDevsAdminLayout(props) {
                                             </div>
                                             Edit
                                         </Link>
-                                        <a className="nav-link" href=" " target="_blank">
+                                        <a className="nav-link" href="@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout" target="_blank">
                                             <div className="nav-link-icon">
                                                 <Icon.Eye {...ICON_DEFAULT_PROPS}/>
                                             </div>
@@ -147,7 +147,7 @@ export default function TrenchDevsAdminLayout(props) {
                                 <div className={`collapse ${url.startsWith('/dashboard/blogs') && 'show'}`} id="blogs"
                                      data-parent="#accordionSidenav">
                                     <nav className="sidenav-menu-nested nav">
-                                        <a className="nav-link" href="">
+                                        <a className="nav-link" href="@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout">
                                             <div className="nav-link-icon">
                                                 <Icon.BookOpen {...ICON_DEFAULT_PROPS}/>
                                             </div>
@@ -166,7 +166,7 @@ export default function TrenchDevsAdminLayout(props) {
                                             </div>
                                             All Blogs
                                         </Link>
-                                        <a className="nav-link" href="">
+                                        <a className="nav-link" href="@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout">
                                             <div className="nav-link-icon">
                                                 <Icon.Feather{...ICON_DEFAULT_PROPS}/>
                                             </div>
@@ -391,9 +391,9 @@ export default function TrenchDevsAdminLayout(props) {
                             <div className="row">
                                 <div className="col-md-6 small">Copyright &copy; TrenchDevs</div>
                                 <div className="col-md-6 text-md-right small">
-                                    <a href="" target="_blank">Privacy Policy</a>
+                                    <a href="@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout" target="_blank">Privacy Policy</a>
                                     &middot;
-                                    <a href="" target="_blank">Terms &amp; Conditions</a>
+                                    <a href="@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout" target="_blank">Terms &amp; Conditions</a>
                                 </div>
                             </div>
                         </div>

@@ -15,6 +15,9 @@ class UtilitiesCommand extends Command
     /**
      * The name and signature of the console command.
      *
+     *  php artisan utilities:execute initialize_project_data
+     *  php artisan utilities:execute test_dispatch
+     *
      * @var string
      */
     protected $signature = 'utilities:execute {fn}';
@@ -115,9 +118,8 @@ class UtilitiesCommand extends Command
 
             foreach ($projectsArr as $projectData) {
 
-                Site::setInstance(Site::fromIdentifier(SiteIdentifier::TRENCHDEVS));
                 $projectData['is_personal'] = 0;
-                $projectData['user_id'] = User::query()->find(1)->id;
+                $projectData['user_id'] = 1;
                 $projectData['url'] = $projectData['repository_url'] ?? '';
 
                 $project = new Project();

@@ -40,7 +40,7 @@
         </small>
     </div>
     <div class="container">
-        <a href="{{route('documents.privacy')}}">Privacy Policy</a> &middot; <a href="{{route('documents.tnc')}}">Terms and Conditions</a>
+        <a href="{{site_route('documents.privacy')}}">Privacy Policy</a> &middot; <a href="{{site_route('documents.tnc')}}">Terms and Conditions</a>
     </div>
 </section>
 <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->

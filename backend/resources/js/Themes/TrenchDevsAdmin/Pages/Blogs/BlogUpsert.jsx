@@ -1,4 +1,4 @@
-import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
+import TrenchDevsAdminLayout from "@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout";
 import {Link, useForm, usePage} from "@inertiajs/inertia-react";
 import * as Icon from 'react-feather';
 import slugify from "slugify";

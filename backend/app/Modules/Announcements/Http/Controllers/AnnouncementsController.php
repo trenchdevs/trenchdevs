@@ -102,6 +102,6 @@ class AnnouncementsController extends AuthWebController
             abort('400', $exception->getMessage());
         }
 
-        return redirect(route('dashboard.announcements'));
+        return redirect(site_route('dashboard.announcements'));
     }
 }

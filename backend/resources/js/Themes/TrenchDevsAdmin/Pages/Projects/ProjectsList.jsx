@@ -1,6 +1,6 @@
 import {Link, usePage} from "@inertiajs/inertia-react";
 import InertiaTable from "@/Themes/TrenchDevsAdmin/Components/Tables/InertiaTable";
-import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
+import TrenchDevsAdminLayout from "@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout";
 import * as Icon from "react-feather";
 import Card from "@/Themes/TrenchDevsAdmin/Components/Card";
 

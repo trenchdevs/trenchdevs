@@ -2,7 +2,7 @@
 
 @section('content')
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-        <div class="container"><a class="navbar-brand js-scroll-trigger" href="{{route('public.home')}}">TRENCHDEVS</a>
+        <div class="container"><a class="navbar-brand js-scroll-trigger" href="{{site_route('public.home')}}">TRENCHDEVS</a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                     type="button"
                     data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
@@ -13,26 +13,26 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                           href="{{route('public.home')}}#portfolio">
+                           href="{{site_route('public.home')}}#portfolio">
                             PROJECTS
                         </a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                           href="{{route('public.home')}}#about">
+                           href="{{site_route('public.home')}}#about">
                             ABOUT
                         </a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                           href="{{route('public.home')}}#contact">
+                           href="{{site_route('public.home')}}#contact">
                             CONTACT US
                         </a>
                     </li>
 
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                           href="{{route('public.blogs')}}">
+                           href="{{site_route('public.blogs')}}">
                             BLOG
                         </a>
                     </li>
@@ -40,7 +40,7 @@
                     @auth
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                               href="{{route('dashboard')}}">
+                               href="{{site_route('dashboard')}}">
                                 PORTAL
                             </a>
                         </li>

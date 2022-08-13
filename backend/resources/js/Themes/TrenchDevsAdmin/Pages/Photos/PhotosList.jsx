@@ -1,5 +1,5 @@
 import BasicFileUploader from "@/Themes/TrenchDevsAdmin/Components/Files/BasicFileUploader";
-import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
+import TrenchDevsAdminLayout from "@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout";
 import * as Icon from 'react-feather';
 import InertiaTable from "@/Themes/TrenchDevsAdmin/Components/Tables/InertiaTable";
 import {useForm, usePage} from "@inertiajs/inertia-react";

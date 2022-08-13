@@ -1,4 +1,4 @@
-import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
+import TrenchDevsAdminLayout from "@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout";
 import {Link, useForm} from "@inertiajs/inertia-react";
 import {Inertia} from "@inertiajs/inertia";
 import * as Icon from 'react-feather'

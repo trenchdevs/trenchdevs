@@ -57,8 +57,8 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto mr-lg-5">
                             <li class="nav-item">
-                                @if(route_exists('public.home'))
-                                    <a class="nav-link text-white" target="_blank" href="{{route('public.home')}}">
+                                @if(site_route_has('public.home'))
+                                    <a class="nav-link text-white" target="_blank" href="{{site_route('public.home')}}">
                                         TRENCHDEVS
                                     </a>
                                 @endif
@@ -104,9 +104,9 @@
                 <div class="row align-items-center">
                     <div class="col-md-6 small">Copyright &copy; TrenchDevs {{date('Y') }}</div>
                     <div class="col-md-6 text-md-right small">
-                        <a href="{{route('documents.privacy')}}" target="_blank">Privacy Policy</a>
+                        <a href="{{site_route('documents.privacy')}}" target="_blank">Privacy Policy</a>
                         &middot;
-                        <a href="{{route('documents.tnc')}}" target="_blank">Terms &amp; Conditions</a>
+                        <a href="{{site_route('documents.tnc')}}" target="_blank">Terms &amp; Conditions</a>
                     </div>
                 </div>
             </div>

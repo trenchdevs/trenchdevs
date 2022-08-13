@@ -34,9 +34,9 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
 
             $table->foreign('site_id')->references('id')->on('sites');
-            $table->unique(['site_id', 'email']);
-            $table->unique(['site_id', 'external_id']);
+            $table->unique(['site_id', 'email', 'external_id']);
 
+            $table->index(['site_id', 'email', 'external_id']);
             $table->index(['site_id', 'email']);
             $table->index(['site_id', 'external_id']);
             $table->index('updated_at');

@@ -254,6 +254,31 @@ if (!function_exists('site_id')) {
     }
 }
 
+if (!function_exists('site_route')) {
+    /**
+     * @param string $name
+     * @param mixed $parameters
+     * @param bool $absolute
+     * @return string
+     */
+    function site_route(string $name, mixed $parameters = [], mixed $absolute = true): string
+    {
+        return route(sprintf("%s.%s", site()->identifier, $name), $parameters, $absolute);
+    }
+}
+
+if (!function_exists('site_route_has')) {
+    /**
+     * @param string $name
+     * @return bool
+     */
+    function site_route_has(string $name): bool
+    {
+        return Route::has(sprintf("%s.%s", site()->identifier, $name));
+    }
+}
+
+
 if (!function_exists('user')) {
     /**
      * @return User|null

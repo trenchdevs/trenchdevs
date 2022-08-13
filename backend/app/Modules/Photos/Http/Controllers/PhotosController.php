@@ -64,7 +64,7 @@ class PhotosController extends Controller
         ]);
 
         Session::flash('message', 'Successfully uploaded photo');
-        return redirect(route('dashboard.photos'));
+        return redirect(site_route('dashboard.photos'));
     }
 
     /**
@@ -80,7 +80,7 @@ class PhotosController extends Controller
             (new S3ImageRemoverService(AmazonS3Service::newInstance()))->deleteImagesMarkedForDeletion(10);
         });
 
-        return redirect(route('dashboard.photos'));
+        return redirect(site_route('dashboard.photos'));
     }
 
 }

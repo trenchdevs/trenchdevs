@@ -128,7 +128,7 @@ class UsersController extends Controller
             Session::flash('message', "Successfully created new user " . $user->name());
         }
 
-        return redirect(route('dashboard.users'));
+        return redirect(site_route('dashboard.displayUsers'));
     }
 
     /**
@@ -154,7 +154,7 @@ class UsersController extends Controller
 
         Session::flash('message', "Successfully sent password reset email to user " . $user->name());
 
-        return redirect(route('dashboard.users'));
+        return redirect(site_route('dashboard.displayUsers'));
     }
 
     /**

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import TrenchDevsAdminLayout from '@/Layouts/Themes/TrenchDevsAdminLayout';
+import TrenchDevsAdminLayout from '@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout';
 import { Head } from '@inertiajs/inertia-react';
 
 export default function Dashboard(props) {

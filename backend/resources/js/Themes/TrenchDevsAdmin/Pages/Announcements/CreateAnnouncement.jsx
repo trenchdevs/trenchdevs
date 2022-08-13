@@ -1,7 +1,7 @@
 import Card from "@/Themes/TrenchDevsAdmin/Components/Card";
 import FormInput from "@/Themes/TrenchDevsAdmin/Components/Forms/FormInput";
 import {useForm} from "@inertiajs/inertia-react";
-import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
+import TrenchDevsAdminLayout from "@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout";
 
 export default function CreateAnnouncement() {
 

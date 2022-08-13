@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Modules\Auth\Services\TdResetPassword;
 use App\Modules\Sites\Models\Site;
 use App\Modules\Sites\Models\SiteConfig;
 use App\Modules\Sites\Models\SiteJson;
@@ -10,6 +11,7 @@ use App\Modules\Sso\Http\Controllers\TdMetadataController;
 use App\Modules\Sso\Traits\TdPerformsSingleSignOn;
 use CodeGreenCreative\SamlIdp\Http\Controllers\MetadataController;
 use CodeGreenCreative\SamlIdp\Traits\PerformsSingleSignOn;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -29,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         // override necessary samlidp classes
         $loader->alias(PerformsSingleSignOn::class, TdPerformsSingleSignOn::class);
         $loader->alias(MetadataController::class, TdMetadataController::class);
+        $loader->alias(ResetPassword::class, TdResetPassword::class);
     }
 
     /**

@@ -65,7 +65,7 @@ class UserPortfolioController extends Controller
         }
 
 
-        return redirect(route('dashboard.portfolio.show', $view));
+        return redirect(site_route('dashboard.portfolio.show', $view));
     }
 
     /**
@@ -93,6 +93,6 @@ class UserPortfolioController extends Controller
         $user = Auth::user();
         $user->update(['avatar_url' => $s3File->s3_url]);
 
-        return redirect(route('dashboard.portfolio.show', 'details'));
+        return redirect(site_route('dashboard.portfolio.show', 'details'));
     }
 }

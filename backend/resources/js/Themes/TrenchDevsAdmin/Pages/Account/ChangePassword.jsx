@@ -1,6 +1,6 @@
 import FormInput from "@/Themes/TrenchDevsAdmin/Components/Forms/FormInput";
 import {Link, useForm} from "@inertiajs/inertia-react";
-import TrenchDevsAdminLayout from "@/Layouts/Themes/TrenchDevsAdminLayout";
+import TrenchDevsAdminLayout from "@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout";
 import * as Icon from 'react-feather';
 
 const FORM_INITIAL_VALUES = {

@@ -35,10 +35,8 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        //
-
         parent::boot();
     }
 
@@ -90,20 +88,16 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function map()
+    public function map(): void
     {
-        if (!app()->runningInConsole()) {
-            // we don't need site specific routes on console
-            // e.g. when doing php artisan route:list
-            // site instance is not available
-            $this->mapSiteRoutes();
-        }
-
         // shared api routes
         $this->mapApiRoutes();
 
         // shared web routes
         $this->mapWebRoutes();
+
+        // map site specific routes
+        $this->mapSiteRoutes();
     }
 
     /**
@@ -113,7 +107,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapWebRoutes()
+    protected function mapWebRoutes(): void
     {
         Route::middleware('web')
             ->namespace($this->namespace)
@@ -127,7 +121,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapApiRoutes()
+    protected function mapApiRoutes(): void
     {
         Route::prefix('api')
             ->middleware('api')
@@ -153,27 +147,40 @@ class RouteServiceProvider extends ServiceProvider
 
     private function mapSiteRoutes()
     {
-        try {
 
-            if (empty($site = site()) || empty($site->theme)) {
-                throw new Exception("Theme not found on site");
-            }
+        /** @var Site[] $sites */
+        $sites = Site::all();
 
-            $siteRoutesPath = "routes/themes/$site->theme.php";
+        foreach ($sites as $site) {
 
-            if (!file_exists(base_path($siteRoutesPath))) {
-                throw new Exception("$siteRoutesPath not found");
-            }
+            try {
 
-            Route::namespace($this->namespace)
-                ->domain($site->domain)
-                ->group(base_path($siteRoutesPath));
+                if (empty($site)) {
+                    throw new Exception("Site not found.");
+                }
 
-        } catch (Exception $exception) {
-            if (app()->environment('local', 'testing')) {
-                dd($exception->getMessage());
+                if (empty($site->theme)) {
+                    throw new Exception("Site theme not found");
+                }
+
+                $siteRoutesPath = "routes/themes/$site->theme.php";
+
+                if (!file_exists(base_path($siteRoutesPath))) {
+                    throw new Exception("$siteRoutesPath not found");
+                }
+
+                Route::namespace($this->namespace)
+                    ->domain($site->domain)
+                    ->as("$site->identifier.")
+                    ->group(base_path($siteRoutesPath));
+
+            } catch (Exception $exception) {
+                if (app()->environment('local', 'testing')) {
+                    dd($exception->getMessage());
+                }
             }
         }
+
     }
 
     private function __inject_local_credentials()

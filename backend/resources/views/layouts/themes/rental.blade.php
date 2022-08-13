@@ -176,9 +176,9 @@
                 <div class="row align-items-center">
                     <div class="col-md-6 small">Copyright &copy; Trenchdevs {{ date('Y') }}</div>
                     <div class="col-md-6 text-md-right small">
-                        <a href="{{route('documents.privacy')}}">Privacy Policy</a>
+                        <a href="{{site_route('documents.privacy')}}">Privacy Policy</a>
                         &middot;
-                        <a href="{{route('documents.tnc') }}">Terms &amp; Conditions</a>
+                        <a href="{{site_route('documents.tnc') }}">Terms &amp; Conditions</a>
                     </div>
                 </div>
             </div>
