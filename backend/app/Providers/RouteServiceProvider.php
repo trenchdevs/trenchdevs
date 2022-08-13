@@ -40,49 +40,6 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
     }
 
-    public function register()
-    {
-        $this->booted(function () {
-            $this->setRootControllerNamespace();
-
-            $cacheKey = $this->getCacheKey();
-
-            if (!$this->app->runningInConsole() && !empty($rawRoutes = TDCache::get($cacheKey))) {
-                Log::info('reading from cache');
-                eval($rawRoutes);
-            } else {
-                $this->loadRoutes();
-
-                $this->app->booted(function () {
-                    $this->app['router']->getRoutes()->refreshNameLookups();
-                    $this->app['router']->getRoutes()->refreshActionLookups();
-                });
-
-                // td -- caching -- start
-
-                /** @var RouteCollection $routes */
-                $routes = Route::getRoutes();
-
-                if (count($routes) > 0) {
-
-                    foreach ($routes as $route) {
-                        $route->prepareForSerialization();
-                    }
-
-                    $stub = file_get_contents(module_path('Routing/stubs/routes.stub'));
-                    $raw = str_replace('{{routes}}', var_export($routes->compile(), true), $stub);
-                    $raw = str_replace('<?php', '', $raw);
-                    eval($raw);
-
-                    if (!$this->app->runningInConsole()) {
-                        Cache::put($cacheKey, $raw, 60 * 5);
-                    }
-                }
-                // td -- caching -- end
-            }
-        });
-    }
-
     /**
      * Define the routes for the application.
      *
@@ -130,30 +87,15 @@ class RouteServiceProvider extends ServiceProvider
     }
 
 
-    protected function mapWebApiV1Routes()
-    {
-
-        $this->__inject_local_credentials();
-
-        if (!empty($site = Site::getInstance()) && $site->theme == 'sjp') {
-
-            Route::middleware(['web', 'webapi'])
-                ->namespace($this->namespace)
-                ->prefix('webapi')
-                ->group(base_path('routes/webapi.php'));
-        }
-
-    }
-
     private function mapSiteRoutes()
     {
 
-        /** @var Site[] $sites */
-        $sites = Site::all();
+        try {
 
-        foreach ($sites as $site) {
+            /** @var Site[] $sites */
+            $sites = Site::all();
 
-            try {
+            foreach ($sites as $site) {
 
                 if (empty($site)) {
                     throw new Exception("Site not found.");
@@ -174,28 +116,11 @@ class RouteServiceProvider extends ServiceProvider
                     ->as("$site->identifier.")
                     ->group(base_path($siteRoutesPath));
 
-            } catch (Exception $exception) {
-                if (app()->environment('local', 'testing')) {
-                    dd($exception->getMessage());
-                }
             }
+        } catch (Exception $exception) {
+            // ignore
         }
 
     }
 
-    private function __inject_local_credentials()
-    {
-        // Ensure we only do this on the react app
-        if (app()->environment('local') && request()->server('HTTP_ORIGIN') === 'http://localhost:3000') {
-            /** @var User $user */
-            $user = User::query()->withoutGlobalScopes()->findOrFail(21);
-            auth('web')->login($user);
-            Site::setInstance($user->site);
-        }
-    }
-
-    private function getCacheKey(): string
-    {
-        return sprintf('%s::%s', static::class, site_id());
-    }
 }
