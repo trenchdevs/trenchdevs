@@ -9,38 +9,22 @@ use Tests\TestCase;
 
 class ExampleTest extends SiteTransactionTestCase
 {
+
     /**
-     * A basic test example.
-     *
-     * @return void
+     * @return SiteIdentifier
      */
-    public function testBasicTest()
-    {
-//        $url = $this->get();
-
-//        $curl = curl_init($this->site->http('/'));
-////        curl_setopt($curl, CURLOPT_URL, $this->site->http('/'));
-////        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-////
-//////for debug only!
-////        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-////        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-////        $result = curl_exec($curl);
-////
-////        dd($result);
-///
-        Site::setInstance($this->site);
-        dd(Site::getInstance());
-        die;
-//        dd(Site::getInstance());
-        $response = $this->get($this->site->http('/'));
-        $response->dd();
-
-        $response->assertStatus(200);
-    }
-
     public function siteIdentifier(): SiteIdentifier
     {
         return SiteIdentifier::TRENCHDEVS;
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function basicTest(): void
+    {
+        $this->assertEquals(SiteIdentifier::TRENCHDEVS->value, $this->site->identifier);
+    }
+
 }

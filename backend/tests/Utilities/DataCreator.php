@@ -30,7 +30,7 @@ class DataCreator
     public function createUser(array $override = []): User
     {
         /** @var User $user */
-        $user = User::query()->create([
+        $user = User::query()->create(array_merge([
             'first_name' => fake()->firstName,
             'last_name' => fake()->lastName,
             'email'  => fake()->email,
@@ -39,7 +39,7 @@ class DataCreator
             'site_id' => $this->site->id,
             'avatar_url' => fake()->imageUrl(),
             'role' => User::ROLE_CUSTOMER,
-        ]);
+        ], $override));
         return $user;
     }
 

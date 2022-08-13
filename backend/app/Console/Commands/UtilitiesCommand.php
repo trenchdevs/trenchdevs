@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Modules\Projects\Models\Project;
+use App\Modules\Sites\Enums\SiteIdentifier;
 use App\Modules\Sites\Models\Site;
 use App\Modules\Users\Models\User;
 use Illuminate\Console\Command;
@@ -114,7 +115,7 @@ class UtilitiesCommand extends Command
 
             foreach ($projectsArr as $projectData) {
 
-                Site::setInstance(Site::fromIdentifier('trenchdevs'));
+                Site::setInstance(Site::fromIdentifier(SiteIdentifier::TRENCHDEVS));
                 $projectData['is_personal'] = 0;
                 $projectData['user_id'] = User::query()->find(1)->id;
                 $projectData['url'] = $projectData['repository_url'] ?? '';

@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Modules\Sites\Models\Site;
 use App\Modules\Sites\Models\SiteConfig;
 use App\Modules\Sites\Models\SiteJson;
+use App\Modules\Sites\Models\Sites\SiteFactory;
 use App\Modules\Sso\Http\Controllers\TdMetadataController;
 use App\Modules\Sso\Traits\TdPerformsSingleSignOn;
 use CodeGreenCreative\SamlIdp\Http\Controllers\MetadataController;
@@ -39,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->injectGlobalViewVariables();
         $this->injectSamlIdpConfig();
+        $this->injectSite();
     }
 
     /**
@@ -76,5 +79,12 @@ class AppServiceProvider extends ServiceProvider
 
         // override the defaults from DB
         config(['samlidp' => array_merge($original, $samlIdpSettings)]);
+    }
+
+    private function injectSite()
+    {
+        if (!$this->app->runningInConsole()) {
+            app()->singleton(Site::class, fn() => SiteFactory::getSiteFromDomain());
+        }
     }
 }

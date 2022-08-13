@@ -64,7 +64,7 @@ class Site extends Model
     /**
      * @var static
      */
-    private static $singleton;
+    private static Site $singleton;
 
     /**
      * @return static|null
@@ -73,11 +73,7 @@ class Site extends Model
     {
         try {
 
-            if (isset(self::$singleton) && !empty(self::$singleton)) {
-                return self::$singleton;
-            }
-
-            return SiteFactory::getInstanceOrNull();
+            return app(Site::class);
 
         } catch (Throwable $throwable) {
             // ignore on production - 404
@@ -130,11 +126,11 @@ class Site extends Model
     {
         $json = $this->getConfigValueByKey($configKey, $default);
 
-        if (!td_is_json($json)) {
+        if (!is_json($json)) {
             return $default;
         }
 
-        $jsonArray = td_json_decode_or_default($json);
+        $jsonArray = json_decode_or_default($json);
 
         return Arr::get($jsonArray, $jsonKey, $default);
     }
@@ -150,7 +146,7 @@ class Site extends Model
             return $default;
         }
 
-        return td_json_decode_or_default($value);
+        return json_decode_or_default($value);
     }
 
     /**
@@ -188,7 +184,7 @@ class Site extends Model
     public function getWhitelistedIps(): array
     {
 
-        if (empty($whitelistedIps = td_json_decode_or_default($this->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_WHITELISTED_IPS)))) {
+        if (empty($whitelistedIps = json_decode_or_default($this->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_WHITELISTED_IPS)))) {
             return [];
         }
 

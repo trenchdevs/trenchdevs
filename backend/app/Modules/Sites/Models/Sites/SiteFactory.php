@@ -23,7 +23,22 @@ class SiteFactory
      */
     public static function getInstanceOrNull(): null|AbstractSite|Site
     {
-        $domain         = get_domain();
+        if (app()->runningInConsole()) {
+            $site = self::getSiteFromDomain();
+        } else {
+            $site = Site::query()->find(1);
+        }
+
+        if (empty($site) || empty($site->theme)) {
+            return null;
+        }
+
+        return $site;
+    }
+
+    public static function getSiteFromDomain()
+    {
+        $domain = get_domain();
 
         if (isset(self::$siteCache[$domain])) {
             return self::$siteCache[$domain];
@@ -47,13 +62,9 @@ class SiteFactory
         /** @var Site $site */
         $site = $query->first();
 
-        if (empty($site) || empty($site->theme)) {
-            return null;
-        }
-
         self::$siteCache[$domain] = $site;
 
-        return $site;
+        return self::$siteCache[$domain];
     }
 
 }
