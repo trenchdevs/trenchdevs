@@ -33,13 +33,13 @@ class Tag extends Model
 
     /**
      * @param string $name
-     * @return Tag
+     * @return Tag|null
      */
-    public static function findByName(string $name): Tag
+    public static function findByName(string $name): ?Tag
     {
         /** @var Tag $tag */
-        $tag = self::query()->where('tag_name', $name)
-            ->first();
+        $tag = self::query()->where('tag_name', $name)->first();
+
         return $tag;
     }
 

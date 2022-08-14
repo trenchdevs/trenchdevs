@@ -1,7 +1,7 @@
 @extends('themes.trenchdevs.layouts.home')
 
 @section('content')
-    <div class="container mt-5 pt-5 pb-5">
+    <div class="container pb-5">
 
         <h1 class="mt-5 pt-5 mb-2">Terms and conditions</h1>
         <p>These terms and conditions (&quot;Agreement&quot;) sets forth the general terms and conditions of your use of

@@ -86,7 +86,7 @@
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">Interests</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Certifications</a></li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="{{route('public.blogs')}}?username={{$user->username}}">
+                <a class="nav-link js-scroll-trigger" href="{{site_route('public.blogs')}}?username={{$user->username}}">
                     Blogs
                 </a>
             </li>

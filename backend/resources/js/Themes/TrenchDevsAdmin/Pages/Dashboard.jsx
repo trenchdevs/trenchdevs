@@ -8,7 +8,7 @@ export default function Dashboard(props) {
             auth={props.auth}
             errors={props.errors}
         >
-            <h2>Dashboard</h2>
+            <h2>Dashboard 🚧</h2>
         </TrenchDevsAdminLayout>
     );
 }

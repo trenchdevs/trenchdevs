@@ -2,9 +2,8 @@
 
 @section('content')
 
-
-    <div class="container mt-5 pt-5 pb-5">
-        <h1 class="mt-5 pt-5 mb-2">Privacy Policy for TrenchDevs</h1>
+    <div class="container pb-5">
+        <h1 class="mb-2 mt-5 pt-5">Privacy Policy for TrenchDevs</h1>
 
         <p>At TrenchDevs, accessible from <a href="{{get_site_url()}}">{{get_site_url()}}</a>, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by TrenchDevs and how we use it.</p>
 

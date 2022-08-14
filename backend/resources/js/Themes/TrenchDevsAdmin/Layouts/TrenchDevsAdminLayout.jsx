@@ -19,6 +19,7 @@ export default function TrenchDevsAdminLayout(props) {
         flash = {},
         server = {},
         auth: {user = {}},
+        site = {},
         children
     } = props;
 
@@ -31,11 +32,17 @@ export default function TrenchDevsAdminLayout(props) {
         }
     }
 
+    let absolutePortfolioUrl = false;
+
+    if (user.external_id) {
+        absolutePortfolioUrl = `/${user.external_id}`;
+    }
+
     return (
         <>
             <nav className="topnav navbar navbar-expand shadow navbar-light bg-white" id="sidenavAccordion">
                 <a className="navbar-brand d-none d-sm-block"
-                   href="/dashboard">TRENCHDEVS PORTAL</a>
+                   href="/dashboard">{site.company_name} </a>
                 <button className="btn btn-icon btn-transparent-light order-1 order-lg-0 mr-lg-2" id="sidebarToggle"
                         onClick={() => $("body").toggleClass("sidenav-toggled")}
                         href="#">
@@ -52,6 +59,7 @@ export default function TrenchDevsAdminLayout(props) {
                     </li>
                 </ul>
             </nav>
+
             <div id="layoutSidenav">
                 <div id="layoutSidenav_nav">
                     <nav className="sidenav shadow-right sidenav-dark">
@@ -94,11 +102,22 @@ export default function TrenchDevsAdminLayout(props) {
                                             </div>
                                             Edit
                                         </Link>
-                                        <a className="nav-link" href="@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout" target="_blank">
+                                        <a
+                                            className="nav-link"
+                                            href={absolutePortfolioUrl ? absolutePortfolioUrl : "#"}
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                if (!absolutePortfolioUrl) {
+                                                    alert("You need to setup your portfolio first");
+                                                }
+                                            }}
+                                            target="_blank"
+                                            title={'Your public portfolio page'}
+                                        >
                                             <div className="nav-link-icon">
                                                 <Icon.Eye {...ICON_DEFAULT_PROPS}/>
                                             </div>
-                                            Page
+                                            My Portfolio Page
                                         </a>
                                     </nav>
                                 </div>
@@ -147,11 +166,11 @@ export default function TrenchDevsAdminLayout(props) {
                                 <div className={`collapse ${url.startsWith('/dashboard/blogs') && 'show'}`} id="blogs"
                                      data-parent="#accordionSidenav">
                                     <nav className="sidenav-menu-nested nav">
-                                        <a className="nav-link" href="@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout">
+                                        <a className="nav-link" href="/blogs" target="_blank">
                                             <div className="nav-link-icon">
                                                 <Icon.BookOpen {...ICON_DEFAULT_PROPS}/>
                                             </div>
-                                            Blog Page
+                                            Public Page
                                         </a>
 
                                         <Link className="nav-link" href="/dashboard/blogs/upsert">
@@ -166,12 +185,12 @@ export default function TrenchDevsAdminLayout(props) {
                                             </div>
                                             All Blogs
                                         </Link>
-                                        <a className="nav-link" href="@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout">
-                                            <div className="nav-link-icon">
-                                                <Icon.Feather{...ICON_DEFAULT_PROPS}/>
-                                            </div>
-                                            My Blogs
-                                        </a>
+                                        {/*<a className="nav-link" href="@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout">*/}
+                                        {/*    <div className="nav-link-icon">*/}
+                                        {/*        <Icon.Feather{...ICON_DEFAULT_PROPS}/>*/}
+                                        {/*    </div>*/}
+                                        {/*    My Blogs*/}
+                                        {/*</a>*/}
                                     </nav>
                                 </div>
 
@@ -391,9 +410,9 @@ export default function TrenchDevsAdminLayout(props) {
                             <div className="row">
                                 <div className="col-md-6 small">Copyright &copy; TrenchDevs</div>
                                 <div className="col-md-6 text-md-right small">
-                                    <a href="@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout" target="_blank">Privacy Policy</a>
+                                    <a href="/documents/privacy" target="_blank">Privacy Policy</a>
                                     &middot;
-                                    <a href="@/Themes/TrenchDevsAdmin/Layouts/TrenchDevsAdminLayout" target="_blank">Terms &amp; Conditions</a>
+                                    <a href="/documents/tnc" target="_blank">Terms &amp; Conditions</a>
                                 </div>
                             </div>
                         </div>
