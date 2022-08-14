@@ -23,7 +23,9 @@ export default function InertiaTable({
 
                     <tbody>
                     {rows.map((row, index) => {
+
                         const rowKey = row.id || index;
+
                         return (
                             <tr key={rowKey}>
                                 {columns.map((column, columnKey) => {
@@ -33,6 +35,29 @@ export default function InertiaTable({
 
                                     if (column.render && isFunction(column.render)) {
                                         toRender = column.render(row) || '';
+                                    } else if (column.type) {
+
+                                        switch (column.type) {
+                                            case 'image':
+                                                toRender = (
+                                                    <img className="img-thumbnail img-fluid"
+                                                         style={{maxHeight: '50px'}}
+                                                         src={row[column.key] || ''} alt={row.title}
+                                                    />
+                                                )
+                                                break;
+                                            case 'external_link':
+                                                toRender = (
+                                                    <a href={row[column.key] || ''} target="_blank">
+                                                        {row[column.key]}
+                                                    </a>
+                                                )
+                                                break;
+
+                                            default:
+                                                toRender = <>type not supported.</>
+                                        }
+
                                     } else {
                                         toRender = row[column.key] || '';
                                     }

@@ -19,11 +19,13 @@ abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    /** @var Site */
-    protected $site;
-
     const STATUS_SUCCESS = 'success';
     const STATUS_ERROR = 'error';
+
+    /**
+     * @var Site
+     */
+    protected Site $site;
 
 
     /**
@@ -41,7 +43,7 @@ abstract class Controller extends BaseController
     public function middlewareOnConstructorCalled(): void
     {
         // do custom logic per controller
-        $this->site = Site::getInstance();
+        $this->site = site();
     }
 
     /**
@@ -51,7 +53,7 @@ abstract class Controller extends BaseController
      * @param array $errors
      * @return JsonResponse
      */
-    protected function jsonResponse(string $status, string $message, array $dataOverride = [], array $errors = [])
+    protected function jsonResponse(string $status, string $message, array $dataOverride = [], array $errors = []): JsonResponse
     {
 
         $response = [
@@ -75,19 +77,14 @@ abstract class Controller extends BaseController
      * @param string $errorMsg
      * @return JsonResponse
      */
-    protected function validationFailureResponse(Validator $validator, string $errorMsg = "Validation Error")
+    protected function validationFailureResponse(Validator $validator, string $errorMsg = "Validation Error"): JsonResponse
     {
-        return $this->jsonResponse(self::STATUS_ERROR, $errorMsg, [], $validator->errors()->all());
-    }
-
-    /**
-     * @param Validator $validator
-     * @param string $errorMsg
-     * @return JsonResponse
-     */
-    protected function validationFailuresResponse(Validator $validator, string $errorMsg = "Validation Error")
-    {
-        return $this->jsonResponse(self::STATUS_ERROR, $errorMsg, [], $validator->errors()->toArray());
+        return $this->jsonResponse(
+            self::STATUS_ERROR,
+            $errorMsg,
+            [],
+            $validator->errors()->all()
+        );
     }
 
     /**
@@ -110,23 +107,6 @@ abstract class Controller extends BaseController
         if (!$this->isLoggedInUserAdmin()) {
             abort('403', $message);
         }
-    }
-
-    /**
-     * @param string $view
-     * @param array $data
-     * @param array $mergeData
-     * @return View
-     */
-    public function siteViewOrDefault(string $view, array $data = [], array $mergeData = []): View
-    {
-        $theme = site()->theme;
-
-        if (view()->exists("$view:$theme")) {
-            return view("$view:$theme", $data, $mergeData);
-        }
-
-        return view($view, $data, $mergeData);
     }
 
     /**

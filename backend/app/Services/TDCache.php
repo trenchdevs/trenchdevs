@@ -5,6 +5,7 @@ namespace App\Services;
 use Closure;
 use DateInterval;
 use DateTimeInterface;
+use Exception;
 use Illuminate\Support\Facades\Cache;
 
 class TDCache
@@ -47,7 +48,7 @@ class TDCache
     {
         try {
             return app_config('CLEAR_CACHE') == 1;
-        }catch (\Exception) {
+        }catch (Exception) {
             // ignore
         }
 

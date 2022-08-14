@@ -3,8 +3,8 @@
 namespace App\Modules\Blogs\Repositories;
 
 use App\Modules\Blogs\Models\Blog;
+use App\Modules\Blogs\Models\Tag;
 use App\Modules\Emails\Models\EmailLog;
-use App\Modules\Sites\Models\Tag;
 use App\Modules\Users\Models\User;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -150,12 +150,8 @@ class BlogsRepository
     public function storeBlog(User $loggedInUser, array $data): Blog
     {
 
-        $blog = null;
-
         try {
 
-            // todo: future - can add blog hash for content changes
-            // todo: future - can always create new entry instead of updating
             DB::beginTransaction();
 
             $id = $data['id'] ?? null;
@@ -225,9 +221,10 @@ class BlogsRepository
             $blog->tags()->sync($tagIds);
 
             // 3. Send emails to moderator (if applicable)
-            if (!$loggedInUser->isBlogModerator() && $blog->moderation_status === Blog::DB_MODERATION_STATUS_PENDING) {
-                $this->sendModerationEmails($blog);
-            }
+            // @tag: v2.0.1
+            //if (!$loggedInUser->isBlogModerator() && $blog->moderation_status === Blog::DB_MODERATION_STATUS_PENDING) {
+            //    $this->sendModerationEmails($blog);
+            // }
 
             DB::commit();
 
@@ -248,7 +245,7 @@ class BlogsRepository
      * @param Blog $blog
      * @throws Throwable
      */
-    private function sendModerationEmails(Blog $blog)
+    private function sendModerationEmails(Blog $blog): void
     {
 
         /** @var User[] $moderators */

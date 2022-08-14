@@ -86,8 +86,11 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/api.php'));
     }
 
-
-    private function mapSiteRoutes()
+    /**
+     * Define Site specific routes for the application
+     * @return void
+     */
+    private function mapSiteRoutes(): void
     {
 
         try {
@@ -118,7 +121,7 @@ class RouteServiceProvider extends ServiceProvider
 
             }
         } catch (Exception $exception) {
-            // ignore
+            Log::error("RouteServiceProvider::mapSiteRoutes: " . $exception->getMessage());
         }
 
     }

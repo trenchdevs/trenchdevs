@@ -19,9 +19,9 @@ class SiteFactory
     private static array $siteCache;
 
     /**
-     * @return AbstractSite|Site|null
+     * @return Site|null
      */
-    public static function getInstanceOrNull(): null|AbstractSite|Site
+    public static function getInstanceOrNull(): ?Site
     {
         if (app()->runningInConsole()) {
             $site = self::getSiteFromDomain();

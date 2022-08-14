@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Modules\Sites\Models;
+namespace App\Modules\Blogs\Models;
 
-use App\Modules\Blogs\Models\Blog;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Throwable;
@@ -27,7 +25,7 @@ class Tag extends Model
     /**
      * @return BelongsToMany
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Blog::class, 'blog_tags')
             ->withTimestamps();
@@ -35,12 +33,14 @@ class Tag extends Model
 
     /**
      * @param string $name
-     * @return Tag|Builder|Model|object|null
+     * @return Tag
      */
-    public static function findByName(string $name)
+    public static function findByName(string $name): Tag
     {
-        return self::query()->where('tag_name', $name)
+        /** @var Tag $tag */
+        $tag = self::query()->where('tag_name', $name)
             ->first();
+        return $tag;
     }
 
     /**

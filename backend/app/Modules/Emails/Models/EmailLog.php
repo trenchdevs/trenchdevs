@@ -100,6 +100,7 @@ class EmailLog extends Model
             $genericMailer->subject($emailQueue->subject);
 
             Mail::to([$emailQueue->email_to])->send($genericMailer);
+
             $emailQueue->status = self::DB_STATUS_PROCESSED;
             $emailQueue->sent_at = date('Y-m-d H:i:s');
             $emailQueue->saveOrFail();

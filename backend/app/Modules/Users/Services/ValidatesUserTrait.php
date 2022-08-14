@@ -15,7 +15,7 @@ trait ValidatesUserTrait
      * @param bool $rolesCheck
      * @return array
      */
-    #[ArrayShape(['first_name' => "string[]", 'last_name' => "string[]", 'is_active' => "array", 'role' => "array", 'password' => "string[]", 'email' => "array"])]
+    #[ArrayShape(['first_name' => "string[]", 'last_name' => "string[]", 'is_active' => "array", 'password' => "string[]", 'email' => "array", 'role' => "array"])]
     protected function validator(bool $create, bool $rolesCheck = true): array
     {
         /** @var User $user */

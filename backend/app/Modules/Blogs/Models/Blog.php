@@ -2,12 +2,9 @@
 
 namespace App\Modules\Blogs\Models;
 
-use App\Modules\Blogs\Models\BlogTag;
-use App\Modules\Sites\Models\Tag;
+use App\Modules\Sites\Traits\SiteScoped;
 use App\Modules\Users\Models\User;
-use App\Support\Traits\SiteScoped;
 use Carbon\Carbon;
-use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

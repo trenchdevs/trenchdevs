@@ -2,7 +2,7 @@
 
 namespace App\Modules\Announcements\Models;
 
-use App\Support\Traits\SiteScoped;
+use App\Modules\Sites\Traits\SiteScoped;
 use Illuminate\Database\Eloquent\Model;
 
 class Announcement extends Model

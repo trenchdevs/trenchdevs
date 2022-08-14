@@ -10,16 +10,21 @@ post.
 
 ## Requirements
 
-- Docker & Docker Compose / Docker Desktop for Windows or Mac
-- Node JS Version 16 (`nvm` recommended)
-    - Use to compile the front-end assets (v16 > for vite support)
+- Docker & Docker Compose  (Docker Desktop)
+- Node JS LTS Version (Version 16 recommended)
 
 ### Development Setup
 
-1. Clone the repo: `git clone https://github.com/trenchdevs/trenchdevs.git`
+1. Clone the repo
 2. `cd /path/to/trenchdevs`
 3. Initialize Everything: `npm run be:init`
-4. Navigate to `trenchdevs.localhost:22071` and you should see the default trenchdevs site
+4. Navigate to `http://trenchdevs.localhost:22071` and you should see the default trenchdevs site
+
+Setup Tested on:
+
+- Linux
+- Mac
+- Windows (via WSL2)
 
 ## Code of Conduct
 
@@ -28,8 +33,7 @@ In order to ensure that the TrenchDevs community is welcoming to all, please rev
 
 ## Security Issues
 
-For security issues, please send an email to Christopher Espiritu
-via [christopheredrian@trenchdevs.org](mailto:christopheredrian@trenchdevs.org)
+For security issues, please email [christopheredrian@trenchdevs.org](mailto:christopheredrian@trenchdevs.org)
 Security vulnerabilities will be addressed immediately.
 
 ## License

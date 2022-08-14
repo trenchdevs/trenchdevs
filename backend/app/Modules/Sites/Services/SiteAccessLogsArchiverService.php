@@ -59,7 +59,7 @@ class SiteAccessLogsArchiverService
 
         // create directory tmp if it does not exist
         if (!file_exists($directory = storage_path('tmp'))) {
-            mkdir($directory, 0777, true);
+            mkdir($directory, 0775, true);
         }
 
         // open csv file
@@ -79,7 +79,7 @@ class SiteAccessLogsArchiverService
             throw new Exception("Failed to create log file $filename");
         }
 
-        // Upload to archives folder
+        // Upload to archive folder
         $s3FilePath = s3_generate_file_path('site_access_logs', $filename);
         $this->client->put($s3FilePath, file_get_contents($localFileFullPath));
 

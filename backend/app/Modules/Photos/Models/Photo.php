@@ -3,7 +3,7 @@
 namespace App\Modules\Photos\Models;
 
 use App\Modules\Aws\Models\AwsS3Upload;
-use App\Support\Traits\SiteScoped;
+use App\Modules\Sites\Traits\SiteScoped;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;

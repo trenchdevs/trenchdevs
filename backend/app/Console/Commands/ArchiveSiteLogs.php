@@ -38,7 +38,7 @@ class ArchiveSiteLogs extends Command
      * @param SiteAccessLogsArchiverService $archiver
      * @return void
      */
-    public function handle(SiteAccessLogsArchiverService $archiver)
+    public function handle(SiteAccessLogsArchiverService $archiver): void
     {
 
         try {

@@ -112,6 +112,8 @@ class UtilitiesCommand extends Command
 
         $projectsArr = array_reverse($projectsArr);
 
+        $userId = $this->ask("Enter owner user id (creator): ");
+
         try {
 
             DB::beginTransaction();
@@ -119,7 +121,7 @@ class UtilitiesCommand extends Command
             foreach ($projectsArr as $projectData) {
 
                 $projectData['is_personal'] = 0;
-                $projectData['user_id'] = 1;
+                $projectData['user_id'] = $userId;
                 $projectData['url'] = $projectData['repository_url'] ?? '';
 
                 $project = new Project();

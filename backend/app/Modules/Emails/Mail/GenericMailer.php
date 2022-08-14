@@ -21,7 +21,6 @@ class GenericMailer extends Mailable
      */
     public function __construct(string $to)
     {
-        // todo: chris env local check here
         $this->to($to);
     }
 

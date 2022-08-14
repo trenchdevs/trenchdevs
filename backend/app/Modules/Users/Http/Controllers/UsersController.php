@@ -62,18 +62,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return Application|Factory|Response|View
-     */
-    public function show($id)
-    {
-
-        return view('admin.users.show', ['user' => User::findOrFail($id)]);
-    }
-
-    /**
      * @param int|null $id
      * @return \Inertia\Response
      * @throws Exception
@@ -207,15 +195,4 @@ class UsersController extends Controller
         return back()->with('message', 'Password reset successful.');
     }
 
-    public function account(Request $request)
-    {
-        $user = $request->user();
-
-        $portfolioDetail = UserPortfolioDetail::findOrEmptyByUser($user->id);
-
-        return view('admin.users.account', [
-            'user' => $user,
-            'portfolio_detail' => $portfolioDetail,
-        ]);
-    }
 }

@@ -7,24 +7,23 @@ use App\Modules\Blogs\Models\Blog;
 use App\Modules\Blogs\Repositories\BlogsRepository;
 use App\Modules\Users\Models\User;
 use Exception;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
 
 class BlogsController extends AuthWebController
 {
 
-    /** @var BlogsRepository */
-    private $blogsRepo;
+    /**
+     * @var BlogsRepository
+     */
+    private BlogsRepository $blogsRepo;
 
     public function middlewareOnConstructorCalled(): void
     {
@@ -72,11 +71,10 @@ class BlogsController extends AuthWebController
 
     /**
      * @param Request $request
-     * @return Application|RedirectResponse|Redirector
-     * @throws Throwable
+     * @return RedirectResponse
      * @throws ValidationException
      */
-    public function upsertBlog(Request $request)
+    public function upsertBlog(Request $request): RedirectResponse
     {
 
         $id = $request->get('id');
@@ -109,7 +107,7 @@ class BlogsController extends AuthWebController
      * @return RedirectResponse
      * @throws ValidationException
      */
-    public function moderate(Request $request)
+    public function moderate(Request $request): RedirectResponse
     {
         $this->validate($request, [
             'moderation_status' => 'required',

@@ -29,7 +29,7 @@ if (!function_exists('get_base_url')) {
                 $tld = explode(":", $tld)[0] ?? '';
             }
 
-            return "{$domain}.{$tld}";
+            return "$domain.$tld";
         }
 
         return env('BASE_URL', 'trenchdevs.test');
@@ -74,7 +74,7 @@ if (!function_exists('add_scheme_to_url')) {
             $scheme = 'https://';
         }
 
-        return "{$scheme}{$url}";
+        return "$scheme$url";
     }
 }
 

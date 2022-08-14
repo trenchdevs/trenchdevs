@@ -38,12 +38,6 @@ class DashboardController extends Controller
             return $expectsJson ? $blog : view('blogs.public.show', ['blog' => $blog]);
         }
 
-        $customSite = PortfolioController::CUSTOM_URLS[$slug] ?? null;
-
-        if (!empty($customSite)) {
-            $this->handleCustomPortfolio($customSite);
-        }
-
         // at this point user has no custom site, use default
         if (!empty($user = User::findByUserName($slug))) {
             $portfolioDetails = $user->getPortfolioDetails();

@@ -31,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
         // override necessary samlidp classes
         $loader->alias(PerformsSingleSignOn::class, TdPerformsSingleSignOn::class);
         $loader->alias(MetadataController::class, TdMetadataController::class);
+
+        // override for password reset (for multi-site setup)
         $loader->alias(ResetPassword::class, TdResetPassword::class);
     }
 

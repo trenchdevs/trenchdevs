@@ -27,8 +27,12 @@ export default function BlogsList() {
                     <InertiaTable links={data.links} rows={data.data} columns={[
                         {
                             key: 'primary_image_url', 'label': 'Image', render: row => {
-                                return <img className="img-thumbnail img-fluid" style={{maxHeight: '50px'}}
-                                            src={row.primary_image_url} alt={row.title}/>
+                                return (
+                                    <img className="img-thumbnail img-fluid"
+                                         style={{maxHeight: '50px'}}
+                                         src={row.primary_image_url} alt={row.title}
+                                    />
+                                )
                             }
                         },
                         {key: 'id', 'label': 'ID'},
