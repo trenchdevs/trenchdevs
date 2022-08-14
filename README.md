@@ -3,9 +3,6 @@
 Main source code for https://trenchdevs.org. TrenchDevs believes in outcome-based learning and adapting to different
 technologies by creating purposeful projects.
 
-For more information please refer the ["Launching TrenchDevs!!!"](https://blog.trenchdevs.org/launching-trenchdevs)
-post.
-
 ## Installation
 
 ## Requirements
