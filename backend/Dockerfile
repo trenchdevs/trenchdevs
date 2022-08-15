@@ -1,7 +1,7 @@
 FROM php:8.1.8-fpm
 
-ARG USER_GID
-ARG USER_UID
+ARG USER_GID=1000
+ARG USER_UID=1000
 
 # Set working directory
 WORKDIR /var/www
