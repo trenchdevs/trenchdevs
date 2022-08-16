@@ -41,13 +41,13 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
 RUN apt -y update && apt -y install postgresql-client
 
 # Install Node v16 via NVM
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+ENV NVM_DIR /usr/local/nvm
 
-# emulate source ~/.bashrc
-SHELL ["/bin/bash", "-c"]
-
-# install node v16
-RUN nvm install 16 && nvm alias default 16
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install 16  \
+    && nvm alias default 16 \
+    && nvm use default
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
