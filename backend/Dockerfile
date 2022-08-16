@@ -54,7 +54,6 @@ RUN docker-php-ext-install pdo pdo_pgsql pgsql zip exif pcntl
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 RUN docker-php-ext-install gd
 
-
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -81,7 +80,12 @@ RUN cp docker/nginx.conf /etc/nginx/sites-enabled/default
 RUN mkdir /var/log/php
 RUN touch /var/log/php/errors.log && chmod ug+w /var/log/php/errors.log
 
+# Composer dependencies
 RUN composer install --optimize-autoloader --no-dev
+
+# Front-end dependencies & vite build
+RUN npm install && npm run build
+
 RUN chmod +x /var/www/docker/run.sh
 
 EXPOSE 80
