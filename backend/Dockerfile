@@ -1,3 +1,13 @@
+# Front-end dependencies & vite build
+FROM node:16.16.0 AS build
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+
 FROM php:8.1.8-fpm
 
 ARG USER_GID=1000
@@ -8,8 +18,6 @@ WORKDIR /var/www
 
 # Add docker php ext repo
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-
-
 
 #Install dependecies
 RUN apt-get update && apt-get install -y \
@@ -40,15 +48,6 @@ RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt -y update && apt -y install postgresql-client
 
-# Install Node v16 via NVM
-ENV NVM_DIR /usr/local/nvm
-
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
-    && . $NVM_DIR/nvm.sh \
-    && nvm install 16  \
-    && nvm alias default 16 \
-    && nvm use default
-
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -71,6 +70,7 @@ RUN useradd -l -u ${USER_UID} -g www www
 
 # Copy code to /var/www
 COPY --chown=www:www-data . /var/www
+COPY --from=build /app/public /var/www/public
 
 # add root to www group
 RUN chmod -R ug+w /var/www/storage
@@ -87,8 +87,6 @@ RUN touch /var/log/php/errors.log && chmod ug+w /var/log/php/errors.log
 # Composer dependencies
 RUN composer install --optimize-autoloader --no-dev
 
-# Front-end dependencies & vite build
-RUN npm install && npm run build
 
 RUN chmod +x /var/www/docker/run.sh
 
