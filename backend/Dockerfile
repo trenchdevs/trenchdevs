@@ -40,7 +40,12 @@ RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt -y update && apt -y install postgresql-client
 
-#Clear cache
+# Install Node v16 via NVM
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+RUN source ~/.bashrc
+RUN nvm install 16 && nvm alias default 16
+
+# Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #Install Extensions
