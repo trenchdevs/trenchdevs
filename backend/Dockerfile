@@ -42,7 +42,11 @@ RUN apt -y update && apt -y install postgresql-client
 
 # Install Node v16 via NVM
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh # emulate source ~/.bashrc
+
+# emulate source ~/.bashrc
+SHELL ["/bin/bash", "-c"]
+
+# install node v16
 RUN nvm install 16 && nvm alias default 16
 
 # Clear cache
