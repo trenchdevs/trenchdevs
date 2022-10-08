@@ -64,18 +64,18 @@
                                 @endif
                             </li>
                         </ul>
-                        @if(empty($loggedInUser))
-                            <a class="btn-primary btn rounded-pill px-4 ml-lg-4" href="{{env('APP_URL')}}/login">
+                        @auth
+                            <a class="btn-primary btn rounded-pill px-4 ml-lg-4" href="{{site_route('dashboard')}}">
+                                Portal
+                                <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        @else
+                            <a class="btn-primary btn rounded-pill px-4 ml-lg-4" href="/login">
                                 SIGN IN / JOIN
                                 <i class="fas fa-arrow-right ml-1"></i>
 
                             </a>
-                        @else
-                            <a class="btn-primary btn rounded-pill px-4 ml-lg-4" href="{{env('APP_URL')}}/portal/home">
-                                Portal
-                                <i class="fas fa-arrow-right ml-1"></i>
-                            </a>
-                        @endif
+                        @endauth
                     </div>
                 </div>
             </nav>
