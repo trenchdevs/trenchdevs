@@ -3,12 +3,12 @@ version: '3.5'
 services:
   db:
     image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=mysql_native_password --init-file /data/application/init.sql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     volumes:
-      - ./docker/mysql:/docker-entrypoint-initdb.d
+      - ./docker/mysql/00-init-test-db.sql:/data/application/init.sql
       - ./docker/volumes/mysql:/var/lib/mysql
     ports:
       - ${FORWARD_DB_PORT:-22060}:3306
