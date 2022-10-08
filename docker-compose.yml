@@ -2,17 +2,18 @@ version: '3.5'
 
 services:
   db:
-    container_name: trenchapps-db
-    user: ${USER_UID:-1000}:${USER_GID:-1000}
-    image: postgres:14.4
-    volumes:
-      - ./docker/volumes/postgres:/var/lib/postgresql/data
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=${DB_ROOT_PASSWORD:-postgres}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - ./database/docker-init:/docker-entrypoint-initdb.d
+      - ./docker/volumes/mysql:/var/lib/mysql
     ports:
-      - ${FORWARD_DB_PORT:-22060}:5432
+      - ${FORWARD_DB_PORT:-22060}:3306
+    healthcheck:
+      test: mysqladmin ping
     networks:
       - trenchdevs-docker-network
 
