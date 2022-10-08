@@ -75,7 +75,12 @@
             You are receiving this email because you are a member of TrenchDevs. <br>
             Please do not reply to this email. <br>
             For further assistance please contact support at support@trenchdevs.org <br>
-            <a href="{{route('notifications.emails.showUnsubscribeForm')}}">Click here to Unsubscribe</a> from all emails<br>
+
+            @if(site_route_has('notifications.emails.showUnsubscribeForm'))
+                <a href="{{site_route('notifications.emails.showUnsubscribeForm')}}">Click here to Unsubscribe</a> from
+                all
+                emails<br>
+            @endif
             <a target="_blank" href="https://trenchdevs.org">© TrenchDevs {{date('Y')}}</a>
         </div>
     </div>

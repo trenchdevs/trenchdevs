@@ -40,7 +40,7 @@ export default function TrenchDevsAdminLayout(props) {
 
     return (
         <>
-            <nav className="topnav navbar navbar-expand shadow navbar-light bg-white" id="sidenavAccordion">
+            <nav className="topnav navbar navbar-expand shadow navbar-light bg-white z-0" id="sidenavAccordion">
                 <a className="navbar-brand d-none d-sm-block"
                    href="/dashboard">{site.company_name} </a>
                 <button className="btn btn-icon btn-transparent-light order-1 order-lg-0 mr-lg-2" id="sidebarToggle"

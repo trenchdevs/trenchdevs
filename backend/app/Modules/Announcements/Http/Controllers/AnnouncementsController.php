@@ -86,7 +86,7 @@ class AnnouncementsController extends AuthWebController
             $users->chunkById(10, function (Collection $users) use ($message, $title) {
                 /** @var User $user */
                 foreach ($users as $user) {
-                    EmailLog::queue(
+                    EmailLog::enqueue(
                         trim($user->email),
                         $title,
                         ['name' => $user->name, 'email_body' => $message],

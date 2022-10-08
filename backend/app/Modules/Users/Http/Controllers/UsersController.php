@@ -186,7 +186,7 @@ class UsersController extends Controller
                 . 'If you have not make this update. Please contact support at support@trenchdevs.org',
         ];
 
-        EmailLog::queue(
+        EmailLog::enqueue(
             $user->email,
             'Your password was Changed',
             $viewData,

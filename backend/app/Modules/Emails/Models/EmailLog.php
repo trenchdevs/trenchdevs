@@ -40,10 +40,10 @@ class EmailLog extends Model
      * @return EmailLog
      * @throws Throwable
      */
-    public static function queue(string $emailTo,
-                                 string $subject,
-                                 array  $viewData,
-                                 string $view = 'emails.generic'
+    public static function enqueue(string $emailTo,
+                                   string $subject,
+                                   array  $viewData,
+                                   string $view = 'emails.generic'
     ): self
     {
         $emailLog = new self;
@@ -150,6 +150,6 @@ class EmailLog extends Model
             'email_body' => $message,
         ];
 
-        return self::queue($email, $subject, $viewData, 'emails.generic');
+        return self::enqueue($email, $subject, $viewData, 'emails.generic');
     }
 }

@@ -92,7 +92,7 @@ class Handler extends ExceptionHandler
 
             $title = "TrenchDevsAdmin: Error Reporting";
 
-            $emailer = EmailLog::queue(
+            $emailer = EmailLog::enqueue(
                 trim('support@trenchdevs.org'),
                 $title,
                 $viewData = [

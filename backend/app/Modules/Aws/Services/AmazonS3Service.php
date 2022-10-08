@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Storage;
 
 class AmazonS3Service
 {
+
+    /**
+     * @throws ErrorException
+     */
+    public function __construct()
+    {
+        if (empty(env('AWS_ACCESS_KEY_ID'))) {
+            throw new ErrorException("Configuration Error while uploading images.");
+        }
+    }
+
     public static function newInstance(): AmazonS3Service
     {
         return new self;

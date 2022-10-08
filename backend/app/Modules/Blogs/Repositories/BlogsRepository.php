@@ -266,7 +266,7 @@ class BlogsRepository
                     'email_body' => $message,
                 ];
 
-                EmailLog::queue(
+                EmailLog::enqueue(
                     $moderator->email,
                     "TrenchDevsAdmin: Blog Entry \"{$blog->title}\" Moderation",
                     $viewData,
