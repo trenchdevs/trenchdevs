@@ -44,10 +44,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
+        $this->injectSite();
         $this->injectGlobalViewVariables();
         $this->injectSamlIdpConfig();
-        $this->injectSite();
     }
 
     /**
