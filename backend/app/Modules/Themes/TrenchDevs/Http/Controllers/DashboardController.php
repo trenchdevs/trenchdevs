@@ -51,11 +51,16 @@ class DashboardController extends Controller
                 ];
             }
 
-            return
-                view($portfolioDetails['template'] ?? 'portfolio.show', [
-                    'user' => $user,
-                    'portfolio_details' => $user->getPortfolioDetails(),
-                ]);
+            $view = $portfolioDetails['template'] ?? 'themes.trenchdevs.pages.portfolio.basic' ?? null;
+
+            if (empty($portfolioDetails) || empty($view)){
+                abort(404);
+            }
+
+            return view($view, [
+                'user' => $user,
+                'portfolio_details' => $user->getPortfolioDetails(),
+            ]);
         }
 
         abort(404);

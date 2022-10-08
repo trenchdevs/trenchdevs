@@ -45,7 +45,7 @@ class BlogsController extends AuthWebController
             'data' => Blog::query()
                 ->when(!empty($request->get('me')), fn(Builder $query) => $query->where('user_id', '=', $request->user()->id ?? null))
                 ->orderBy('id', 'desc')
-                ->paginate(1)
+                ->paginate(10)
         ]);
     }
 
