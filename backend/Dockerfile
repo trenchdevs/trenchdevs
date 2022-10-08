@@ -43,17 +43,11 @@ RUN apt-get update && apt-get install -y \
     wget \
     lsb-release
 
-# Add postgres 14 repo (app does not need except for squashing migrations)
-# RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-# RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-# RUN apt -y update && apt -y install postgresql-client
-
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #Install Extensions
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
-RUN docker-php-ext-install pdo pdo_pgsql pgsql zip exif pcntl
+RUN docker-php-ext-install pdo pdo_mysql zip exif pcntl
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 RUN docker-php-ext-install gd
 
