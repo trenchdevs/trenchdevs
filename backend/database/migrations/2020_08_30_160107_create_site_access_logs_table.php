@@ -17,10 +17,10 @@ class CreateSiteAccessLogsTable extends Migration
         Schema::create('site_access_logs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable()->index();
-            $table->string('url', 2000)->index(); // see UserLogin constants
+            $table->string('url', 512)->index(); // see UserLogin constants
             $table->ipAddress('ip')->index();
             $table->enum('action', [SiteAccessLog::DB_ACTION_ALLOWED, SiteAccessLog::DB_ACTION_DENIED])->default(SiteAccessLog::DB_ACTION_ALLOWED);
-            $table->string('user_agent', 2000)->index();
+            $table->string('user_agent', 512)->index();
             $table->string('referer', 512)->nullable()->index();
             $table->json('misc_json')->nullable();
             $table->timestamps();

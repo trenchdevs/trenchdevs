@@ -16,7 +16,7 @@ class CreateBlogsTable extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('site_id')->after('id')->default(1)->index();
+            $table->unsignedBigInteger('site_id')->default(1)->index();
             $table->enum('status', ['draft', 'published']);
             $table->string('slug', 255)->nullable()->comment('if not specified by default we will use id');
             $table->string('title');

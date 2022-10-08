@@ -13,6 +13,7 @@ use CodeGreenCreative\SamlIdp\Http\Controllers\MetadataController;
 use CodeGreenCreative\SamlIdp\Traits\PerformsSingleSignOn;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use stdClass;

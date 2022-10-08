@@ -15,8 +15,8 @@ class CreateAnnouncementsTable extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('site_id')->after('id')->index();
-            $table->unsignedBigInteger('user_id')->comment('Who created announcement?');
+            $table->unsignedBigInteger('site_id')->index();
+            $table->unsignedBigInteger('user_id')->index()->comment('Who created the announcement?');
             $table->string('title', 128);
             $table->enum('status', ['pending', 'canceled', 'processing', 'processed', 'errored'])->default('pending');
             $table->text('message'); // can be html

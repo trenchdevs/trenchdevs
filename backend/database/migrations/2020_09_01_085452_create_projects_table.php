@@ -20,7 +20,7 @@ class CreateProjectsTable extends Migration
             $table->string('title');
             $table->string('url', 512)->nullable();
             $table->string('repository_url', 512)->nullable();
-            $table->string('image_url', 512)->after('repository_url')->nullable();
+            $table->string('image_url', 512)->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
