@@ -1,3 +1,3 @@
 <?php
 
-require base_path("routes/themes/trenchdevs.php");
+require __DIR__  . '/../trenchdevs_dashboard.php';

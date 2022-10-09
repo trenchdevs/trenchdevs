@@ -36,7 +36,7 @@ export default function ChangePassword(props) {
             </div>
 
             <div className="row">
-                <div className="col-6">
+                <div className="col-md-8">
                     <div className="card mb-4">
                         <div className="card-header">
                             Change Password

@@ -72,8 +72,8 @@ class AppServiceProvider extends ServiceProvider
     {
         if (
             empty($site = site()) ||
-            $site->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_SAMLIDP_ENABLED) != 1 ||
-            empty($samlIdpSettings = $site->getSiteJson(SiteJson::KEY_SAML_IDP))
+            $site->config(SiteConfig::KEY_NAME_SITE_SAMLIDP_ENABLED) != 1 ||
+            empty($samlIdpSettings = $site->json(SiteJson::KEY_SAML_IDP))
         ) {
             // don't inject anything, just use default
             return;

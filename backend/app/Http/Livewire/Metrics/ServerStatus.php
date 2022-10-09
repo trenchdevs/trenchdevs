@@ -23,7 +23,7 @@ class ServerStatus extends Component
         parent::__construct($id);
         $this->serverUtilities = new ServerUtilitiesService();
         $this->site = Site::getInstance();
-        $this->host = $this->site->getConfigValueByKey("SERVER_TO_PING");
+        $this->host = $this->site->config("SERVER_TO_PING");
     }
 
     public function checkStatus()

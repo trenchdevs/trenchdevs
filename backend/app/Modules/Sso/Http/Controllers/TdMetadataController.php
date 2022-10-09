@@ -27,7 +27,7 @@ class TdMetadataController extends Controller
         $cert = preg_replace('/^\W+\w+\s+\w+\W+\s(.*)\s+\W+.*$/s', '$1', trim($cert));
         $cert = str_replace(PHP_EOL, "", $cert);
 
-        if (empty($site = site()) || $site->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_SAMLIDP_ENABLED) != 1) {
+        if (empty($site = site()) || $site->config(SiteConfig::KEY_NAME_SITE_SAMLIDP_ENABLED) != 1) {
             abort(403);
         }
 

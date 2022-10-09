@@ -436,7 +436,7 @@ if (!function_exists('site_get_config_from_json')) {
      */
     function site_get_config_from_json(string $configKey, string $jsonKey, string $default): string
     {
-        return site()->getConfigValueFromJson($configKey, $jsonKey, $default);
+        return site()->configJson($configKey, $jsonKey, $default);
     }
 }
 

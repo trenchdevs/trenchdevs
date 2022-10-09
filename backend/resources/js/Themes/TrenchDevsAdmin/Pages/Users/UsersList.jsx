@@ -29,10 +29,12 @@ export default function UsersList(props) {
 
                     <div className="row pb-3">
                         <div className="col text-right">
-                            <Link href="/dashboard/users/upsert" className="btn btn-sm btn-success">
-                                <Icon.Plus color="white" size={16}/>
-                                <span className="ml-1">Add Participant</span>
-                            </Link>
+                            {['superadmin', 'admin'].includes(auth.user.role) &&
+                                <Link href="/dashboard/users/upsert" className="btn btn-sm btn-success">
+                                    <Icon.Plus color="white" size={16}/>
+                                    <span className="ml-1">Add Participant</span>
+                                </Link>
+                            }
                         </div>
                     </div>
 
@@ -47,16 +49,18 @@ export default function UsersList(props) {
                                 key: 'actions', 'label': 'Actions', render: row => {
                                     return (
                                         <>
-                                            <Link href={`/dashboard/users/upsert/${row.id}`}
-                                                  className="btn btn-warning"><Icon.Edit size={12}/>
-                                            </Link>
                                             {['superadmin', 'admin'].includes(auth.user.role) &&
-                                                <button
-                                                    onClick={() => sendResetPasswordEmail(row.id, row.email)}
-                                                    className="btn btn-info ml-2"
-                                                >
-                                                    <Icon.Key size={12}/>
-                                                </button>
+                                                <>
+                                                    <Link href={`/dashboard/users/upsert/${row.id}`}
+                                                          className="btn btn-warning"><Icon.Edit size={12}/>
+                                                    </Link>
+                                                    <button
+                                                        onClick={() => sendResetPasswordEmail(row.id, row.email)}
+                                                        className="btn btn-info ml-2"
+                                                    >
+                                                        <Icon.Key size={12}/>
+                                                    </button>
+                                                </>
                                             }
                                         </>
                                     );

@@ -6,6 +6,7 @@ use App\Modules\Sites\Enums\SiteIdentifier;
 use App\Modules\Sites\Models\Sites\SiteFactory;
 use App\Providers\RouteServiceProvider;
 use ArrayAccess;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,6 +26,8 @@ use Throwable;
  * @property $updated_at
  * @property $deleted_at
  * @property $inertia_theme
+ *
+ * @property Collection $configs
  */
 class Site extends Model
 {
@@ -32,6 +35,10 @@ class Site extends Model
     use SoftDeletes;
 
     protected $table = 'sites';
+
+    protected $appends = [
+        'configs'
+    ];
 
     /**
      * @var string[]
@@ -90,7 +97,7 @@ class Site extends Model
      *
      * @return static|null
      */
-    public static function getByIdentifier(string $identifier): ?self
+    public static function findByIdentifier(string $identifier): ?self
     {
         /** @var Site $site */
         $site = self::query()->where('identifier', $identifier)->first();
@@ -102,18 +109,39 @@ class Site extends Model
      * @param string|null $defaultValue
      * @return string|null
      */
-    public function getConfigValueByKey(string $keyName, string $defaultValue = null): ?string
+    public function config(string $keyName, string $defaultValue = null): ?string
     {
 
         if (!$this->id) {
             return $defaultValue;
         }
 
-        if (!isset($this->config)) {
-            $this->config = SiteConfig::query()->where('site_id', '=', $this->id)->get()->keyBy('key_name');
-        }
+        return $this->configs->get($keyName, $defaultValue) ?? $defaultValue;
+    }
 
-        return $this->config->get($keyName, $defaultValue)->key_value ?? $defaultValue;
+    /**
+     * @param $keyName
+     * @param $keyValue
+     * @param string $comments
+     * @return Model|Builder
+     */
+    public function setConfig($keyName, $keyValue, string $comments): Model|Builder
+    {
+        return SiteConfig::query()->updateOrCreate(
+            ['key_name' => $keyName,'site_id' => $this->id],
+            ['key_value'=> $keyValue, 'comments' => $comments]
+        );
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigsAttribute(): mixed
+    {
+        return SiteConfig::query()->where('site_id', '=', $this->id)
+            ->get()
+            ->keyBy('key_name')
+            ->map(fn($obj) => $obj->key_value);
     }
 
     /**
@@ -122,9 +150,9 @@ class Site extends Model
      * @param string $default
      * @return string
      */
-    public function getConfigValueFromJson(string $configKey, string $jsonKey, string $default): string
+    public function configJson(string $configKey, string $jsonKey, string $default): string
     {
-        $json = $this->getConfigValueByKey($configKey, $default);
+        $json = $this->config($configKey, $default);
 
         if (!is_json($json)) {
             return $default;
@@ -135,12 +163,12 @@ class Site extends Model
         return Arr::get($jsonArray, $jsonKey, $default);
     }
 
-    public function getSiteJson(string $key, $default = [])
+    public function json(string $key, $default = [])
     {
         $value = DB::table('site_jsons')->where('site_id', '=', $this->id)
-                ->where('key', '=', $key)
-                ->first()
-                ->value ?? null;
+            ->where('key', '=', $key)
+            ->first()
+            ->value ?? null;
 
         if (empty($value)) {
             return $default;
@@ -154,24 +182,13 @@ class Site extends Model
      */
     public function getFaqs(): Collection
     {
-        return collect($this->getSiteJson('content::faqs', []));
-    }
-
-    /**
-     * @param $key
-     * @param $jsonKey
-     * @param $default
-     * @return array|ArrayAccess|mixed
-     */
-    public function getSiteJsonValueFromKey($key, $jsonKey, $default): mixed
-    {
-        return Arr::get($this->getSiteJson($key, $default), $jsonKey, []);
+        return collect($this->json('content::faqs', []));
     }
 
     public function getRedirectPath(): ?string
     {
 
-        $redirectPath = $this->getConfigValueByKey(SiteConfig::KEY_NAME_SYSTEM_LOGIN_REDIRECT_PATH);
+        $redirectPath = $this->config(SiteConfig::KEY_NAME_SYSTEM_LOGIN_REDIRECT_PATH);
 
         return !empty($redirectPath) ? $redirectPath : RouteServiceProvider::HOME;
     }
@@ -184,7 +201,7 @@ class Site extends Model
     public function getWhitelistedIps(): array
     {
 
-        if (empty($whitelistedIps = json_decode_or_default($this->getConfigValueByKey(SiteConfig::KEY_NAME_SITE_WHITELISTED_IPS)))) {
+        if (empty($whitelistedIps = json_decode_or_default($this->config(SiteConfig::KEY_NAME_SITE_WHITELISTED_IPS)))) {
             return [];
         }
 
