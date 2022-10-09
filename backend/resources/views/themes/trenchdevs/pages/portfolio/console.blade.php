@@ -82,10 +82,10 @@
             </p>
 
             <p class="d-flex align-items-start justify-content-end">
-                <a href="//{{$portfolio_details['linkedin_url'] ?? '#'}}" target="_blank">
+                <a href="{{$portfolio_details['linkedin_url'] ?? '#'}}" target="_blank">
                     <i data-feather="linkedin"></i>
                 </a> ·
-                <a href="//{{$portfolio_details['github_url'] ?? '#'}}" target="_blank">
+                <a href="{{$portfolio_details['github_url'] ?? '#'}}" target="_blank">
                     <i data-feather="github"></i>
                 </a>
             </p>
