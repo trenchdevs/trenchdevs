@@ -31,7 +31,7 @@ class PhotosController extends Controller
                     photos.id,
                     photos.site_id,
                     photos.user_id,
-                    s3.meta->>'original_name' AS original_name,
+                    s3.meta ->> '$.original_name' AS original_name,
                     s3.s3_url,
                     s3.identifier,
                     s3.s3_path,
