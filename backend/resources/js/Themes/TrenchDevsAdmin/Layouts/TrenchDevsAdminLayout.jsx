@@ -293,17 +293,6 @@ function SidebarNav({
                                 </>
                             }
 
-                            {
-                                MODULES.USERS_ENABLED &&
-                                <Link className={`nav-link collapsed ${url.startsWith('/dashboard/users') && 'active'}`}
-                                      href="/dashboard/users">
-                                    <div className="nav-link-icon">
-                                        <Icon.Users{...ICON_DEFAULT_PROPS}/>
-                                    </div>
-                                    Users
-                                </Link>
-                            }
-
 
                             {
                                 MODULES.PHOTOS_ENABLED &&
