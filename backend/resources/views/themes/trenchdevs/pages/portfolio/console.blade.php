@@ -106,11 +106,11 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="subheading mb-4">Fluent</div>
-                    {!! $user->skills->fluent ?? '' !!}
+                    {!! $user->skills['fluent'] ?? '' !!}
                 </div>
                 <div class="col-md-4">
                     <div class="subheading mb-4">Conversationally Fluent</div>
-                    {!! $user->skills->conversationally_fluent ?? '' !!}
+                    {!! $user->skills['conversationally_fluent'] ?? '' !!}
                 </div>
             </div>
         </div>
