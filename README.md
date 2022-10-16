@@ -12,10 +12,18 @@ technologies by creating purposeful projects.
 
 ### Development Setup
 
-1. Clone the repo
+1. Clone the repo on your local
 2. `cd /path/to/trenchdevs`
-3. Initialize Everything: `npm run be:init`
-4. Navigate to `http://trenchdevs.localhost:22071` and you should see the default trenchdevs site
+3. Initialize Everything: `npm run be:init`. This does the following 
+   - Initializes .env variables for the root and the backend app
+   - Creates the MySQL docker volume 
+   - Builds the image 
+   - Runs the app/db/mailhog using docker compose 
+   - Install Composer dependencies
+   - Migrations
+   - Generate the app key 
+   - Installs the front-end dependencies
+4. Navigate to `http://trenchdevs.localhost:22061` and you should see the main trenchdevs site
 
 Setup Tested on:
 
