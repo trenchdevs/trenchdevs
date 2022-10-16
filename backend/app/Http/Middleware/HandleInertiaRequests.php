@@ -25,7 +25,7 @@ class HandleInertiaRequests extends Middleware
     public function handle(Request $request, Closure $next): \Symfony\Component\HttpFoundation\Response
     {
 
-        if (theme_is('demo', 'trenchdevs')) {
+        if (site() && site()->inertia_theme === 'TrenchDevsAdmin') {
             $this->rootView = 'layouts.inertia.trenchdevs-admin';
         }
 

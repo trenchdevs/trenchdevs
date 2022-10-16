@@ -24,3 +24,4 @@ docker/volumes/postgres
 
 .DS_Store
 public/.DS_Store
+backend/public/build/assets/*

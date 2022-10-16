@@ -195,6 +195,8 @@ function SidebarNav({
                                                     e.preventDefault();
                                                     if (!absolutePortfolioUrl) {
                                                         alert("You need to setup your portfolio first");
+                                                    } else {
+                                                        window.location.href = absolutePortfolioUrl;
                                                     }
                                                 }}
                                                 target="_blank"
