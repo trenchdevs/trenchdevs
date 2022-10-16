@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+  backend:
+    image: trenchdevs/trenchdevs:master
+    container_name: trenchdevs-backend
+    working_dir: /var/www
+    volumes:
+      - ./.env:/var/www/.env
+    ports:
+      - "80:80"
