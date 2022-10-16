@@ -126,7 +126,6 @@ function SidebarNav({
         absolutePortfolioUrl = `/${user.external_id}`;
     }
 
-    alert('erer');
     const MODULES = {
         PORTFOLIO_ENABLED: site.configs.portfolio_module_enabled === '1',
         USERS_ENABLED: site.configs.users_module_enabled === '1',
