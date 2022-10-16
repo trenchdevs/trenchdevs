@@ -1,6 +1,6 @@
 {
   "resources/js/app.jsx": {
-    "file": "assets/app.715081ff.js",
+    "file": "assets/app.666b5c97.js",
     "src": "resources/js/app.jsx",
     "isEntry": true,
     "dynamicImports": [
@@ -33,22 +33,22 @@
     ]
   },
   "resources/js/Pages/Dashboard.jsx": {
-    "file": "assets/Dashboard.ead596e6.js",
+    "file": "assets/Dashboard.fa2848ff.js",
     "src": "resources/js/Pages/Dashboard.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_TrenchDevsAdminLayout.6b3ff650.js"
+      "_TrenchDevsAdminLayout.b5972db5.js"
     ]
   },
-  "_TrenchDevsAdminLayout.6b3ff650.js": {
-    "file": "assets/TrenchDevsAdminLayout.6b3ff650.js",
+  "_TrenchDevsAdminLayout.b5972db5.js": {
+    "file": "assets/TrenchDevsAdminLayout.b5972db5.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
   "resources/js/Pages/Welcome.jsx": {
-    "file": "assets/Welcome.ea32a254.js",
+    "file": "assets/Welcome.a3129479.js",
     "src": "resources/js/Pages/Welcome.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -56,230 +56,230 @@
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Account/ChangePassword.jsx": {
-    "file": "assets/ChangePassword.b2a89acf.js",
+    "file": "assets/ChangePassword.f776d0b7.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Account/ChangePassword.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_FormInput.2f143e6c.js",
+      "_FormInput.3693ae45.js",
       "resources/js/app.jsx",
-      "_TrenchDevsAdminLayout.6b3ff650.js",
-      "_save.f17dfde4.js"
+      "_TrenchDevsAdminLayout.b5972db5.js",
+      "_save.ebea0edd.js"
     ]
   },
-  "_FormInput.2f143e6c.js": {
-    "file": "assets/FormInput.2f143e6c.js",
+  "_FormInput.3693ae45.js": {
+    "file": "assets/FormInput.3693ae45.js",
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
       "resources/js/app.jsx"
     ]
   },
-  "_save.f17dfde4.js": {
-    "file": "assets/save.f17dfde4.js",
+  "_save.ebea0edd.js": {
+    "file": "assets/save.ebea0edd.js",
     "imports": [
       "resources/js/app.jsx",
-      "_TrenchDevsAdminLayout.6b3ff650.js"
+      "_TrenchDevsAdminLayout.b5972db5.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Announcements/AnnouncementsList.jsx": {
-    "file": "assets/AnnouncementsList.6ea8021e.js",
+    "file": "assets/AnnouncementsList.a83a7341.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Announcements/AnnouncementsList.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_InertiaTable.fe028fb1.js",
-      "_TrenchDevsAdminLayout.6b3ff650.js",
-      "_Card.6e47c3aa.js"
+      "_InertiaTable.d774fbf6.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
+      "_Card.9cc9bd6a.js"
     ]
   },
-  "_InertiaTable.fe028fb1.js": {
-    "file": "assets/InertiaTable.fe028fb1.js",
+  "_InertiaTable.d774fbf6.js": {
+    "file": "assets/InertiaTable.d774fbf6.js",
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
       "resources/js/app.jsx"
     ]
   },
-  "_Card.6e47c3aa.js": {
-    "file": "assets/Card.6e47c3aa.js",
+  "_Card.9cc9bd6a.js": {
+    "file": "assets/Card.9cc9bd6a.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Announcements/CreateAnnouncement.jsx": {
-    "file": "assets/CreateAnnouncement.d39837e5.js",
+    "file": "assets/CreateAnnouncement.48e77031.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Announcements/CreateAnnouncement.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_Card.6e47c3aa.js",
-      "_FormInput.2f143e6c.js",
+      "_Card.9cc9bd6a.js",
+      "_FormInput.3693ae45.js",
       "resources/js/app.jsx",
-      "_TrenchDevsAdminLayout.6b3ff650.js"
+      "_TrenchDevsAdminLayout.b5972db5.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/ConfirmPassword.jsx": {
-    "file": "assets/ConfirmPassword.947214d2.js",
+    "file": "assets/ConfirmPassword.e342070f.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/ConfirmPassword.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Guest.acfa4687.js",
-      "_ValidationErrors.f54fab77.js",
-      "_Label.c6a0ed24.js"
+      "_Guest.e0ba4a5a.js",
+      "_ValidationErrors.b2558d6f.js",
+      "_Label.d2875901.js"
     ]
   },
-  "_Guest.acfa4687.js": {
-    "file": "assets/Guest.acfa4687.js",
+  "_Guest.e0ba4a5a.js": {
+    "file": "assets/Guest.e0ba4a5a.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_ValidationErrors.f54fab77.js": {
-    "file": "assets/ValidationErrors.f54fab77.js",
+  "_ValidationErrors.b2558d6f.js": {
+    "file": "assets/ValidationErrors.b2558d6f.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_Label.c6a0ed24.js": {
-    "file": "assets/Label.c6a0ed24.js",
+  "_Label.d2875901.js": {
+    "file": "assets/Label.d2875901.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/ForgotPassword.jsx": {
-    "file": "assets/ForgotPassword.31d887f2.js",
+    "file": "assets/ForgotPassword.5d859ac0.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/ForgotPassword.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Guest.acfa4687.js",
-      "_ValidationErrors.f54fab77.js"
+      "_Guest.e0ba4a5a.js",
+      "_ValidationErrors.b2558d6f.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/Login.jsx": {
-    "file": "assets/Login.31674c25.js",
+    "file": "assets/Login.08a5d40f.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/Login.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Guest.acfa4687.js",
-      "_ValidationErrors.f54fab77.js",
-      "_Label.c6a0ed24.js"
+      "_Guest.e0ba4a5a.js",
+      "_ValidationErrors.b2558d6f.js",
+      "_Label.d2875901.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/Register.jsx": {
-    "file": "assets/Register.fda9dae3.js",
+    "file": "assets/Register.2bc2644e.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/Register.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Guest.acfa4687.js",
-      "_ValidationErrors.f54fab77.js",
-      "_Label.c6a0ed24.js"
+      "_Guest.e0ba4a5a.js",
+      "_ValidationErrors.b2558d6f.js",
+      "_Label.d2875901.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/ResetPassword.jsx": {
-    "file": "assets/ResetPassword.008c89b8.js",
+    "file": "assets/ResetPassword.5281854e.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/ResetPassword.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Guest.acfa4687.js",
-      "_ValidationErrors.f54fab77.js",
-      "_Label.c6a0ed24.js"
+      "_Guest.e0ba4a5a.js",
+      "_ValidationErrors.b2558d6f.js",
+      "_Label.d2875901.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/VerifyEmail.jsx": {
-    "file": "assets/VerifyEmail.9258d032.js",
+    "file": "assets/VerifyEmail.8907ecf1.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Auth/VerifyEmail.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Guest.acfa4687.js"
+      "_Guest.e0ba4a5a.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Blogs/BlogUpsert.jsx": {
-    "file": "assets/BlogUpsert.b8d5b44c.js",
+    "file": "assets/BlogUpsert.6b9cf5e5.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Blogs/BlogUpsert.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
       "resources/js/app.jsx",
-      "_skip-back.c9d1c897.js",
-      "_save.f17dfde4.js"
+      "_skip-back.14675e5c.js",
+      "_save.ebea0edd.js"
     ],
     "css": [
       "assets/BlogUpsert.4cb80c95.css"
     ]
   },
-  "_skip-back.c9d1c897.js": {
-    "file": "assets/skip-back.c9d1c897.js",
+  "_skip-back.14675e5c.js": {
+    "file": "assets/skip-back.14675e5c.js",
     "imports": [
       "resources/js/app.jsx",
-      "_TrenchDevsAdminLayout.6b3ff650.js"
+      "_TrenchDevsAdminLayout.b5972db5.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Blogs/BlogsList.jsx": {
-    "file": "assets/BlogsList.0afb9764.js",
+    "file": "assets/BlogsList.b0b3b7d4.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Blogs/BlogsList.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_InertiaTable.fe028fb1.js",
-      "_TrenchDevsAdminLayout.6b3ff650.js"
+      "_InertiaTable.d774fbf6.js",
+      "_TrenchDevsAdminLayout.b5972db5.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Dashboard.jsx": {
-    "file": "assets/Dashboard.dc97133c.js",
+    "file": "assets/Dashboard.721a3828.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Dashboard.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_TrenchDevsAdminLayout.6b3ff650.js"
+      "_TrenchDevsAdminLayout.b5972db5.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Photos/PhotosList.jsx": {
-    "file": "assets/PhotosList.caaf9baf.js",
+    "file": "assets/PhotosList.bce682ed.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Photos/PhotosList.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_BasicFileUploader.36096b51.js",
-      "_TrenchDevsAdminLayout.6b3ff650.js",
-      "_InertiaTable.fe028fb1.js",
+      "_BasicFileUploader.aa282077.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
+      "_InertiaTable.d774fbf6.js",
       "resources/js/app.jsx",
-      "_Card.6e47c3aa.js",
-      "_trash.fd52e13a.js"
+      "_Card.9cc9bd6a.js",
+      "_trash.ad8ceccc.js"
     ]
   },
-  "_BasicFileUploader.36096b51.js": {
-    "file": "assets/BasicFileUploader.36096b51.js",
+  "_BasicFileUploader.aa282077.js": {
+    "file": "assets/BasicFileUploader.aa282077.js",
     "imports": [
       "resources/js/app.jsx",
-      "_TrenchDevsAdminLayout.6b3ff650.js"
+      "_TrenchDevsAdminLayout.b5972db5.js"
     ]
   },
-  "_trash.fd52e13a.js": {
-    "file": "assets/trash.fd52e13a.js",
+  "_trash.ad8ceccc.js": {
+    "file": "assets/trash.ad8ceccc.js",
     "imports": [
       "resources/js/app.jsx",
-      "_TrenchDevsAdminLayout.6b3ff650.js"
+      "_TrenchDevsAdminLayout.b5972db5.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Portfolio/Certifications.jsx": {
-    "file": "assets/Certifications.1aa5d1c2.js",
+    "file": "assets/Certifications.01230a9f.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Portfolio/Certifications.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
-      "_PortfolioStepper.3684be65.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
+      "_PortfolioStepper.2f3d08e2.js",
       "resources/js/app.jsx",
-      "_DynamicListForm.f87903a8.js",
-      "_FormInput.2f143e6c.js",
-      "_trash.fd52e13a.js",
-      "_plus.c2954f84.js",
-      "_save.f17dfde4.js"
+      "_DynamicListForm.f45dfc0a.js",
+      "_FormInput.3693ae45.js",
+      "_trash.ad8ceccc.js",
+      "_plus.53465b75.js",
+      "_save.ebea0edd.js"
     ]
   },
-  "_PortfolioStepper.3684be65.js": {
-    "file": "assets/PortfolioStepper.3684be65.js",
+  "_PortfolioStepper.2f3d08e2.js": {
+    "file": "assets/PortfolioStepper.2f3d08e2.js",
     "imports": [
       "resources/js/app.jsx"
     ],
@@ -287,123 +287,123 @@
       "assets/PortfolioStepper.d84957f3.css"
     ]
   },
-  "_DynamicListForm.f87903a8.js": {
-    "file": "assets/DynamicListForm.f87903a8.js",
+  "_DynamicListForm.f45dfc0a.js": {
+    "file": "assets/DynamicListForm.f45dfc0a.js",
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
-      "_FormInput.2f143e6c.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
+      "_FormInput.3693ae45.js",
       "resources/js/app.jsx",
-      "_trash.fd52e13a.js",
-      "_plus.c2954f84.js",
-      "_save.f17dfde4.js"
+      "_trash.ad8ceccc.js",
+      "_plus.53465b75.js",
+      "_save.ebea0edd.js"
     ]
   },
-  "_plus.c2954f84.js": {
-    "file": "assets/plus.c2954f84.js",
+  "_plus.53465b75.js": {
+    "file": "assets/plus.53465b75.js",
     "imports": [
       "resources/js/app.jsx",
-      "_TrenchDevsAdminLayout.6b3ff650.js"
+      "_TrenchDevsAdminLayout.b5972db5.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Portfolio/Degrees.jsx": {
-    "file": "assets/Degrees.31171ef8.js",
+    "file": "assets/Degrees.b1ef1dc6.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Portfolio/Degrees.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
-      "_PortfolioStepper.3684be65.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
+      "_PortfolioStepper.2f3d08e2.js",
       "resources/js/app.jsx",
-      "_DynamicListForm.f87903a8.js",
-      "_FormInput.2f143e6c.js",
-      "_trash.fd52e13a.js",
-      "_plus.c2954f84.js",
-      "_save.f17dfde4.js"
+      "_DynamicListForm.f45dfc0a.js",
+      "_FormInput.3693ae45.js",
+      "_trash.ad8ceccc.js",
+      "_plus.53465b75.js",
+      "_save.ebea0edd.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Portfolio/Details.jsx": {
-    "file": "assets/Details.e1561876.js",
+    "file": "assets/Details.952b9fd1.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Portfolio/Details.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
-      "_PortfolioStepper.3684be65.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
+      "_PortfolioStepper.2f3d08e2.js",
       "resources/js/app.jsx",
-      "_Card.6e47c3aa.js",
-      "_DynamicForm.0cb9aa7c.js",
-      "_BasicFileUploader.36096b51.js",
-      "_FormInput.2f143e6c.js",
-      "_save.f17dfde4.js"
+      "_Card.9cc9bd6a.js",
+      "_DynamicForm.453ff092.js",
+      "_BasicFileUploader.aa282077.js",
+      "_FormInput.3693ae45.js",
+      "_save.ebea0edd.js"
     ]
   },
-  "_DynamicForm.0cb9aa7c.js": {
-    "file": "assets/DynamicForm.0cb9aa7c.js",
+  "_DynamicForm.453ff092.js": {
+    "file": "assets/DynamicForm.453ff092.js",
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
-      "_FormInput.2f143e6c.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
+      "_FormInput.3693ae45.js",
       "resources/js/app.jsx",
-      "_save.f17dfde4.js"
+      "_save.ebea0edd.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Portfolio/Experiences.jsx": {
-    "file": "assets/Experiences.f46aca0c.js",
+    "file": "assets/Experiences.2b379f27.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Portfolio/Experiences.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
-      "_PortfolioStepper.3684be65.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
+      "_PortfolioStepper.2f3d08e2.js",
       "resources/js/app.jsx",
-      "_DynamicListForm.f87903a8.js",
-      "_FormInput.2f143e6c.js",
-      "_trash.fd52e13a.js",
-      "_plus.c2954f84.js",
-      "_save.f17dfde4.js"
+      "_DynamicListForm.f45dfc0a.js",
+      "_FormInput.3693ae45.js",
+      "_trash.ad8ceccc.js",
+      "_plus.53465b75.js",
+      "_save.ebea0edd.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Portfolio/Skills.jsx": {
-    "file": "assets/Skills.3ba9556f.js",
+    "file": "assets/Skills.d77b7c65.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Portfolio/Skills.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
-      "_PortfolioStepper.3684be65.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
+      "_PortfolioStepper.2f3d08e2.js",
       "resources/js/app.jsx",
-      "_Card.6e47c3aa.js",
-      "_DynamicForm.0cb9aa7c.js",
-      "_FormInput.2f143e6c.js",
-      "_save.f17dfde4.js"
+      "_Card.9cc9bd6a.js",
+      "_DynamicForm.453ff092.js",
+      "_FormInput.3693ae45.js",
+      "_save.ebea0edd.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Projects/ProjectsList.jsx": {
-    "file": "assets/ProjectsList.03430b44.js",
+    "file": "assets/ProjectsList.72294fc0.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Projects/ProjectsList.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_InertiaTable.fe028fb1.js",
-      "_TrenchDevsAdminLayout.6b3ff650.js",
-      "_Card.6e47c3aa.js"
+      "_InertiaTable.d774fbf6.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
+      "_Card.9cc9bd6a.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Users/UserUpsert.jsx": {
-    "file": "assets/UserUpsert.19117663.js",
+    "file": "assets/UserUpsert.95b2529e.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Users/UserUpsert.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
       "resources/js/app.jsx",
-      "_skip-back.c9d1c897.js",
-      "_save.f17dfde4.js"
+      "_skip-back.14675e5c.js",
+      "_save.ebea0edd.js"
     ]
   },
   "resources/js/Themes/TrenchDevsAdmin/Pages/Users/UsersList.jsx": {
-    "file": "assets/UsersList.8e158a60.js",
+    "file": "assets/UsersList.ca85b8d4.js",
     "src": "resources/js/Themes/TrenchDevsAdmin/Pages/Users/UsersList.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_TrenchDevsAdminLayout.6b3ff650.js",
+      "_TrenchDevsAdminLayout.b5972db5.js",
       "resources/js/app.jsx",
-      "_InertiaTable.fe028fb1.js",
-      "_plus.c2954f84.js"
+      "_InertiaTable.d774fbf6.js",
+      "_plus.53465b75.js"
     ]
   },
   "PortfolioStepper.css": {
