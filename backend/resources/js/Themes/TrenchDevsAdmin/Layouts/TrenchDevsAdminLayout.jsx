@@ -126,9 +126,10 @@ function SidebarNav({
         absolutePortfolioUrl = `/${user.external_id}`;
     }
 
+    alert('erer');
     const MODULES = {
         PORTFOLIO_ENABLED: site.configs.portfolio_module_enabled === '1',
-        USERS_ENABLED: site.configs.users_module_enabled === '1' || 1, // default to enabled
+        USERS_ENABLED: site.configs.users_module_enabled === '1',
         DASHBOARD_ENABLED: site.configs.dashboard_module_enabled === '1',
         PHOTOS_ENABLED: site.configs.photos_module_enabled === '1',
         ANNOUNCEMENT_ENABLED: site.configs.announcement_module_enabled === '1',
@@ -297,7 +298,7 @@ function SidebarNav({
 
 
                             {
-                                MODULES.PHOTOS_ENABLED &&
+                                MODULES.USERS_ENABLED &&
                                 <Link className={`nav-link collapsed ${url.startsWith('/dashboard/users') && 'active'}`}
                                       href="/dashboard/users">
                                     <div className="nav-link-icon">
