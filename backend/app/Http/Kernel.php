@@ -47,6 +47,7 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
+        SecurityMiddleware::class,
 
     ];
 
@@ -68,7 +69,6 @@ class Kernel extends HttpKernel
 
             // app middlewares for web
             SiteAccessMiddleware::class,
-            SecurityMiddleware::class,
         ],
 
         'api' => [
