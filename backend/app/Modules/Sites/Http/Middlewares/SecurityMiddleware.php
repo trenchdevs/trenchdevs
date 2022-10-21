@@ -19,7 +19,7 @@ class SecurityMiddleware
         /** @var Response $response */
         $response = $next($request);
 
-        // $response->headers->set('Strict-Transport-Security', 'max-age=31536001; includeSubDomains; preload');
+        $response->headers->set('Strict-Transport-Security', 'max-age=31536001; includeSubDomains; preload');
 
         return $response;
     }
