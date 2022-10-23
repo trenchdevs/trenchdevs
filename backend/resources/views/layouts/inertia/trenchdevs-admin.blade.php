@@ -20,11 +20,11 @@
     @vite('resources/js/app.jsx')
     @inertiaHead
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
+    <script nonce="{{ csp_nonce() }}"src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
             crossorigin="anonymous">
     </script>
 
-    <style>
+    <style nonce="{{ csp_nonce() }}">
         .card-header {
             background-color: #1f2d41;
             color: white !important;
@@ -78,10 +78,10 @@
 
 @inertia
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+<script nonce="{{ csp_nonce() }}"src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+<script nonce="{{ csp_nonce() }}"src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-<script src="/admin/js/admin-scripts.js"></script>
+<script nonce="{{ csp_nonce() }}"src="/admin/js/admin-scripts.js"></script>
 
 @yield('scripts')
 

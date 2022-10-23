@@ -1,7 +1,7 @@
 @extends('layouts.blog')
 
 @section('styles')
-    <style>
+    <style nonce="{{ csp_nonce() }}">
         #markdown_contents img {
             width: 100%;
             text-align: center;
@@ -25,7 +25,7 @@
 @endsection
 
 @section('scripts')
-    <script src="/blog/prism/prism.js"></script>
+    <script nonce="{{ csp_nonce() }}"src="/blog/prism/prism.js"></script>
 @endsection
 
 @section('contents')

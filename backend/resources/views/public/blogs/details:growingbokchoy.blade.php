@@ -2,7 +2,7 @@
 
 @section('style')
 
-    <style>
+    <style nonce="{{ csp_nonce() }}">
         .post-body img {
             width: 100%;
         }

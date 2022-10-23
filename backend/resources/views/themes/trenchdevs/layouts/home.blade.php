@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <title>TrenchDevs</title>
     <!-- Font Awesome icons (free version)-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+    <script nonce="{{ csp_nonce() }}"src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
             crossorigin="anonymous"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/home/styles.css" rel="stylesheet">
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/css/home/heading.css">
     <link rel="stylesheet" href="/css/home/body.css">
 
-    <style>
+    <style nonce="{{ csp_nonce() }}">
         .card-header {
             background-color: #1f2d41;
             color: white !important;
@@ -47,12 +47,12 @@
 <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded"
                                                        href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
 <!-- Bootstrap core JS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script nonce="{{ csp_nonce() }}"src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script nonce="{{ csp_nonce() }}"src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 <!-- Third party plugin JS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script nonce="{{ csp_nonce() }}"src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <!-- Contact form JS-->
 <!-- Core theme JS-->
-<script src="/js/home-scripts.js"></script>
+<script nonce="{{ csp_nonce() }}"src="/js/home-scripts.js"></script>
 </body>
 </html>

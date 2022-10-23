@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('scripts')
-    <script data-search-pseudo-elements defer
+    <script nonce="{{ csp_nonce() }}"data-search-pseudo-elements defer
             src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
             crossorigin="anonymous"></script>
 @endsection

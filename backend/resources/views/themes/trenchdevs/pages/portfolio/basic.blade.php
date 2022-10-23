@@ -14,7 +14,7 @@
     <link href="/portfolio/css/styles.css" rel="stylesheet"/>
     @include('layouts.partials.ga')
     <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+    <script nonce="{{ csp_nonce() }}"src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet"
           type="text/css"/>
@@ -22,7 +22,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/portfolio/custom/basic/css/styles.css" rel="stylesheet"/>
 
-    <style>
+    <style nonce="{{ csp_nonce() }}">
         .bg-primary {
             background-color: #2c3e50 !important;
         }
@@ -216,11 +216,11 @@
     </section>
 </div>
 <!-- Bootstrap core JS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<script nonce="{{ csp_nonce() }}"src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script nonce="{{ csp_nonce() }}"src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 <!-- Third party plugin JS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script nonce="{{ csp_nonce() }}"src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <!-- Core theme JS-->
-<script src="/portfolio/custom/basic/js/scripts.js"></script>
+<script nonce="{{ csp_nonce() }}"src="/portfolio/custom/basic/js/scripts.js"></script>
 </body>
 </html>

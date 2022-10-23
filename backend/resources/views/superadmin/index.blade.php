@@ -38,7 +38,7 @@
 @endsection
 
 @section('scripts')
-    <script src="/blog/prism/prism.js"></script>
+    <script nonce="{{ csp_nonce() }}"src="/blog/prism/prism.js"></script>
     <script>
         (function () {
             var $commandForm = $('#commands-form');

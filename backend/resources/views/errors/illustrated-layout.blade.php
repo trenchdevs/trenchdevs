@@ -11,7 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
         <!-- Styles -->
-        <style>
+        <style nonce="{{ csp_nonce() }}">
             html {
                 line-height: 1.15;
                     -ms-text-size-adjust: 100%;

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AddNonceToViteMiddleware;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckAccount;
 use App\Http\Middleware\CheckForMaintenanceMode;
@@ -29,6 +30,7 @@ use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Spatie\Csp\AddCspHeaders;
 
 class Kernel extends HttpKernel
 {
@@ -69,6 +71,8 @@ class Kernel extends HttpKernel
 
             // app middlewares for web
             SiteAccessMiddleware::class,
+            AddCspHeaders::class,
+//            AddNonceToViteMiddleware::class,
         ],
 
         'api' => [
