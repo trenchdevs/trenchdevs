@@ -12,7 +12,7 @@
     "i4": "npm run be:composer:install && npm run be:migrate && npm run be:key:generate && npm run permissions:fix",
     "i5": "cd backend && npm install && cd ..",
     "--Backend--": "----------------------BACK END COMMANDS------------------------------------------------------------",
-    "be:dev": "docker-compose up -d && npm run dev --prefix backend",
+    "be:dev": "docker-compose up -d && npm run be:clear && npm run dev --prefix backend",
     "fe:build": "npm run build --prefix backend",
     "be:up": "docker-compose up -d",
     "be:up:lite": "docker-compose up app -d",
@@ -22,6 +22,7 @@
     "be:key:generate": "docker exec -it --user www:www-data trenchdevs-backend php artisan key:generate",
     "be:shell": "docker exec -it --user www:www-data trenchdevs-backend bash",
     "be:shell:root": "docker exec -it trenchdevs-backend bash",
+    "be:clear": "docker exec -it --user www:www-data trenchdevs-backend /bin/bash -c 'php artisan route:clear && php artisan cache:clear'",
     "permissions:fix": "docker exec -i trenchdevs-backend bash -c 'chown -R www:www-data /var/www/storage /var/www/resources && chmod ug+w -R /var/www/storage /var/www/resources'"
   },
   "repository": {
