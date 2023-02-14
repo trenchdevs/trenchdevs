@@ -30,7 +30,7 @@
         "tailwindcss": "^3.1.0"
     },
     "dependencies": {
-        "@ckeditor/ckeditor5-build-classic": "^35.0.1",
+        "@ckeditor/ckeditor5-build-classic": "^36.0.1",
         "@ckeditor/ckeditor5-react": "^5.0.2",
         "markdown-it": "^13.0.1",
         "react-dropzone": "^14.2.2",
